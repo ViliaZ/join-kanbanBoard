@@ -1,1 +1,32 @@
-/* You can add global styles to this file, and also import other style files */
+
+:root{
+    --bodyText: 16px;
+    --xxsFont: 12px;
+}
+
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+}
+
+h1{
+    font-family:'Courier New', Courier, monospace;
+    font-size: 32px;
+}
+h2{
+    font-family:'Courier New', Courier, monospace;
+    font-size: 22px;
+}
+
+.flex-c-c{
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.flex-1{
+    flex:1;
+}
