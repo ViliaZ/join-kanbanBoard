@@ -13,7 +13,6 @@ const routes: Routes = [
   { path: 'imprint', component: ImprintComponent },
   { path: 'board', component: BoardComponent },
   { path: 'backlog', component: BacklogComponent },
-
 ];
 
 @NgModule({
