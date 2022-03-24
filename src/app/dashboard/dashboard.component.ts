@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
+  variable: string = '';
   constructor() { }
 
   ngOnInit(): void {
   }
+
+
 
 }
