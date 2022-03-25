@@ -16,15 +16,12 @@
 .main {
     position: relative;
     flex: 1;
-    background-color: white;
-    padding: 50px;
     margin: 1.5rem var(--marginPage) 0.5rem var(--marginPage);
     width: 100%;
-    max-width: 1600px;
     overflow: auto;
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    border-radius: 12px;
 }
+
 
 .img-plus {
     font-size: 54px;

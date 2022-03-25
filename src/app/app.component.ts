@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Routes, Router } from 'node_modules/@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'join-kanbanBoard';
+
+  constructor(public router: Router ) {
+  }
 }
