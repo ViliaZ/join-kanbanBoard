@@ -1,33 +1,21 @@
 
-:root{
-    --bodyText: 16px;
-    --xxsFont: 12px;
-}
-
 *{
     margin:0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 16px;
+    box-sizing: border-box!important;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    color: var(--fontDark);
 }
 
-h1{
-    font-size: 32px;
-    margin-bottom: 1rem;
+:root{
+    --detailsDarkight: rgb(168, 168, 168);
+    --detailsLight: rgb(248, 245, 245); 
+    --bg: #F0F4FA;
+    --fontDark: #58627c;
+    --fontAccent:#473279;
+    --marginPage: 3rem;
 }
-
-h2{
-    font-size: 22px;
-    margin-bottom: 1rem;
-}
-
-.flex-c-c{
-display: flex;
-align-items: center;
-justify-content: center;
-}
-
-.flex-1{
-    flex:1;
+h1, h2, h3{
+    font-family: 'Lato', sans-serif;
 }

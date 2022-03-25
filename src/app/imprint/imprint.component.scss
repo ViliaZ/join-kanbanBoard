@@ -1,8 +1,22 @@
+:host{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+}
+
 p{
     margin-top: 25px; 
     margin-bottom: 25px;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .title{
     margin-bottom: 0rem!important;
+}
+
+.mt{
+    margin-top: 25px;
 }
