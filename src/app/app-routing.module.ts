@@ -9,7 +9,7 @@ import { ImprintComponent } from './imprint/imprint.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 
 const routes: Routes = [
-  { path: '', component: AddTaskComponent },
+  { path: '', component: AppComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'imprint', component: ImprintComponent },
   { path: 'board', component: BoardComponent },

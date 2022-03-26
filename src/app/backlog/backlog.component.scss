@@ -1,7 +1,74 @@
-
-.body-backlog{
+.body-backlog {
     background-color: rgb(255, 255, 255);
     min-height: 100%;
     padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+.filterOptions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 0px;
+}
+
+.emptyBacklog {
+    padding: 8px 12px;
+    background-color: var(--bg);
+    border-radius: 12px;
+}
+
+.taskContainer {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 32px;
+    padding: 16px 12px;
+    background-color: rgba(211, 211, 211, 0.281);
+    // border-radius: 8px 0px 0px 8px;
+    border-radius: 12px 12px 12px 12px;
+    min-height: 100px;
+    // max-height: 136px;
+}
+
+.margin-right {
+    margin-right: 1em;
+}
+
+.category {
+    writing-mode: tb-rl;
+    transform: rotate(-180deg);
+}
+
+.userImage {
+    border-radius: 8px;
+    background-color: rgb(89, 42, 97);
+    width: 45px;
+    height: 45px;
+}
+
+.text {
+    flex: 1;
+
+    .title {
+        font-weight: 700;
+        font-size: 18px;
+    }
+
+    .description {
+        color: rgb(158, 157, 157);
+    }
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+
+    button {
+        flex: 1;
+    }
+}

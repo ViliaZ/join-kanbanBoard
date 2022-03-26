@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BacklogComponent implements OnInit {
 
+  backlogEmpty:boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
