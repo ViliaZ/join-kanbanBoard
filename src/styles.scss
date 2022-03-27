@@ -1,22 +1,89 @@
-*{
-    margin:0;
-    padding: 0;
-    box-sizing: border-box!important;
-    font-family: 'Lato', sans-serif;
-    color: var(--fontDark);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box !important;
+  font-family: "Lato", sans-serif;
+  color: var(--fontDark);
 }
 
-:root{
-    --detailsDarkight: rgb(168, 168, 168);
-    --detailsLight: rgb(248, 245, 245); 
-    --bg: #F0F4FA;
-    --fontDark: #58627c;
-    --fontAccent:#473279;
-    --marginPage: 3rem;
+:root {
+  --detailsDarkight: rgb(168, 168, 168);
+  --detailsLight: rgb(248, 245, 245);
+  --bg: #f0f4fa;
+  --fontDark: #58627c;
+  --fontAccent: #473279;
+  --marginPage: 3rem;
 }
-h1, h2, h3{
-    font-family: 'Lato', sans-serif;
+h1,
+h2,
+h3 {
+  font-family: "Lato", sans-serif;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+// MATERIAL DESIGN ELEMENTS
+
+mat-option {
+  background-color: lightgrey;
+  color: green !important;
+
+  &:hover {
+    background-color: white !important;
+  }
+}
+
+
+// selector background
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: rgb(255, 255, 255);
+}
+
+.mat-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-form-field-flex {
+  border-radius: 12px;
+  border: 1px solid black;
+}
+
+// date picker
+
+.datePicker .mat-form-field-wrapper{
+  border-radius: 12px!important;
+  border: 1px solid black12px!important;
+}
+
+// urgency
+
+.mat-button-toggle{
+  background-color: white;
+
+  &:hover {
+    background-color: grey;
+    color: white!important;
+
+    &:focus{
+      background-color: lightgrey;
+    }
+  }
+}
+
+.not-empty-select.mat-selected {
+  color: green !important;
+}
+
+.not-empty-select.mat-selected {
+  color: rgb(0, 70, 128) !important;
+}
+
+// the first selcted option
+.mat-select-panel {
+  background-color: darkgrey;
+}
+
+

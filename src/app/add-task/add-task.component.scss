@@ -1,6 +1,10 @@
 .body-addTask {
     background-color: rgb(255, 255, 255);
-    min-height: 100%;
+    border-radius: 12px;
+    height: max-content;
+    max-height: 100%;
+    max-width: 1000px;
+    margin: auto;
     padding: 30px;
     display: flex;
     flex-direction: column;
@@ -23,8 +27,68 @@
     align-items: center;
 }
 
-.flex-1{
-    flex: 1 200px;
+.flex-1 {
+    flex: 1;
 }
 
+.title {
+    flex: 1;
+    border: 1px black solid;
+    background-color: white;
+    border-radius: 12px;
 
+    input {
+        width: 100%;
+        min-height: 100%;
+        background-color: transparent;
+        border: unset;
+        padding: 12px;
+
+        &::placeholder{
+            font-size: 16px;
+        }
+    }
+}
+// border: 1px solid darkgrey;
+.description {
+    border-radius: 12px;
+    border: 1px black solid;
+    background-color: white;
+
+    textarea {
+        resize: none;
+        height: 100%;
+        border: unset;
+        width: 100%;
+        background-color: transparent;
+        padding: 12px;
+
+        &::placeholder {
+            font-size: 16px;
+        }
+    }
+}
+
+.urgency {
+    width: 100%;
+}
+
+.datePicker {
+    width: 100%;
+    border-radius: 12px;
+}
+
+.button {
+    border: 1px solid black;
+    border-radius: 12px;
+    height: max-content;
+    font-size: 16px;
+    padding: 8px 84px;
+    cursor: pointer;
+}
+
+.userImg{
+    width: 30px;
+    height: 30px; 
+    border-radius: 50%;
+}

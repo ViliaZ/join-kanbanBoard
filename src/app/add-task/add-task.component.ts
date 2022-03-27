@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-add-task',
@@ -7,16 +10,40 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddTaskComponent implements OnInit {
 
-  // make an interface for it users: User[] = [ ...]
-  users: any = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
-  ];
+  task: any = {
+  };
 
-  constructor() { }
+// via ngModel
+  title: string = '';
+  description: string = '';
+  dueTo:any;
+  urgency:string = '';
+  board: string = '';
+  category: string = '';
+  users: any = '';
 
+  constructor(private firestore: AngularFirestore, public dataService: DataService) {
+
+  }
   ngOnInit(): void {
   }
+
+  saveTask(){
+
+    // fill the task object with input from ngModel
+    this.task['ticketId'] = new Date().getTime();
+    this.task['title'] = this.title;
+    this.task['description'] = this.description;
+    this.task['dueTo'] = this.dueTo;
+    this.task['urgency'] = this.urgency;
+    this.task['category'] = this.category;
+    this.task['board'] = 'backlog';    
+    this.task['users'] = this.users;
+    
+    // save task json to firestore database
+    this.firestore.collection('tasks').add(this.task).then((result:any)=> console.log('task added', result ))
+  }
+
+
 
 }

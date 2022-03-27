@@ -1,5 +1,55 @@
-.body-dashboard{
+.body-dashboard {
     background-color: rgb(255, 255, 255);
-    min-height: 100%;
+    border-radius: 12px;
+    max-height: 100%;
     padding: 30px;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.user {
+    img {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+    }
+}
+
+
+.card {
+    width: 150px;
+    height: 150px;
+    border-radius: 12px;
+    background-color: rgba(128, 128, 128, 0.726);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgb(0 0 0 / 12%) 1px 1px 6px;
+    color: white;
+
+    div {
+        color: white;
+    }
+}
+
+.date {
+    .number {
+        font-size: 30px;
+        color: white;
+    }
+    div {
+        color: white;
+    }
 }
