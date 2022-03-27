@@ -7,18 +7,18 @@
 
 
 
-    <div class="wrapper">
-        <div class="taskContainer">
+    <div class="wrapper" *ngFor="let task of backlogtasks; index as i">
+        <div class="taskContainer" >
             <div class="user margin-right">
-                <div class="userImage"></div>
+                <img src="assets/img/user.png">
             </div>
             <div class="text margin-right">
-                <div class="title">{{ title }}</div>
-                <div class="description">Dies ist die description</div>
+                <div class="title">{{ task.title }}</div>
+                <div class="description">{{ task.description }}</div>
             </div>
             <div class="information margin-right">
-                <div class="urgency">medium</div>
-                <div class="date">2 Januar 2022</div>
+                <div class="urgency">{{ task.urgency }}</div>
+                <div class="date">{{ task.dueTo }}</div>
             </div>
             <div class="buttons">
                 <button>Add</button>
@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="category">
-            Design
+            {{ task.category }}
         </div>
     </div>
 

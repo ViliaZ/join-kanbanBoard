@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
@@ -6,35 +6,35 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   templateUrl: './backlog.component.html',
   styleUrls: ['./backlog.component.scss']
 })
-export class BacklogComponent implements OnInit {
+export class BacklogComponent implements OnInit, OnChanges {
 
-  backlogEmpty:boolean = false;
+  backlogEmpty: boolean = false;
+  
 
-  tasks:any = [];
 
-  title:string = 'hello';
-  item:any;
+  public tasks: any = []; // all tasks
+  backlogtasks: any = []; // filtered 
+  public item: any;
 
-  constructor(public firestore: AngularFirestore) { 
+  constructor(public firestore: AngularFirestore) {
     this.item = this.firestore
     .collection('tasks')
     .valueChanges()
-    .subscribe((result)=> {
-
-      console.log('this.tasks in backlog', result);
-      let backlog = result.filter((item:any)=>{let res=item.category ==="Marketing"; return res})
-      console.log('backlogtasks', backlog)
-
-      // this.backlogtasks=this.tasks.includes('backlog');
-      // console.log('backlogtasks', this.backlogtasks)
-    
+    .subscribe((result) => {
+      this.tasks = result;
+      this.backlogtasks = result.filter((item: any) => { let result = item.board === "backlog"; return result })
+      console.log('backlogtasks', this.backlogtasks);
     });
 
-    // this.backlogtasks = this.tasks.filter((task:any)=>{task.board ==='backlog'})
-    // console.log('backlogtasks', this.backlogtasks)
   }
+
+  ngOnChanges(): void {
+
+   }
 
   ngOnInit(): void {
   }
 
 }
+
+

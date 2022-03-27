@@ -4,6 +4,7 @@
     // padding: 30px;
     display: flex;
     flex-direction: column;
+    gap: 20px;
 }
 
 .filterOptions {
@@ -76,9 +77,8 @@
         }
 }
 
-.userImage {
+img {
     border-radius: 8px;
-    background-color: rgb(89, 42, 97);
     width: 45px;
     height: 45px;
 }
