@@ -5,8 +5,6 @@
         <input type="filter">
     </div>
 
-
-
     <div class="wrapper" *ngFor="let task of backlogtasks; index as i">
         <div class="taskContainer" >
             <div class="user margin-right">
@@ -21,9 +19,9 @@
                 <div class="date">{{ task.dueTo }}</div>
             </div>
             <div class="buttons">
-                <button>Add</button>
-                <button>delete</button>
-                <button>Edit</button>
+                <button (click)="movetoBoardToDo(i)">Add</button>
+                <button (click)="deleteTask()">delete</button>
+                <button (click)="editTask()" >Edit</button>
             </div>
         </div>
         <div class="category">

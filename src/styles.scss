@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box !important;
   font-family: "Lato", sans-serif;
-  color: var(--fontDark);
+  color: var(--fontDark)!important;
 }
 
 :root {
@@ -51,12 +51,6 @@ mat-option {
   border: 1px solid black;
 }
 
-// date picker
-
-.datePicker .mat-form-field-wrapper{
-  border-radius: 12px!important;
-  border: 1px solid black12px!important;
-}
 
 // urgency
 
@@ -81,9 +75,17 @@ mat-option {
   color: rgb(0, 70, 128) !important;
 }
 
-// the first selcted option
-.mat-select-panel {
-  background-color: darkgrey;
+
+.mat-calendar {
+  background-color: white!important;
 }
 
+.mat-select-panel .mat-optgroup-label, .mat-select-panel .mat-option {
+  background-color: white;
+  }
+
+  mat-button-toggle:hover{
+    background-color: red;
+
+  }
 
