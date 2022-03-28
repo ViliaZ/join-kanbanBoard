@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { collection, query, where } from "firebase/firestore";
+
 @Component({
   selector: 'app-backlog',
   templateUrl: './backlog.component.html',
