@@ -8,7 +8,24 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class BoardComponent implements OnInit {
 
-  boards: any = ['todo', 'inprogress', 'done', 'archive'];
+  boards: any = [
+    {
+      name: 'todo',
+      tasks: []
+    },
+    {
+      name: 'inprogress',
+      tasks: []
+    },
+    {
+      name: 'done',
+      tasks: []
+    },
+    {
+      name: 'archive',
+      tasks: []
+    }
+  ]
   allTasks: any = [];
 
 
@@ -17,7 +34,11 @@ export class BoardComponent implements OnInit {
 
   async ngOnInit(): Promise<any> {
     await this.getDataFromDB();
-    this.sortDataTBoards();
+    setTimeout(() => {
+      this.sortDataTBoards();
+    }, 3000);
+
+
   }
 
   async getDataFromDB() {
@@ -26,14 +47,21 @@ export class BoardComponent implements OnInit {
       .valueChanges({ idField: 'customIdName' })
       .subscribe((result: any) => {
         this.allTasks = result;
-        console.log(result);
+        console.log('result Fetch', result);
       })
   }
 
   sortDataTBoards() {
-
+    // console.log('allTasks',this.allTasks);
+      this.allTasks.forEach((task: any) => {
+        for(let i = 0; i<this.boards.length; i++){
+          if(task.board === this.boards[i].name){
+            this.boards[i].tasks.push(task)
+          }
+        }
+      });
+      console.log(this.boards)
   }
-
 
 
 }
