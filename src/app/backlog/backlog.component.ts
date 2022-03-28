@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-
+import { collection, query, where } from "firebase/firestore";
 @Component({
   selector: 'app-backlog',
   templateUrl: './backlog.component.html',
@@ -16,43 +16,35 @@ export class BacklogComponent implements OnInit {
 
 
   constructor(public firestore: AngularFirestore) {
-    this.firestore
-      .collection('tasks')
-      .valueChanges()
-      .subscribe((result) => {
-        this.tasks = result;
-        this.backlogtasks = result.filter((item: any) => {
-          // convert to local timeformat (in firebase data is set dueTo['seconds']= seconds)
-          item.dueTo = new Date(item.dueTo['seconds']).toLocaleDateString('en-GB');
-          // filter all backlog tasks
-          let result = item.board === "backlog";
-          return result
-        })
-        // console.log('backlogtasks due', new Date(this.backlogtasks[1].dueTo['seconds']).toLocaleDateString())
-
-      });
+    this.getBacklogTasks();
   }
-
 
   ngOnInit(): void {
   }
 
+  getBacklogTasks() {
+    this.firestore
+      .collection('tasks', ref => ref.where('board', '==', 'backlog'))
+      .valueChanges({ idField: 'customIdName' })
+      .subscribe((result: any) => {
+        this.backlogtasks = result;
+        this.backlogtasks
+        .map((task:any) => { 
+          task.dueTo = new Date(task.dueTo['seconds'] * 1000).toLocaleDateString('en-GB')})
+      })
+  }
 
-
-  movetoBoardToDo(i: number) {
-    // get ID of Task
-    i = 2;
-    this.firestore.collection("firestoreSammlung").doc('idinFirestore').update({ foo: "bar" });
+  // id is id in firestore for each item
+  movetoBoardToDo(idInFirestore: string) {
     // change task['board'] = todo; 
-    // render new --> macht angular selbst
-
-
+    this.firestore.collection('tasks').doc(idInFirestore).update({ board: 'todo' })
   }
 
-  editTask() {
+  editTask(idInFirestore: string) {
   }
 
-  deleteTask() { }
+  deleteTask(idInFirestore: string) {
+    this.firestore.collection('tasks').doc(idInFirestore).delete();
+  }
 }
-
 

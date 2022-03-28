@@ -41,7 +41,7 @@ export class AddTaskComponent implements OnInit {
     this.task['users'] = this.users;
 
 
-    console.log('dueTo', this.task['dueTo'] )
+    console.log('AddTask: original time', this.task['dueTo'] )
     // save task json to firestore database
     this.firestore.collection('tasks').add(this.task).then((result:any)=> console.log('task added', result ))
   // this.setDate(this.dueTo);

@@ -19,9 +19,9 @@
                 <div class="date">{{ task.dueTo }}</div>
             </div>
             <div class="buttons">
-                <button (click)="movetoBoardToDo(i)">Add</button>
-                <button (click)="deleteTask()">delete</button>
-                <button (click)="editTask()" >Edit</button>
+                <button (click)="movetoBoardToDo(task.customIdName)">Add</button>
+                <button (click)="deleteTask(task.customIdName)">delete</button>
+                <button (click)="editTask(task.customIdName)" >Edit</button>
             </div>
         </div>
         <div class="category">
