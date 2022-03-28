@@ -8,6 +8,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class BoardComponent implements OnInit {
 
+  newTask: boolean = false; 
   boards: any = [
     {
       name: 'todo',
@@ -32,36 +33,37 @@ export class BoardComponent implements OnInit {
   constructor(public firestore: AngularFirestore) {
   }
 
-  async ngOnInit(): Promise<any> {
-    await this.getDataFromDB();
-    setTimeout(() => {
-      this.sortDataTBoards();
-    }, 3000);
-
-
+  ngOnInit(): void {
+    this.getDataFromDB();
   }
 
-  async getDataFromDB() {
-    await this.firestore
+  getDataFromDB() {
+    this.firestore
       .collection('tasks')
       .valueChanges({ idField: 'customIdName' })
-      .subscribe((result: any) => {
-        this.allTasks = result;
-        console.log('result Fetch', result);
+      .subscribe((result)=>{
+        this.getAllTasks(result);
+        this.sortDataToBoards();
       })
   }
 
-  sortDataTBoards() {
-    // console.log('allTasks',this.allTasks);
-      this.allTasks.forEach((task: any) => {
-        for(let i = 0; i<this.boards.length; i++){
-          if(task.board === this.boards[i].name){
-            this.boards[i].tasks.push(task)
-          }
+  getAllTasks(result: any) {
+    this.allTasks = result;
+    console.log('result Fetch', result);
+  }
+  sortDataToBoards() {
+    this.allTasks.forEach((task: any) => {
+      task.dueTo = new Date(task.dueTo['seconds'] * 1000).toLocaleDateString('en-GB')
+
+      for (let i = 0; i < this.boards.length; i++) {
+        if (task.board === this.boards[i].name) {
+          this.boards[i].tasks.push(task)
         }
-      });
-      console.log(this.boards)
+      }
+    });
   }
 
-
+  openTaskPopUp(){
+    this.newTask = true; 
+  }
 }

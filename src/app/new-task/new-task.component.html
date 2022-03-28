@@ -1,0 +1,66 @@
+<div class="body-addTask">
+
+    <div class="row">
+        <!-- title -->
+
+        <div class="title">
+            <input placeholder="Title" [(ngModel)]="title">
+        </div>
+
+        <!-- Category -->
+        <mat-form-field class="flex-1" appearance="fill">
+            <mat-label>Category</mat-label>
+            <mat-select [(ngModel)]="category">
+                <mat-option>Add a category</mat-option>
+                <mat-option *ngFor="let category of dataService.categories" [value]="category">{{category}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </div>
+
+    <div class="row">
+        <!-- description textarea -->
+        <div class="description flex-1">
+            <textarea [(ngModel)]="description" placeholder="Things to do ..."></textarea>
+        </div>
+        <div class="column flex-1">
+            <!-- Due Date -->
+
+            <mat-form-field class="datePicker example-full-width" appearance="fill">
+                <mat-label>Choose a date</mat-label>
+                <input matInput [(ngModel)]="dueTo"  [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker  #picker></mat-datepicker>
+              </mat-form-field>
+
+
+
+            <!-- Importance -->
+            <mat-button-toggle-group [(ngModel)]="urgency" class="urgency" name="urgency" aria-label="Urgency">
+                <mat-button-toggle class="flex-1" value="priority">Priority</mat-button-toggle>
+                <mat-button-toggle class="flex-1" value="high">High</mat-button-toggle>
+                <mat-button-toggle class="flex-1" value="standard">Standard</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- people -->
+
+
+        <mat-form-field class="flex-1" appearance="fill">
+            <mat-label>Users</mat-label>
+            <mat-select [(ngModel)]="users" multiple>
+
+                <mat-option *ngFor="let user of dataService.user" [value]="user">
+                    <img class="userImg" src="{{user.userImage}}">
+                    {{user.firstName}} {{user.lastName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button (click)="saveTask()" class="button">Save</button>
+    </div>
+
+
+</div>

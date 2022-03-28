@@ -29,8 +29,10 @@ export class BacklogComponent implements OnInit {
       .subscribe((result: any) => {
         this.backlogtasks = result;
         this.backlogtasks
-        .map((task:any) => { 
-          task.dueTo = new Date(task.dueTo['seconds'] * 1000).toLocaleDateString('en-GB')})
+          .map((task: any) => {
+            task.dueTo = new Date(task.dueTo['seconds'] * 1000).toLocaleDateString('en-GB')
+          }
+          )
       })
   }
 

@@ -1,198 +1,54 @@
 <div class="body-board">
 
 
-    <div class="board">
+    <div *ngFor="let board of boards; index as i" class="board">
 
         <!-- column header -->
         <div class="headColumn">
-            <span>TITLE</span>
+            <span>{{ board.name }}</span>
             <div>+</div>
         </div>
 
         <!-- All Tickets -->
         <div class="columnTickets">
-            <!-- SINGLE TICKET -->
 
-            <div class="ticketWrap">
+            <!-- DYNAMIC: SINGLE TICKET -->
+            <div *ngFor="let task of board.tasks; index as i" class="ticketWrap">
+                
                 <div class="singleTicket">
-                    <div class="title">Title comes here</div>
-                    <div class="urgency">medium</div>
+                    <div class="title">{{ task.title }}</div>
+                    <div class="urgency">{{ task.urgency }}</div>
 
                     <div class="information">
                         <div class="user"></div>
-                        <div>12.Januar 2022</div>
+                        <div>{{ task.dueTo }}</div>
                     </div>
                 </div>
 
                 <!-- category -->
                 <div class="category">
-                    Design
+                    {{ task.category }}
                 </div>
             </div>
 
-
-            <!-- plaecholder -->
-            <div class="ticketWrapPlaceholder">
+            <!-- STATIC plaecholder -->
+            <div class="ticketWrapPlaceholder" (click)="openTaskPopUp()">
                 <div class="singleTicket plaecholderTicket">
                     <div class="title">New Task</div>
                     <div class="urgency"></div>
 
                     <div class="information">
-                        <div class="user"></div>
+                        <div class="user">+</div>
                         <div class="date">Date</div>
                     </div>
                 </div>
             </div>
-
         </div>
 
 
     </div>
 
-    <div class="board">
-
-        <!-- column header -->
-        <div class="headColumn">
-            <span>TITLE</span>
-            <div>+</div>
-        </div>
-
-        <!-- All Tickets -->
-        <div class="columnTickets">
-            <!-- SINGLE TICKET -->
-
-            <div class="ticketWrap">
-                <div class="singleTicket">
-                    <div class="title">Title comes here</div>
-                    <div class="urgency">medium</div>
-
-                    <div class="information">
-                        <div class="user"></div>
-                        <div>12.Januar 2022</div>
-                    </div>
-                </div>
-
-                <!-- category -->
-                <div class="category">
-                    Design
-                </div>
-            </div>
-
-
-            <!-- plaecholder -->
-            <div class="ticketWrapPlaceholder">
-                <div class="singleTicket plaecholderTicket">
-                    <div class="title">New Task</div>
-                    <div class="urgency"></div>
-
-                    <div class="information">
-                        <div class="user"></div>
-                        <div class="date">Date</div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-
-    </div>
-
-    <div class="board">
-
-        <!-- column header -->
-        <div class="headColumn">
-            <span>TITLE</span>
-            <div>+</div>
-        </div>
-
-        <!-- All Tickets -->
-        <div class="columnTickets">
-            <!-- SINGLE TICKET -->
-
-            <div class="ticketWrap">
-                <div class="singleTicket">
-                    <div class="title">Title comes here</div>
-                    <div class="urgency">medium</div>
-
-                    <div class="information">
-                        <div class="user"></div>
-                        <div>12.Januar 2022</div>
-                    </div>
-                </div>
-
-                <!-- category -->
-                <div class="category">
-                    Design
-                </div>
-            </div>
-
-
-            <!-- plaecholder -->
-            <div class="ticketWrapPlaceholder">
-                <div class="singleTicket plaecholderTicket">
-                    <div class="title">New Task</div>
-                    <div class="urgency"></div>
-
-                    <div class="information">
-                        <div class="user"></div>
-                        <div class="date">Date</div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-
-    </div>
-
-
-    <div class="board">
-
-        <!-- column header -->
-        <div class="headColumn">
-            <span>TITLE</span>
-            <div>+</div>
-        </div>
-
-        <!-- All Tickets -->
-        <div class="columnTickets">
-            <!-- SINGLE TICKET -->
-
-            <div class="ticketWrap">
-                <div class="singleTicket">
-                    <div class="title">Title comes here</div>
-                    <div class="urgency">medium</div>
-
-                    <div class="information">
-                        <div class="user"></div>
-                        <div>12.Januar 2022</div>
-                    </div>
-                </div>
-
-                <!-- category -->
-                <div class="category">
-                    Design
-                </div>
-            </div>
-
-
-            <!-- plaecholder -->
-            <div class="ticketWrapPlaceholder">
-                <div class="singleTicket plaecholderTicket">
-                    <div class="title">New Task</div>
-                    <div class="urgency"></div>
-
-                    <div class="information">
-                        <div class="user"></div>
-                        <div class="date">Date</div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-
-    </div>
+  <app-new-task *ngIf="newTask"></app-new-task>
 
 
 </div>

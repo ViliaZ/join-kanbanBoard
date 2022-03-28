@@ -102,9 +102,15 @@
     box-shadow: unset;
     .title,
     .date {
-        color: lightgrey;
+        color: rgb(161, 159, 159)!important;
     }
     .user {
         background-color: rgba(211, 211, 211, 0.493) !important;
+        font-size: 18px;
+        color: rgb(161, 159, 159)!important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
     }
 }

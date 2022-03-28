@@ -21,6 +21,7 @@ import { MatSelectModule} from '@angular/material/select';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
+import { NewTaskComponent } from './new-task/new-task.component';
 
 
 
@@ -34,7 +35,8 @@ import { FormsModule } from '@angular/forms';
     BoardComponent,
     BacklogComponent,
     MenuComponent,
-    AddTaskComponent
+    AddTaskComponent,
+    NewTaskComponent
   ],
   imports: [
     BrowserModule,

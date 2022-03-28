@@ -3,11 +3,11 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { DataService } from '../data.service';
 
 @Component({
-  selector: 'app-add-task',
-  templateUrl: './add-task.component.html',
-  styleUrls: ['./add-task.component.scss']
+  selector: 'app-new-task',
+  templateUrl: './new-task.component.html',
+  styleUrls: ['./new-task.component.scss']
 })
-export class AddTaskComponent implements OnInit {
+export class NewTaskComponent implements OnInit {
 
   task: any = {
   };
@@ -21,11 +21,11 @@ export class AddTaskComponent implements OnInit {
   category: string = '';
   users: any = '';
 
-  constructor(private firestore: AngularFirestore, public dataService: DataService) {
+  constructor(public firestore: AngularFirestore, public dataService: DataService) { }
 
-  }
   ngOnInit(): void {
   }
+
 
   saveTask(){
     // fill the task object with input from ngModel
@@ -40,9 +40,11 @@ export class AddTaskComponent implements OnInit {
 
 
     console.log('AddTask: original time', this.task['dueTo'] )
+
     this.firestore.collection('tasks').add(this.task).then((result:any)=> console.log('task added', result ))
+
   }
 
+
+
 }
-
-
