@@ -5,6 +5,8 @@
     <router-outlet></router-outlet>
 </div>
 
+<app-new-task *ngIf="taskservice.taskPopupOpen"></app-new-task>
+
 <div (click)="addTaskPopUp()" *ngIf="!router.url.includes('task') && !router.url.includes('imprint') && !taskservice.taskPopupOpen" class="img-plus">
     +
 </div>
