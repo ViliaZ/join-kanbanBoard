@@ -1,5 +1,6 @@
 .body-addTask {
     position: absolute; 
+    z-index: 100;
     top: 0; 
     bottom: 0; 
     left: 0; 
@@ -93,6 +94,11 @@
     padding: 8px 84px;
     cursor: pointer;
 }
+
+.btn-cancel{
+    background-color: unset;
+}
+
 
 .userImg{
     width: 30px;

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { NewTaskComponent } from '../new-task/new-task.component';
+import { TasksService } from '../tasks.service';
 
 @Component({
   selector: 'app-board',
@@ -8,7 +10,6 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class BoardComponent implements OnInit {
 
-  newTask: boolean = false; 
   boards: any = [
     {
       name: 'todo',
@@ -27,10 +28,9 @@ export class BoardComponent implements OnInit {
       tasks: []
     }
   ]
-  allTasks: any = [];
 
 
-  constructor(public firestore: AngularFirestore) {
+  constructor(public firestore: AngularFirestore, public taskservice: TasksService) {
   }
 
   ngOnInit(): void {
@@ -41,29 +41,35 @@ export class BoardComponent implements OnInit {
     this.firestore
       .collection('tasks')
       .valueChanges({ idField: 'customIdName' })
-      .subscribe((result)=>{
-        this.getAllTasks(result);
-        this.sortDataToBoards();
+      .subscribe((result) => {
+        this.sortDataToBoards(result);
       })
   }
 
-  getAllTasks(result: any) {
-    this.allTasks = result;
-    console.log('result Fetch', result);
-  }
-  sortDataToBoards() {
-    this.allTasks.forEach((task: any) => {
-      task.dueTo = new Date(task.dueTo['seconds'] * 1000).toLocaleDateString('en-GB')
-
+  sortDataToBoards(result: any) {
+    result.forEach((task: any) => {
       for (let i = 0; i < this.boards.length; i++) {
         if (task.board === this.boards[i].name) {
+          if (task.dueTo) {
+            task.dueTo = new Date(task.dueTo['seconds'] * 1000).toLocaleDateString('en-GB');
+          }
           this.boards[i].tasks.push(task)
         }
       }
     });
   }
 
-  openTaskPopUp(){
-    this.newTask = true; 
+  openTaskPopUp() {
+    console.log(this.taskservice.taskPopupOpen);
+
+    this.taskservice.taskPopupOpen = true;
   }
+  // closePopUp() {
+  //   console.log(this.taskservice.taskPopupOpen);
+    
+  //   if (this.taskservice.taskPopupOpen === true) {
+  //     this.taskservice.taskPopupOpen = false
+  //   }
+  // }
+
 }

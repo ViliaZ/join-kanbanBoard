@@ -1,5 +1,4 @@
-<div class="body-board">
-
+<div [class.blurOverlay]="taskservice.taskPopupOpen" class="body-board" >
 
     <div *ngFor="let board of boards; index as i" class="board">
 
@@ -44,11 +43,7 @@
                 </div>
             </div>
         </div>
-
-
     </div>
-
-  <app-new-task *ngIf="newTask"></app-new-task>
-
-
 </div>
+
+<app-new-task *ngIf="taskservice.taskPopupOpen"></app-new-task>

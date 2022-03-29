@@ -38,7 +38,6 @@ export class AddTaskComponent implements OnInit {
     this.task['board'] = 'backlog';    
     this.task['users'] = this.users;
 
-
     console.log('AddTask: original time', this.task['dueTo'] )
     this.firestore.collection('tasks').add(this.task).then((result:any)=> console.log('task added', result ))
   }
