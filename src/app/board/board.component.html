@@ -11,32 +11,15 @@
 
         <!-- column header -->
         <div class="headColumn">
-            <span>{{ board.board }}</span>
+            <span>{{ board.name }}</span>
             <div>+</div>
         </div>
 
         <!-- Wrapper All Tickets -->
         <div class="columnTickets">
 
-            <!-- DYNAMIC: SINGLE TICKET -->
-            <div *ngFor="let task of board.tasks; index as i" class="ticketWrap">
-                
-                <div class="singleTicket">
-                    <div class="title">{{ task.title }}</div>
-                    <div class="urgency">{{ task.urgency }}</div>
-
-                    <div class="information">
-                        <div class="user"></div>
-                        <div>{{ task.dueTo }}</div>
-                    </div>
-                </div>
-
-                <!-- category -->
-                <div class="category">
-                    {{ task.category }}
-                </div>
-            </div>
-
+            <app-task [task]="task" *ngFor="let task of board.tasks; index as i"></app-task>
+        
             <!-- STATIC plaecholder -->
             <div class="ticketWrapPlaceholder" (click)="openTaskPopUp()">
                 <div class="singleTicket plaecholderTicket">

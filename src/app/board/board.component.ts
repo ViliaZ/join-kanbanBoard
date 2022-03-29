@@ -13,12 +13,7 @@ import { TasksService } from '../tasks.service';
 export class BoardComponent implements OnInit {
 
   newBoardName: any;  // from inputfield ngModel (new Board)
-  boards: any = [
-    {
-      'name': 'todo',
-      'tasks': []
-    }
-  ]
+  public boards: any = []
 
 
   constructor(public firestore: AngularFirestore, public taskservice: TasksService) {

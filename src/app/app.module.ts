@@ -22,6 +22,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { NewTaskComponent } from './new-task/new-task.component';
+import { TaskComponent } from './task/task.component';
 
 
 
@@ -36,7 +37,8 @@ import { NewTaskComponent } from './new-task/new-task.component';
     BacklogComponent,
     MenuComponent,
     AddTaskComponent,
-    NewTaskComponent
+    NewTaskComponent,
+    TaskComponent
   ],
   imports: [
     BrowserModule,

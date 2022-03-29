@@ -1,0 +1,60 @@
+.ticketWrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    background-color: white;
+    border-radius: 12px 12px 12px 12px;
+}
+.singleTicket {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px;
+    border-radius: 12px 2px 2px 12px;
+    background-color: white;
+    max-height: 180px;
+    overflow: auto;
+    box-shadow: rgb(0 0 0 / 12%) 1px 1px 6px;
+
+    .title {
+        font-weight: bold;
+    }
+    .urgency {
+        text-align: center;
+        padding: 0px 8px 1px 8px;
+        background-color: rgb(236, 172, 54);
+        border-radius: 6px;
+        margin-top: 4px;
+        margin-bottom: 4px;
+        font-size: 12px;
+        color: white;
+    }
+}
+
+.information {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: grey;
+
+    .user {
+        width: 30px;
+        height: 30px;
+        border-radius: 6px;
+        background-color: purple;
+    }
+}
+
+.category {
+    writing-mode: vertical-lr;
+    color: rgb(200, 192, 192);
+    font-size: 12px;
+    padding: 4px;
+}
+
