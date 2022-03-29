@@ -1,11 +1,9 @@
-<div [class.blurOverlay]="taskservice.taskPopupOpen" class="body-board" >
+<div class="addNewBoard">
+    <button (click)="addNewBoard()"> New Board</button>
+    <input [(ngModel)]="newBoardName" type="text">
+</div>
 
-    <div class="addNewBoard">
-      
-        <button (click)="addNewBoard()"> New Board</button>
-        <input [(ngModel)]="newBoardName" type="text">
-    </div>
-
+<div [class.blurOverlay]="taskservice.taskPopupOpen" class="body-board">
 
     <div *ngFor="let board of boards; index as i" class="board">
 
@@ -15,12 +13,11 @@
             <div>+</div>
         </div>
 
-        <!-- Wrapper All Tickets -->
-        <div class="columnTickets">
-
+        <div class="wrapperTickets">
+            <!-- SINGLE TASK (dynamic) -->
             <app-task [task]="task" *ngFor="let task of board.tasks; index as i"></app-task>
-        
-            <!-- STATIC plaecholder -->
+
+            <!-- EMPTY TASK plaecholder (static) -->
             <div class="ticketWrapPlaceholder" (click)="openTaskPopUp()">
                 <div class="singleTicket plaecholderTicket">
                     <div class="title">New Task</div>
@@ -32,10 +29,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
-
     </div>
 </div>
-
