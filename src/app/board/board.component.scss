@@ -5,6 +5,7 @@
     display: flex;
     justify-content: flex-start;
     gap: 20px;
+    overflow: auto;
 }
 
 .blurOverlay{
@@ -15,6 +16,15 @@
     bottom: 0;
     filter: blur(10px);
     z-index: -1;
+}
+
+.addNewBoard{
+    position: absolute;
+    top: 0px; 
+    right: 20px;
+    padding: 8px;
+    border: 1px solid grey;
+    cursor: pointer;
 }
 
 .board {

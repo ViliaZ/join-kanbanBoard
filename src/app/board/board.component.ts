@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { NewTaskComponent } from '../new-task/new-task.component';
 import { TasksService } from '../tasks.service';
@@ -6,26 +6,17 @@ import { TasksService } from '../tasks.service';
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss']
+  styleUrls: ['./board.component.scss'
+  ]
 })
+
 export class BoardComponent implements OnInit {
 
+  newBoardName: any;  // from inputfield ngModel (new Board)
   boards: any = [
     {
-      name: 'todo',
-      tasks: []
-    },
-    {
-      name: 'inprogress',
-      tasks: []
-    },
-    {
-      name: 'done',
-      tasks: []
-    },
-    {
-      name: 'archive',
-      tasks: []
+      'name': 'todo',
+      'tasks': []
     }
   ]
 
@@ -34,19 +25,29 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getDataFromDB();
+    this.getBoardsFromDB();
   }
 
-  getDataFromDB() {
+  getBoardsFromDB() {
+    this.firestore
+      .collection('boards')
+      .valueChanges({ idField: 'customIdName' })
+      .subscribe((result) => {
+        this.boards = result;
+        this.getTasksFromDB();
+      })
+  }
+
+  getTasksFromDB() {
     this.firestore
       .collection('tasks')
       .valueChanges({ idField: 'customIdName' })
       .subscribe((result) => {
-        this.sortDataToBoards(result);
+        this.sortTasksToBoards(result);
       })
   }
 
-  sortDataToBoards(result: any) {
+  sortTasksToBoards(result: any) {
     result.forEach((task: any) => {
       for (let i = 0; i < this.boards.length; i++) {
         if (task.board === this.boards[i].name) {
@@ -60,16 +61,15 @@ export class BoardComponent implements OnInit {
   }
 
   openTaskPopUp() {
-    console.log(this.taskservice.taskPopupOpen);
-
     this.taskservice.taskPopupOpen = true;
   }
-  // closePopUp() {
-  //   console.log(this.taskservice.taskPopupOpen);
-    
-  //   if (this.taskservice.taskPopupOpen === true) {
-  //     this.taskservice.taskPopupOpen = false
-  //   }
-  // }
+
+  addNewBoard() {
+    this.firestore
+      .collection('boards')
+      .add({ 'name': this.newBoardName,'tasks':[]});
+  }
+
+
 
 }

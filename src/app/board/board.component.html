@@ -1,14 +1,21 @@
 <div [class.blurOverlay]="taskservice.taskPopupOpen" class="body-board" >
 
+    <div class="addNewBoard">
+      
+        <button (click)="addNewBoard()"> New Board</button>
+        <input [(ngModel)]="newBoardName" type="text">
+    </div>
+
+
     <div *ngFor="let board of boards; index as i" class="board">
 
         <!-- column header -->
         <div class="headColumn">
-            <span>{{ board.name }}</span>
+            <span>{{ board.board }}</span>
             <div>+</div>
         </div>
 
-        <!-- All Tickets -->
+        <!-- Wrapper All Tickets -->
         <div class="columnTickets">
 
             <!-- DYNAMIC: SINGLE TICKET -->
@@ -42,7 +49,10 @@
                     </div>
                 </div>
             </div>
+
+
         </div>
+
     </div>
 </div>
 
