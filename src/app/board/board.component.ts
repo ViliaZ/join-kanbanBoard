@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { catchError } from 'rxjs';
 import { NewTaskComponent } from '../new-task/new-task.component';
@@ -14,6 +14,9 @@ import { TasksService } from '../tasks.service';
 
 export class BoardComponent implements OnInit {
 
+  @ViewChild('columnTitle') columnTitle!: ElementRef;
+
+  editModeTitle: boolean = false;
   newBoardName: any;  // from inputfield ngModel (new Board)
   public boards: any = []
 
@@ -46,7 +49,7 @@ export class BoardComponent implements OnInit {
   }
 
   sortTasksToBoards(result: any) {
-    this.boards.forEach((board:any) => board.tasks = []);
+    this.boards.forEach((board: any) => board.tasks = []);
     result.forEach((task: any) => {
       for (let i = 0; i < this.boards.length; i++) {
         if (task.board === this.boards[i].name) {
@@ -93,5 +96,17 @@ export class BoardComponent implements OnInit {
     }
   }
 
+  editTitle() {
+    this.editModeTitle = true;
+    this.columnTitle.nativeElement.removeAttribute('disabled');
+    this.columnTitle.nativeElement.focus();
+  }
+
+  saveNewTitle(inputTitle: any, boardIdInFirestore: any){
+    this.firestore.collection('boards').doc(boardIdInFirestore).update({ name: inputTitle })
+    this.editModeTitle = false;
+    this.columnTitle.nativeElement.setAttribute('disabled', true);
+
+  }
 
 }

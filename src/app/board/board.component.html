@@ -9,8 +9,9 @@
 
         <!-- column header -->
         <div class="headColumn">
-            <span>{{ board.name }}</span>
-            <div>+</div>
+            <input #columnTitle [(ngModel)]="board.name" disabled>
+            <img *ngIf="!editModeTitle" (click)="editTitle()" src="assets/img/edit.png" class="iconEdit">
+            <img *ngIf="editModeTitle" (click)="saveNewTitle(board.name, board.customIdName)" src="assets/img/save.png" class="iconEdit">
         </div>
 
         <div class="wrapperTickets" id="{{board.name}}" (drop)="drop($event, board.name)" (dragover)="allowDrop($event)">
