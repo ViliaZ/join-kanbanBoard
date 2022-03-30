@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { catchError } from 'rxjs';
+import { TasksService } from 'src/services/tasks.service';
 import { NewTaskComponent } from '../new-task/new-task.component';
-import { TasksService } from '../tasks.service';
+
 
 
 @Component({
@@ -106,7 +107,6 @@ export class BoardComponent implements OnInit {
     this.firestore.collection('boards').doc(boardIdInFirestore).update({ name: inputTitle })
     this.editModeTitle = false;
     this.columnTitle.nativeElement.setAttribute('disabled', true);
-
   }
 
 }

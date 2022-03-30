@@ -1,5 +1,6 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { DatabaseService } from 'src/services/database.service';
 
 @Component({
   selector: 'app-backlog',
@@ -9,44 +10,29 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 export class BacklogComponent implements OnInit {
 
   backlogEmpty: boolean = false;
-  dueDateFormatted: any;
 
-  public tasks: any = []; // all tasks
-  public backlogtasks: any = []; // filtered 
-
-
-  constructor(public firestore: AngularFirestore) {
-    this.getBacklogTasks();
+  constructor(public db: DatabaseService, public firestore: AngularFirestore) {
+    this.db.getBacklogTasks();
   }
 
   ngOnInit(): void {
   }
 
-  getBacklogTasks() {
-    this.firestore
-      .collection('tasks', ref => ref.where('board', '==', 'backlog'))
-      .valueChanges({ idField: 'customIdName' })
-      .subscribe((result: any) => {
-        this.backlogtasks = result;
-        this.backlogtasks
-          .map((task: any) => {
-            task.dueTo = new Date(task.dueTo['seconds'] * 1000).toLocaleDateString('en-GB')
-          }
-          )
-      })
+  moveToBoardToDo(idInFirestore: string) {
+    let updateData: object = { board: 'todo' };
+    this.db.updateDoc('tasks', idInFirestore, updateData);
   }
 
-  // id is id in firestore for each item
-  movetoBoardToDo(idInFirestore: string) {
-    // change task['board'] = todo; 
-    this.firestore.collection('tasks').doc(idInFirestore).update({ board: 'todo' })
+  updateDoc(collection: string, docID: string, updateData: object) {
+    this.firestore.collection(collection).doc(docID).update(updateData);
   }
 
   editTask(idInFirestore: string) {
   }
 
   deleteTask(idInFirestore: string) {
-    this.firestore.collection('tasks').doc(idInFirestore).delete();
+    this.db.deleteDoc('tasks', idInFirestore);
   }
+
 }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { DataService } from '../data.service';
+import { DataService } from 'src/services/data.service';
+
 
 @Component({
   selector: 'app-add-task',

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Routes, Router } from 'node_modules/@angular/router';
-import { TasksService } from './tasks.service';
+import { DatabaseService } from 'src/services/database.service';
+import { TasksService } from 'src/services/tasks.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { TasksService } from './tasks.service';
 export class AppComponent {
   title = 'join-kanbanBoard';
 
-  constructor(public router: Router, public taskservice: TasksService ) {
+  constructor(public router: Router,  public taskservice: TasksService ) {
   
   }
   addTaskPopUp(){

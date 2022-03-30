@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { DataService } from '../data.service';
-import { TasksService } from '../tasks.service';
+import { DataService } from 'src/services/data.service';
+import { DatabaseService } from 'src/services/database.service';
+import { TasksService } from 'src/services/tasks.service';
+
 
 @Component({
   selector: 'app-new-task',
@@ -25,7 +27,7 @@ export class NewTaskComponent implements OnInit {
   category: string = '';
   users: any = '';
 
-  constructor(public firestore: AngularFirestore, public dataService: DataService, private taskservice: TasksService) { }
+  constructor(public db: DatabaseService, public dataService: DataService, private taskservice: TasksService) { }
 
   ngOnInit(): void {
   }
@@ -41,11 +43,9 @@ export class NewTaskComponent implements OnInit {
     this.task['board'] = 'backlog';
     this.task['users'] = this.users;
 
-    this.firestore.collection('tasks').add(this.task).then((result: any) => console.log('task added', result))
-
+    this.db.addDocToCollection('tasks', this.task)
     this.taskservice.taskPopupOpen = false;
   }
-
 
   closeWithoutSave() {
     this.taskservice.taskPopupOpen = false;

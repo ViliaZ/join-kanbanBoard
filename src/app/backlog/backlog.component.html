@@ -5,7 +5,7 @@
         <input type="filter">
     </div>
 
-    <div class="wrapper" *ngFor="let task of backlogtasks; index as i">
+    <div class="wrapper" *ngFor="let task of db.backlogtasks; index as i">
         <div class="taskContainer" >
             <div class="user margin-right">
                 <img src="assets/img/user.png">
@@ -19,7 +19,7 @@
                 <div class="date">{{ task.dueTo }}</div>
             </div>
             <div class="buttons">
-                <button (click)="movetoBoardToDo(task.customIdName)">Add</button>
+                <button (click)="moveToBoardToDo(task.customIdName)">Add</button>
                 <button (click)="deleteTask(task.customIdName)">delete</button>
                 <button (click)="editTask(task.customIdName)" >Edit</button>
             </div>
