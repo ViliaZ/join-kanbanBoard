@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { catchError } from 'rxjs';
 import { NewTaskComponent } from '../new-task/new-task.component';
 import { TasksService } from '../tasks.service';
 
@@ -62,9 +63,33 @@ export class BoardComponent implements OnInit {
   addNewBoard() {
     this.firestore
       .collection('boards')
-      .add({ 'name': this.newBoardName,'tasks':[]});
+      .add({ 'name': this.newBoardName, 'tasks': [] });
   }
 
+  allowDrop(ev: any) {
+    ev.preventDefault();
+  }
+
+  //defines what data to be dragged
+  drag(ev: any) {
+    ev.dataTransfer.setData("text", ev.target.id);
+    // ev.target.id containes the HTML id="" of the div 
+    // the id of each task div is set to be the customID in Firestore for the element
+  }
+
+  drop(ev: any, targetboard: string) {
+    ev.preventDefault();
+    let data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+    // "data" returns the HTML Id of the dragged element - this id is set to be the customID in Firestore for the element
+   
+    // change 'board' to new board in firestore
+    try {
+      this.firestore.collection('tasks').doc(data).update({ board: targetboard })
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 
 }

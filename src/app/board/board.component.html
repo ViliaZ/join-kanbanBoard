@@ -13,9 +13,11 @@
             <div>+</div>
         </div>
 
-        <div class="wrapperTickets">
-            <!-- SINGLE TASK (dynamic) -->
-            <app-task [task]="task" *ngFor="let task of board.tasks; index as i"></app-task>
+        <div class="wrapperTickets" id="{{board.name}}" (drop)="drop($event, board.name)" (dragover)="allowDrop($event)">
+            <!-- SINGLE TASK (dynamic) Note: customIdName is set from DB Firestore at subscribe -->
+            <app-task draggable="true" (dragstart)="drag($event)" id="{{task.customIdName}}" [task]="task"
+                *ngFor="let task of board.tasks; index as i">
+            </app-task>
 
             <!-- EMPTY TASK plaecholder (static) -->
             <div class="ticketWrapPlaceholder" (click)="openTaskPopUp()">
