@@ -4,6 +4,7 @@ import { catchError } from 'rxjs';
 import { NewTaskComponent } from '../new-task/new-task.component';
 import { TasksService } from '../tasks.service';
 
+
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -21,7 +22,9 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('before', this.boards);
     this.getBoardsFromDB();
+    setTimeout(() => { this.getTasksFromDB() }, 2000)
   }
 
   getBoardsFromDB() {
@@ -30,7 +33,6 @@ export class BoardComponent implements OnInit {
       .valueChanges({ idField: 'customIdName' })
       .subscribe((result) => {
         this.boards = result;
-        this.getTasksFromDB();
       })
   }
 
@@ -44,17 +46,17 @@ export class BoardComponent implements OnInit {
   }
 
   sortTasksToBoards(result: any) {
+    this.boards.forEach((board:any) => board.tasks = []);
     result.forEach((task: any) => {
       for (let i = 0; i < this.boards.length; i++) {
         if (task.board === this.boards[i].name) {
-          if (task.dueTo) {
-            task.dueTo = new Date(task.dueTo['seconds'] * 1000).toLocaleDateString('en-GB');
-          }
+          task.dueTo = new Date(task.dueTo['seconds'] * 1000).toLocaleDateString('en-GB');
           this.boards[i].tasks.push(task)
         }
       }
-    });
+    })
   }
+
 
   openTaskPopUp() {
     this.taskservice.taskPopupOpen = true;
@@ -82,7 +84,7 @@ export class BoardComponent implements OnInit {
     let data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
     // "data" returns the HTML Id of the dragged element - this id is set to be the customID in Firestore for the element
-   
+
     // change 'board' to new board in firestore
     try {
       this.firestore.collection('tasks').doc(data).update({ board: targetboard })
