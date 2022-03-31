@@ -152,6 +152,22 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+}
 
+.alertbox{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: white;
+    width: max-content;
+    border-radius: 12px;
+    padding: 24px;
+    transition: 250ms all ease-in-out;
+
+    img{
+        height: 24px;
+        margin-right: 10px;
+        
     }
 }

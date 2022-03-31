@@ -1,6 +1,11 @@
 <div class="addNewBoard">
     <button (click)="addNewBoard()"> New Board</button>
-    <input [(ngModel)]="newBoardName" type="text">
+    <input [(ngModel)]="newBoardTitle" type="text">
+</div>
+
+<div class="alertbox" *ngIf="douplicateAlert">
+    <img src="assets/img/alert.png" alt="alert">
+Board name already exists. Please choose another title.
 </div>
 
 <div [class.blurOverlay]="taskservice.taskPopupOpen" class="body-board">
@@ -9,11 +14,12 @@
 
         <!-- column header -->
         <div class="headColumn">
-            <input #columnTitle
+            <input #boardTitle
             [(ngModel)]="board.name" 
-            [disabled]="!board.editable">
-            <img *ngIf="!board.editable" (click)="editTitle(board.customIdName)" src="assets/img/edit.png" class="iconEdit">
-            <img *ngIf="board.editable" (click)="saveNewTitle(board.name, board.customIdName)" src="assets/img/save.png" class="iconEdit">
+            [disabled]="!board.editable"
+            (blur)="exitEditMode(i)">
+            <img *ngIf="!board.editable" (click)="enterEditMode(i)" src="assets/img/edit.png" class="iconEdit">
+            <img *ngIf="board.editable" (click)="saveBoardTitle(board.name, board.customIdName, i)" src="assets/img/save.png" class="iconEdit">
         </div>
 
         <div class="wrapperTickets" id="{{board.name}}" (drop)="drop($event, board.name)" (dragover)="allowDrop($event)">

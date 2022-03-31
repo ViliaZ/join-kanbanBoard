@@ -1,5 +1,6 @@
 import { Injectable, ɵɵNgOnChangesFeature } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class DatabaseService {
   public backlogtasks: any = [];
 
   constructor(public firestore: AngularFirestore) {
-    this.getBoardsData();
+    this.getBoardAndTaskData();
   }
 
   getBoardsData() {
@@ -22,6 +23,21 @@ export class DatabaseService {
         this.boards = result;
         this.getTaskData();
        })
+  }
+
+  getBoardAndTaskData(){
+    this.firestore
+    .collection('boards')
+    .valueChanges({ idField: 'customIdName' })
+    .pipe(switchMap( (result: any) => {
+      this.boards = result;
+      return this.firestore
+      .collection('tasks')
+      .valueChanges({ idField: 'customIdName' });
+    }))
+    .subscribe((result) => {
+      this.sortTasksToBoards(result);
+    });
   }
 
   getTaskData() {
@@ -59,10 +75,9 @@ export class DatabaseService {
       })
   }
 
-  updateDoc(collection: string, docID: string, updateData: object) {
-    this.firestore.collection(collection).doc(docID).update(updateData);
+  updateDoc(collection: string, docID: string, updateData: object): Promise<any> {
+   return this.firestore.collection(collection).doc(docID).update(updateData);
   }
-
 
   addDocToCollection(collection: string, doc: object) {
     this.firestore.collection(collection).add(doc)
