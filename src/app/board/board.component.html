@@ -5,13 +5,15 @@
 
 <div [class.blurOverlay]="taskservice.taskPopupOpen" class="body-board">
 
-    <div *ngFor="let board of boards; index as i" class="board">
+    <div *ngFor="let board of db.boards; index as i" class="board">
 
         <!-- column header -->
         <div class="headColumn">
-            <input #columnTitle [(ngModel)]="board.name" disabled>
-            <img *ngIf="!editModeTitle" (click)="editTitle()" src="assets/img/edit.png" class="iconEdit">
-            <img *ngIf="editModeTitle" (click)="saveNewTitle(board.name, board.customIdName)" src="assets/img/save.png" class="iconEdit">
+            <input #columnTitle
+            [(ngModel)]="board.name" 
+            [disabled]="!board.editable">
+            <img *ngIf="!board.editable" (click)="editTitle(board.customIdName)" src="assets/img/edit.png" class="iconEdit">
+            <img *ngIf="board.editable" (click)="saveNewTitle(board.name, board.customIdName)" src="assets/img/save.png" class="iconEdit">
         </div>
 
         <div class="wrapperTickets" id="{{board.name}}" (drop)="drop($event, board.name)" (dragover)="allowDrop($event)">

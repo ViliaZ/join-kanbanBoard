@@ -18,8 +18,10 @@ export class DatabaseService {
     this.firestore
       .collection('boards')
       .valueChanges({ idField: 'customIdName' })
-      .subscribe((result: any) => { this.boards = result })
-    this.getTaskData();
+      .subscribe((result: any) => { 
+        this.boards = result;
+        this.getTaskData();
+       })
   }
 
   getTaskData() {

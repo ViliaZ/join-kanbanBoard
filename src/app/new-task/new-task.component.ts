@@ -43,7 +43,7 @@ export class NewTaskComponent implements OnInit {
     this.task['board'] = 'backlog';
     this.task['users'] = this.users;
 
-    this.db.addDocToCollection('tasks', this.task)
+    this.db.addDocToCollection('tasks', this.task);
     this.taskservice.taskPopupOpen = false;
   }
 

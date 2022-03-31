@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { catchError } from 'rxjs';
+import { DatabaseService } from 'src/services/database.service';
 import { TasksService } from 'src/services/tasks.service';
 import { NewTaskComponent } from '../new-task/new-task.component';
 
@@ -15,72 +16,64 @@ import { NewTaskComponent } from '../new-task/new-task.component';
 
 export class BoardComponent implements OnInit {
 
+  // @ViewChildren('columnTitle') boardTitles!: QueryList<any>
+
   @ViewChild('columnTitle') columnTitle!: ElementRef;
 
-  editModeTitle: boolean = false;
   newBoardName: any;  // from inputfield ngModel (new Board)
-  public boards: any = []
 
-
-  constructor(public firestore: AngularFirestore, public taskservice: TasksService) {
+  constructor(public db: DatabaseService, public firestore: AngularFirestore, public taskservice: TasksService) {
   }
 
   ngOnInit(): void {
-    console.log('before', this.boards);
-    this.getBoardsFromDB();
-    setTimeout(() => { this.getTasksFromDB() }, 2000)
   }
-
-  getBoardsFromDB() {
-    this.firestore
-      .collection('boards')
-      .valueChanges({ idField: 'customIdName' })
-      .subscribe((result) => {
-        this.boards = result;
-      })
-  }
-
-  getTasksFromDB() {
-    this.firestore
-      .collection('tasks')
-      .valueChanges({ idField: 'customIdName' })
-      .subscribe((result) => {
-        this.sortTasksToBoards(result);
-      })
-  }
-
-  sortTasksToBoards(result: any) {
-    this.boards.forEach((board: any) => board.tasks = []);
-    result.forEach((task: any) => {
-      for (let i = 0; i < this.boards.length; i++) {
-        if (task.board === this.boards[i].name) {
-          task.dueTo = new Date(task.dueTo['seconds'] * 1000).toLocaleDateString('en-GB');
-          this.boards[i].tasks.push(task)
-        }
-      }
-    })
-  }
-
 
   openTaskPopUp() {
     this.taskservice.taskPopupOpen = true;
   }
 
   addNewBoard() {
-    this.firestore
-      .collection('boards')
-      .add({ 'name': this.newBoardName, 'tasks': [] });
+    let newBoard = { 'name': this.newBoardName, 'tasks': [], 'editable': false };
+    this.db.addDocToCollection('boards', newBoard);
   }
 
+  editTitle(boardIdInFirestore: string) {
+   this.db.updateDoc('boards', boardIdInFirestore, { editable: true})
+    this.columnTitle.nativeElement.focus()
+    // setTimeout(() => { this.columnTitle.nativeElement.focus() }, 1000)
+
+    console.log(this.columnTitle.nativeElement);
+
+    // let boardTitlesArray = this.boardTitles.toArray()
+    // boardTitlesArray[i].nativeElement.focus();
+
+    // ViewChildren returns a querylist. toArray() is a method that can be called on a querlist
+    // generate a normal array from the original querylist, content: all ElementRefs for the viewed Children
+    // console.log(this.boardTitles.toArray()[0].focus())
+
+  }
+
+  saveNewTitle(inputTitle: any, boardIdInFirestore: any) {
+    this.db.updateDoc('boards', boardIdInFirestore, { name: inputTitle });
+    this.db.updateDoc('boards', boardIdInFirestore, { editable: false})
+
+    // this.firestore.collection('boards').doc(boardIdInFirestore).update({ name: inputTitle })
+    // this.boardTitles.nativeElement.setAttribute('disabled', true);
+
+  }
+
+  // updateDoc(collection: string, docID: string, updateData: object) {
+  //   this.firestore.collection(collection).doc(docID).update(updateData);
+  // }
+
+  //++++++++  DRAG AND DROP ******
   allowDrop(ev: any) {
     ev.preventDefault();
   }
 
-  //defines what data to be dragged
   drag(ev: any) {
     ev.dataTransfer.setData("text", ev.target.id);
-    // ev.target.id containes the HTML id="" of the div 
-    // the id of each task div is set to be the customID in Firestore for the element
+    // ev.target.id containes the HTML id="" of the div - the id of each task div is set to be the customID in Firestore for the element
   }
 
   drop(ev: any, targetboard: string) {
@@ -95,18 +88,6 @@ export class BoardComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
-  }
-
-  editTitle() {
-    this.editModeTitle = true;
-    this.columnTitle.nativeElement.removeAttribute('disabled');
-    this.columnTitle.nativeElement.focus();
-  }
-
-  saveNewTitle(inputTitle: any, boardIdInFirestore: any){
-    this.firestore.collection('boards').doc(boardIdInFirestore).update({ name: inputTitle })
-    this.editModeTitle = false;
-    this.columnTitle.nativeElement.setAttribute('disabled', true);
   }
 
 }
