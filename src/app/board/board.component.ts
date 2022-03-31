@@ -21,9 +21,10 @@ export class BoardComponent implements OnInit {
   // @ViewChild('columnTitle') columnTitle!: ElementRef;
   newBoardTitle: any;  // from inputfield ngModel (to ADD a new Board)
   editMode: boolean = false;
-  douplicateAlert: boolean = false;
+  doublicateAlert: boolean = false;
+  deleteBoardAlert: boolean = false;
 
-  constructor(public db: DatabaseService, public firestore: AngularFirestore, public taskservice: TasksService) {
+  constructor(public db: DatabaseService, public taskservice: TasksService) {
   }
 
   ngOnInit(): void {
@@ -36,7 +37,7 @@ export class BoardComponent implements OnInit {
   }
 
   enterEditMode(i: number) {
-    this.douplicateAlert = false;
+    this.doublicateAlert = false;
     this.db.boards[i].editable = true;  // this change is only affecting local variable in db service (not the database in firestore) --> otherwise data would be newly rendered
     // set Input on focus
     let allTitles = this.boardTitles.toArray();  // toArray() is specific method for Querylists (e.g. with Viewchildren)
@@ -44,9 +45,12 @@ export class BoardComponent implements OnInit {
   }
 
   saveBoardTitle(inputTitle: string, boardIDinFirestore: any, i: number) {
-    this.douplicateAlert = false;
+    console.log('saveTitle');
+    
+    this.doublicateAlert = false;
     let findDouplicate = this.db.boards.filter((board: any) => {
-    return(board.name == inputTitle)})
+      return (board.name == inputTitle)
+    })
 
     if (findDouplicate.length <= 1) { // a return 1 means, its existing because ngModel already pushed the new name in local variable in db.service (boards)
       this.db.boards[i].editable = false;
@@ -54,15 +58,20 @@ export class BoardComponent implements OnInit {
       this.updateTasksOnBoard(inputTitle, boardIDinFirestore, i); // all tasks must change reference to new board name
     }
     else {
-      this.douplicateAlert = true;
+      this.doublicateAlert = true;
       // reset focus on input:
       let allTitles = this.boardTitles.toArray();  // toArray() is specific method for Querylists (e.g. with Viewchildren)
       setTimeout(() => { allTitles[i].nativeElement.focus() }, 200)
     }
   }
 
-  exitEditMode(i:number){
+  exitEditMode(i: number, event:Event) {
+    console.log('exit',event.currentTarget);
     this.db.boards[i].editable = false;
+  }
+
+  stopPropagation(event:Event){
+    console.log('stoppropagation',event);
   }
 
   updateTasksOnBoard(newBoardTitle: any, boardIDinFirestore: any, i: number) {
@@ -73,6 +82,29 @@ export class BoardComponent implements OnInit {
       })
     }
   }
+
+  deleteBoard(i: number, event: Event) {
+    console.log('delete');
+    // this.db.boards[i].editable = false;
+
+    // event.stopImmediatePropagation();
+
+    // this.db.boards[i].editable = true;
+    // alert('go')
+    // this.deleteBoardAlert = true;
+  }
+
+  confirmDelete() {
+  }
+
+  cancelDelete() {
+  }
+
+  editTask(task:any){
+    console.log(task);  // proofed! gives the whole json
+    this.taskservice.taskPopupOpen = true;
+  }
+
 
   openTaskPopUp() {
     this.taskservice.taskPopupOpen = true;

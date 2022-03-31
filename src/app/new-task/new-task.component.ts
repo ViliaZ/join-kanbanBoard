@@ -1,6 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { DataService } from 'src/services/data.service';
 import { DatabaseService } from 'src/services/database.service';
 import { TasksService } from 'src/services/tasks.service';
 
@@ -27,7 +25,7 @@ export class NewTaskComponent implements OnInit {
   category: string = '';
   users: any = '';
 
-  constructor(public db: DatabaseService, public dataService: DataService, private taskservice: TasksService) { }
+  constructor(public db: DatabaseService,  public taskservice: TasksService) { }
 
   ngOnInit(): void {
   }

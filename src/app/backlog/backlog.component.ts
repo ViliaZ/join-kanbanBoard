@@ -1,5 +1,4 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { DatabaseService } from 'src/services/database.service';
 
 @Component({
@@ -11,7 +10,7 @@ export class BacklogComponent implements OnInit {
 
   backlogEmpty: boolean = false;
 
-  constructor(public db: DatabaseService, public firestore: AngularFirestore) {
+  constructor(public db: DatabaseService) {
     this.db.getBacklogTasks();
   }
 
@@ -19,12 +18,11 @@ export class BacklogComponent implements OnInit {
   }
 
   moveToBoardToDo(idInFirestore: string) {
-    let updateData: object = { board: 'todo' };
-    this.db.updateDoc('tasks', idInFirestore, updateData);
+    this.db.updateDoc('tasks', idInFirestore, { board: 'todo' });
   }
 
   updateDoc(collection: string, docID: string, updateData: object) {
-    this.firestore.collection(collection).doc(docID).update(updateData);
+    this.db.updateDoc(collection,docID, updateData)
   }
 
   editTask(idInFirestore: string) {

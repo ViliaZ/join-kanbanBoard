@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { DataService } from 'src/services/data.service';
+import { DatabaseService } from 'src/services/database.service';
+import { TasksService } from 'src/services/tasks.service';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class AddTaskComponent implements OnInit {
   category: string = '';
   users: any = '';
 
-  constructor(private firestore: AngularFirestore, public dataService: DataService) {
+  constructor(private db: DatabaseService, public tasksService: TasksService) {
 
   }
   ngOnInit(): void {
@@ -40,9 +41,7 @@ export class AddTaskComponent implements OnInit {
     this.task['users'] = this.users;
 
     console.log('AddTask: original time', this.task['dueTo'] )
-    this.firestore.collection('tasks').add(this.task).then((result:any)=> console.log('task added', result ))
-  }
-
+    this.db.addDocToCollection('tasks',this.task)
 }
 
-
+}

@@ -12,7 +12,7 @@
             <mat-label>Category</mat-label>
             <mat-select [(ngModel)]="category">
                 <mat-option>Add a category</mat-option>
-                <mat-option *ngFor="let category of dataService.categories" [value]="category">{{category}}</mat-option>
+                <mat-option *ngFor="let category of tasksService.categories" [value]="category">{{category}}</mat-option>
             </mat-select>
         </mat-form-field>
 
@@ -52,7 +52,7 @@
             <mat-label>Users</mat-label>
             <mat-select [(ngModel)]="users" multiple>
 
-                <mat-option *ngFor="let user of dataService.user" [value]="user">
+                <mat-option *ngFor="let user of tasksService.user" [value]="user">
                     <img class="userImg" src="{{user.userImage}}">
                     {{user.firstName}} {{user.lastName}}
                 </mat-option>
