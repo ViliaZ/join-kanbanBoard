@@ -3,12 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class TasksService {
-
-  public taskPopupOpen = false; 
-  public currentTask: any = {};
-  public editMode: boolean = false;  // turns true if a task is edited
-
+export class DataService {
 
   user: any = [
     {
@@ -24,11 +19,21 @@ export class TasksService {
   ]
 
 
-  // categories: string[] = ['Design','Marketing', 'Finance', 'Admin', 'Other']
+  categories: string[] = ['Design','Marketing','Other']
 
+  task: any = 
+    {
+      'ticketId': '1',
+      'users': ['user1', 'user2'],
+      'title': 'titlecomeshere',
+      'description': 'decriptiongoeshere',
+      'dueTo': '1.2.2022',
+      'category': 'Design',
+      'board': 'ToDo',
+    };
+  
 
   constructor() { }
-
 
 
 

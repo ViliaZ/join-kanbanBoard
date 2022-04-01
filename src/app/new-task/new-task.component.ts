@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { DatabaseService } from 'src/services/database.service';
 import { TasksService } from 'src/services/tasks.service';
 
@@ -11,42 +11,92 @@ import { TasksService } from 'src/services/tasks.service';
 export class NewTaskComponent implements OnInit {
 
   @Input() newTask: boolean | undefined;
+  @ViewChild('catSelect') categorySelector: any;
+
   public closePopup: boolean = false;
 
-  task: any = {
-  };
+  public customCategory: any = '';
+  public openCategoryPopUp: boolean = false;
+  public currentTask: any;
 
-  // via ngModel
-  title: string = '';
-  description: string = '';
-  dueTo: any;
-  urgency: string = '';
-  board: string = '';
-  category: string = '';
-  users: any = '';
 
-  constructor(public db: DatabaseService,  public taskservice: TasksService) { }
+  // via ng Model
+  public task: any = {
+    title: '',
+    description: '',
+    dueTo!: '',
+    urgency: '',
+    board: '',
+    category: '',
+    users: ''
+  }
+
+  constructor(public db: DatabaseService, public taskservice: TasksService) {
+    this.task = this.taskservice.currentTask;
+    console.log('this.task now filled:', this.taskservice.editMode);
+  }
 
   ngOnInit(): void {
+    this.checkForTaskEdit();
+  }
+
+  //if a task is edited, the form is filled with this content
+  checkForTaskEdit() {
+    if (!this.currentTask) {
+      console.log('leer');
+      return
+    }
+    else {
+      console.log(this.currentTask);
+      this.currentTask = this.task;
+    }
   }
 
   saveTask() {
     // fill the task object with input from ngModel
-    this.task['ticketId'] = new Date().getTime();
-    this.task['title'] = this.title;
-    this.task['description'] = this.description;
-    this.task['dueTo'] = this.dueTo;
-    this.task['urgency'] = this.urgency;
-    this.task['category'] = this.category;
-    this.task['board'] = 'backlog';
-    this.task['users'] = this.users;
-
+    if (!this.taskservice.editMode) {
+      this.task.board = 'backlog'
+    }
     this.db.addDocToCollection('tasks', this.task);
     this.taskservice.taskPopupOpen = false;
+    this.taskservice.currentTask = {};
+    this.taskservice.editMode = false;
   }
 
   closeWithoutSave() {
     this.taskservice.taskPopupOpen = false;
+    this.taskservice.currentTask = {};
+    this.taskservice.editMode = false;
   }
+
+  setUrgency(urgency = 'normal') {
+    // default: normal
+    console.log(urgency);
+  }
+
+  saveCategory(event: any) {
+    if (event.target.value == 'Custom Category') {
+      this.openCategoryPopUp = true;
+      event.target.value = '';
+    }
+    else {
+      this.task.category = event.target.value;
+    }
+  }
+
+  addCustomCategory() {
+    this.db.categories.push(this.customCategory);
+    alert(this.customCategory)
+    this.task.category = this.customCategory;
+    this.openCategoryPopUp = false;
+
+  }
+
+  closeCustomCategory() {
+    this.customCategory = '';
+    this.openCategoryPopUp = false;
+  }
+
+
 
 }

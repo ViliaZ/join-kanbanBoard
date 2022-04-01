@@ -4,63 +4,66 @@
         <!-- title -->
 
         <div class="title">
-            <input placeholder="Title" [(ngModel)]="title">
+            <input placeholder="Title" [(ngModel)]="task.title" required="true">
         </div>
 
         <!-- Category -->
-        <mat-form-field class="flex-1" appearance="fill">
-            <mat-label>Category</mat-label>
-            <mat-select [(ngModel)]="category">
-                <mat-option>Add a category</mat-option>
-                <mat-option *ngFor="let category of tasksService.categories" [value]="category">{{category}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+        <div class="flex-1">
+            <label for="category">Cat</label>
+            <select name="category" id="category-select" [(ngModel)]="task.category">
+                <option value=""> - Choose a category - </option>
+                <option value="customCategory"> Custom Category </option>
+                <option *ngFor="let category of db.categories" value="category">{{category}}</option>
+            </select>
+
+            
+        </div>
 
     </div>
+
 
     <div class="row">
         <!-- description textarea -->
         <div class="description flex-1">
-            <textarea [(ngModel)]="description" placeholder="Things to do ..."></textarea>
+            <textarea [(ngModel)]="task.description" placeholder="Things to do ..."></textarea>
         </div>
+
         <div class="column flex-1">
             <!-- Due Date -->
-
             <mat-form-field class="datePicker example-full-width" appearance="fill">
                 <mat-label>Choose a date</mat-label>
-                <input matInput [(ngModel)]="dueTo"  [matDatepicker]="picker">
+                <input matInput [(ngModel)]="task.dueTo" required="true" [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker  #picker></mat-datepicker>
-              </mat-form-field>
-
-
-
-            <!-- Importance -->
-            <mat-button-toggle-group [(ngModel)]="urgency" class="urgency" name="urgency" aria-label="Urgency">
-                <mat-button-toggle class="flex-1" value="priority">Priority</mat-button-toggle>
-                <mat-button-toggle class="flex-1" value="high">High</mat-button-toggle>
-                <mat-button-toggle class="flex-1" value="standard">Standard</mat-button-toggle>
-            </mat-button-toggle-group>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
         </div>
+
+        <div class="urgency">
+            <div>Urgency</div>
+            <button (click)="setUrgency('normal')">Normal</button>
+            <button (click)="setUrgency('urgent')">Urgent</button>
+            <button (click)="setUrgency('priority')">Priority</button>
+
+        </div>
+
     </div>
 
     <div class="row">
-        <!-- people -->
 
-
-        <mat-form-field class="flex-1" appearance="fill">
-            <mat-label>Users</mat-label>
-            <mat-select [(ngModel)]="users" multiple>
-
-                <mat-option *ngFor="let user of tasksService.user" [value]="user">
+        <!-- Users -->
+        <div class="flex-1">
+            <label for="user">Users</label>
+            <select name="user" id="user-select" [(ngModel)]="task.users">
+                <option value="">- Add User(s) -</option>
+                <option *ngFor="let user of db.users" value="category">
                     <img class="userImg" src="{{user.userImage}}">
                     {{user.firstName}} {{user.lastName}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
+                </option>
+            </select>
+        </div>
+
 
         <button (click)="saveTask()" class="button">Save</button>
+
     </div>
-
-
 </div>

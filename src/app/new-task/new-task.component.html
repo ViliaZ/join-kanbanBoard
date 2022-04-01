@@ -4,62 +4,72 @@
         <!-- title -->
 
         <div class="title">
-            <input placeholder="Title" [(ngModel)]="title" required="true">
+            <input placeholder="Title" [(ngModel)]="task.title" required="true">
         </div>
 
         <!-- Category -->
-        <mat-form-field class="flex-1" appearance="fill">
-            <mat-label>Category</mat-label>
-            <mat-select [(ngModel)]="category">
-                <mat-option>Add a category</mat-option>
-                <mat-option *ngFor="let category of taskservice.categories" [value]="category">{{category}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+
+        <div class="category flex-1">
+            <label for="category">CAT</label>
+            <select #catSelect (change)="saveCategory($event)" [(ngModel)]="task.category">
+                <option *ngIf="customCategory == ''" value=""> - Choose a category - </option>
+
+                <option value="Custom Category"> - Add Category - </option>
+                
+
+                <option *ngFor="let category of db.categories" value={{category}}>{{category}}</option>
+            </select>
+
+            <div *ngIf="openCategoryPopUp" class="categoryPopUp">
+                <label for="category">New Category</label>
+                <input #inputCat="ngModel" minlength="3" [(ngModel)]="customCategory" type="text">
+                <div *ngIf="inputCat.errors?.['minlength']">
+                    Name must be at least 3 characters long.
+               </div> 
+                <button (click)="addCustomCategory()">save</button>
+                <button  (click)="closeCustomCategory()">cancel</button>
+            </div>
+
+        </div>
 
     </div>
+
 
     <div class="row">
         <!-- description textarea -->
         <div class="description flex-1">
-            <textarea [(ngModel)]="description" placeholder="Things to do ..."></textarea>
+            <textarea [(ngModel)]="task.description" placeholder="Things to do ..."></textarea>
         </div>
         <div class="column flex-1">
             <!-- Due Date -->
 
             <mat-form-field class="datePicker example-full-width" appearance="fill">
                 <mat-label>Choose a date</mat-label>
-                <input matInput [(ngModel)]="dueTo" required="true" [matDatepicker]="picker">
+                <input matInput [(ngModel)]="task.dueTo" required="true" [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker  #picker></mat-datepicker>
-              </mat-form-field>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
 
-            <!-- Importance -->
-            <mat-button-toggle-group [(ngModel)]="urgency" class="urgency" name="urgency" aria-label="Urgency">
-                <mat-button-toggle class="flex-1" value="priority">Priority</mat-button-toggle>
-                <mat-button-toggle class="flex-1" value="high">High</mat-button-toggle>
-                <mat-button-toggle class="flex-1" value="standard">Standard</mat-button-toggle>
-            </mat-button-toggle-group>
         </div>
     </div>
 
     <div class="row">
-        <!-- people -->
 
-
-        <mat-form-field class="flex-1" appearance="fill">
-            <mat-label>Users</mat-label>
-            <mat-select [(ngModel)]="users" multiple>
-
-                <mat-option *ngFor="let user of taskservice.user" [value]="user">
+        <!-- Users -->
+        <div class="flex-1">
+            <label for="user">Responsibility</label>
+            <select name="user" id="user-select" [(ngModel)]="task.users">
+                <option value=""> - Team Member  -</option>
+                <option *ngFor="let user of db.users" value={{user}}>
                     <img class="userImg" src="{{user.userImage}}">
                     {{user.firstName}} {{user.lastName}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
+                </option>
+            </select>
+        </div>
+
 
         <button (click)="saveTask()" class="button">Save</button>
         <button (click)="closeWithoutSave()" class="button btn-cancel">Cancel</button>
+
     </div>
-
-
 </div>

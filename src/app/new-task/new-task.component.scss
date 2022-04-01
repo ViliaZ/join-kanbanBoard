@@ -95,6 +95,10 @@
     cursor: pointer;
 }
 
+button:disabled {
+    background-color: orange;
+}
+
 .btn-cancel{
     background-color: unset;
 }
@@ -104,4 +108,14 @@
     width: 30px;
     height: 30px; 
     border-radius: 50%;
+}
+
+.category{
+    position: relative;
+
+    .categoryPopUp{
+        position: absolute;
+        top: -20px; 
+      
+    }
 }

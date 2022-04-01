@@ -36,6 +36,7 @@ export class BoardComponent implements OnInit {
     this.db.addDocToCollection('boards', newBoard);
   }
 
+  // Board Title Edit
   enterEditMode(i: number) {
     this.doublicateAlert = false;
     this.db.boards[i].editable = true;  // this change is only affecting local variable in db service (not the database in firestore) --> otherwise data would be newly rendered
@@ -43,6 +44,7 @@ export class BoardComponent implements OnInit {
     let allTitles = this.boardTitles.toArray();  // toArray() is specific method for Querylists (e.g. with Viewchildren)
     setTimeout(() => { allTitles[i].nativeElement.focus() }, 200)
   }
+
 
   saveBoardTitle(inputTitle: string, boardIDinFirestore: any, i: number) {
     console.log('saveTitle');
@@ -102,9 +104,10 @@ export class BoardComponent implements OnInit {
 
   editTask(task:any){
     console.log(task);  // proofed! gives the whole json
+    this.taskservice.currentTask = task;
     this.taskservice.taskPopupOpen = true;
+    this.taskservice.editMode = true;
   }
-
 
   openTaskPopUp() {
     this.taskservice.taskPopupOpen = true;

@@ -7,6 +7,19 @@ import { switchMap } from 'rxjs';
 })
 export class DatabaseService {
 
+  public categories: string[] = ['Design','Marketing', 'Finance', 'Admin', 'Other']
+  public users: any = [
+    {
+      'firstName': 'Franzi',
+      'lastName': 'Hamm',
+      'userImage': 'assets/img/user.png'
+    },
+    {
+      'firstName': 'Guest',
+      'lastName': 'User',
+      'userImage': 'assets/img/user.png'
+    }
+  ];
   public boards: any = [];
   public tasks: any = [];
   public backlogtasks: any = [];
@@ -46,7 +59,7 @@ export class DatabaseService {
       .valueChanges({ idField: 'customIdName' })
       .subscribe((result) => {
         this.sortTasksToBoards(result);
-      })
+      });
   }
 
   sortTasksToBoards(result: any) {
@@ -55,7 +68,7 @@ export class DatabaseService {
       for (let i = 0; i < this.boards.length; i++) {
         if (task.board === this.boards[i].name) {
           task.dueTo = new Date(task.dueTo['seconds'] * 1000).toLocaleDateString('en-GB');
-          this.boards[i].tasks.push(task)
+          this.boards[i].tasks.push(task);
         }
       }
     })
@@ -67,6 +80,7 @@ export class DatabaseService {
       .valueChanges({ idField: 'customIdName' })
       .subscribe((result: any) => {
         this.backlogtasks = result;
+
         this.backlogtasks
           .map((task: any) => {
             task.dueTo = new Date(task.dueTo['seconds'] * 1000).toLocaleDateString('en-GB')
@@ -80,7 +94,7 @@ export class DatabaseService {
   }
 
   addDocToCollection(collection: string, doc: object) {
-    this.firestore.collection(collection).add(doc)
+    this.firestore.collection(collection).add(doc);
   }
 
   deleteDoc(collection: string, docID: string) {
