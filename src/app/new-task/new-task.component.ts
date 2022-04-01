@@ -32,25 +32,13 @@ export class NewTaskComponent implements OnInit {
   }
 
   constructor(public db: DatabaseService, public taskservice: TasksService) {
-    this.task = this.taskservice.currentTask;
-    console.log('this.task now filled:', this.taskservice.editMode);
+    this.task = this.taskservice.currentTask;   
   }
 
   ngOnInit(): void {
-    this.checkForTaskEdit();
   }
 
   //if a task is edited, the form is filled with this content
-  checkForTaskEdit() {
-    if (!this.currentTask) {
-      console.log('leer');
-      return
-    }
-    else {
-      console.log(this.currentTask);
-      this.currentTask = this.task;
-    }
-  }
 
   saveTask() {
     // fill the task object with input from ngModel

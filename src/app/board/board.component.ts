@@ -103,7 +103,6 @@ export class BoardComponent implements OnInit {
   }
 
   editTask(task:any){
-    console.log(task);  // proofed! gives the whole json
     this.taskservice.currentTask = task;
     this.taskservice.taskPopupOpen = true;
     this.taskservice.editMode = true;
