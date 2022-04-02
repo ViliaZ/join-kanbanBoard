@@ -54,15 +54,20 @@ export class DatabaseService {
 
     tasks.forEach((task: any) => {
       for (let i = 0; i < this.boards.length; i++) {
+        console.log('task', this.backlogtasks);
+
         task.dueTo = new Date(task.dueTo['seconds'] * 1000).toLocaleDateString('en-GB');
         if (task.board === 'backlog') {
           this.backlogtasks.push(task);
+          return
         }
         else if (task.board === this.boards[i].name) {
           this.boards[i].tasks.push(task);
         }
       }
     })
+    console.log('backlogtasks nach allem sortieren:', this.backlogtasks);
+
   }
 
   // ****************** OLD VERSION FOR REFERENCE: NOW MADE INTO SWITCHMAP METHOD ABOVE ********

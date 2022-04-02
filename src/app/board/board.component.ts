@@ -111,7 +111,6 @@ export class BoardComponent implements OnInit {
     this.taskservice.taskPopupOpen = true;
   }
 
-
   //++++++++  DRAG AND DROP ******
   allowDrop(ev: any) {
     ev.preventDefault();
