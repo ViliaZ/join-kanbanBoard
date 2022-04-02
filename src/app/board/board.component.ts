@@ -70,8 +70,7 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  exitEditMode(i: number, event: Event) {
-    console.log('exit', event.currentTarget);
+  exitEditMode(i: number) {
     this.db.boards[i].editable = false;
   }
 
@@ -105,6 +104,18 @@ export class BoardComponent implements OnInit {
     this.taskservice.currentTask = task;
     this.taskservice.taskPopupOpen = true;
     this.taskservice.editMode = true;
+  }
+
+  expandCard(task:any) {
+    this.taskservice.currentTask = task;
+    this.taskservice.detailsRequested = true;
+    console.log('this.taskservice.detailsRequested sollte true;:', this.taskservice.detailsRequested);
+
+  }
+
+  closeExpandCard(){
+    this.taskservice.currentTask = {};
+    this.taskservice.detailsRequested = false;
   }
 
   openTaskPopUp() {

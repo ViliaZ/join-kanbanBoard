@@ -15,7 +15,7 @@
     border-radius: 12px 2px 2px 12px;
     background-color: white;
 
-    height: 120px;
+    // height: 120px;
     overflow: auto;
     box-shadow: rgb(0 0 0 / 12%) 1px 1px 6px;
 
@@ -57,5 +57,22 @@
     color: rgb(200, 192, 192);
     font-size: 12px;
     padding: 4px;
+
 }
+
+
+//*********  expand card animation *********
+.description{
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    max-height: 0px;
+}
+
+.description.animateExpansion{
+    max-height: 500px!important;
+    transition: max-height 2s ease-in-out;
+}
+
 
