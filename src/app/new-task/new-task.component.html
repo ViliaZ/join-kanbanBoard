@@ -1,8 +1,7 @@
 <div class="body-addTask">
 
     <div class="row">
-        <!-- title -->
-
+        <!-- task title -->
         <div class="title">
             <input placeholder="Title" [(ngModel)]="task.title" required="true">
         </div>
@@ -13,10 +12,7 @@
             <label for="category">CAT</label>
             <select #catSelect (change)="saveCategory($event)" [(ngModel)]="task.category">
                 <option *ngIf="customCategory == ''" value=""> - Choose a category - </option>
-
                 <option value="Custom Category"> - Add Category - </option>
-                
-
                 <option *ngFor="let category of db.categories" value={{category}}>{{category}}</option>
             </select>
 
@@ -29,9 +25,7 @@
                 <button (click)="addCustomCategory()">save</button>
                 <button  (click)="closeCustomCategory()">cancel</button>
             </div>
-
         </div>
-
     </div>
 
 
@@ -40,9 +34,9 @@
         <div class="description flex-1">
             <textarea [(ngModel)]="task.description" placeholder="Things to do ..."></textarea>
         </div>
+
         <div class="column flex-1">
             <!-- Due Date -->
-
             <mat-form-field class="datePicker example-full-width" appearance="fill">
                 <mat-label *ngIf="!taskservice.editMode">Choose a date</mat-label>
                 <mat-label *ngIf="taskservice.editMode">{{ task.dueTo }}</mat-label>
@@ -50,7 +44,15 @@
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
-
+            
+            <!-- Urgency -->
+            <div class="urgency">
+                <div>Urgency</div>
+                <button (click)="setUrgency('normal')">Normal</button>
+                <button (click)="setUrgency('urgent')">Urgent</button>
+                <button (click)="setUrgency('priority')">Priority</button>
+    
+            </div>
         </div>
     </div>
 

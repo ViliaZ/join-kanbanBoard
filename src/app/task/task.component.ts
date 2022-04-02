@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DatabaseService } from 'src/services/database.service';
 
 @Component({
   selector: 'app-task',
@@ -9,9 +10,12 @@ export class TaskComponent implements OnInit {
 
   @Input() task:any;
 
-  constructor() { }
+  constructor(private db: DatabaseService) {
+   }
 
   ngOnInit(): void {
   }
+
+
 
 }

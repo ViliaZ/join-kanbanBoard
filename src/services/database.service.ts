@@ -1,3 +1,4 @@
+import { BaseOverlayDispatcher } from '@angular/cdk/overlay/dispatchers/base-overlay-dispatcher';
 import { Injectable, ɵɵNgOnChangesFeature } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { switchMap } from 'rxjs';
@@ -19,7 +20,28 @@ export class DatabaseService {
   public tasks: any = [];
   public backlogtasks: any = [];
   public backlogEmpty: boolean = false;
-  initializationDone: boolean = false;
+  initializationDone = () => {
+    let result = this.boards.find((item:any) => {
+      return item.name == 'todo'
+     }) 
+     return result
+  }
+
+  
+
+
+
+  // initializationDone: any = () => {
+  //   let res = this.boards.find((board: any) => {
+  //     if (board.name === 'todo') {
+  //       return true
+  //     }
+  //     else { return false }
+  //   })
+  //   return res
+  // } 
+
+
 
 
 
@@ -72,6 +94,7 @@ export class DatabaseService {
   sortTasksToBoards(tasks: any) {
     this.boards.forEach((board: any) => board.tasks = []);
     this.backlogtasks = [];
+    console.log('backlogtasks vorm sortieren:', this.backlogtasks);
 
     tasks.forEach((task: any) => {
       for (let i = 0; i < this.boards.length; i++) {
@@ -84,8 +107,6 @@ export class DatabaseService {
         }
       }
     })
-    console.log('backlogtasks frisch sortiert:', this.backlogtasks);
-
   }
 
   // ****************** OLD VERSION FOR REFERENCE: NOW MADE INTO SWITCHMAP METHOD ABOVE ********

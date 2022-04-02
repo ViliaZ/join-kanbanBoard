@@ -11,10 +11,19 @@ import { TasksService } from 'src/services/tasks.service';
 export class AppComponent {
   title = 'join-kanbanBoard';
 
-  constructor(public router: Router,  public taskservice: TasksService ) {
-  
+  constructor(private db: DatabaseService, public router: Router, public taskservice: TasksService) {
+    this.db.getBoardAndTaskData;
+    setTimeout(()=>{this.initializeBoards()},3000)
   }
-  addTaskPopUp(){
+
+  // only done ONCE - when first time adding a task in Join
+  initializeBoards() {
+    if (this.db.initializationDone() == undefined) {
+      this.db.addDocToCollection('boards', { name: 'todo', tasks: [] })
+    }
+  }
+  
+  addTaskPopUp() {
     this.taskservice.taskPopupOpen = true;
   }
 

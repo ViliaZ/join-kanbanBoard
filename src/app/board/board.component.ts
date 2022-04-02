@@ -52,6 +52,7 @@ export class BoardComponent implements OnInit {
       this.setFocusToTitle(i);
       return
     }  
+    
     this.doublicateAlert = false;
     let findDouplicate = this.db.boards.filter((board: any) => {
       return (board.name == inputTitle)

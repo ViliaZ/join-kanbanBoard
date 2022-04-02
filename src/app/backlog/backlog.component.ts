@@ -29,19 +29,9 @@ export class BacklogComponent implements OnInit {
     }
   }
 
-  showBacklogTasks() {
-    // filter --> (class.hide) = filterTask(task);
-    //   const temp = this.db.boards.find((board:any)=> {
-    //     board.name === 'backlog';
-    //     console.log(board);})
-    // neues Array mit allen Basks von board.tasks
-  }
-
-  checkSearchInput() {
-
-  }
 
   evaluateSearchRequest(task: any) {
+    console.log(this.db.backlogtasks)
     let taskToString = JSON.stringify(task);
     return taskToString.includes(this.searchInput)
   }

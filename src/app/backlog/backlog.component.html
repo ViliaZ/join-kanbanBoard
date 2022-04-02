@@ -3,7 +3,6 @@
     <div class="filterOptions">
         <span>Search for:</span>
         <input [(ngModel)]="searchInput" type="filter">
-        <button (click)="checkSearchInput()">Search</button>
     </div>
 
     <div  [class.hide]="!evaluateSearchRequest(task)" class="wrapper" *ngFor="let task of db.backlogtasks; index as i">

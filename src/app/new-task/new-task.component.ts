@@ -32,44 +32,14 @@ export class NewTaskComponent implements OnInit {
   }
 
   constructor(public db: DatabaseService, public taskservice: TasksService) {
-    this.initializeBoards();
     this.task = this.taskservice.currentTask;
   }
 
   ngOnInit(): void {
-
   }
 
-  initializeBoards(){
-    if(!this.db.initializationDone){
-      // this.db.addDocToCollection('boards',{name:'backlog', tasks:[]})
-      this.db.addDocToCollection('boards',{name:'todo', tasks:[]})
-    }
-  }
-
-  //if a task is edited, the form is filled with this content
-
-  saveTask() {
-
-    // fill the task object with input from ngModel
-    if (!this.taskservice.editMode) {
-      this.task.board = 'backlog'
-    }
-
-    this.db.addDocToCollection('tasks', this.task);
-    this.taskservice.taskPopupOpen = false;
-    this.taskservice.currentTask = {};
-    this.taskservice.editMode = false;
-  }
-
-  closeWithoutSave() {
-    this.taskservice.taskPopupOpen = false;
-    this.taskservice.currentTask = {};
-    this.taskservice.editMode = false;
-  }
-
-  setUrgency(urgency = 'normal') {    // default: normal
-    console.log(urgency);
+  setUrgency(urgency: string = 'normal') {    // default: normal
+    this.task.urgency = urgency;
   }
 
   saveCategory(event: any) {
@@ -84,7 +54,6 @@ export class NewTaskComponent implements OnInit {
 
   addCustomCategory() {
     this.db.categories.push(this.customCategory);
-    alert(this.customCategory)
     this.task.category = this.customCategory;
     this.openCategoryPopUp = false;
   }
@@ -94,6 +63,22 @@ export class NewTaskComponent implements OnInit {
     this.openCategoryPopUp = false;
   }
 
+  saveTask() {
+    // fill the task object with input from ngModel
+    if (!this.taskservice.editMode) {
+      this.task.board = 'backlog'
+    }
+    this.db.addDocToCollection('tasks', this.task);
+    this.taskservice.taskPopupOpen = false;
+    this.taskservice.currentTask = {};
+    this.taskservice.editMode = false;
+  }
+
+  closeWithoutSave() {
+    this.taskservice.taskPopupOpen = false;
+    this.taskservice.currentTask = {};
+    this.taskservice.editMode = false;
+  }
 
 
 }
