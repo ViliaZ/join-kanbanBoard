@@ -32,19 +32,30 @@ export class NewTaskComponent implements OnInit {
   }
 
   constructor(public db: DatabaseService, public taskservice: TasksService) {
-    this.task = this.taskservice.currentTask;   
+    this.initializeBoards();
+    this.task = this.taskservice.currentTask;
   }
 
   ngOnInit(): void {
+
+  }
+
+  initializeBoards(){
+    if(!this.db.initializationDone){
+      // this.db.addDocToCollection('boards',{name:'backlog', tasks:[]})
+      this.db.addDocToCollection('boards',{name:'todo', tasks:[]})
+    }
   }
 
   //if a task is edited, the form is filled with this content
 
   saveTask() {
+
     // fill the task object with input from ngModel
     if (!this.taskservice.editMode) {
       this.task.board = 'backlog'
     }
+
     this.db.addDocToCollection('tasks', this.task);
     this.taskservice.taskPopupOpen = false;
     this.taskservice.currentTask = {};
@@ -57,8 +68,7 @@ export class NewTaskComponent implements OnInit {
     this.taskservice.editMode = false;
   }
 
-  setUrgency(urgency = 'normal') {
-    // default: normal
+  setUrgency(urgency = 'normal') {    // default: normal
     console.log(urgency);
   }
 
@@ -77,7 +87,6 @@ export class NewTaskComponent implements OnInit {
     alert(this.customCategory)
     this.task.category = this.customCategory;
     this.openCategoryPopUp = false;
-
   }
 
   closeCustomCategory() {

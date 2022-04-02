@@ -2,11 +2,13 @@
 
     <div class="filterOptions">
         <span>Search for:</span>
-        <input type="filter">
+        <input [(ngModel)]="searchInput" type="filter">
+        <button (click)="checkSearchInput()">Search</button>
     </div>
 
-    <div class="wrapper" *ngFor="let task of db.backlogtasks; index as i">
-        <div class="taskContainer" >
+    <div  [class.hide]="!evaluateSearchRequest(task)" class="wrapper" *ngFor="let task of db.backlogtasks; index as i">
+
+        <div  class="taskContainer" >
             <div class="user margin-right">
                 <img src="assets/img/user.png">
             </div>
@@ -24,6 +26,7 @@
                 <button (click)="editTask(task)" >Edit</button>
             </div>
         </div>
+
         <div class="category">
             {{ task.category }}
         </div>
@@ -34,7 +37,7 @@
 
 
 
-    <div *ngIf="backlogEmpty == true" class="emptyBacklog">
+    <div *ngIf="db.backlogEmpty == true" class="emptyBacklog">
         Boring times ... No tasks in the Backlog.
     </div>
 

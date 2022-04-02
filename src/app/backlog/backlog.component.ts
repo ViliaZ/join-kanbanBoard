@@ -9,13 +9,41 @@ import { TasksService } from 'src/services/tasks.service';
 })
 export class BacklogComponent implements OnInit {
 
-  backlogEmpty: boolean = false;
+  searchInput: string = '';
+  backlogtasks: any = [];
+  public backlogEmpty: boolean = false;
 
   constructor(public db: DatabaseService, public taskservice: TasksService) {
-    this.db.getBacklogTasks();
+    this.db.getBoardAndTaskData();
+    
+    // this.showBacklogTasks();
+    // this.backlogtasks = this.db.backlogtasks;
+    // console.log('im constructor, this.db.backlogtasks', this.db.backlogtasks);
   }
 
   ngOnInit(): void {
+    console.log(this.db.backlogtasks);
+
+    if (this.db.backlogtasks == [] || this.db.backlogtasks == undefined) {
+      this.backlogEmpty = true;
+    }
+  }
+
+  showBacklogTasks() {
+    // filter --> (class.hide) = filterTask(task);
+    //   const temp = this.db.boards.find((board:any)=> {
+    //     board.name === 'backlog';
+    //     console.log(board);})
+    // neues Array mit allen Basks von board.tasks
+  }
+
+  checkSearchInput() {
+
+  }
+
+  evaluateSearchRequest(task: any) {
+    let taskToString = JSON.stringify(task);
+    return taskToString.includes(this.searchInput)
   }
 
   moveToBoardToDo(idInFirestore: string) {
@@ -31,6 +59,7 @@ export class BacklogComponent implements OnInit {
   deleteTask(idInFirestore: string) {
     this.db.deleteDoc('tasks', idInFirestore);
   }
+
 
 
 

@@ -7,13 +7,8 @@ import { switchMap } from 'rxjs';
 })
 export class DatabaseService {
 
-  public categories: string[] = ['Design','Marketing', 'Finance', 'Admin', 'Other']
+  public categories: string[] = ['Design', 'Marketing', 'Finance', 'Admin', 'Other']
   public users: any = [
-    {
-      'firstName': 'Franzi',
-      'lastName': 'Hamm',
-      'userImage': 'assets/img/user.png'
-    },
     {
       'firstName': 'Guest',
       'lastName': 'User',
@@ -23,74 +18,104 @@ export class DatabaseService {
   public boards: any = [];
   public tasks: any = [];
   public backlogtasks: any = [];
+  public backlogEmpty: boolean = false;
+  initializationDone: boolean = false;
+
+
 
   constructor(public firestore: AngularFirestore) {
     this.getBoardAndTaskData();
   }
 
-  getBoardsData() {
+  getBoardAndTaskData() {
     this.firestore
       .collection('boards')
       .valueChanges({ idField: 'customIdName' })
-      .subscribe((result: any) => { 
+      .pipe(switchMap((result: any) => {
         this.boards = result;
-        this.getTaskData();
-       })
-  }
 
-  getBoardAndTaskData(){
-    this.firestore
-    .collection('boards')
-    .valueChanges({ idField: 'customIdName' })
-    .pipe(switchMap( (result: any) => {
-      this.boards = result;
-      return this.firestore
-      .collection('tasks')
-      .valueChanges({ idField: 'customIdName' });
-    }))
-    .subscribe((result) => {
-      this.sortTasksToBoards(result);
-    });
-  }
-
-  getTaskData() {
-    this.firestore
-      .collection('tasks')
-      .valueChanges({ idField: 'customIdName' })
+        return this.firestore
+          .collection('tasks')
+          .valueChanges({ idField: 'customIdName' });
+      }))
       .subscribe((result) => {
         this.sortTasksToBoards(result);
       });
   }
 
-  sortTasksToBoards(result: any) {
+
+  // getBacklogTasks(): any {
+
+  //   this.backlogtasks = this.boards.find((board: any) => {
+  //     console.log(board.name);
+
+  //     board.name === 'backlog'
+  //   })
+
+  // this.firestore
+  //   .collection('tasks', ref => ref.where('board', '==', 'backlog'))
+  //   .valueChanges({ idField: 'customIdName' })
+  //   .subscribe((result: any) => {
+  //     this.backlogtasks = result;
+  //     this.convertDateFormat(this.backlogtasks) 
+  //   })
+  //   return this.backlogtasks
+  // }
+
+  // convertDateFormat(data: []): void {
+  //   data.map((el: any) => {
+  //     el.dueTo = new Date(el.dueTo['seconds'] * 1000).toLocaleDateString('en-GB')
+  //   }
+  //   )
+  // }
+
+  sortTasksToBoards(tasks: any) {
     this.boards.forEach((board: any) => board.tasks = []);
-    result.forEach((task: any) => {
+    this.backlogtasks = [];
+
+    tasks.forEach((task: any) => {
       for (let i = 0; i < this.boards.length; i++) {
-        if (task.board === this.boards[i].name) {
-          task.dueTo = new Date(task.dueTo['seconds'] * 1000).toLocaleDateString('en-GB');
+        task.dueTo = new Date(task.dueTo['seconds'] * 1000).toLocaleDateString('en-GB');
+        if (task.board === 'backlog') {
+          this.backlogtasks.push(task);
+        }
+        else if (task.board === this.boards[i].name) {
           this.boards[i].tasks.push(task);
         }
       }
     })
+    console.log('backlogtasks frisch sortiert:', this.backlogtasks);
+
   }
 
-  getBacklogTasks() {
-    this.firestore
-      .collection('tasks', ref => ref.where('board', '==', 'backlog'))
-      .valueChanges({ idField: 'customIdName' })
-      .subscribe((result: any) => {
-        this.backlogtasks = result;
+  // ****************** OLD VERSION FOR REFERENCE: NOW MADE INTO SWITCHMAP METHOD ABOVE ********
+  // getBoardsData() {
+  //   this.firestore
+  //     .collection('boards')
+  //     .valueChanges({ idField: 'customIdName' })
+  //     .subscribe((result: any) => { 
+  //       this.boards = result;
+  //       this.getTaskData();
+  //      })
+  // }
 
-        this.backlogtasks
-          .map((task: any) => {
-            task.dueTo = new Date(task.dueTo['seconds'] * 1000).toLocaleDateString('en-GB')
-          }
-          )
-      })
-  }
+  // getTaskData() {
+  //   this.firestore
+  //     .collection('tasks')
+  //     .valueChanges({ idField: 'customIdName' })
+  //     .subscribe((result) => {
+  //       this.sortTasksToBoards(result);
+  //     });
+  // }
+  // ****************** OLD VERSION FROM SWITCHMAP METHOD ABOVE ********
+
+
+
+
+
 
   updateDoc(collection: string, docID: string, updateData: object): Promise<any> {
-   return this.firestore.collection(collection).doc(docID).update(updateData);
+    return this.firestore.collection(collection).doc(docID).update(updateData);
   }
 
   addDocToCollection(collection: string, doc: object) {

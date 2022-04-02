@@ -17,8 +17,11 @@ import { NewTaskComponent } from '../new-task/new-task.component';
 export class BoardComponent implements OnInit {
 
   @ViewChildren('boardTitle') boardTitles!: QueryList<any>
+  setFocusToTitle: CallableFunction =  (currentTitle: number) => {
+    let allTitles = this.boardTitles.toArray();  // toArray() is specific method for Querylists (e.g. with Viewchildren)
+    setTimeout(() => { allTitles[currentTitle].nativeElement.focus() }, 200)
+  }    
 
-  // @ViewChild('columnTitle') columnTitle!: ElementRef;
   newBoardTitle: any;  // from inputfield ngModel (to ADD a new Board)
   editMode: boolean = false;
   doublicateAlert: boolean = false;
@@ -27,8 +30,7 @@ export class BoardComponent implements OnInit {
   constructor(public db: DatabaseService, public taskservice: TasksService) {
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
 
   addNewBoard() {
@@ -40,15 +42,16 @@ export class BoardComponent implements OnInit {
   enterEditMode(i: number) {
     this.doublicateAlert = false;
     this.db.boards[i].editable = true;  // this change is only affecting local variable in db service (not the database in firestore) --> otherwise data would be newly rendered
-    // set Input on focus
-    let allTitles = this.boardTitles.toArray();  // toArray() is specific method for Querylists (e.g. with Viewchildren)
-    setTimeout(() => { allTitles[i].nativeElement.focus() }, 200)
+    this.setFocusToTitle(i);
   }
 
 
-  saveBoardTitle(inputTitle: string, boardIDinFirestore: any, i: number) {
-    console.log('saveTitle');
-    
+  saveBoardTitle(inputTitle: string, boardIDinFirestore: any, i: number) {  
+    if(inputTitle ==='backlog' || inputTitle === 'Backlog'){
+      alert('Backlog Tasks are already sorted to "Backlog" Section. Please choose another Title')
+      this.setFocusToTitle(i);
+      return
+    }  
     this.doublicateAlert = false;
     let findDouplicate = this.db.boards.filter((board: any) => {
       return (board.name == inputTitle)
@@ -61,9 +64,7 @@ export class BoardComponent implements OnInit {
     }
     else {
       this.doublicateAlert = true;
-      // reset focus on input:
-      let allTitles = this.boardTitles.toArray();  // toArray() is specific method for Querylists (e.g. with Viewchildren)
-      setTimeout(() => { allTitles[i].nativeElement.focus() }, 200)
+      this.setFocusToTitle(i);
     }
   }
 
