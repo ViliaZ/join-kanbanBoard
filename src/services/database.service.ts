@@ -19,30 +19,11 @@ export class DatabaseService {
   public boards: any = [];
   public tasks: any = [];
   public backlogtasks: any = [];
-  public backlogEmpty: boolean = false;
-  initializationDone = () => {
-    let result = this.boards.find((item:any) => {
-      return item.name == 'todo'
-     }) 
-     return result
+  public backlogEmpty = () => { return (this.backlogtasks.length == 0) }
+  public initializationDone = () => {
+    let result = this.boards.find((item: any) => { return item.name == 'todo' })
+    return result
   }
-
-  
-
-
-
-  // initializationDone: any = () => {
-  //   let res = this.boards.find((board: any) => {
-  //     if (board.name === 'todo') {
-  //       return true
-  //     }
-  //     else { return false }
-  //   })
-  //   return res
-  // } 
-
-
-
 
 
   constructor(public firestore: AngularFirestore) {
@@ -65,31 +46,6 @@ export class DatabaseService {
       });
   }
 
-
-  // getBacklogTasks(): any {
-
-  //   this.backlogtasks = this.boards.find((board: any) => {
-  //     console.log(board.name);
-
-  //     board.name === 'backlog'
-  //   })
-
-  // this.firestore
-  //   .collection('tasks', ref => ref.where('board', '==', 'backlog'))
-  //   .valueChanges({ idField: 'customIdName' })
-  //   .subscribe((result: any) => {
-  //     this.backlogtasks = result;
-  //     this.convertDateFormat(this.backlogtasks) 
-  //   })
-  //   return this.backlogtasks
-  // }
-
-  // convertDateFormat(data: []): void {
-  //   data.map((el: any) => {
-  //     el.dueTo = new Date(el.dueTo['seconds'] * 1000).toLocaleDateString('en-GB')
-  //   }
-  //   )
-  // }
 
   sortTasksToBoards(tasks: any) {
     this.boards.forEach((board: any) => board.tasks = []);
@@ -129,9 +85,6 @@ export class DatabaseService {
   //     });
   // }
   // ****************** OLD VERSION FROM SWITCHMAP METHOD ABOVE ********
-
-
-
 
 
 

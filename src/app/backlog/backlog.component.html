@@ -3,9 +3,10 @@
     <div class="filterOptions">
         <span>Search for:</span>
         <input [(ngModel)]="searchInput" type="filter">
+        <!-- <button (click)="search()">search</button> -->
     </div>
 
-    <div  [class.hide]="!evaluateSearchRequest(task)" class="wrapper" *ngFor="let task of db.backlogtasks; index as i">
+    <div [class.hide]="activeSearch && !evaluateSearchRequest(task)" class="wrapper" *ngFor="let task of db.backlogtasks; index as i">
 
         <div  class="taskContainer" >
             <div class="user margin-right">
@@ -32,11 +33,7 @@
     </div>
 
 
-
-
-
-
-    <div *ngIf="db.backlogEmpty == true" class="emptyBacklog">
+    <div *ngIf="db.backlogEmpty()" class="emptyBacklog">
         Boring times ... No tasks in the Backlog.
     </div>
 

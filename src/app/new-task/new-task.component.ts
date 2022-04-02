@@ -63,16 +63,24 @@ export class NewTaskComponent implements OnInit {
     this.openCategoryPopUp = false;
   }
 
-  saveTask() {
+  saveTask(task:any) {
+    console.log('editmode?',this.taskservice.editMode);
+    console.log('currentTasks?',this.taskservice.currentTask);
+    
     // fill the task object with input from ngModel
     if (!this.taskservice.editMode) {
       this.task.board = 'backlog'
+      this.db.addDocToCollection('tasks', this.task);
     }
-    this.db.addDocToCollection('tasks', this.task);
+    else {
+      this.task = this.taskservice.currentTask;
+      this.db.updateDoc('tasks', this.task.customIdName, this.task)
+      this.taskservice.currentTask = {};
+      this.taskservice.editMode = false;
+    }
     this.taskservice.taskPopupOpen = false;
-    this.taskservice.currentTask = {};
-    this.taskservice.editMode = false;
   }
+
 
   closeWithoutSave() {
     this.taskservice.taskPopupOpen = false;

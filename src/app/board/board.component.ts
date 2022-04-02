@@ -17,20 +17,21 @@ import { NewTaskComponent } from '../new-task/new-task.component';
 export class BoardComponent implements OnInit {
 
   @ViewChildren('boardTitle') boardTitles!: QueryList<any>
-  setFocusToTitle: CallableFunction =  (currentTitle: number) => {
+  setFocusToTitle: CallableFunction = (currentTitle: number) => {
     let allTitles = this.boardTitles.toArray();  // toArray() is specific method for Querylists (e.g. with Viewchildren)
     setTimeout(() => { allTitles[currentTitle].nativeElement.focus() }, 200)
-  }    
+  }
 
   newBoardTitle: any;  // from inputfield ngModel (to ADD a new Board)
   editMode: boolean = false;
   doublicateAlert: boolean = false;
   deleteBoardAlert: boolean = false;
+  currentBoard: any = {}; // board to delete
 
   constructor(public db: DatabaseService, public taskservice: TasksService) {
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
 
   addNewBoard() {
@@ -46,13 +47,13 @@ export class BoardComponent implements OnInit {
   }
 
 
-  saveBoardTitle(inputTitle: string, boardIDinFirestore: any, i: number) {  
-    if(inputTitle ==='backlog' || inputTitle === 'Backlog'){
+  saveBoardTitle(inputTitle: string, boardIDinFirestore: any, i: number) {
+    if (inputTitle === 'backlog' || inputTitle === 'Backlog') {
       alert('Backlog Tasks are already sorted to "Backlog" Section. Please choose another Title')
       this.setFocusToTitle(i);
       return
-    }  
-    
+    }
+
     this.doublicateAlert = false;
     let findDouplicate = this.db.boards.filter((board: any) => {
       return (board.name == inputTitle)
@@ -69,13 +70,13 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  exitEditMode(i: number, event:Event) {
-    console.log('exit',event.currentTarget);
+  exitEditMode(i: number, event: Event) {
+    console.log('exit', event.currentTarget);
     this.db.boards[i].editable = false;
   }
 
-  stopPropagation(event:Event){
-    console.log('stoppropagation',event);
+  stopPropagation(event: Event) {
+    console.log('stoppropagation', event);
   }
 
   updateTasksOnBoard(newBoardTitle: any, boardIDinFirestore: any, i: number) {
@@ -88,23 +89,19 @@ export class BoardComponent implements OnInit {
   }
 
   deleteBoard(i: number, event: Event) {
-    console.log('delete');
-    // this.db.boards[i].editable = false;
-
-    // event.stopImmediatePropagation();
-
-    // this.db.boards[i].editable = true;
-    // alert('go')
-    // this.deleteBoardAlert = true;
+    console.log('delete board requested');
+    this.deleteBoardAlert = true;
+    this.currentBoard = this.db.boards[i];
   }
 
-  confirmDelete() {
+  confirmDelete(): any {
+    this.currentBoard.tasks.forEach((task: any) => {
+      this.db.deleteDoc('tasks', task.customIdName)
+    });
+    this.db.deleteDoc('boards', this.currentBoard.customIdName);
   }
 
-  cancelDelete() {
-  }
-
-  editTask(task:any){
+  editTask(task: any) {
     this.taskservice.currentTask = task;
     this.taskservice.taskPopupOpen = true;
     this.taskservice.editMode = true;
