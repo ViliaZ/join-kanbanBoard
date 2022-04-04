@@ -50,18 +50,15 @@ export class DatabaseService {
   sortTasksToBoards(tasks: any) {
     this.boards.forEach((board: any) => board.tasks = []);
     this.backlogtasks = [];
-
     tasks.forEach((task: any) => {
       task.dueTo = this.convertDateFormat(task, 'en-GB')
-
       for (let i = 0; i < this.boards.length; i++) {
-
         if (task.board === 'backlog') {
           this.handleBacklogTasks(task)
           return
         }
-        else if (task.board === this.boards[i].name) {
-          this.boards[i].tasks.push(task);
+        else {
+          this.handleBoardTasks(task, i)
         }
       }
     })
@@ -72,9 +69,15 @@ export class DatabaseService {
     //firestore dates are a timstamp object
   }
 
-  handleBacklogTasks(task:any){
+  handleBacklogTasks(task: any){
     this.backlogtasks.push(task);
     // sorting into default order: by deadline
+  }
+
+  handleBoardTasks(task: any, i: number){
+    if (task.board === this.boards[i].name) {
+      this.boards[i].tasks.push(task);
+    }
   }
 
   updateDoc(collection: string, docID: string, updateData: object): Promise<any> {

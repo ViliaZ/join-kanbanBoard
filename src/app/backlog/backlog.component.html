@@ -1,6 +1,10 @@
 <div class="body-backlog">
 
+
     <div class="filterOptions">
+        <div class="sortBy">
+            <img (click)="changeSorting()" src="assets/img/sort.png" alt="sort icon">
+        </div>
         <span>Search for:</span>
         <input [(ngModel)]="searchInput" type="filter">
         <!-- <button (click)="search()">search</button> -->
