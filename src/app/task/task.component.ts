@@ -14,13 +14,14 @@ export class TaskComponent implements OnInit {
   public detailsRequested: boolean = false;
   public isPinned: boolean = false;
 
+
   constructor(private db: DatabaseService, public tasksservice: TasksService) {
   }
 
   ngOnInit(): void {
   }
   expandCard(task: any) {
-    // console.log('expandCard')
+    console.log('expandCard')
     
     // if (this.tasksservice.currentTask == task) {
     //   this.detailsRequested = false;
@@ -32,17 +33,22 @@ export class TaskComponent implements OnInit {
     // }
   }
 
-  fixTask(task: any){
-    console.log('clicked pin');
+  fixTask(task: any, event:Event){
+
     
-    if (this.tasksservice.currentTask == task) {
-      this.detailsRequested = false;
-      this.tasksservice.currentTask = {};
+    if (task.isPinnedToBoard === false || task.isPinnedToBoard == undefined) {
+      console.log('false');
+      this.db.updateDoc('tasks', task.customIdName, {'isPinnedToBoard': true});    
+   
+      console.log('danach');
+
+
     }
     else {
-      this.tasksservice.currentTask = task;
-      this.detailsRequested = true;
+      console.log('else');
+      this.db.updateDoc('tasks', task.customIdName, {'isPinnedToBoard': false});    
     }
+    console.log('danach',task.isPinnedToBoard);
   }
 
 

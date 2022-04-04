@@ -50,11 +50,11 @@ export class DatabaseService {
   sortTasksToBoards(tasks: any) {
     this.boards.forEach((board: any) => board.tasks = []);
     this.backlogtasks = [];
-    console.log('backlogtasks vorm sortieren:', this.backlogtasks);
+    // console.log('backlogtasks vorm sortieren:', this.backlogtasks);
 
     tasks.forEach((task: any) => {
       for (let i = 0; i < this.boards.length; i++) {
-        console.log('task', this.backlogtasks);
+        // console.log('task', this.backlogtasks);
 
         task.dueTo = new Date(task.dueTo['seconds'] * 1000).toLocaleDateString('en-GB');
         if (task.board === 'backlog') {
@@ -66,8 +66,7 @@ export class DatabaseService {
         }
       }
     })
-    console.log('backlogtasks nach allem sortieren:', this.backlogtasks);
-
+    // console.log('backlogtasks nach allem sortieren:', this.backlogtasks);
   }
 
   // ****************** OLD VERSION FOR REFERENCE: NOW MADE INTO SWITCHMAP METHOD ABOVE ********

@@ -1,5 +1,5 @@
-<div class="ticketWrap" (click)="expandCard(task)">
-
+<div class="ticketWrap">
+    <!-- (click)="expandCard(task)" -->
     <div class="singleTicket">
 
         <div class="first-row">
@@ -11,14 +11,14 @@
                 <img 
                 class="icon-pin" 
                 src="assets/img/pin-filled.png" 
-                [class.pinRotation]="detailsRequested"
-                (click)="fixTask(task)">
+                [class.pinRotation]="task.isPinnedToBoard"
+                (click)="fixTask(task, $event)">
 
                 <img 
                 class="icon-pin-fixed" 
                 src="assets/img/pin-filled.png" 
-                [class.pinRotation]="detailsRequested"
-                *ngIf="detailsRequested">
+                [class.pinRotation]="task.isPinnedToBoard"
+                *ngIf="task.isPinnedToBoard">
                 
         </div>
 

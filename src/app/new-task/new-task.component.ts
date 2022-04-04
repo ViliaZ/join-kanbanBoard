@@ -28,7 +28,8 @@ export class NewTaskComponent implements OnInit {
     urgency: '',
     board: '',
     category: '',
-    users: ''
+    users: '',
+    isPinnedToBoard: ''
   }
 
   constructor(public db: DatabaseService, public taskservice: TasksService) {
@@ -69,12 +70,13 @@ export class NewTaskComponent implements OnInit {
     
     // fill the task object with input from ngModel
     if (!this.taskservice.editMode) {
-      this.task.board = 'backlog'
+      this.task.board = 'backlog';  // default
+      this.task.isPinnedToBoard = false; // default
       this.db.addDocToCollection('tasks', this.task);
     }
     else {
       this.task = this.taskservice.currentTask;
-      this.db.updateDoc('tasks', this.task.customIdName, this.task)
+      this.db.updateDoc('tasks', this.task.customIdName, this.task);
       this.taskservice.currentTask = {};
       this.taskservice.editMode = false;
     }
