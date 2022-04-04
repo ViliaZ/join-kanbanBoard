@@ -106,12 +106,12 @@ export class BoardComponent implements OnInit {
     this.taskservice.editMode = true;
   }
 
-  expandCard(task:any) {
-    this.taskservice.currentTask = task;
-    this.taskservice.detailsRequested = true;
-    console.log('this.taskservice.detailsRequested sollte true;:', this.taskservice.detailsRequested);
+  // expandCard(task:any) {
+  //   this.taskservice.currentTask = task;
+  //   this.taskservice.detailsRequested = true;
+  //   console.log('this.taskservice.detailsRequested sollte true;:', this.taskservice.detailsRequested);
 
-  }
+  // }
 
   closeExpandCard(){
     this.taskservice.currentTask = {};

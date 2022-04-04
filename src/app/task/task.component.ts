@@ -9,15 +9,41 @@ import { TasksService } from 'src/services/tasks.service';
 })
 export class TaskComponent implements OnInit {
 
-  @Input() task:any;
-  public cardIsClicked: any = (task: any)=>{ return this.tasksservice.currentTask == task} // returns boolean for expand card or not
+  @Input() task: any;
+  // public cardIsClicked: any = (task: any) => { return this.tasksservice.currentTask == task } // returns boolean for expand card or not
+  public detailsRequested: boolean = false;
+  public isPinned: boolean = false;
 
   constructor(private db: DatabaseService, public tasksservice: TasksService) {
-   }
+  }
 
   ngOnInit(): void {
   }
+  expandCard(task: any) {
+    // console.log('expandCard')
+    
+    // if (this.tasksservice.currentTask == task) {
+    //   this.detailsRequested = false;
+    //   this.tasksservice.currentTask = {};
+    // }
+    // else {
+    //   this.tasksservice.currentTask = task;
+    //   this.detailsRequested = true;
+    // }
+  }
 
+  fixTask(task: any){
+    console.log('clicked pin');
+    
+    if (this.tasksservice.currentTask == task) {
+      this.detailsRequested = false;
+      this.tasksservice.currentTask = {};
+    }
+    else {
+      this.tasksservice.currentTask = task;
+      this.detailsRequested = true;
+    }
+  }
 
 
 }

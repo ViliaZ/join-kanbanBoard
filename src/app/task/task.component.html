@@ -1,12 +1,32 @@
-<div class="ticketWrap">
-                
-    <div class="singleTicket">
-        <div class="title">{{ task.title }}</div>
-        <div class="urgency">{{ task.urgency }}</div>
+<div class="ticketWrap" (click)="expandCard(task)">
 
-       <div [class.animateExpansion]="cardIsClicked(task) && tasksservice.detailsRequested" class="description">
-        {{ task.description }}
-       </div>
+    <div class="singleTicket">
+
+        <div class="first-row">
+            <div>
+                <div class="title">{{ task.title }}</div>
+                <div class="urgency">{{ task.urgency }}</div>
+            </div>
+
+                <img 
+                class="icon-pin" 
+                src="assets/img/pin-filled.png" 
+                [class.pinRotation]="detailsRequested"
+                (click)="fixTask(task)">
+
+                <img 
+                class="icon-pin-fixed" 
+                src="assets/img/pin-filled.png" 
+                [class.pinRotation]="detailsRequested"
+                *ngIf="detailsRequested">
+                
+        </div>
+
+
+        <div class="description" [class.animateExpansion]="detailsRequested">
+            {{ task.description }}
+        </div>
+
 
         <div class="information">
             <div class="user"></div>
