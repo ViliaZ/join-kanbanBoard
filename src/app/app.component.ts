@@ -13,19 +13,17 @@ export class AppComponent {
 
   constructor(private db: DatabaseService, public router: Router, public taskservice: TasksService) {
     this.db.getBoardAndTaskData;
-    setTimeout(()=>{this.initializeBoards()},3000)
+    setTimeout(() => { this.initializeBoards() }, 2000)
   }
 
   // only done ONCE - when first time adding a task in Join
   initializeBoards() {
     if (this.db.initializationDone() == undefined) {
-      console.log('initialisierung done?:',this.db.initializationDone());
-      
       this.db.addDocToCollection('boards', { name: 'todo', tasks: [], createdAt: new Date().getTime() })
     }
   }
-  
-  addTaskPopUp() {
+
+  addTaskPopUp(){
     this.taskservice.taskPopupOpen = true;
   }
 

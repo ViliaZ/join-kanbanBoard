@@ -21,7 +21,7 @@ export class DatabaseService {
   public backlogtasks: any = [];
   public backlogEmpty = () => { return (this.backlogtasks.length == 0) }
   public initializationDone = () => {
-    let result = this.boards.find((item: any) => { return item.name == 'todo' })
+    let result = this.boards.find((item: any) => { return item.name == 'todo'})
     return result
   }
 
@@ -50,16 +50,15 @@ export class DatabaseService {
   sortTasksToBoards(tasks: any) {
     this.boards.forEach((board: any) => board.tasks = []);
     this.backlogtasks = [];
+
     tasks.forEach((task: any) => {
       task.dueTo = this.convertDateFormat(task, 'en-GB')
+
       for (let i = 0; i < this.boards.length; i++) {
         if (task.board === 'backlog') {
           this.handleBacklogTasks(task);
-          return
         }
-        else {
-          this.handleBoardTasks(task, i);
-        }
+        else { this.handleBoardTasks(task, i); }
       }
     })
     this.sortBoardsDescending();
@@ -75,14 +74,14 @@ export class DatabaseService {
     // sorting into default order: by deadline
   }
 
-  // console.log(this.boards[i].name, ascending);
-  // pinned Task on Top of Board, then all other tasks sorted by createdAt
+
+  // Goal: pinned Task on Top of Board, then all other tasks sorted by createdAt
   sortBoardsDescending() {
     for (let i = 0; i < this.boards.length; i++) {
-      // temporary subarrays from the board
-      let pinnedTasks: any = []; // holds all not-pinned tasks of a board
-      let unpinnedTasks: any = [];
-      let unpinnedTasksSorted: any = [];
+
+      let pinnedTasks: any = [];              // temporary subarrays from the board
+      let unpinnedTasks: any = [];            // temporary subarrays from the board
+      let unpinnedTasksSortByCreationTime: any = [];      // temporary subarrays from the board
 
       this.boards[i].tasks.map((task: any) => {
         if (task.isPinnedToBoard) {
@@ -92,9 +91,8 @@ export class DatabaseService {
           unpinnedTasks.push(task);
         }
       }) // sort this array with "createdAt" descending
-      unpinnedTasksSorted = unpinnedTasks.sort((a: any, b: any) => Number(a.createdAt) - Number(b.createdAt));
-      // merge subarrays again to final sorted Array
-      this.boards[i].tasks = pinnedTasks.concat(unpinnedTasksSorted);
+      unpinnedTasksSortByCreationTime = unpinnedTasks.sort((a: any, b: any) => Number(a.createdAt) - Number(b.createdAt));
+      this.boards[i].tasks = pinnedTasks.concat(unpinnedTasksSortByCreationTime); // merge subarrays again to final sorted Array
     }
   }
 
