@@ -30,15 +30,15 @@ export class DatabaseService {
     this.getBoardAndTaskData();
   }
 
-  getBoardAndTaskData() {
+  getBoardAndTaskData(sortBoardsBy:string ='createdAt', sortBoardOrder:any = 'asc', sortTasksBy:string = 'createdAt', sortTasksOrder:any='desc') {
     this.firestore
-      .collection('boards', ref => ref.orderBy('createdAt'))  // default sort via timestamp
+      .collection('boards', ref => ref.orderBy(sortBoardsBy, sortBoardOrder))  // default sort via timestamp
       .valueChanges({ idField: 'customIdName' })
       .pipe(switchMap((result: any) => {
         this.boards = result;
 
         return this.firestore
-          .collection('tasks', ref => ref.orderBy('createdAt','desc'))
+          .collection('tasks', ref => ref.orderBy(sortTasksBy, sortTasksOrder))
           .valueChanges({ idField: 'customIdName' });
       }))
       .subscribe((result) => {
@@ -75,8 +75,6 @@ export class DatabaseService {
   handleBacklogTasks(task:any){
     this.backlogtasks.push(task);
     // sorting into default order: by deadline
-
-
   }
 
   updateDoc(collection: string, docID: string, updateData: object): Promise<any> {
