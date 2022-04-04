@@ -31,12 +31,12 @@
         <!-- column header -->
         <div class="headColumn">
             <input #boardTitle [(ngModel)]="board.name" [disabled]="!board.editable" (click)="stopPropagation($event)">
-            <span *ngIf="board.name =='todo'" class="showOnHover">No title edits here. 'To Do' is a fixed board.</span>
+            <span *ngIf="board.name =='ToDo'" class="showOnHover">No title edits here. 'ToDo' is a fixed board.</span>
             <img *ngIf="board.editable"  (click)="saveBoardTitle(board.name, board.customIdName, i)"
-                src="assets/img/save.png" [class.disabledIcon]="board.name =='To Do'" class="iconEdit">
-            <img *ngIf="!board.editable" [class.disabledIcon]="board.name =='To Do'" (click)="enterEditMode(i)" src="assets/img/edit.png"
+                src="assets/img/save.png" [class.disabledIcon]="board.name =='ToDo'" class="iconEdit">
+            <img *ngIf="!board.editable" [class.disabledIcon]="board.name =='ToDo'" (click)="enterEditMode(i)" src="assets/img/edit.png"
                 class="iconEdit">
-            <img *ngIf="!board.editable" [class.disabledIcon]="board.name =='To Do'" (click)="deleteBoard(i,$event)"
+            <img *ngIf="!board.editable" [class.disabledIcon]="board.name =='ToDo'" (click)="deleteBoard(i,$event)"
                 src="assets/img/delete.png" class="iconEdit">
         </div>
 

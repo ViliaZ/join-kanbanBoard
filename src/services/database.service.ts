@@ -21,7 +21,7 @@ export class DatabaseService {
   public backlogtasks: any = [];
   public backlogEmpty = () => { return (this.backlogtasks.length == 0) }
   public initializationDone = () => {
-    let result = this.boards.find((item: any) => { return item.name == 'Todo'})
+    let result = this.boards.find((item: any) => { return item.name == 'ToDo'})
     return result
   }
 
