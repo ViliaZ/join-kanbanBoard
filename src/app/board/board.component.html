@@ -1,21 +1,29 @@
-<div class="addNewBoard">
-    <button (click)="addNewBoard()"> New Board</button>
-    <input [(ngModel)]="newBoardTitle" type="text">
+
+
+<div class="board-top">
+    <div class="alerts">
+        <div *ngIf="doublicateAlert && !deleteBoardAlert" class="alertbox" >
+            <img src="assets/img/alert.png" alt="alert">
+            Board name already exists. Please choose another title.
+        </div>
+        
+        <div *ngIf="deleteBoardAlert && !doublicateAlert" class="alertDelete">
+            <img src="assets/img/alert.png" alt="alert">
+            Do you really want to delete the board with all belonging tasks?
+            <button (click)="confirmDelete()">Confirm</button>
+            <button (click)="deleteBoardAlert = false">Cancel</button>
+        </div>
+    </div>
+
+    <div class="addNewBoard">
+        <button (click)="addNewBoard()"> New Board</button>
+        <input [(ngModel)]="newBoardTitle" type="text">
+    </div>
 </div>
 
-<div *ngIf="doublicateAlert && !deleteBoardAlert" class="alertbox" >
-    <img src="assets/img/alert.png" alt="alert">
-    Board name already exists. Please choose another title.
-</div>
-
-<div *ngIf="deleteBoardAlert && !doublicateAlert" class="alertDelete">
-    <img src="assets/img/alert.png" alt="alert">
-    Do you really want to delete the board with all belonging tasks?
-    <button (click)="confirmDelete()">Confirm</button>
-    <button (click)="deleteBoardAlert = false">Cancel</button>
-</div>
 
 <div [class.blurOverlay]="taskservice.taskPopupOpen" class="body-board">
+
 
     <div *ngFor="let board of db.boards; index as i" class="board">
     

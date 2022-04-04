@@ -30,7 +30,7 @@ export class DatabaseService {
     this.getBoardAndTaskData();
   }
 
-  getBoardAndTaskData(sortBoardsBy:string ='createdAt', sortBoardOrder:any = 'asc', sortTasksBy:string = 'createdAt', sortTasksOrder:any='desc') {
+  getBoardAndTaskData(sortBoardsBy: string = 'createdAt', sortBoardOrder: any = 'asc', sortTasksBy: string = 'isPinnedToBoard', sortTasksOrder: any = 'desc') {
     this.firestore
       .collection('boards', ref => ref.orderBy(sortBoardsBy, sortBoardOrder))  // default sort via timestamp
       .valueChanges({ idField: 'customIdName' })
@@ -54,29 +54,54 @@ export class DatabaseService {
       task.dueTo = this.convertDateFormat(task, 'en-GB')
       for (let i = 0; i < this.boards.length; i++) {
         if (task.board === 'backlog') {
-          this.handleBacklogTasks(task)
+          this.handleBacklogTasks(task);
           return
         }
         else {
-          this.handleBoardTasks(task, i)
+          this.handleBoardTasks(task, i);
         }
       }
     })
+    this.sortBoardsDescending();
   }
 
-  convertDateFormat(task:any, targetDateFormat: string){
+  convertDateFormat(task: any, targetDateFormat: string) {
     return new Date(task.dueTo['seconds'] * 1000).toLocaleDateString(targetDateFormat);
     //firestore dates are a timstamp object
   }
 
-  handleBacklogTasks(task: any){
+  handleBacklogTasks(task: any) {
     this.backlogtasks.push(task);
     // sorting into default order: by deadline
   }
 
-  handleBoardTasks(task: any, i: number){
+  // console.log(this.boards[i].name, ascending);
+  // pinned Task on Top of Board, then all other tasks sorted by createdAt
+  sortBoardsDescending() {
+    for (let i = 0; i < this.boards.length; i++) {
+      // temporary subarrays from the board
+      let pinnedTasks: any = []; // holds all not-pinned tasks of a board
+      let unpinnedTasks: any = [];
+      let unpinnedTasksSorted: any = [];
+
+      this.boards[i].tasks.map((task: any) => {
+        if (task.isPinnedToBoard) {
+          pinnedTasks.push(task);
+        }
+        if (!task.isPinnedToBoard) {
+          unpinnedTasks.push(task);
+        }
+      }) // sort this array with "createdAt" descending
+      unpinnedTasksSorted = unpinnedTasks.sort((a: any, b: any) => Number(a.createdAt) - Number(b.createdAt));
+      // merge subarrays again to final sorted Array
+      this.boards[i].tasks = pinnedTasks.concat(unpinnedTasksSorted);
+    }
+  }
+
+  handleBoardTasks(task: any, i: number) {
     if (task.board === this.boards[i].name) {
-      this.boards[i].tasks.push(task);
+      if (task.createdAt)
+        this.boards[i].tasks.push(task);
     }
   }
 
@@ -100,7 +125,7 @@ export class DatabaseService {
   //   this.firestore
   //     .collection('boards')
   //     .valueChanges({ idField: 'customIdName' })
-  //     .subscribe((result: any) => { 
+  //     .subscribe((result: any) => {
   //       this.boards = result;
   //       this.getTaskData();
   //      })

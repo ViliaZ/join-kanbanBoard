@@ -1,3 +1,4 @@
+import { BaseOverlayDispatcher } from '@angular/cdk/overlay/dispatchers/base-overlay-dispatcher';
 import { Component, Input, OnInit } from '@angular/core';
 import { DatabaseService } from 'src/services/database.service';
 import { TasksService } from 'src/services/tasks.service';
@@ -22,33 +23,43 @@ export class TaskComponent implements OnInit {
   }
   expandCard(task: any) {
     console.log('expandCard')
-    
-    // if (this.tasksservice.currentTask == task) {
-    //   this.detailsRequested = false;
-    //   this.tasksservice.currentTask = {};
-    // }
-    // else {
-    //   this.tasksservice.currentTask = task;
-    //   this.detailsRequested = true;
-    // }
-  }
 
-  fixTask(task: any, event:Event){
-
-    
-    if (task.isPinnedToBoard === false || task.isPinnedToBoard == undefined) {
-      console.log('false');
-      this.db.updateDoc('tasks', task.customIdName, {'isPinnedToBoard': true});    
-   
-      console.log('danach');
-
-
+    if (this.tasksservice.currentTask == task) {
+      this.detailsRequested = false;
+      this.tasksservice.currentTask = {};
     }
     else {
-      console.log('else');
-      this.db.updateDoc('tasks', task.customIdName, {'isPinnedToBoard': false});    
+      this.tasksservice.currentTask = task;
+      this.detailsRequested = true;
     }
-    console.log('danach',task.isPinnedToBoard);
+  }
+
+  fixTaskToTop(task: any, event: any) {
+
+    // let currentBoardIndex!: number;
+    // this.db.boards.map((board: any, i: any) => {
+    //   if (board.name == task.board) {
+    //     currentBoardIndex = i }
+    // })
+
+
+    // let tasksArray = this.db.boards[currentBoardIndex].tasks;
+    
+    
+
+
+
+
+    // console.log('currentBoardIndex:', currentBoardIndex);
+      if (!task.isPinnedToBoard) {
+        this.db.updateDoc('tasks', task.customIdName, { 'isPinnedToBoard': true, 'createdAt': new Date().getTime() });
+
+      }
+      else {
+        this.db.updateDoc('tasks', task.customIdName, { 'isPinnedToBoard': false });
+      }
+
+
   }
 
 

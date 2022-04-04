@@ -1,3 +1,20 @@
+:host {
+    display: flex;
+    flex-direction: column;
+}
+
+.board-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 60px;
+
+    .addNewBoard {
+        padding: 8px;
+        cursor: pointer;
+    }
+}
+
 .body-board {
     height: 100%;
     max-height: 100%;
@@ -8,23 +25,14 @@
     overflow: auto;
 }
 
-.blurOverlay{
+.blurOverlay {
     position: absolute;
-    left: 0; 
+    left: 0;
     right: 0;
     top: 0;
     bottom: 0;
     filter: blur(10px);
     z-index: -1;
-}
-
-.addNewBoard{
-    position: absolute;
-    top: 0px; 
-    right: 20px;
-    padding: 8px;
-    border: 1px solid grey;
-    cursor: pointer;
 }
 
 .board {
@@ -40,28 +48,27 @@
         max-width: 100%;
         padding: 8px 0px 10px 0px;
 
-        input{
+        input {
             background-color: unset;
-            border: unset; 
+            border: unset;
             font-size: 16px;
             font-weight: bold;
             // padding: 4px 8px;
             border-radius: 12px;
             margin-left: 4px;
-
         }
-       .iconEdit{
-           width: 16px;
-           height: 16px;
-           filter: opacity(0);
-           transition: all 150ms ease-in-out;
-           margin-left: 8px;
-       }
+        .iconEdit {
+            width: 16px;
+            height: 16px;
+            filter: opacity(0);
+            transition: all 150ms ease-in-out;
+            margin-left: 8px;
+        }
 
-       &:hover .iconEdit{
-        filter: opacity(0.5);
-        cursor: pointer;
-       }
+        &:hover .iconEdit {
+            filter: opacity(0.5);
+            cursor: pointer;
+        }
     }
 
     .wrapperTickets {
@@ -145,46 +152,46 @@
     box-shadow: unset;
     .title,
     .date {
-        color: rgb(161, 159, 159)!important;
+        color: rgb(161, 159, 159) !important;
     }
     .user {
         background-color: rgba(211, 211, 211, 0.493) !important;
         font-size: 18px;
-        color: rgb(161, 159, 159)!important;
+        color: rgb(161, 159, 159) !important;
         display: flex;
         align-items: center;
         justify-content: center;
     }
 }
 
-.alertbox{
+.alertbox {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     background-color: white;
     width: max-content;
     border-radius: 12px;
-    padding: 24px;
+    padding: 16px;
     transition: 250ms all ease-in-out;
 
-    img{
+    img {
         height: 24px;
-        margin-right: 10px; 
+        margin-right: 10px;
     }
 }
 
-.alertDelete{
+.alertDelete {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     background-color: white;
     width: max-content;
     border-radius: 12px;
-    padding: 24px;
+    padding: 16px;
     transition: 250ms all ease-in-out;
 
-    img{
+    img {
         height: 24px;
-        margin-right: 10px;  
+        margin-right: 10px;
     }
 }

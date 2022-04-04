@@ -39,6 +39,7 @@
     padding: 12px;
     border-radius: 12px 2px 2px 12px;
     background-color: white;
+    cursor: pointer;
 
     // height: 120px;
     overflow: auto;
@@ -98,6 +99,7 @@
     transform: rotateZ(0deg);
     transition: all 300ms ease-in-out;
     z-index: 2;
+    cursor: pointer;
 
     &.pinRotation {
         transform: rotateZ(33deg);

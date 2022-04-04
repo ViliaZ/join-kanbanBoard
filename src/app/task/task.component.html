@@ -1,5 +1,5 @@
-<div class="ticketWrap">
-    <!-- (click)="expandCard(task)" -->
+<div (click)="expandCard(task)" class="ticketWrap">
+   
     <div class="singleTicket">
 
         <div class="first-row">
@@ -12,7 +12,7 @@
                 class="icon-pin" 
                 src="assets/img/pin-filled.png" 
                 [class.pinRotation]="task.isPinnedToBoard"
-                (click)="fixTask(task, $event)">
+                (click)="fixTaskToTop(task, $event)">
 
                 <img 
                 class="icon-pin-fixed" 
