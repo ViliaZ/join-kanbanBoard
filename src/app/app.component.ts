@@ -19,7 +19,9 @@ export class AppComponent {
   // only done ONCE - when first time adding a task in Join
   initializeBoards() {
     if (this.db.initializationDone() == undefined) {
-      this.db.addDocToCollection('boards', { name: 'todo', tasks: [] })
+      console.log('initialisierung done?:',this.db.initializationDone());
+      
+      this.db.addDocToCollection('boards', { name: 'todo', tasks: [], createdAt: new Date().getTime() })
     }
   }
   

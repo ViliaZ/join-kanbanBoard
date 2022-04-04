@@ -35,7 +35,7 @@ export class BoardComponent implements OnInit {
 
 
   addNewBoard() {
-    let newBoard = { 'name': this.newBoardTitle, 'tasks': [], 'editable': false };
+    let newBoard = { 'name': this.newBoardTitle, 'tasks': [], 'editable': false, 'createdAt': new Date().getTime() };
     this.db.addDocToCollection('boards', newBoard);
   }
 

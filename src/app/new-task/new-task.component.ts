@@ -29,7 +29,8 @@ export class NewTaskComponent implements OnInit {
     board: '',
     category: '',
     users: '',
-    isPinnedToBoard: ''
+    isPinnedToBoard: '',
+    createdAt:''
   }
 
   constructor(public db: DatabaseService, public taskservice: TasksService) {
@@ -71,6 +72,7 @@ export class NewTaskComponent implements OnInit {
     // fill the task object with input from ngModel
     if (!this.taskservice.editMode) {
       this.task.board = 'backlog';  // default
+      this.task.createdAt = new Date().getTime(); // needed for sorting tasks in order
       this.task.isPinnedToBoard = false; // default
       this.db.addDocToCollection('tasks', this.task);
     }

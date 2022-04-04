@@ -32,13 +32,13 @@ export class DatabaseService {
 
   getBoardAndTaskData() {
     this.firestore
-      .collection('boards')
+      .collection('boards', ref => ref.orderBy('createdAt'))  // default sort via timestamp
       .valueChanges({ idField: 'customIdName' })
       .pipe(switchMap((result: any) => {
         this.boards = result;
 
         return this.firestore
-          .collection('tasks')
+          .collection('tasks', ref => ref.orderBy('createdAt','desc'))
           .valueChanges({ idField: 'customIdName' });
       }))
       .subscribe((result) => {
@@ -50,15 +50,14 @@ export class DatabaseService {
   sortTasksToBoards(tasks: any) {
     this.boards.forEach((board: any) => board.tasks = []);
     this.backlogtasks = [];
-    // console.log('backlogtasks vorm sortieren:', this.backlogtasks);
 
     tasks.forEach((task: any) => {
-      for (let i = 0; i < this.boards.length; i++) {
-        // console.log('task', this.backlogtasks);
+      task.dueTo = this.convertDateFormat(task, 'en-GB')
 
-        task.dueTo = new Date(task.dueTo['seconds'] * 1000).toLocaleDateString('en-GB');
+      for (let i = 0; i < this.boards.length; i++) {
+
         if (task.board === 'backlog') {
-          this.backlogtasks.push(task);
+          this.handleBacklogTasks(task)
           return
         }
         else if (task.board === this.boards[i].name) {
@@ -66,10 +65,36 @@ export class DatabaseService {
         }
       }
     })
-    // console.log('backlogtasks nach allem sortieren:', this.backlogtasks);
   }
 
-  // ****************** OLD VERSION FOR REFERENCE: NOW MADE INTO SWITCHMAP METHOD ABOVE ********
+  convertDateFormat(task:any, targetDateFormat: string){
+    return new Date(task.dueTo['seconds'] * 1000).toLocaleDateString(targetDateFormat);
+    //firestore dates are a timstamp object
+  }
+
+  handleBacklogTasks(task:any){
+    this.backlogtasks.push(task);
+    // sorting into default order: by deadline
+
+
+  }
+
+  updateDoc(collection: string, docID: string, updateData: object): Promise<any> {
+    return this.firestore.collection(collection).doc(docID).update(updateData);
+  }
+
+  addDocToCollection(collection: string, doc: object) {
+    this.firestore.collection(collection).add(doc);
+  }
+
+  deleteDoc(collection: string, docID: string) {
+    this.firestore.collection(collection).doc(docID).delete();
+  }
+
+
+}
+
+// ****************** OLD VERSION FOR REFERENCE: NOW MADE INTO SWITCHMAP METHOD ABOVE ********
   // getBoardsData() {
   //   this.firestore
   //     .collection('boards')
@@ -89,20 +114,3 @@ export class DatabaseService {
   //     });
   // }
   // ****************** OLD VERSION FROM SWITCHMAP METHOD ABOVE ********
-
-
-
-  updateDoc(collection: string, docID: string, updateData: object): Promise<any> {
-    return this.firestore.collection(collection).doc(docID).update(updateData);
-  }
-
-  addDocToCollection(collection: string, doc: object) {
-    this.firestore.collection(collection).add(doc);
-  }
-
-  deleteDoc(collection: string, docID: string) {
-    this.firestore.collection(collection).doc(docID).delete();
-  }
-
-
-}
