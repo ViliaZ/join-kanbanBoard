@@ -88,7 +88,6 @@ export class BoardComponent implements OnInit {
   }
 
   deleteBoard(i: number, event: Event) {
-    console.log('delete board requested');
     this.deleteBoardAlert = true;
     this.currentBoard = this.db.boards[i];
   }

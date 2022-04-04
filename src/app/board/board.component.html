@@ -1,13 +1,11 @@
-
-
 <div class="board-top">
 
     <div class="alerts">
-        <div *ngIf="doublicateAlert && !deleteBoardAlert" class="alertbox" >
+        <div *ngIf="doublicateAlert && !deleteBoardAlert" class="alertbox">
             <img src="assets/img/alert.png" alt="alert">
             Board name already exists. Please choose another title.
         </div>
-        
+
         <div *ngIf="deleteBoardAlert && !doublicateAlert" class="alertDelete">
             <img src="assets/img/alert.png" alt="alert">
             Do you really want to delete the board with all belonging tasks?
@@ -27,30 +25,27 @@
 
 
     <div *ngFor="let board of db.boards; index as i" class="board">
-    
+
         <!-- for Inputarea: (blur)="exitEditMode(i,$event)"-->
 
         <!-- column header -->
-        <div class="headColumn" >
-            <input #boardTitle  [(ngModel)]="board.name" [disabled]="!board.editable" (click)="stopPropagation($event)">
-            <img *ngIf="board.editable" (click)="saveBoardTitle(board.name, board.customIdName, i)"
-                src="assets/img/save.png" class="iconEdit">
-            <img *ngIf="!board.editable" (click)="enterEditMode(i)" src="assets/img/edit.png" class="iconEdit">
-            <img *ngIf="!board.editable" (click)="deleteBoard(i,$event)" src="assets/img/delete.png" class="iconEdit">
-
+        <div class="headColumn">
+            <input #boardTitle [(ngModel)]="board.name" [disabled]="!board.editable" (click)="stopPropagation($event)">
+            <span *ngIf="board.name =='todo'" class="showOnHover">No title edits here. 'To Do' is a fixed board.</span>
+            <img *ngIf="board.editable"  (click)="saveBoardTitle(board.name, board.customIdName, i)"
+                src="assets/img/save.png" [class.disabledIcon]="board.name =='To Do'" class="iconEdit">
+            <img *ngIf="!board.editable" [class.disabledIcon]="board.name =='To Do'" (click)="enterEditMode(i)" src="assets/img/edit.png"
+                class="iconEdit">
+            <img *ngIf="!board.editable" [class.disabledIcon]="board.name =='To Do'" (click)="deleteBoard(i,$event)"
+                src="assets/img/delete.png" class="iconEdit">
         </div>
 
         <div class="wrapperTickets" id="{{board.name}}" (drop)="drop($event, board.name)"
             (dragover)="allowDrop($event)">
 
             <!-- SINGLE TASK (dynamic) Note: customIdName is set from DB Firestore at subscribe -->
-            <app-task 
-                *ngFor="let task of board.tasks; index as i"
-                id="{{task.customIdName}}" 
-                [task]="task"
-                draggable="true" 
-                (dragstart)="drag($event)" 
-            >
+            <app-task *ngFor="let task of board.tasks; index as i" id="{{task.customIdName}}" [task]="task"
+                draggable="true" (dragstart)="drag($event)">
             </app-task>
 
             <!-- EMPTY TASK plaecholder (static) -->

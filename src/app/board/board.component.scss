@@ -3,6 +3,8 @@
     flex-direction: column;
 }
 
+
+
 .board-top {
     display: flex;
     justify-content: space-between;
@@ -42,11 +44,13 @@
     margin-bottom: 24px;
 
     .headColumn {
+        position: relative;
         display: flex;
         justify-content: space-between;
         align-items: center;
         max-width: 100%;
         padding: 8px 0px 10px 0px;
+        transition: all 300ms ease-in-out;
 
         input {
             background-color: unset;
@@ -56,6 +60,9 @@
             // padding: 4px 8px;
             border-radius: 12px;
             margin-left: 4px;
+            margin-right: 8px;
+            flex: 1;
+            overflow: auto;
         }
         .iconEdit {
             width: 16px;
@@ -68,6 +75,27 @@
         &:hover .iconEdit {
             filter: opacity(0.5);
             cursor: pointer;
+        }
+
+        &:hover .disabledIcon{
+            filter: opacity(0.2)!important;
+            cursor: unset;
+        }
+
+        .showOnHover{
+            display: none;
+        }
+
+        &:hover .showOnHover{
+            position: absolute;
+            display: inline;
+            background-color: white; 
+            border-radius: 3px;
+            padding: 3px 6px;
+            bottom: -18px;
+            right: 0;
+            font-size: 12px;
+            font-style: italic;
         }
     }
 
@@ -195,3 +223,5 @@
         margin-right: 10px;
     }
 }
+
+

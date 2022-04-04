@@ -27,7 +27,7 @@ export class BacklogComponent implements OnInit {
   }
 
   moveToBoardToDo(idInFirestore: string) {
-    this.db.updateDoc('tasks', idInFirestore, { board: 'todo' });
+    this.db.updateDoc('tasks', idInFirestore, { board: 'To Do' });
   }
 
   editTask(task: any) {
