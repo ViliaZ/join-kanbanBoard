@@ -23,6 +23,7 @@ import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { NewTaskComponent } from './new-task/new-task.component';
 import { TaskComponent } from './task/task.component';
+import { LogoAnimationComponent } from './logo-animation/logo-animation.component';
 
 
 
@@ -38,7 +39,8 @@ import { TaskComponent } from './task/task.component';
     MenuComponent,
     AddTaskComponent,
     NewTaskComponent,
-    TaskComponent
+    TaskComponent,
+    LogoAnimationComponent
   ],
   imports: [
     BrowserModule,

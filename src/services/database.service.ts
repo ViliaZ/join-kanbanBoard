@@ -25,7 +25,6 @@ export class DatabaseService {
     return result
   }
 
-
   constructor(public firestore: AngularFirestore) {
     this.getBoardAndTaskData();
   }
