@@ -33,7 +33,7 @@ export class BoardComponent implements OnInit {
 
   ngOnInit(): void { }
 
-
+  // input New Board
   addNewBoard() {
     let newBoard = { 'name': this.newBoardTitle, 'tasks': [], 'editable': false, 'createdAt': new Date().getTime() };
     this.db.addDocToCollection('boards', newBoard);
@@ -53,20 +53,33 @@ export class BoardComponent implements OnInit {
       this.setFocusToTitle(i);
       return
     }
-
-    this.doublicateAlert = false;
-    let findDouplicate = this.db.boards.filter((board: any) => {
-      return (board.name == inputTitle)
-    })
-
-    if (findDouplicate.length <= 1) { // a return 1 means, its existing because ngModel already pushed the new name in local variable in db.service (boards)
+    let checkDuplicateTitles = this.checkTitleDuplicates(inputTitle)
+   
+    if (!checkDuplicateTitles){ // no duplicates found, proceed normally
       this.db.boards[i].editable = false;
       this.db.updateDoc('boards', boardIDinFirestore, { name: inputTitle });
       this.updateTasksOnBoard(inputTitle, boardIDinFirestore, i); // all tasks must change reference to new board name
     }
-    else {
+    else { // duplicates found
       this.doublicateAlert = true;
       this.setFocusToTitle(i);
+    }
+
+  }
+
+  // Board Title DUPLICATES check to prevent 
+  checkTitleDuplicates(inputTitle: string) {
+    this.doublicateAlert = false;
+    let findDouplicate = this.db.boards.filter((board: any) => {
+      return (board.name == inputTitle)
+    })
+    if (findDouplicate.length <= 1) { //  1 means, its existing because ngModel already pushed the new name in local variable in db.service (boards)
+     console.log('NO duplicates')
+      return false
+    }
+    else {
+      console.log('duplicates found')
+      return true
     }
   }
 
@@ -87,16 +100,19 @@ export class BoardComponent implements OnInit {
     }
   }
 
+  // eventHandler: delete Board
   deleteBoard(i: number, event: Event) {
     this.deleteBoardAlert = true;
     this.currentBoard = this.db.boards[i];
   }
 
+  // delete all tasks on board, after that, delete the board
   confirmDelete(): any {
     this.currentBoard.tasks.forEach((task: any) => {
       this.db.deleteDoc('tasks', task.customIdName)
     });
     this.db.deleteDoc('boards', this.currentBoard.customIdName);
+    this.deleteBoardAlert = false;
   }
 
   editTask(task: any) {
@@ -105,18 +121,12 @@ export class BoardComponent implements OnInit {
     this.taskservice.editMode = true;
   }
 
-  // expandCard(task:any) {
-  //   this.taskservice.currentTask = task;
-  //   this.taskservice.detailsRequested = true;
-  //   console.log('this.taskservice.detailsRequested sollte true;:', this.taskservice.detailsRequested);
-
-  // }
-
-  closeExpandCard(){
+  closeExpandCard() {
     this.taskservice.currentTask = {};
     this.taskservice.detailsRequested = false;
   }
 
+  // new Task or Edit Task
   openTaskPopUp() {
     this.taskservice.taskPopupOpen = true;
   }
