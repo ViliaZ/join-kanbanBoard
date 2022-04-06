@@ -18,16 +18,16 @@ export class NewTaskComponent implements OnInit {
   public customCategory: any = '';
   public openCategoryPopUp: boolean = false;
   public currentTask: any;
-
+  public activeUrgency: string = 'normal';
 
   // via ng Model
   public task: any = {
     title: '',
     description: '',
     dueTo!: '',
-    urgency: '',
+    urgency: 'normal',
     board: '',
-    category: '',
+    category: 'Other',
     users: '',
     isPinnedToBoard: '',
     createdAt:''
@@ -42,6 +42,7 @@ export class NewTaskComponent implements OnInit {
 
   setUrgency(urgency: string = 'normal') {    // default: normal
     this.task.urgency = urgency;
+    this.activeUrgency = urgency;
   }
 
   saveCategory(event: any) {

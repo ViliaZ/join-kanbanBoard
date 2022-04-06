@@ -10,8 +10,8 @@
 
         <div class="category flex-1">
             <label for="category">CAT</label>
-            <select #catSelect (change)="saveCategory($event)" [(ngModel)]="task.category">
-                <option *ngIf="customCategory == ''" value=""> - Choose a category - </option>
+            <select #catSelect (change)="saveCategory($event)" [(ngModel)]="task.category" >
+                <option *ngIf="customCategory == ''" > - Choose a category - </option>
                 <option value="Custom Category"> - Add Category - </option>
                 <option *ngFor="let category of db.categories" value={{category}}>{{category}}</option>
             </select>
@@ -48,9 +48,9 @@
             <!-- Urgency -->
             <div class="urgency">
                 <div>Urgency</div>
-                <button (click)="setUrgency('normal')">Normal</button>
-                <button (click)="setUrgency('urgent')">Urgent</button>
-                <button (click)="setUrgency('priority')">Priority</button>
+                <button [class.activeButton]="activeUrgency == 'normal'" (click)="setUrgency('normal')">Normal</button>
+                <button [class.activeButton]="activeUrgency == 'urgent'" (click)="setUrgency('urgent')">Urgent</button>
+                <button [class.activeButton]="activeUrgency == 'priority'" (click)="setUrgency('priority')">Priority</button>
     
             </div>
         </div>
