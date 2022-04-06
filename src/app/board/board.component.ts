@@ -1,11 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { catchError } from 'rxjs';
 import { DatabaseService } from 'src/services/database.service';
 import { TasksService } from 'src/services/tasks.service';
-import { NewTaskComponent } from '../new-task/new-task.component';
-
-
 
 @Component({
   selector: 'app-board',
@@ -17,15 +13,17 @@ import { NewTaskComponent } from '../new-task/new-task.component';
 export class BoardComponent implements OnInit {
 
   @ViewChildren('boardTitle') boardTitles!: QueryList<any>
-  setFocusToTitle: CallableFunction = (currentTitle: number) => {
+
+  setFocusToTitle: CallableFunction = (currentTitle: number) => { // focus current title
     let allTitles = this.boardTitles.toArray();  // toArray() is specific method for Querylists (e.g. with Viewchildren)
     setTimeout(() => { allTitles[currentTitle].nativeElement.focus() }, 200)
   }
-  newBoardTitle: any;  // from inputfield ngModel (to ADD a new Board)
-  editMode: boolean = false;
+
+  editMode: boolean = false;  // title edits
+  newBoardTitle: any = '';  // from inputfield ngModel (to ADD a new Board)
+  currentBoard: any = {}; // board to delete
   doublicateAlert: boolean = false;
   deleteBoardAlert: boolean = false;
-  currentBoard: any = {}; // board to delete
 
   constructor(public db: DatabaseService, public taskservice: TasksService) {
   }
@@ -34,8 +32,15 @@ export class BoardComponent implements OnInit {
 
   // input New Board
   addNewBoard() {
-    let newBoard = { 'name': this.newBoardTitle, 'tasks': [], 'editable': false, 'createdAt': new Date().getTime() };
-    this.db.addDocToCollection('boards', newBoard);
+    console.log(this.newBoardTitle);
+    
+    if(this.newBoardTitle.length > 0 && !this.checkDuplicates(this.newBoardTitle)){
+      let newBoard = { 'name': this.newBoardTitle, 'tasks': [], 'editable': false, 'createdAt': new Date().getTime() };
+      this.db.addDocToCollection('boards', newBoard);
+    }
+    else{
+      this.doublicateAlert = true;
+    }
   }
 
   // Board Title Edit
@@ -45,6 +50,14 @@ export class BoardComponent implements OnInit {
     this.setFocusToTitle(i);
   }
 
+  // Board Title Edit exit
+  exitEditMode(i: number) {
+    this.db.boards[i].editable = false;
+  }
+
+  stopPropagation(event: Event) {
+    console.log('stoppropagation', event);
+  }
 
   saveBoardTitle(inputTitle: string, boardIDinFirestore: any, i: number) {
     if (inputTitle === 'backlog' || inputTitle === 'Backlog') {
@@ -52,8 +65,8 @@ export class BoardComponent implements OnInit {
       this.setFocusToTitle(i);
       return
     }
-    // check duplicates
-    if (this.checkDuplicates(inputTitle) == false && inputTitle.length > 1){ // no duplicates found, proceed normally
+    // handle duplicate check
+    if (this.checkDuplicates(inputTitle) == false && inputTitle.length > 0){ // no duplicates found, proceed normally
       this.db.boards[i].editable = false;
       this.db.updateDoc('boards', boardIDinFirestore, { name: inputTitle });
       this.updateTasksOnBoard(inputTitle, boardIDinFirestore, i); // all tasks must change reference to new board name
@@ -65,7 +78,7 @@ export class BoardComponent implements OnInit {
 
   }
 
-  // Board Title DUPLICATES check to prevent 
+  // Check for Title DUPLICATES --> boolean
   checkDuplicates(inputTitle: string) {
     this.doublicateAlert = false;
     let findDouplicate = this.db.boards.filter((board: any) => {
@@ -81,14 +94,6 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  exitEditMode(i: number) {
-    this.db.boards[i].editable = false;
-  }
-
-  stopPropagation(event: Event) {
-    console.log('stoppropagation', event);
-  }
-
   updateTasksOnBoard(newBoardTitle: any, boardIDinFirestore: any, i: number) {
     let tasksOnBoard: [] = this.db.boards[i].tasks;
     if (tasksOnBoard.length > 0) {
@@ -98,15 +103,15 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  // eventHandler: delete Board
+  // eventHandler: delete Board REQUEST--> opens Confirmation Alert
   deleteBoard(i: number, event: Event) {
     this.deleteBoardAlert = true;
     this.currentBoard = this.db.boards[i];
   }
 
-  // delete all tasks on board, after that, delete the board
+  // eventHandler: delete CONFIRMED 
   confirmDelete(): any {
-    this.currentBoard.tasks.forEach((task: any) => {
+    this.currentBoard.tasks.forEach((task: any) => { // first: delete all tasks on board
       this.db.deleteDoc('tasks', task.customIdName)
     });
     this.db.deleteDoc('boards', this.currentBoard.customIdName);
@@ -119,6 +124,7 @@ export class BoardComponent implements OnInit {
     this.taskservice.editMode = true;
   }
 
+  // hide description text of card
   closeExpandCard() {
     this.taskservice.currentTask = {};
     this.taskservice.detailsRequested = false;
