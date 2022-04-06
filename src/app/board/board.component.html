@@ -4,7 +4,7 @@
     <div class="alerts">
         <div *ngIf="doublicateAlert && !deleteBoardAlert" class="alertbox">
             <img src="assets/img/alert.png" alt="alert">
-            Board name already exists. Please choose another title.  
+            Invalid Input: Please choose a title that does not exist yet.  
             <!-- <button (click)="doublicateAlert = false">X</button> -->
         </div>
 
@@ -20,8 +20,9 @@
         <button (click)="addNewBoard()">New Board</button>
         <input 
             [(ngModel)]="newBoardTitle" 
+            (keyup.enter)="addNewBoard()"
             type="text"
-            (keyup.enter)="addNewBoard()">
+            minlength="2">
     </div>
 </div>
 
@@ -36,7 +37,8 @@
                 #boardTitle 
                 [(ngModel)]="board.name" 
                 [disabled]="!board.editable" 
-                (click)="stopPropagation($event)">
+                (click)="stopPropagation($event)"
+                >
             <span 
                 *ngIf="board.name =='ToDo'" 
                 class="showOnHover">
@@ -45,9 +47,10 @@
             <img    
                 *ngIf="board.editable"     
                 (click)="saveBoardTitle(board.name, board.customIdName, i)"
-                src="assets/img/save.png" 
                 [class.disabledIcon]="board.name =='ToDo'" 
-                class="iconEdit">
+                class="iconEdit"
+                src="assets/img/save.png" 
+                >
             <img 
                 *ngIf="!board.editable" 
                 [class.disabledIcon]="board.name =='ToDo'" 

@@ -21,7 +21,6 @@ export class BoardComponent implements OnInit {
     let allTitles = this.boardTitles.toArray();  // toArray() is specific method for Querylists (e.g. with Viewchildren)
     setTimeout(() => { allTitles[currentTitle].nativeElement.focus() }, 200)
   }
-
   newBoardTitle: any;  // from inputfield ngModel (to ADD a new Board)
   editMode: boolean = false;
   doublicateAlert: boolean = false;
@@ -53,9 +52,8 @@ export class BoardComponent implements OnInit {
       this.setFocusToTitle(i);
       return
     }
-    let checkDuplicateTitles = this.checkTitleDuplicates(inputTitle)
-   
-    if (!checkDuplicateTitles){ // no duplicates found, proceed normally
+    // check duplicates
+    if (this.checkDuplicates(inputTitle) == false && inputTitle.length > 1){ // no duplicates found, proceed normally
       this.db.boards[i].editable = false;
       this.db.updateDoc('boards', boardIDinFirestore, { name: inputTitle });
       this.updateTasksOnBoard(inputTitle, boardIDinFirestore, i); // all tasks must change reference to new board name
@@ -68,7 +66,7 @@ export class BoardComponent implements OnInit {
   }
 
   // Board Title DUPLICATES check to prevent 
-  checkTitleDuplicates(inputTitle: string) {
+  checkDuplicates(inputTitle: string) {
     this.doublicateAlert = false;
     let findDouplicate = this.db.boards.filter((board: any) => {
       return (board.name == inputTitle)
