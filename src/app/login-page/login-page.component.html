@@ -4,15 +4,25 @@
     <div class="section-card">
         <app-logo-animation></app-logo-animation>
     
-        <section class="login">
-            <label for="">Name</label>
+        <div class="login">
+
+            <label for="">First Name</label>
+            <input type="text">            
+            
+            <label for="">Last Name</label>
             <input type="text">
-            <label for="">E-mail</label>
-    
+
+            <label for="">E-Mail</label>
             <input type="text">
+
             <button routerLink="/">Login</button>
-            <div>as guest</div>
-        </section>
+
+            <div class="guestLogin">
+                <input type="checkbox" id="guestlogin" name="guestlogin" >
+                <div>Login as a Guest</div>
+            </div>
+
+        </div>
 
         <div class="section-bg"></div>
     

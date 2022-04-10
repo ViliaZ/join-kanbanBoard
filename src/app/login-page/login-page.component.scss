@@ -3,14 +3,15 @@
     justify-content: center;
     width: 100%;
     height: 100vh;
-    background-color: rgba(211, 211, 211, 0.815);
-    padding: 8rem;
+    background-color: #dfdeff;
+    padding: 6rem 10rem;
+    color: var(--primary-light);
 
     .wrapper {
-        width: 100%;
+        width: 60vw;
         height: 100%;
         display: flex;
-        border-radius: 34px;
+        border-radius: 44px;
         background-image: url("../../assets/img/mesh.png/");
         background-repeat: no-repeat;
         background-size: cover;
@@ -18,263 +19,88 @@
     }
 }
 
-// ********* BG IMAGE ************
-
 .section-bg {
     width: 40%;
     border-radius: 34px;
 }
-// *********************
 
 .section-card {
-    width: 60%;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
-    background-color: white;
-    border-radius: 34px 0px 0px 34px;
+    width: 60%;
     padding: 2rem;
+    background-color: var(--secondary-dark);
+    border-radius: 44px 0px 0px 44px;
 }
 
+//contains all input elements
 .login {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
-    flex: 1;
+    width: 50%;
+    min-width: 250px;
 
-    &:last-child {
-        height: 100%;
-        flex-direction: column;
-        color: #6cbaf1;
+    label {
+        margin-top: 0.5em;
+        padding: 2px 8px;
+        background-color: var(--secondary-dark);
+        font-weight: var(--font-light);
+        font-size: var(--font-small);
+        transform: translateY(0.8em);
+    }
 
-        h2 {
-            margin-bottom: 0.5em;
-        }
+    input {
+        width: 100%;
+        padding: 4px;
+        height: 40px;
+        border: 1px solid var(--primary-light);
+        border-radius: 20px;
+        background-color: transparent;
+    }
 
-        label {
-            margin-bottom: 0.3em;
-            margin-top: 1em;
-            font-size: var(--xxsFont);
-        }
+    .guestLogin {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        text-align: center;
+        font-weight: var(--font-light);
+
+
         input {
-            width: 50%;
-            padding: 4px;
-            height: 40px;
-            border: 1px solid rgb(212, 209, 209);
-            border-radius: 20px;
-            background-color: white;
+            width: 14px;
+            margin-right: 10px;
         }
-        button {
-            width: 50%;
-            padding: 8px;
-            font-size: var(--bodyText);
-            margin-top: 1em;
-            border-radius: 20px;
-            border: unset;
-            color: white;
-            background: linear-gradient(
-                15deg,
-                rgba(0, 125, 222, 0.5704875700280112) 1%,
-                rgba(34, 193, 195, 0.6993391106442577) 100%
-            );
+
+        #guestlogin{
+            background-color: rgba(218, 51, 51, 0.322)!important;
+            font-weight: var(--font-light);
         }
+    }
+
+    button {
+        width: 100%;
+        padding: 8px;
+        margin-top: 1.5em;
+        border-radius: 20px;
+        border: unset;
+        color: white;
+        font-size: 16px;
+        letter-spacing: 3px;
+        background: rgb(222, 228, 19);
+        background: linear-gradient(
+            73deg,
+            rgba(222, 228, 19, 0.9094231442577031) 10%,
+            rgba(226, 167, 85, 1) 48%,
+            rgba(237, 21, 198, 1) 100%,
+            rgba(99, 227, 209, 1) 100%,
+            rgba(233, 62, 199, 1) 100%
+        );
     }
 }
-
-// ********* LOGO  ************
-.logo-wrapper {
-    width: 100%;
-    font-size: 140px;
-    font-weight: bold;
-    display: flex;
-}
-.character {
-    color: rgba(255, 255, 255, 0.644) !important;
-}
-
-.container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-
-    &::after {
-        content: "";
-        position: absolute;
-        z-index: 9;
-        top: 57px;
-        width: 300px;
-        height: 3px;
-        margin-left: 4px;
-        border-radius: 2px;
-        background-color: rgba(199, 0, 123, 0.87);
-        animation: entryStroke 3s ease-in-out forwards;
-    }
-
-    @keyframes entryStroke {
-        0% {
-            left: 0;
-            right: unset;
-            height: 1px;
-            width: 0%;
-            filter: opacity(0.4);
-        }
-        50% {
-            left: 0;
-            right: 0;
-            height: 6px;
-            width: 100%;
-            top: 57px;
-            filter: opacity(1);
-        }
-        51% {
-            left: unset;
-            right: 0;
-            height: 6px;
-            width: 100%;
-            top: 57px;
-            filter: opacity(0.8);
-        }
-        100% {
-            left: unset;
-            right: 0;
-            height: 4px;
-            width: 38px;
-            top: 57px;
-            filter: opacity(0);
-        }
-    }
-}
-
-.j {
-    z-index: 10;
-    transform: translateX(65%);
-    translate: all ease-in-out;
-    animation: Janimate 4s ease-in-out forwards;
-    animation-delay: 1.4s;
-
-    @keyframes Janimate {
-        0% {
-            transform: translateX(65%);
-        }
-        50% {
-            transform: translateX(-2%);
-        }
-        100% {
-            transform: translateX(30%);
-        }
-    }
-}
-
-.o {
-    z-index: 8;
-    // transform: translateX(65%);
-    translate: all ease-in-out;
-    animation: oToLeft 4s ease-in-out forwards;
-    animation-delay: 3.2s;
-
-    @keyframes oToLeft {
-        0% {
-            transform: translateX(0%);
-        }
-        70% {
-            transform: translateX(-18%);
-        }
-        100% {
-            transform: translateX(-12%);
-        }
-    }
-}
-
-.i {
-    z-index: 10;
-    translate: all ease-in-out;
-    animation: iToLeft 4s ease-in-out forwards;
-    animation-delay: 3.8s;
-
-    @keyframes iToLeft {
-        0% {
-            transform: translateX(0%);
-        }
-        50% {
-            transform: translateX(-55%);
-        }
-        100% {
-            transform: translateX(-44%);
-        }
-    }
-}
-
-.n {
-    position: relative;
-    z-index: 8;
-    translate: all ease-in-out;
-    animation: nToLeft 4s ease-in-out forwards;
-    animation-delay: 4.2s;
-
-    @keyframes nToLeft {
-        0% {
-            transform: translateX(0%);
-        }
-        50% {
-            transform: translateX(-38%);
-        }
-        100% {
-            transform: translateX(-26%);
-        }
-    }
-}
-
-.plus {
-    position: relative;
-    filter: opacity(0);
-    z-index: 9;
-    width: 38px;
-    height: 6px;
-    border-radius: 2px;
-    background-color: rgba(240, 104, 188, 0.822);
-    animation: horizontalLine 1s ease-in-out forwards;
-    animation-delay: 1.5s;
-
-    &:after {
-        position: absolute;
-        filter: opacity(0);
-        top: -16px;
-        right: 16px;
-        content: "";
-        height: 38px;
-        width: 6px;
-        border-radius: 2px;
-        background-color: rgba(248, 232, 0, 0.87);
-        animation: verticalLine 1s ease-in-out forwards;
-        animation-delay: 2.3s;
-    }
-
-    @keyframes verticalLine {
-        0% {
-            filter: opacity(0);
-            height: 0px;
-        }
-        100% {
-            height: 38px;
-            filter: opacity(1);
-        }
-    }
-
-    @keyframes horizontalLine {
-        0% {
-            filter: opacity(0.3);
-            height: 0px;
-        }
-        100% {
-            height: 6px;
-            filter: opacity(1);
-        }
-    }
-}
-// *********************

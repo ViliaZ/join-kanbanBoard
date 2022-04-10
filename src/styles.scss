@@ -2,14 +2,14 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box !important;
-  font-family: "Lato", sans-serif;
-  color: var(--fontDark) !important;
+  font-family: "Poppins", sans-serif;
 }
 
 :root {
   --bg: #031229;
   --primary-light: rgb(248, 240, 240);
   --secondary: #27344b;
+  --secondary-dark: #1b1160;
   --accent1: #e902b3;
   --accent2: #13e2a4;
   --muted: #12bb88; // z.B. Menu inactive tab
@@ -17,7 +17,8 @@
   --assetGrey: rgb(156, 164, 173);
   --font-bold: 400;
   --font-xBold: 600;
-  --font-thin: 200;
+  --font-light: 200;
+  --font-small: 12px;
   --marginPage: 3rem;
   --paddingMain: 1.5rem 4rem;
 }
@@ -27,7 +28,7 @@
 h1,
 h2,
 h3 {
-  font-family: "Lato", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 html,
@@ -36,7 +37,7 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 // MATERIAL DESIGN ELEMENTS
