@@ -7,20 +7,25 @@
     width: 100vw;
     max-width: 100%;
     height: 100vh;
-    background-color: var(--bg);
-    background: linear-gradient(180deg, rgba(111,124,159,0.3660057773109243) 3%, rgba(255,255,255,1) 93%);
-        font-family: "Open Sans", sans-serif;
+    // background-color: var(--bg);
+    // background: linear-gradient(180deg, rgba(111, 124, 159, 0.3660057773109243) 3%, rgba(255, 255, 255, 1) 93%);
+    // padding: 1.5rem var(--marginPage) 4rem var(--marginPage);
+}
+
+.padding-app{
     padding: 1.5rem var(--marginPage) 4rem var(--marginPage);
 }
 
 .main {
     position: relative;
     flex: 1;
-    margin: 1.5rem var(--marginPage) 0.5rem var(--marginPage);
+    // margin: 1.5rem var(--marginPage) 0.5rem var(--marginPage);
     width: 100%;
-    max-width: 1400px;
     overflow: auto;
-    border-radius: 12px;
+}
+
+.maxwidth{
+    max-width: 1400px;
 }
 
 .img-plus {

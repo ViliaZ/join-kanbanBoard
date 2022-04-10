@@ -3,17 +3,27 @@
   padding: 0;
   box-sizing: border-box !important;
   font-family: "Lato", sans-serif;
-  color: var(--fontDark)!important;
+  color: var(--fontDark) !important;
 }
 
 :root {
-  --detailsDarkight: rgb(168, 168, 168);
-  --detailsLight: rgb(248, 245, 245);
-  --bg: #f0f4fa;
-  --fontDark: #58627c;
-  --fontAccent: #473279;
+  --bg: #031229;
+  --primary-light: rgb(248, 240, 240);
+  --secondary: #27344b;
+  --accent1: #e902b3;
+  --accent2: #13e2a4;
+  --muted: #12bb88; // z.B. Menu inactive tab
+  --link: lightgrey;
+  --assetGrey: rgb(156, 164, 173);
+  --font-bold: 400;
+  --font-xBold: 600;
+  --font-thin: 200;
   --marginPage: 3rem;
+  --paddingMain: 1.5rem 4rem;
 }
+
+
+
 h1,
 h2,
 h3 {
@@ -40,7 +50,6 @@ mat-option {
   }
 }
 
-
 // selector background
 .mat-form-field-appearance-fill .mat-form-field-flex {
   background-color: rgb(255, 255, 255);
@@ -51,17 +60,16 @@ mat-option {
   border: 1px solid black;
 }
 
-
 // urgency
 
-.mat-button-toggle{
+.mat-button-toggle {
   background-color: white;
 
   &:hover {
     background-color: grey;
-    color: white!important;
+    color: white !important;
 
-    &:focus{
+    &:focus {
       background-color: lightgrey;
     }
   }
@@ -75,17 +83,15 @@ mat-option {
   color: rgb(0, 70, 128) !important;
 }
 
-
 .mat-calendar {
-  background-color: white!important;
+  background-color: white !important;
 }
 
-.mat-select-panel .mat-optgroup-label, .mat-select-panel .mat-option {
+.mat-select-panel .mat-optgroup-label,
+.mat-select-panel .mat-option {
   background-color: white;
-  }
+}
 
-  mat-button-toggle:hover{
-    background-color: red;
-
-  }
-
+mat-button-toggle:hover {
+  background-color: red;
+}
