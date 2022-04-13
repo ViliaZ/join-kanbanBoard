@@ -24,6 +24,7 @@ import { FormsModule } from '@angular/forms';
 import { NewTaskComponent } from './new-task/new-task.component';
 import { TaskComponent } from './task/task.component';
 import { LogoAnimationComponent } from './logo-animation/logo-animation.component';
+import { GradientAnimationComponent } from './gradient-animation/gradient-animation.component';
 
 
 
@@ -40,7 +41,8 @@ import { LogoAnimationComponent } from './logo-animation/logo-animation.componen
     AddTaskComponent,
     NewTaskComponent,
     TaskComponent,
-    LogoAnimationComponent
+    LogoAnimationComponent,
+    GradientAnimationComponent
   ],
   imports: [
     BrowserModule,

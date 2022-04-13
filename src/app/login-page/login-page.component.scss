@@ -8,32 +8,48 @@
     color: var(--primary-light);
 
     .wrapper {
+        position: relative;
         width: 60vw;
         height: 100%;
         display: flex;
         border-radius: 44px;
-        background-image: url("../../assets/img/mesh.png/");
-        background-repeat: no-repeat;
-        background-size: cover;
         max-width: 1200px;
+        overflow: hidden;
+
+        .bg-gradient {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 0;
+        }
     }
 }
 
-.section-bg {
+.section-overlay {
     width: 40%;
     border-radius: 34px;
 }
 
 .section-card {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
     width: 60%;
     padding: 2rem;
-    background-color: var(--secondary-dark);
+    background: rgba(26, 17, 96, 0.65);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 10px;
     border-radius: 44px 0px 0px 44px;
+    z-index: 10;
 }
 
 //contains all input elements
@@ -42,26 +58,28 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    height: 60%;
     width: 50%;
     min-width: 250px;
 
-    label {
-        margin-top: 0.5em;
-        padding: 2px 8px;
-        background-color: var(--secondary-dark);
-        font-weight: var(--font-light);
-        font-size: var(--font-small);
-        transform: translateY(0.8em);
-    }
-
     input {
         width: 100%;
-        padding: 4px;
+        padding: 16px;
+        margin-bottom: 12px;
         height: 40px;
         border: 1px solid var(--primary-light);
         border-radius: 20px;
         background-color: transparent;
+        color: var(--primary-light);
+        text-align: center;
+
+
+
+        &::placeholder{
+            font-weight: var(--font-light);
+            color: var(--primary-light);
+            text-align: center;
+        }
     }
 
     .guestLogin {
@@ -72,22 +90,22 @@
         text-align: center;
         font-weight: var(--font-light);
 
-
         input {
             width: 14px;
             margin-right: 10px;
         }
 
-        #guestlogin{
-            background-color: rgba(218, 51, 51, 0.322)!important;
+        #guestlogin {
+            background-color: rgba(218, 51, 51, 0.322) !important;
             font-weight: var(--font-light);
+            margin-bottom: 0px;
         }
     }
 
     button {
         width: 100%;
         padding: 8px;
-        margin-top: 1.5em;
+        margin-top: 1em;
         border-radius: 20px;
         border: unset;
         color: white;

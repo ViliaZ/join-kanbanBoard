@@ -2,6 +2,7 @@
     position: relative;
     display: block;
     margin: 1rem;
+    margin-left: 14px;
 
     &::after{
         content: '[ kanban & more ]'; 
@@ -9,9 +10,8 @@
         position: absolute;
         bottom: 18px;
         letter-spacing: 3px;
-        
         font-weight: var(--font-light);
-        transform: translateX(28%) translateY(10px);
+        transform: translateX(48px) translateY(10px);
     }
 }
 
@@ -36,13 +36,22 @@
         content: "";
         position: absolute;
         z-index: 9;
-        top: 57px;
+        top: 72px;
         width: 300px;
         height: 3px;
         margin-left: 4px;
         border-radius: 2px;
-        background-color: rgba(199, 0, 123, 0.87);
-        animation: entryStroke 3s ease-in-out forwards;
+        background: rgb(222, 228, 19);
+        background: linear-gradient(
+            73deg,
+            rgba(222, 228, 19, 0.9094231442577031) 10%,
+            rgba(226, 167, 85, 1) 48%,
+            rgba(237, 21, 198, 1) 100%,
+            rgba(99, 227, 209, 1) 100%,
+            rgba(233, 62, 199, 1) 100%
+        );
+
+        animation: entryStroke 6s ease-in-out forwards;
 
     }
 
@@ -59,7 +68,6 @@
             right: 0;
             height: 6px;
             width: 100%;
-            top: 57px;
             filter: opacity(1);
         }
         51% {
@@ -67,7 +75,6 @@
             right: 0;
             height: 6px;
             width: 100%;
-            top: 57px;
             filter: opacity(0.8);
         }
         100% {
@@ -75,7 +82,6 @@
             right: 0;
             height: 4px;
             width: 38px;
-            top: 57px;
             filter: opacity(0);
         }
     }
@@ -85,8 +91,8 @@
     z-index: 10;
     transform: translateX(65%);
     translate: all ease-in-out;
-    animation: Janimate 4s ease-in-out forwards;
-    animation-delay: 1.4s;
+    animation: Janimate 7s ease-in-out forwards;
+    animation-delay: 1.5s;
 
 
     @keyframes Janimate {
@@ -96,8 +102,11 @@
         50% {
             transform: translateX(-2%);
         }
-        100% {
+        75% {
             transform: translateX(30%);
+        }
+        100% {
+            transform: translateX(24%);
         }
     }
 }
@@ -135,7 +144,7 @@
             transform: translateX(0%);
         }
         50% {
-            transform: translateX(-55%);
+            transform: translateX(-96%);
         }
         100% {
             transform: translateX(-44%);
@@ -147,7 +156,7 @@
     position: relative;
     z-index: 8;
     translate: all ease-in-out;
-    animation: nToLeft 4s ease-in-out forwards;
+    animation: nToLeft 5s ease-in-out forwards;
     animation-delay: 4.2s;
 
     @keyframes nToLeft {
@@ -155,10 +164,10 @@
             transform: translateX(0%);
         }
         50% {
-            transform: translateX(-38%);
+            transform: translateX(-62%);
         }
         100% {
-            transform: translateX(-24%);
+            transform: translateX(-22%);
         }
     }
 }
