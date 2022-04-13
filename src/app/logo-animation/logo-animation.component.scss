@@ -2,7 +2,7 @@
     position: relative;
     display: block;
     margin: 1rem;
-    margin-left: 14px;
+    margin-left: 18px;
 
     &::after{
         content: '[ kanban & more ]'; 
@@ -11,7 +11,7 @@
         bottom: 18px;
         letter-spacing: 3px;
         font-weight: var(--font-light);
-        transform: translateX(48px) translateY(10px);
+        transform: translateX(50px) translateY(10px);
     }
 }
 

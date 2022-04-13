@@ -15,7 +15,7 @@
         border-radius: 44px;
         max-width: 1200px;
         overflow: hidden;
-
+        box-shadow: #1a116063 0px 40px 90px -20px,  #1a11605c 0px 30px 40px -30px;
         .bg-gradient {
             position: absolute;
             left: 0;
@@ -43,7 +43,7 @@
     align-items: center;
     width: 60%;
     padding: 2rem;
-    background: rgba(26, 17, 96, 0.65);
+    background: #1a1160a6;
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
