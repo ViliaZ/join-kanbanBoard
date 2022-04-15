@@ -1,13 +1,14 @@
 
 <app-menu *ngIf="router.url !== '/login'"></app-menu>
 
-<div class="main" [class.maxwidth]="!router.url.includes('login')">
-    <router-outlet></router-outlet>
-</div>
+<div class="main"> <router-outlet></router-outlet></div>
 
 <app-new-task *ngIf="taskservice.taskPopupOpen"></app-new-task>
 
-<div (click)="addTaskPopUp()" *ngIf="router.url.includes('backlog') || router.url.includes('board')" class="img-plus">
+<div 
+    (click)="addTaskPopUp()" 
+    *ngIf="router.url.includes('backlog') || router.url.includes('board')" 
+    class="img-plus">
     +
 </div>
 

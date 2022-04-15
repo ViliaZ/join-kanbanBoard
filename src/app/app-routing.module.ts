@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'imprint', component: ImprintComponent },
   { path: 'board', component: BoardComponent },
   { path: 'backlog', component: BacklogComponent },
-  { path: 'task', component: AddTaskComponent }
+  // { path: 'task', component: AddTaskComponent }
 ];
 
 @NgModule({

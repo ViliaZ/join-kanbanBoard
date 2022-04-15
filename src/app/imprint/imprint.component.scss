@@ -1,16 +1,15 @@
 
 :host{
+    display: flex;
+    flex-direction: column;
     height: 100%;
-}
-.body-imprint{
-    background-color: rgb(255, 255, 255);
-    min-height: 100%;
-    padding: 30px;
+    padding: var(--paddingPage);
 }
 
 h1{
     margin-bottom: 24px;
 }
+
 p{
     margin-top: 25px; 
     font-family: 'Lato', sans-serif;
@@ -23,4 +22,8 @@ p{
 
 .mt{
     margin-top: 25px;
+}
+
+.padding-bottom{
+    padding-bottom: 40px;
 }

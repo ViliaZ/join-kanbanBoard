@@ -73,8 +73,6 @@
         color: var(--primary-light);
         text-align: center;
 
-
-
         &::placeholder{
             font-weight: var(--font-light);
             color: var(--primary-light);
@@ -100,6 +98,10 @@
             font-weight: var(--font-light);
             margin-bottom: 0px;
         }
+
+        .guestText{
+            color: var(--primary-light);
+        }
     }
 
     button {
@@ -108,17 +110,10 @@
         margin-top: 1em;
         border-radius: 20px;
         border: unset;
-        color: white;
+        color: white!important;
         font-size: 16px;
         letter-spacing: 3px;
         background: rgb(222, 228, 19);
-        background: linear-gradient(
-            73deg,
-            rgba(222, 228, 19, 0.9094231442577031) 10%,
-            rgba(226, 167, 85, 1) 48%,
-            rgba(237, 21, 198, 1) 100%,
-            rgba(99, 227, 209, 1) 100%,
-            rgba(233, 62, 199, 1) 100%
-        );
+        background: var(--gradientColors);
     }
 }

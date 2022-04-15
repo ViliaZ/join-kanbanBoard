@@ -3,11 +3,25 @@
   padding: 0;
   box-sizing: border-box !important;
   font-family: "Poppins", sans-serif;
+  color: var(--primary-dark);
 }
 
 :root {
-  --bg: #031229;
-  --primary-light: rgb(248, 240, 240);
+  --bg: linear-gradient(
+    356deg,
+    rgba(255, 255, 255, 0.5704875700280112) 8%,
+    rgba(216, 208, 231, 0.6993391106442577) 100%
+  );
+  --gradientColors: linear-gradient(
+    73deg,
+    rgba(222, 228, 19, 0.9094231442577031) 10%,
+    rgba(226, 167, 85, 1) 48%,
+    rgba(237, 21, 198, 1) 100%,
+    rgba(99, 227, 209, 1) 100%,
+    rgba(233, 62, 199, 1) 100%
+);
+  --primary-light: #f1fbf7;
+  --primary-dark: rgba(22, 4, 54, 0.956);
   --secondary: #27344b;
   --secondary-dark: #1b1160;
   --accent1: #e902b3;
@@ -19,11 +33,8 @@
   --font-xBold: 600;
   --font-light: 200;
   --font-small: 12px;
-  --marginPage: 3rem;
-  --paddingMain: 1.5rem 4rem;
+  --paddingPage: 3rem;
 }
-
-
 
 h1,
 h2,
@@ -38,6 +49,7 @@ body {
 body {
   margin: 0;
   font-family: "Poppins", sans-serif;
+  background: var(--bg);
 }
 
 // MATERIAL DESIGN ELEMENTS
