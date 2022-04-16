@@ -1,78 +1,70 @@
-<div class="body-addTask">
+<div class="sectionOne">
+    <!-- task title -->
+    <div class="title">
+        <input placeholder="Title" [(ngModel)]="task.title" required="true">
+    </div>
 
-    <div class="row">
-        <!-- task title -->
-        <div class="title">
-            <input placeholder="Title" [(ngModel)]="task.title" required="true">
-        </div>
+    <!-- description textarea -->
+    <div class="description">
+        <textarea [(ngModel)]="task.description" placeholder="Things to-do ..."></textarea>
+    </div>
+</div>
 
-        <!-- Category -->
 
-        <div class="category flex-1">
-            <label for="category">CAT</label>
-            <select #catSelect (change)="saveCategory($event)" [(ngModel)]="task.category" >
-                <option *ngIf="customCategory == ''" > - Choose a category - </option>
-                <option value="Custom Category"> - Add Category - </option>
-                <option *ngFor="let category of db.categories" value={{category}}>{{category}}</option>
-            </select>
+<div class="sectionTwo">
+    <!-- Due Date -->
+    <mat-form-field class="datePicker example-full-width" appearance="fill">
+        <mat-label *ngIf="!taskservice.editMode">Choose a date</mat-label>
+        <mat-label *ngIf="taskservice.editMode">{{ task.dueTo }}</mat-label>
+        <input matInput [(ngModel)]="task.dueTo" required="true" [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
 
-            <div *ngIf="openCategoryPopUp" class="categoryPopUp">
-                <label for="category">New Category</label>
-                <input #inputCat="ngModel" minlength="3" [(ngModel)]="customCategory" type="text">
-                <div *ngIf="inputCat.errors?.['minlength']">
-                    Name must be at least 3 characters long.
-               </div> 
-                <button (click)="addCustomCategory()">save</button>
-                <button  (click)="closeCustomCategory()">cancel</button>
+    <!-- Urgency -->
+    <div class="urgency">
+        <!-- <div>Urgency</div> -->
+        <button [class.activeButton]="activeUrgency == 'normal'" (click)="setUrgency('normal')">Normal</button>
+        <button [class.activeButton]="activeUrgency == 'urgent'" (click)="setUrgency('urgent')">Urgent</button>
+        <button [class.activeButton]="activeUrgency == 'priority'" (click)="setUrgency('priority')">Priority</button>
+    </div>
+
+    <div class="category">
+        <!-- <label for="category">CAT</label> -->
+        <select #catSelect (change)="saveCategory($event)" [ngModel]="task.category||''">
+            <option *ngIf="customCategory == ''"  value=""> - Choose a category - </option>
+            <option value="Custom Category"> - Add Category - </option>
+            <option *ngFor="let category of db.categories" [ngValue]="category">{{category}}</option>
+        </select>
+
+        <div *ngIf="openCategoryPopUp" class="categoryPopUp">
+            <label for="category">New Category</label>
+            <input #inputCat="ngModel" minlength="3" [(ngModel)]="customCategory" type="text">
+            <div *ngIf="inputCat.errors?.['minlength']">
+                Name must be at least 3 characters long.
             </div>
+            <button (click)="addCustomCategory()">save</button>
+            <button (click)="closeCustomCategory()">cancel</button>
         </div>
     </div>
 
+    <!-- Users -->
+    <div class="user">
 
-    <div class="row">
-        <!-- description textarea -->
-        <div class="description flex-1">
-            <textarea [(ngModel)]="task.description" placeholder="Things to-do ..."></textarea>
-        </div>
+        <!-- <label for="user">Responsibility</label> -->
+        <select [ngModel]="task.users ||''">
+            <option value="">Select Responsibility</option>
+            <option *ngFor="let user of db.users" [ngValue]="user"> {{user.firstName}} {{user.lastName}}</option>
+        </select>
 
-        <div class="column flex-1">
-            <!-- Due Date -->
-            <mat-form-field class="datePicker example-full-width" appearance="fill">
-                <mat-label *ngIf="!taskservice.editMode">Choose a date</mat-label>
-                <mat-label *ngIf="taskservice.editMode">{{ task.dueTo }}</mat-label>
-                <input matInput [(ngModel)]="task.dueTo" required="true" [matDatepicker]="picker">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-            
-            <!-- Urgency -->
-            <div class="urgency">
-                <div>Urgency</div>
-                <button [class.activeButton]="activeUrgency == 'normal'" (click)="setUrgency('normal')">Normal</button>
-                <button [class.activeButton]="activeUrgency == 'urgent'" (click)="setUrgency('urgent')">Urgent</button>
-                <button [class.activeButton]="activeUrgency == 'priority'" (click)="setUrgency('priority')">Priority</button>
-    
-            </div>
-        </div>
     </div>
 
-    <div class="row">
-
-        <!-- Users -->
-        <div class="flex-1">
-            <label for="user">Responsibility</label>
-            <select name="user" id="user-select" [(ngModel)]="task.users">
-                <option value=""> - Team Member  -</option>
-                <option *ngFor="let user of db.users" value={{user}}>
-                    <img class="userImg" src="{{user.userImage}}">
-                    {{user.firstName}} {{user.lastName}}
-                </option>
-            </select>
-        </div>
-
-
+    <div>
         <button (click)="saveTask(task)" class="button">Save</button>
-        <button (click)="closeWithoutSave()" class="button btn-cancel">Cancel</button>
-
+        <button *ngIf="taskservice.taskPopupOpen" (click)="closeWithoutSave()" class="button btn-cancel">
+            Cancel
+        </button>
     </div>
+
+
 </div>

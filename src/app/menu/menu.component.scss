@@ -10,6 +10,22 @@
     padding-right: var(--paddingPage);
 }
 
+a{
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover{
+        color: var(--hover);
+    }
+}
+
+.icon{
+    width: 20px;
+    height: 20px;
+    cursor:pointer;
+    filter: invert(19%) sepia(83%) saturate(707%) hue-rotate(248deg) brightness(47%) contrast(92%);
+}
+
 .border-bottom {
     position: absolute;
     height: 1px;
@@ -19,28 +35,19 @@
     bottom: 0;
 }
 
-.user{
+.sectionLeft{
+    display: flex;
+    align-items: center;
+    
+    gap: 1em;
+}
+
+.sectionRight{
     display: flex;
     align-items: center;
     gap: 1em;
-
-    .userImage{
-        border-radius: 8px;
-        background-color: rgb(89, 42, 97);
-        width: 45px;
-        height: 45px;
-    }
 }
 
-.links{
-    display: flex;
-    align-items: center;
-    gap: 1em;
-
-    a{
-        text-decoration: none;
-    }
-}
 
 .home{
     position: relative;
@@ -61,8 +68,4 @@
     filter: opacity(1);
     }
 }
-.img-home{
-    width: 20px;
-    height: 20px;
-    filter: invert(19%) sepia(83%) saturate(707%) hue-rotate(248deg) brightness(47%) contrast(92%);
-}
+

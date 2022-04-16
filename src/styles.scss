@@ -23,17 +23,14 @@
   --primary-light: #f1fbf7;
   --primary-dark: rgba(22, 4, 54, 0.956);
   --secondary: #27344b;
-  --secondary-dark: #1b1160;
   --accent1: #e902b3;
-  --accent2: #13e2a4;
-  --muted: #12bb88; // z.B. Menu inactive tab
-  --link: lightgrey;
-  --assetGrey: rgb(156, 164, 173);
+  --hover:  rgba(140, 120, 173, 0.956);
   --font-bold: 400;
   --font-xBold: 600;
   --font-light: 200;
   --font-small: 12px;
-  --paddingPage: 3rem;
+  --paddingPage: 120px;
+  --paddingPageTopBottom: 44px;
 }
 
 h1,
@@ -65,7 +62,7 @@ mat-option {
 
 // selector background
 .mat-form-field-appearance-fill .mat-form-field-flex {
-  background-color: rgb(255, 255, 255);
+  // background-color: rgb(255, 255, 255);
 }
 
 .mat-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-form-field-flex {
@@ -97,7 +94,11 @@ mat-option {
 }
 
 .mat-calendar {
-  background-color: white !important;
+  background-color: var(--primary-dark)!important;
+}
+
+.mat-button-wrapper>*{
+  color: white!important;
 }
 
 .mat-select-panel .mat-optgroup-label,

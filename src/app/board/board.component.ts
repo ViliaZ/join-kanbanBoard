@@ -32,14 +32,14 @@ export class BoardComponent implements OnInit {
 
   // input New Board
   addNewBoard() {
-    console.log(this.newBoardTitle);
-    
-    if(this.newBoardTitle.length > 0 && !this.checkDuplicates(this.newBoardTitle)){
+    if(this.newBoardTitle.length > 0 && !this.checkDuplicates(this.newBoardTitle)){      
       let newBoard = { 'name': this.newBoardTitle, 'tasks': [], 'editable': false, 'createdAt': new Date().getTime() };
       this.db.addDocToCollection('boards', newBoard);
     }
     else{
-      this.doublicateAlert = true;
+      this.newBoardTitle = '';
+      this.doublicateAlert = true
+      setTimeout(()=>{ this.doublicateAlert = false},2000)
     }
   }
 
@@ -59,14 +59,14 @@ export class BoardComponent implements OnInit {
     console.log('stoppropagation', event);
   }
 
-  saveBoardTitle(inputTitle: string, boardIDinFirestore: any, i: number) {
+  async saveBoardTitle(inputTitle: string, boardIDinFirestore: any, i: number) {
     if (inputTitle === 'backlog' || inputTitle === 'Backlog') {
       alert('Backlog Tasks are already sorted to "Backlog" Section. Please choose another Title')
       this.setFocusToTitle(i);
       return
     }
     // handle duplicate check
-    if (this.checkDuplicates(inputTitle) == false && inputTitle.length > 0){ // no duplicates found, proceed normally
+    if (await this.checkDuplicates(inputTitle) == false && inputTitle.length > 0){ // no duplicates found, proceed normally
       this.db.boards[i].editable = false;
       this.db.updateDoc('boards', boardIDinFirestore, { name: inputTitle });
       this.updateTasksOnBoard(inputTitle, boardIDinFirestore, i); // all tasks must change reference to new board name
@@ -79,9 +79,9 @@ export class BoardComponent implements OnInit {
   }
 
   // Check for Title DUPLICATES --> boolean
-  checkDuplicates(inputTitle: string) {
+  async checkDuplicates(inputTitle: string) {
     this.doublicateAlert = false;
-    let findDouplicate = this.db.boards.filter((board: any) => {
+    let findDouplicate = await this.db.boards.filter((board: any) => {
       return (board.name == inputTitle)
     })
     if (findDouplicate.length <= 1) { //  1 means, its existing because ngModel already pushed the new name in local variable in db.service (boards)
@@ -141,12 +141,16 @@ export class BoardComponent implements OnInit {
   }
 
   drag(ev: any) {
+    console.log( ev.target.id);
     ev.dataTransfer.setData("text", ev.target.id);
+  
     // ev.target.id containes the HTML id="" of the div - the id of each task div is set to be the customID in Firestore for the element
   }
 
   drop(ev: any, targetboard: string) {
     ev.preventDefault();
+    console.log(targetboard);
+    
     let dataID = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(dataID));
     // "data" returns the HTML Id of the dragged element - this id is set to be the customID in Firestore for the element

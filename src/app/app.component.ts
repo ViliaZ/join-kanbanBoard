@@ -13,7 +13,7 @@ export class AppComponent {
 
   constructor(private db: DatabaseService, public router: Router, public taskservice: TasksService) {
     this.db.getBoardAndTaskData;
-    setTimeout(() => { this.initializeBoards() }, 2000)
+    setTimeout(() => { this.initializeBoards() }, 2500)
   }
 
   // only done ONCE - when first time adding a task in Join
@@ -25,6 +25,7 @@ export class AppComponent {
 
   addTaskPopUp(){
     this.taskservice.taskPopupOpen = true;
+
   }
 
 }

@@ -1,3 +1,4 @@
+import { temporaryAllocator } from '@angular/compiler/src/render3/view/util';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { DatabaseService } from 'src/services/database.service';
 import { TasksService } from 'src/services/tasks.service';
@@ -19,6 +20,7 @@ export class NewTaskComponent implements OnInit {
   public openCategoryPopUp: boolean = false;
   public currentTask: any;
   public activeUrgency: string = 'normal';
+ngValue: any = null;
 
   // via ng Model
   public task: any = {

@@ -1,26 +1,33 @@
-:host{
-    display: flex;
-    height: 100%;
-    max-height: 100%;
-    padding: var(--paddingPage);
-}
-
-.body-dashboard {
-    border-radius: 12px;
-}
-
-.flex-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 20px;
-}
-
-.flex-column {
+:host {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    justify-content: space-between;
+    height: 100%;
+    max-height: 100%;
+    padding: var(--paddingPageTopBottom) var(--paddingPage);
+    border-radius: 12px;
+    flex-wrap: wrap;
 }
+
+
+//upper part
+.sectionOne {
+    display: flex;
+    gap: 2em;
+    flex-wrap: wrap;
+
+    .containerLeft{
+        width: 40%;
+    }
+
+    .containerRight{
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+
 
 .user {
     img {
@@ -30,18 +37,18 @@
     }
 }
 
-
 .card {
     width: 150px;
     height: 150px;
     border-radius: 12px;
-    background-color: rgba(128, 128, 128, 0.726);
+    background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
     box-shadow: rgb(0 0 0 / 12%) 1px 1px 6px;
-    color: white;
+    // color: white;
 
     div {
         color: white;
@@ -56,4 +63,14 @@
     div {
         color: white;
     }
+}
+
+
+
+app-new-task {
+    width: 100%;
+    height:50%;
+    // background-color: white;
+    border-radius: 12px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }

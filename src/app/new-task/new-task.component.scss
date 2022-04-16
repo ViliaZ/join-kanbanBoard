@@ -1,49 +1,40 @@
-.body-addTask {
-    position: absolute; 
-    z-index: 100;
-    top: 0; 
-    bottom: 0; 
-    left: 0; 
-    right: 0;
-    background-color: rgb(255, 255, 255);
+:host {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: fit-content;
+    gap: 44px;
+    padding: 44px;
     border-radius: 12px;
-    height: max-content;
-    max-height: 100%;
-    max-width: 1000px;
-    margin: auto;
-    padding: 30px;
+}
+
+.sectionOne {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 35px;
+    width: 50%;
+    height: 100%;
+    gap: 12px;
 }
+
+.sectionTwo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 50%;
+    height: 100%;
+    gap: 12px;
+}
+
 .demo-inline-calendar-card {
     width: 300px;
-  }
-.row {
-    display: flex;
-    // align-items: center;
-    justify-content: center;
-    gap: 40px;
-    width: 100%;
-}
-
-.column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.flex-1 {
-    flex: 1;
 }
 
 .title {
-    flex: 1;
-    border: 1px black solid;
-    background-color: white;
+    // border: 1px black solid;
+    background-color:transparent;
     border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
 
     input {
         width: 100%;
@@ -52,16 +43,18 @@
         border: unset;
         padding: 12px;
 
-        &::placeholder{
+        &::placeholder {
             font-size: 16px;
         }
     }
 }
 // border: 1px solid darkgrey;
 .description {
+    flex: 1;
     border-radius: 12px;
-    border: 1px black solid;
-    background-color: white;
+    // border: 1px black solid;
+    background-color: transparent;
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
 
     textarea {
         resize: none;
@@ -78,11 +71,20 @@
 }
 
 .urgency {
+    display: flex;
+    gap: 12px;
     width: 100%;
+
+    button {
+        width: 33%;
+        padding: 8px 16px;
+        border-radius: 6px;
+        border: none;
+    }
 }
 
-.activeButton{
-    background-color: red;
+.activeButton {
+    background-color: var(--accent1);
 }
 
 .datePicker {
@@ -90,11 +92,42 @@
     border-radius: 12px;
 }
 
+.user {
+    width: 100%;
+
+    select {
+        width: 100%;
+        padding: 4px;
+        border: none;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+        border-radius: 6px;
+    }
+}
+
+.category {
+    position: relative;
+    width: 100%;
+
+    select {
+        width: 100%;
+        padding: 4px;
+        border: none;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+        border-radius: 6px;
+    }
+
+    .categoryPopUp {
+        position: absolute;
+        top: -20px;
+    }
+}
+
+// save-Button
 .button {
-    border: 1px solid black;
+    border: none;
     border-radius: 12px;
-    height: max-content;
     font-size: 16px;
+    width: 100%;
     padding: 8px 84px;
     cursor: pointer;
 }
@@ -103,23 +136,6 @@ button:disabled {
     background-color: orange;
 }
 
-.btn-cancel{
+.btn-cancel {
     background-color: unset;
-}
-
-
-.userImg{
-    width: 30px;
-    height: 30px; 
-    border-radius: 50%;
-}
-
-.category{
-    position: relative;
-
-    .categoryPopUp{
-        position: absolute;
-        top: -20px; 
-      
-    }
 }
