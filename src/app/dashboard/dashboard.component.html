@@ -77,7 +77,7 @@
                <div>Task Details:</div> 
                <div><span>On Board:</span> {{ nextDeadlineTask.board }} </div> 
                <div><span>Category:</span> {{ nextDeadlineTask.category }} </div> 
-               <div *ngIf="nextDeadlineTasks.length > 1"> + {{ nextDeadlineTasks.length-1 }} more task(s) with same due date</div> 
+               <div *ngIf="nextDeadlineTasks.length > 1"> +{{ nextDeadlineTasks.length-1 }}further task(s)</div> 
             </div>
 
         </div>

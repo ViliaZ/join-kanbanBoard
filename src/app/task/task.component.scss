@@ -109,7 +109,7 @@
 .icon-pin {
     display: none;
     position: absolute;
-    right: -2px;
+    right: -8px;
     top: 0px;
     width: 18px;
     height: 18px;
@@ -120,13 +120,13 @@
     cursor: pointer;
 
     &:hover{
-        filter: opacity(0.6);
+        filter: opacity(0.8);
         transform: rotateZ(33deg);
     }
 
     &.pinRotation {
         transform: rotateZ(33deg);
-        filter: opacity(0.6);
+        filter: opacity(0.8);
     }
 }
 
@@ -134,7 +134,7 @@
 
 .icon-pin-fixed {
     position: absolute;
-    right: -2px;
+    right: -8px;
     top: 0px;
     width: 18px;
     height: 18px;
@@ -145,13 +145,13 @@
 
     &.pinRotation {
         transform: rotateZ(33deg);
-        filter: opacity(0.6);
+        filter: opacity(0.8);
     }
 }
 
 .icon-delete{
     position: absolute;
-    right: 22px;
+    right: 16px;
     top: 0px;
     width: 16px;
     height: 16px;
@@ -160,7 +160,22 @@
     cursor: pointer;
 
     &:hover{
-        filter: opacity(0.6);
+        filter: opacity(0.8);
+    }
+}
+
+.icon-edit{
+    position: absolute;
+    right: 40px;
+    top: 0px;
+    width: 16px;
+    height: 16px;
+    display: none;
+    filter: opacity(0.3);
+    cursor: pointer;
+
+    &:hover{
+        filter: opacity(0.8);
     }
 }
 
@@ -170,6 +185,10 @@
     }
 
     :hover .icon-delete{
+        display: block;
+    }
+
+    :hover .icon-edit{
         display: block;
     }
 }

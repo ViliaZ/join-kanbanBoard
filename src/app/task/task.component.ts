@@ -56,11 +56,16 @@ export class TaskComponent implements OnInit {
   }
 
   deleteTask(task: any, event: Event) {
-    event.stopImmediatePropagation();
+    event.stopImmediatePropagation(); // prevent opening details view (card expansion)
     this.db.deleteDoc('tasks', task.customIdName)
   }
 
 
-
+  editTask(task: any, event: Event){
+    event.stopImmediatePropagation();
+    this.tasksservice.currentTask = task;
+    this.tasksservice.taskPopupOpen = true;
+    this.tasksservice.editMode = true;
+  }
 
 }
