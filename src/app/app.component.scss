@@ -20,17 +20,32 @@
     overflow: auto;
 }
 
-.asOverlay{
-    position: absolute; 
-    background-color: white!important;
-    width: 100%;
-    height: 100%;
-    top: 0; 
-    bottom: 0; 
-    left: 0; 
-    right: 0;
+.asOverlay {
+    position: absolute;
+    background-color: white !important;
+    width: calc(100% - var(--paddingPage));
+    height: calc(100% - var(--paddingPage));
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 100;
+}
 
+.blurOverlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.827);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(13.5px);
+    -webkit-backdrop-filter: blur(13.5px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    z-index: 90;
 }
 
 .plus-wrapper {
@@ -64,7 +79,7 @@
             width: 44px;
             height: 6px;
             background-color: rgba(242, 77, 179, 0.978);
-            border:rgb(103, 31, 247) 1px solid;
+            border: rgb(103, 31, 247) 1px solid;
 
             border-radius: 3px;
             z-index: 12;
@@ -80,7 +95,7 @@
             width: 6px;
             background-color: rgb(249, 249, 19);
             border-radius: 3px;
-            border:rgba(242, 77, 179, 0.37) 1px solid;
+            border: rgba(242, 77, 179, 0.37) 1px solid;
             z-index: 11;
         }
     }

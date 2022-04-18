@@ -25,7 +25,6 @@ export class AppComponent {
 
   addTaskPopUp(){
     this.taskservice.taskPopupOpen = true;
-
   }
 
 }

@@ -22,7 +22,6 @@
     &.animateExpansion {
         max-height: 500px !important;
     }
-
 }
 
 .first-row {
@@ -49,8 +48,9 @@
 
     .title {
         font-weight: bold;
-        width: 154px;
-        overflow: auto;
+        width: 155px;
+        overflow-wrap: break-word;
+
     }
     .urgency {
         text-align: center;

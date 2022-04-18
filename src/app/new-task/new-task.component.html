@@ -15,10 +15,10 @@
     <!-- Due Date -->
     <mat-form-field class="datePicker example-full-width" appearance="fill">
         <mat-label *ngIf="!taskservice.editMode">Choose a Due Date</mat-label>
-        <mat-label *ngIf="taskservice.editMode">{{ task.dueTo }}</mat-label>
-        <input  [min]="minDate" matInput [(ngModel)]="task.dueTo" required="true" [matDatepicker]="picker">
+        <mat-label *ngIf="taskservice.editMode">editmode</mat-label>
+        <input [min]="minDate" matInput [(ngModel)]="task.dueTo" required="true" [matDatepicker]="picker">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker  [startAt]="date"  #picker></mat-datepicker>
+        <mat-datepicker [startAt]="date"  #picker></mat-datepicker>
     </mat-form-field>
 
     <!-- Urgency -->
@@ -32,7 +32,7 @@
         <select #catSelect (change)="saveCategory($event)" [ngModel]="task.category||''">
             <option *ngIf="customCategory == ''"  value="">Choose a category</option>
             <option value="Custom Category"> Add Category</option>
-            <option *ngFor="let category of db.categories" value={{category}}>{{ category }}</option>
+            <option *ngFor="let category of db.categories" value={{category}}>{{ category }} </option>
         </select>
 
         <div *ngIf="openCategoryPopUp" class="categoryPopUp">

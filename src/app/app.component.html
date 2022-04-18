@@ -9,6 +9,10 @@
     </app-new-task>
 </div>
 
+<div    
+    *ngIf="this.taskservice.taskPopupOpen && (router.url.includes('backlog') || router.url.includes('board'))" 
+    class="blurOverlay">
+</div>
 
 <div 
     (click)="addTaskPopUp()" 
