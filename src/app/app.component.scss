@@ -38,8 +38,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    right: 3em;
-    bottom: 3em;
+    right: var(--paddingPage);
+    bottom: var(--paddingPageTopBottom);
     height: 84px;
     width: 84px;
     // background: var(--gradientColors);

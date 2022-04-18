@@ -14,27 +14,25 @@
 <div class="sectionTwo">
     <!-- Due Date -->
     <mat-form-field class="datePicker example-full-width" appearance="fill">
-        <mat-label *ngIf="!taskservice.editMode">Choose a date</mat-label>
+        <mat-label *ngIf="!taskservice.editMode">Choose a Due Date</mat-label>
         <mat-label *ngIf="taskservice.editMode">{{ task.dueTo }}</mat-label>
-        <input matInput [(ngModel)]="task.dueTo" required="true" [matDatepicker]="picker">
+        <input  [min]="minDate" matInput [(ngModel)]="task.dueTo" required="true" [matDatepicker]="picker">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+        <mat-datepicker  [startAt]="date"  #picker></mat-datepicker>
     </mat-form-field>
 
     <!-- Urgency -->
     <div class="urgency">
-        <!-- <div>Urgency</div> -->
+        <button [class.activeButton]="activeUrgency == 'low'" (click)="setUrgency('low')">Low</button>
         <button [class.activeButton]="activeUrgency == 'normal'" (click)="setUrgency('normal')">Normal</button>
         <button [class.activeButton]="activeUrgency == 'urgent'" (click)="setUrgency('urgent')">Urgent</button>
-        <button [class.activeButton]="activeUrgency == 'priority'" (click)="setUrgency('priority')">Priority</button>
     </div>
 
     <div class="category">
-        <!-- <label for="category">CAT</label> -->
         <select #catSelect (change)="saveCategory($event)" [ngModel]="task.category||''">
-            <option *ngIf="customCategory == ''"  value=""> - Choose a category - </option>
-            <option value="Custom Category"> - Add Category - </option>
-            <option *ngFor="let category of db.categories" [ngValue]="category">{{category}}</option>
+            <option *ngIf="customCategory == ''"  value="">Choose a category</option>
+            <option value="Custom Category"> Add Category</option>
+            <option *ngFor="let category of db.categories" value={{category}}>{{ category }}</option>
         </select>
 
         <div *ngIf="openCategoryPopUp" class="categoryPopUp">
@@ -51,7 +49,6 @@
     <!-- Users -->
     <div class="user">
 
-        <!-- <label for="user">Responsibility</label> -->
         <select [ngModel]="task.users ||''">
             <option value="">Select Responsibility</option>
             <option *ngFor="let user of db.users" [ngValue]="user"> {{user.firstName}} {{user.lastName}}</option>

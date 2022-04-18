@@ -21,6 +21,7 @@ export class TaskComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   expandCard(task: any) {
     console.log('expandCard')
 
@@ -44,23 +45,22 @@ export class TaskComponent implements OnInit {
 
 
     // let tasksArray = this.db.boards[currentBoardIndex].tasks;
-    
-    
-
-
-
 
     // console.log('currentBoardIndex:', currentBoardIndex);
-      if (!task.isPinnedToBoard) {
-        this.db.updateDoc('tasks', task.customIdName, { 'isPinnedToBoard': true, 'createdAt': new Date().getTime() });
-
-      }
-      else {
-        this.db.updateDoc('tasks', task.customIdName, { 'isPinnedToBoard': false });
-      }
-
-
+    if (!task.isPinnedToBoard) {
+      this.db.updateDoc('tasks', task.customIdName, { 'isPinnedToBoard': true, 'createdAt': new Date().getTime() });
+    }
+    else {
+      this.db.updateDoc('tasks', task.customIdName, { 'isPinnedToBoard': false });
+    }
   }
+
+  deleteTask(task: any, event: Event) {
+    event.stopImmediatePropagation();
+    this.db.deleteDoc('tasks', task.customIdName)
+  }
+
+
 
 
 }

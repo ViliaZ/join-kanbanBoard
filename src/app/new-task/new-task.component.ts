@@ -20,7 +20,9 @@ export class NewTaskComponent implements OnInit {
   public openCategoryPopUp: boolean = false;
   public currentTask: any;
   public activeUrgency: string = 'normal';
-ngValue: any = null;
+  public date: any = new Date;  // datepicker default date
+  public minDate: any = new Date;  // minimum date for datepicker
+  ngValue: any = null;
 
   // via ng Model
   public task: any = {
@@ -32,7 +34,7 @@ ngValue: any = null;
     category: 'Other',
     users: '',
     isPinnedToBoard: '',
-    createdAt:''
+    createdAt: ''
   }
 
   constructor(public db: DatabaseService, public taskservice: TasksService) {
@@ -53,6 +55,8 @@ ngValue: any = null;
       event.target.value = '';
     }
     else {
+      console.log(event.target.value);
+      
       this.task.category = event.target.value;
     }
   }
@@ -68,10 +72,10 @@ ngValue: any = null;
     this.openCategoryPopUp = false;
   }
 
-  saveTask(task:any) {
-    console.log('editmode?',this.taskservice.editMode);
-    console.log('currentTasks?',this.taskservice.currentTask);
-    
+  saveTask(task: any) {
+    console.log('editmode?', this.taskservice.editMode);
+    console.log('currentTasks?', this.taskservice.currentTask);
+
     // fill the task object with input from ngModel
     if (!this.taskservice.editMode) {
       this.task.board = 'backlog';  // default

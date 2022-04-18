@@ -6,6 +6,7 @@ import { switchMap } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class DatabaseService {
 
   public categories: string[] = ['Design', 'Marketing', 'Finance', 'Admin', 'Other']
@@ -17,11 +18,13 @@ export class DatabaseService {
     }
   ];
   public boards: any = [];
-  public tasks: any = [];
   public backlogtasks: any = [];
+  public urgentTasks: any = [];
+  public todoTasks: any = [];
+  public allTasks: any = [];
   public backlogEmpty = () => { return (this.backlogtasks.length == 0) }
   public initializationDone = () => {
-    let result = this.boards.find((item: any) => { return item.name == 'ToDo'})
+    let result = this.boards.find((item: any) => { return item.name == 'ToDo' })
     return result
   }
 
@@ -41,27 +44,56 @@ export class DatabaseService {
           .valueChanges({ idField: 'customIdName' });
       }))
       .subscribe((result) => {
-        this.sortTasksToBoards(result);
+        this.handleTasks(result);
       });
   }
 
 
-  sortTasksToBoards(tasks: any) {
-    this.boards.forEach((board: any) => board.tasks = []);
-    this.backlogtasks = [];
-
+  async handleTasks(tasks: any) {
+    this.emptyAllArrays();
     tasks.forEach((task: any) => {
-      task.dueTo = this.convertDateFormat(task, 'en-GB')
-
-      for (let i = 0; i < this.boards.length; i++) {
-        if (task.board === 'backlog') {
-          this.handleBacklogTasks(task);
-        }
-        else { this.handleBoardTasks(task, i); }
-      }
+      // task.dueTo = this.convertDateFormat(task, 'en-GB');
+      this.filterAllTasks(task); 
+      this.filterUrgentTasks(task);
+      this.filterToDoTasks(task);
+      this.sortTasksToBoards(task);
     })
     this.sortBoardsDescending();
   }
+
+  emptyAllArrays() {
+    this.boards.forEach((board: any) => board.tasks = []);
+    this.backlogtasks = [];
+    this.allTasks = [];
+    this.todoTasks = [];
+    this.urgentTasks = [];
+  }
+
+  sortTasksToBoards(task: any) {
+    for (let i = 0; i < this.boards.length; i++) {
+      if (task.board === 'backlog') {
+        this.handleBacklogTasks(task);
+      }
+      else { this.handleBoardTasks(task, i); }
+    }
+  }
+
+  filterUrgentTasks(task: any) {
+    if (task.urgency == 'urgent') {
+      this.urgentTasks.push(task)
+    }
+  }
+
+  filterAllTasks(task: any) {    
+    this.allTasks.push(task);
+  }
+
+  filterToDoTasks(task: any) {
+    if (task.board == 'ToDo') {
+      this.todoTasks.push(task)
+    }
+  }
+
 
   convertDateFormat(task: any, targetDateFormat: string) {
     return new Date(task.dueTo['seconds'] * 1000).toLocaleDateString(targetDateFormat);
@@ -113,8 +145,6 @@ export class DatabaseService {
   deleteDoc(collection: string, docID: string) {
     this.firestore.collection(collection).doc(docID).delete();
   }
-
-
 }
 
 // ****************** OLD VERSION FOR REFERENCE: NOW MADE INTO SWITCHMAP METHOD ABOVE ********
@@ -133,7 +163,7 @@ export class DatabaseService {
   //     .collection('tasks')
   //     .valueChanges({ idField: 'customIdName' })
   //     .subscribe((result) => {
-  //       this.sortTasksToBoards(result);
+  //       this.handleTasks(result);
   //     });
   // }
   // ****************** OLD VERSION FROM SWITCHMAP METHOD ABOVE ********

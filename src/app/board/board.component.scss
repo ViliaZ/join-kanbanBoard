@@ -217,6 +217,31 @@
     padding: 16px;
     transition: 250ms all ease-in-out;
 
+    button{
+        margin-left: 6px;
+        border: unset;
+        background-color: var(--primary-dark);
+        color:white;
+        padding: 4px 6px;
+        border-radius: 6px;
+        cursor: pointer;
+
+        &:hover{
+           background-color: var(--hover);
+        }
+    }
+
+    #confirm{
+        background-color: var(--bg);
+        border: 1px solid var(--primary-dark);
+        color: var(--primary-dark);
+
+        &:hover{
+            background-color: var(--hover);
+            color: white;
+         }
+    }
+
     img {
         height: 24px;
         margin-right: 10px;

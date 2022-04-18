@@ -6,40 +6,36 @@
     max-height: 100%;
     padding: var(--paddingPageTopBottom) var(--paddingPage);
     border-radius: 12px;
-    flex-wrap: wrap;
 }
-
 
 //upper part
 .sectionOne {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 44px;
     gap: 2em;
+    flex: 1;
     flex-wrap: wrap;
 
-    .containerLeft{
-        width: 40%;
-    }
-
-    .containerRight{
-        flex: 1;
+    .containerLeft {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        width: fit-content;
+        flex: 1;
     }
-}
 
-
-
-.user {
-    img {
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
+    .containerRight {
+        display: flex;
+        height: fit-content;
+        gap: 1em;
     }
 }
 
 .card {
-    width: 150px;
-    height: 150px;
+    position: relative;
+    width: 200px;
+    height: 175px;
     border-radius: 12px;
     background-color: white;
     display: flex;
@@ -48,28 +44,127 @@
     justify-content: center;
     flex-wrap: wrap;
     box-shadow: rgb(0 0 0 / 12%) 1px 1px 6px;
-    // color: white;
 
-    div {
-        color: white;
+    .icon {
+        position: absolute;
+        left: 14px;
+        top: 14px;
+        width: 34px;
+        height: 34px;
     }
 }
 
-.date {
+.statistic {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px;
+    width: 300px;
+    height: 175px;
+
+    .row {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 6px;
+
+        .row-label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 92px;
+            max-width: 114px;
+
+            div:last-child {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(128, 128, 128, 0.137);
+                padding: 5px;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+            }
+        }
+
+        .fullwidth {
+            flex: 1;
+            height: 12px;
+            background-color: rgba(128, 128, 128, 0.137);
+            margin-left: 12px;
+            border-radius: 6px;
+
+            .bar {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: var(--accent1);
+                border-radius: 8px;
+                height: 100%;
+                font-size: var(--font-small);
+                color: var(--primary-light);
+            }
+        }
+    }
+}
+
+.nextDueTask {
+    position: relative;
+
+    .dueDate {
+        font-size: 34px;
+    }
+
+    .taskDetails-onhover {
+        display: none;
+    }
+
+    &:hover .taskDetails-onhover {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 14px;
+        border-radius: 12px;
+        background-color: white;
+        z-index: 3;
+
+        div:first-child {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            height: 40%;
+            width: 100%;
+            border-radius: 8px;
+            background-color: rgba(128, 128, 128, 0.137);
+        }
+
+        span{
+            font-weight: var(--font-bold);
+        }
+    }
+}
+
+.urgentTasks {
     .number {
-        font-size: 30px;
-        color: white;
-    }
-    div {
-        color: white;
+        font-size: 34px;
     }
 }
-
-
 
 app-new-task {
     width: 100%;
-    height:50%;
+    height: 60%;
     // background-color: white;
     border-radius: 12px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;

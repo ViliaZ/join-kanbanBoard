@@ -31,16 +31,21 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void { }
 
   // input New Board
-  addNewBoard() {
-    if(this.newBoardTitle.length > 0 && !this.checkDuplicates(this.newBoardTitle)){      
-      let newBoard = { 'name': this.newBoardTitle, 'tasks': [], 'editable': false, 'createdAt': new Date().getTime() };
-      this.db.addDocToCollection('boards', newBoard);
-    }
-    else{
-      this.newBoardTitle = '';
-      this.doublicateAlert = true
-      setTimeout(()=>{ this.doublicateAlert = false},2000)
-    }
+  async addNewBoard() {
+   let duplicate = await this.checkDuplicates(this.newBoardTitle);
+   
+  if(this.newBoardTitle.length > 0 && !duplicate){   
+    let newBoard = { 'name': this.newBoardTitle, 'tasks': [], 'editable': false, 'createdAt': new Date().getTime() };
+    this.db.addDocToCollection('boards', newBoard);
+  }
+  else{
+    this.newBoardTitle = '';
+    this.doublicateAlert = true
+    setTimeout(()=>{ this.doublicateAlert = false},2000)
+  }
+
+
+
   }
 
   // Board Title Edit

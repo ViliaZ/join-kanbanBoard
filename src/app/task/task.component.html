@@ -9,6 +9,13 @@
             </div>
 
                 <img 
+                class="icon-delete" 
+                src="assets/img/delete.png" 
+                [class.pinRotation]="task.isPinnedToBoard"
+                (click)="deleteTask(task, $event)">                
+                
+                
+                <img 
                 class="icon-pin" 
                 src="assets/img/pin-filled.png" 
                 [class.pinRotation]="task.isPinnedToBoard"
@@ -30,7 +37,10 @@
 
         <div class="information">
             <div class="user"></div>
-            <div>{{ task.dueTo }}</div>
+            <div class="dueTo">
+                <img src="assets/img/bell.png" alt="due to">
+                {{ task.dueTo.toDate()| date:'yyyy/MM/dd' }}
+            </div>
         </div>
     </div>
 

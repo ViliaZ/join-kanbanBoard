@@ -22,7 +22,6 @@ export class BacklogComponent implements OnInit {
 
   evaluateSearchRequest(task: any): any {
     let taskToString = JSON.stringify(task);
-    console.log('yes');
     return taskToString.includes(this.searchInput)
   }
 

@@ -11,7 +11,7 @@
         <div *ngIf="deleteBoardAlert && !doublicateAlert" class="alertDelete">
             <img src="assets/img/alert.png" alt="alert">
             Please confirm deletion. This will include all board tasks.
-            <button (click)="confirmDelete()">Confirm</button>
+            <button (click)="confirmDelete()" id="confirm">Confirm</button>
             <button (click)="deleteBoardAlert = false">Cancel</button>
         </div>
     </div>
