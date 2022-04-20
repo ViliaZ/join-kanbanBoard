@@ -9,7 +9,7 @@
     border-radius: 12px;
 }
 
-form{
+form {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -17,7 +17,7 @@ form{
     height: fit-content;
     gap: 44px;
     padding: 44px;
-    border-radius: 12px; 
+    border-radius: 12px;
 }
 
 .sectionOne {
@@ -43,7 +43,7 @@ form{
 
 .title {
     // border: 1px black solid;
-    background-color:transparent;
+    background-color: transparent;
     border-radius: 12px;
     box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
 
@@ -59,6 +59,7 @@ form{
         }
     }
 }
+
 // border: 1px solid darkgrey;
 .description {
     flex: 1;
@@ -86,7 +87,6 @@ form{
     gap: 12px;
     width: 100%;
 
-
     input {
         width: 33%;
         padding: 8px 16px;
@@ -95,7 +95,7 @@ form{
         display: none;
     }
 
-    label{
+    label {
         width: 33%;
         padding: 8px 16px;
         text-align: center;
@@ -106,14 +106,14 @@ form{
 }
 
 .activeButton {
-    background-color: var(--accent1)!important;
+    background-color: var(--accent1) !important;
+    color: var(--primary-light);
 }
 
 .datePicker {
     width: 100%;
     border-radius: 12px;
 }
-
 
 .user {
     width: 100%;
@@ -141,7 +141,48 @@ form{
 
     .categoryPopUp {
         position: absolute;
-        top: -20px;
+        display: flex;
+        justify-content: space-between;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: white;
+        font-size: var(--font-small);
+
+        input {
+            flex: 1;
+            padding-left: 8px;
+        }
+        button {
+            height: 100%;
+            padding-left: 4px;
+            padding-right: 4px;
+            font-size: var(--font-small);
+            color: var(--primary-dark);
+            border: 1px darkgrey solid;
+            border-radius: 2px;
+            background-color:var(--accent1);
+
+
+            &:disabled {
+                background-color: lightgrey;
+                color: var(--primary-light);
+            }
+        }
+
+        .validatorCategory {
+            position: absolute;
+            bottom: -32px;
+            left: 0;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 4px; 
+            padding-right: 4px;
+            background-color: white; 
+            color: red;
+
+        }
     }
 }
 
@@ -159,10 +200,13 @@ form{
 }
 
 button:disabled {
-    background-color: rgb(179, 85, 176);
-
+    background-color: lightgrey;
+    color: var(--primary-dark);
 }
 
 .btn-cancel {
     background-color: unset;
+    border: 1px solid  var(--accent1);
+    color:  var(--accent1);
+    margin-top: 8px;
 }

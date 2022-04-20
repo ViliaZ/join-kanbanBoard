@@ -11,8 +11,9 @@
     class="blurOverlay">
 </div> -->
 
-<div (click)="addTaskPopUp()" *ngIf="router.url.includes('backlog') || router.url.includes('board')"
+<div 
+  (click)="newTaskPopUp()" 
+  *ngIf="router.url.includes('backlog') || router.url.includes('board')"
   class="plus-wrapper">
-  <span class="plus">
-  </span>
+  <span class="plus"></span>
 </div>

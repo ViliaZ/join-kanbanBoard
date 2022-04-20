@@ -59,20 +59,18 @@ export class NewTaskComponent implements OnInit {
     this.activeUrgency = urgency;
   }
 
-  updateCategory(event: any) {
+  checkIfCustomCategory(event: any) {
+    console.log('event');
     if (event.target.value == 'Custom Category') {
       this.openCategoryPopUp = true;
       event.target.value = '';
-    } else {
-      console.log(event.target.value);
-      this.task.category = event.target.value;
-    }
+    } 
   }
 
   addCustomCategory() {
-    this.db.categories.push(this.customCategory);
-    this.task.category = this.customCategory;
-    this.openCategoryPopUp = false;
+  this.db.categories.push(this.customCategory);
+  this.task.category = this.customCategory;
+  this.openCategoryPopUp = false;
   }
 
   closeCustomCategory() {

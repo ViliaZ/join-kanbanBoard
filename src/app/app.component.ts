@@ -23,10 +23,9 @@ export class AppComponent {
     }
   }
 
-  addTaskPopUp(){
+  newTaskPopUp(){
     this.taskservice.taskPopupOpen = true;
     console.log('popupOpen',this.taskservice.taskPopupOpen);
-    
   }
 
 }

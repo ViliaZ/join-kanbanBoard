@@ -34,25 +34,37 @@
     </div>
 
     <div class="category">
-      <select #catSelect  [ngModel]="task.category||''" name="taskCategory" required>
+      <select  (change)="checkIfCustomCategory($event)" #catSelect  [ngModel]="task.category||''" name="taskCategory" required>
         <option *ngIf="customCategory == ''" value="">Choose a category*</option>
-        <option value="Custom Category"> Add Category</option>
+        <option value="Custom Category"> Add Category </option>
         <option *ngFor="let category of db.categories" value={{category}}>{{ category }} </option>
       </select>
 
       <div *ngIf="openCategoryPopUp" class="categoryPopUp">
-        <label for="category">New Category</label>
-        <input #inputCat="ngModel" minlength="3" [(ngModel)]="customCategory" type="text" name="taskCustomCategory">
-        <div *ngIf="inputCat.errors?.['minlength']">
-          Name must be at least 3 characters long.
+        <input 
+          #inputCat="ngModel" 
+          minlength="3"
+          maxlength="11"
+          [(ngModel)]="customCategory" 
+          type="text" 
+          name="taskCustomCategory"
+          placeholder="Custom Category"
+          >
+        <div 
+          *ngIf="inputCat.errors?.['minlength'] || inputCat.errors?.['maxlength']"
+          class="validatorCategory">
+          Please use 3-10 characters.
         </div>
-        <button (click)="addCustomCategory()">save</button>
-        <button (click)="closeCustomCategory()">cancel</button>
+
+        <div>
+          <button (click)="addCustomCategory()" [disabled]="!inputCat.value || inputCat.errors?.['minlength'] ">Save</button>
+          <button (click)="closeCustomCategory()">Cancel</button>
+        </div>
       </div>
     </div>
 
     <div class="user">
-      <select [ngModel]="task.users ||''" name="taskUser">
+      <select [ngModel]="task.users ||''" required name="taskUser">
         <option value="">Select Responsibility*</option>
         <option *ngFor="let user of db.users" [ngValue]="user"> {{user.firstName}} {{user.lastName}}</option>
       </select>
@@ -60,8 +72,17 @@
     </div>
 
     <div>
-      <button type="submit" [disabled]="!form.valid" class="button">Save</button>
-      <button *ngIf="taskservice.taskPopupOpen" (click)="closeWithoutSave()" class="button btn-cancel">
+      <button 
+        type="submit" 
+        [disabled]="!form.valid" 
+        class="button">
+        Save
+      </button>
+
+      <button 
+        *ngIf="taskservice.taskPopupOpen" 
+        (click)="closeWithoutSave()" 
+        class="button btn-cancel">
         Cancel
       </button>
     </div>

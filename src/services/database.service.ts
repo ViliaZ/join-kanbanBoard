@@ -65,19 +65,15 @@ export class DatabaseService {
   getNextDueDateTask(task: any) {
     if(this.nextDueDates.length == 0 ){ // push first task in array --> if only one task exists, this one will be the one with closest deadline
       this.nextDueDates.push(task);
-      console.log('111 first task in array', task);
     }
     else if(this.nextDueDates.length > 0 && (task.dueTo.toMillis() - this.nextDueDates[0].dueTo.toMillis() < 0) ){ // compare dueTo Date in milliseconds
      // if current task has closer deadline as task before, clear array and save current task as the closest deadline task
      this.nextDueDates = []; // clear whole array
      this.nextDueDates.push(task);
-     console.log('222 new task', task);
     }
     else if(this.nextDueDates.length > 0 && (task.dueTo.toMillis() - this.nextDueDates[0].dueTo.toMillis() == 0) ){ // two tasks with same dueDate
       this.nextDueDates.push(task); // save multiple tasks, which have same closest Due date
-      console.log('====', task);
     }
-    console.log(this.nextDueDates);
     this.nextDueDateTask = this.nextDueDates[0];
     
   }
