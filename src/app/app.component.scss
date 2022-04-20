@@ -1,106 +1,105 @@
 :host {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
 }
 
 .padding-app {
-    padding: 1.5rem var(--marginPage) 4rem var(--marginPage);
+  padding: 1.5rem var(--marginPage) 4rem var(--marginPage);
 }
 
 .main {
-    position: relative;
-    flex: 1;
-    // margin: 1.5rem var(--marginPage) 0.5rem var(--marginPage);
-    width: 100%;
-    overflow: auto;
+  position: relative;
+  flex: 1;
+  // margin: 1.5rem var(--marginPage) 0.5rem var(--marginPage);
+  width: 100%;
+  overflow: auto;
 }
 
 .asOverlay {
-    position: absolute;
-    background-color: white !important;
-    width: calc(100% - var(--paddingPage));
-    height: calc(100% - var(--paddingPage));
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 100;
+  position: absolute;
+  background-color: white;
+  width: 85%;
+  height: 75%;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 110;
 }
 
 .blurOverlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(255, 255, 255, 0.827);
-    background: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    backdrop-filter: blur(13.5px);
-    -webkit-backdrop-filter: blur(13.5px);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    z-index: 90;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.827);
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(22.5px);
+  -webkit-backdrop-filter: blur(20.5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  z-index: 90;
 }
 
 .plus-wrapper {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    right: var(--paddingPage);
-    bottom: var(--paddingPageTopBottom);
-    height: 84px;
-    width: 84px;
-    // background: var(--gradientColors);
-    z-index: 2;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: var(--paddingPage);
+  bottom: var(--paddingPageTopBottom);
+  height: 84px;
+  width: 84px;
+  // background: var(--gradientColors);
+  z-index: 2;
 
-    .plus {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        background-color: white;
-        z-index: 3;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-        cursor: pointer;
+  .plus {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: white;
+    z-index: 3;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+    cursor: pointer;
 
-        &:after {
-            content: "";
-            position: absolute;
-            left: 50%;
-            bottom: 50%;
-            transform: translate(-50%, 50%);
-            width: 44px;
-            height: 6px;
-            background-color: rgba(242, 77, 179, 0.978);
-            border: rgb(103, 31, 247) 1px solid;
+    &:after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 50%;
+      transform: translate(-50%, 50%);
+      width: 44px;
+      height: 6px;
+      background-color: rgba(242, 77, 179, 0.978);
+      border: rgb(103, 31, 247) 1px solid;
 
-            border-radius: 3px;
-            z-index: 12;
-        }
-
-        &:before {
-            content: "";
-            position: absolute;
-            left: 50%;
-            bottom: 50%;
-            transform: translate(-50%, 50%);
-            height: 44px;
-            width: 6px;
-            background-color: rgb(249, 249, 19);
-            border-radius: 3px;
-            border: rgba(242, 77, 179, 0.37) 1px solid;
-            z-index: 11;
-        }
+      border-radius: 3px;
+      z-index: 12;
     }
 
-    &:hover {
-        color: white;
+    &:before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 50%;
+      transform: translate(-50%, 50%);
+      height: 44px;
+      width: 6px;
+      background-color: rgb(249, 249, 19);
+      border-radius: 3px;
+      border: rgba(242, 77, 179, 0.37) 1px solid;
+      z-index: 11;
     }
+  }
+
+  &:hover {
+    color: white;
+  }
 }

@@ -27,6 +27,7 @@
 
     .containerRight {
         display: flex;
+        flex-wrap: wrap;
         height: fit-content;
         gap: 1em;
     }
@@ -162,8 +163,7 @@
             border-top: 1px solid rgb(190, 190, 190);
         }
 
-
-        span{
+        span {
             font-weight: var(--font-bold);
         }
     }

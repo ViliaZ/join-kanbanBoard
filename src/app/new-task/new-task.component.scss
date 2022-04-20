@@ -1,4 +1,15 @@
 :host {
+    // display: flex;
+    // align-items: center;
+    // justify-content: space-between;
+    // width: 100%;
+    // height: fit-content;
+    // gap: 44px;
+    // padding: 44px;
+    border-radius: 12px;
+}
+
+form{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -6,7 +17,7 @@
     height: fit-content;
     gap: 44px;
     padding: 44px;
-    border-radius: 12px;
+    border-radius: 12px; 
 }
 
 .sectionOne {
@@ -75,16 +86,26 @@
     gap: 12px;
     width: 100%;
 
-    button {
+
+    input {
         width: 33%;
         padding: 8px 16px;
         border-radius: 6px;
         border: none;
+        display: none;
+    }
+
+    label{
+        width: 33%;
+        padding: 8px 16px;
+        border-radius: 6px;
+        border: none;
+        background-color: lightgrey;
     }
 }
 
 .activeButton {
-    background-color: var(--accent1);
+    background-color: var(--accent1)!important;
 }
 
 .datePicker {

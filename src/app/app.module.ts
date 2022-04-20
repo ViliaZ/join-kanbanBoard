@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginPageComponent } from './login-page/login-page.component';
@@ -9,7 +8,6 @@ import { ImprintComponent } from './imprint/imprint.component';
 import { BoardComponent } from './board/board.component';
 import { BacklogComponent } from './backlog/backlog.component';
 import { MenuComponent } from './menu/menu.component';
-import { AddTaskComponent } from './add-task/add-task.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule} from '@angular/material/input';
@@ -25,10 +23,6 @@ import { NewTaskComponent } from './new-task/new-task.component';
 import { TaskComponent } from './task/task.component';
 import { LogoAnimationComponent } from './logo-animation/logo-animation.component';
 import { GradientAnimationComponent } from './gradient-animation/gradient-animation.component';
-
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +32,6 @@ import { GradientAnimationComponent } from './gradient-animation/gradient-animat
     BoardComponent,
     BacklogComponent,
     MenuComponent,
-    AddTaskComponent,
     NewTaskComponent,
     TaskComponent,
     LogoAnimationComponent,

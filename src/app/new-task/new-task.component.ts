@@ -1,7 +1,18 @@
-import { temporaryAllocator } from '@angular/compiler/src/render3/view/util';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { DatabaseService } from 'src/services/database.service';
-import { TasksService } from 'src/services/tasks.service';
+import {
+  temporaryAllocator
+} from '@angular/compiler/src/render3/view/util';
+import {
+  Component,
+  Input,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import {
+  DatabaseService
+} from 'src/services/database.service';
+import {
+  TasksService
+} from 'src/services/tasks.service';
 
 
 @Component({
@@ -20,15 +31,15 @@ export class NewTaskComponent implements OnInit {
   public openCategoryPopUp: boolean = false;
   public currentTask: any;
   public activeUrgency: string = 'normal';
-  public date: any = new Date;  // datepicker default date
-  public minDate: any = new Date;  // minimum date for datepicker
+  public date: any = new Date; // datepicker default date
+  public minDate: any = new Date; // minimum date for datepicker
   ngValue: any = null;
 
   // via ng Model
   public task: any = {
-    title: '',
+    title: 'aaaaaa',
     description: '',
-    dueTo!: '',
+    dueTo: '',
     urgency: 'normal',
     board: '',
     category: 'Other',
@@ -41,10 +52,9 @@ export class NewTaskComponent implements OnInit {
     this.task = this.taskservice.currentTask;
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  setUrgency(urgency: string = 'normal') {    // default: normal
+  setUrgency(urgency: string = 'normal') { // default: normal
     this.task.urgency = urgency;
     this.activeUrgency = urgency;
   }
@@ -53,10 +63,8 @@ export class NewTaskComponent implements OnInit {
     if (event.target.value == 'Custom Category') {
       this.openCategoryPopUp = true;
       event.target.value = '';
-    }
-    else {
+    } else {
       console.log(event.target.value);
-      
       this.task.category = event.target.value;
     }
   }
@@ -72,18 +80,19 @@ export class NewTaskComponent implements OnInit {
     this.openCategoryPopUp = false;
   }
 
+
+  // mit onsubmit ersetzen
   saveTask(task: any) {
     console.log('editmode?', this.taskservice.editMode);
     console.log('currentTasks?', this.taskservice.currentTask);
 
     // fill the task object with input from ngModel
     if (!this.taskservice.editMode) {
-      this.task.board = 'backlog';  // default
+      this.task.board = 'backlog'; // default
       this.task.createdAt = new Date().getTime(); // needed for sorting tasks in order
       this.task.isPinnedToBoard = false; // default
       this.db.addDocToCollection('tasks', this.task);
-    }
-    else {
+    } else {
       this.task = this.taskservice.currentTask;
       this.db.updateDoc('tasks', this.task.customIdName, this.task);
       this.taskservice.currentTask = {};
@@ -93,11 +102,19 @@ export class NewTaskComponent implements OnInit {
   }
 
 
+
+  submitForm(form: any) {
+
+
+    console.log('form abgeschickt', this.task.title)
+
+
+  }
+
   closeWithoutSave() {
     this.taskservice.taskPopupOpen = false;
     this.taskservice.currentTask = {};
     this.taskservice.editMode = false;
   }
-
 
 }

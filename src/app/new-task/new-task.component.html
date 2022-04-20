@@ -1,67 +1,76 @@
-<div class="sectionOne">
+<!-- <form (ngSubmit)="onSubmit(form)" #form="ngForm"> -->
+
+<form (ngSubmit)="submitForm(form)" #form="ngForm">
+  <div class="sectionOne">
     <!-- task title -->
     <div class="title">
-        <input placeholder="Title" [(ngModel)]="task.title" required="true">
+      <input placeholder="Title" [(ngModel)]="task.title" name="taskTitle">
     </div>
 
-    <!-- description textarea -->
     <div class="description">
-        <textarea [(ngModel)]="task.description" placeholder="Things to-do ..."></textarea>
+      <textarea placeholder="Things to-do ..." [(ngModel)]="task.description" name="taskDescription">
+            </textarea>
     </div>
-</div>
+  </div>
 
-
-<div class="sectionTwo">
-    <!-- Due Date -->
+  <div class="sectionTwo">
     <mat-form-field class="datePicker example-full-width" appearance="fill">
-        <mat-label *ngIf="!taskservice.editMode">Choose a Due Date</mat-label>
-        <mat-label *ngIf="taskservice.editMode">editmode</mat-label>
-        <input [min]="minDate" matInput [(ngModel)]="task.dueTo" required="true" [matDatepicker]="picker">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker [startAt]="date"  #picker></mat-datepicker>
+      <mat-label *ngIf="!taskservice.editMode">Choose a Due Date</mat-label>
+      <mat-label *ngIf="taskservice.editMode">editmode</mat-label>
+      <input [min]="minDate" matInput [(ngModel)]="task.dueTo" name="taskDueDate" required [matDatepicker]="picker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker [startAt]="date" #picker></mat-datepicker>
     </mat-form-field>
 
-    <!-- Urgency -->
     <div class="urgency">
-        <button [class.activeButton]="activeUrgency == 'low'" (click)="setUrgency('low')">Low</button>
-        <button [class.activeButton]="activeUrgency == 'normal'" (click)="setUrgency('normal')">Normal</button>
-        <button [class.activeButton]="activeUrgency == 'urgent'" (click)="setUrgency('urgent')">Urgent</button>
+      <!-- <button [class.activeButton]="activeUrgency == 'low'" (click)="setUrgency('low')">Low</button>
+                <button [class.activeButton]="activeUrgency == 'normal'" (click)="setUrgency('normal')">Normal</button>
+                <button [class.activeButton]="activeUrgency == 'urgent'" (click)="setUrgency('urgent')">Urgent</button> -->
+
+
+      <label for="low" [class.activeButton]="activeUrgency == 'low'">Low</label>
+      <input id="low" type="checkbox" value="Low" name="task.urgency" [ngModel]="task.urgency" required>
+      <label for="normal" [class.activeButton]="activeUrgency == 'low'">Normal</label>
+      <input id="normal" type="checkbox" value="Normal" name="task.urgency" [ngModel]="task.urgency" required>
+      <label for="urgent" [class.activeButton]="activeUrgency == 'low'">Urgent</label>
+      <input id="urgent" type="checkbox" value="Urgent" name="task.urgency" [ngModel]="task.urgency" required>
+
+
+
     </div>
 
     <div class="category">
-        <select #catSelect (change)="saveCategory($event)" [ngModel]="task.category||''">
-            <option *ngIf="customCategory == ''"  value="">Choose a category</option>
-            <option value="Custom Category"> Add Category</option>
-            <option *ngFor="let category of db.categories" value={{category}}>{{ category }} </option>
-        </select>
+      <select #catSelect (change)="saveCategory($event)" [ngModel]="task.category||''" name="taskCategory">
+        <option *ngIf="customCategory == ''" value="">Choose a category</option>
+        <option value="Custom Category"> Add Category</option>
+        <option *ngFor="let category of db.categories" value={{category}}>{{ category }} </option>
+      </select>
 
-        <div *ngIf="openCategoryPopUp" class="categoryPopUp">
-            <label for="category">New Category</label>
-            <input #inputCat="ngModel" minlength="3" [(ngModel)]="customCategory" type="text">
-            <div *ngIf="inputCat.errors?.['minlength']">
-                Name must be at least 3 characters long.
-            </div>
-            <button (click)="addCustomCategory()">save</button>
-            <button (click)="closeCustomCategory()">cancel</button>
+      <div *ngIf="openCategoryPopUp" class="categoryPopUp">
+        <label for="category">New Category</label>
+        <input #inputCat="ngModel" minlength="3" [(ngModel)]="customCategory" type="text" name="taskCustomCategory">
+        <div *ngIf="inputCat.errors?.['minlength']">
+          Name must be at least 3 characters long.
         </div>
+        <button (click)="addCustomCategory()">save</button>
+        <button (click)="closeCustomCategory()">cancel</button>
+      </div>
     </div>
 
-    <!-- Users -->
     <div class="user">
-
-        <select [ngModel]="task.users ||''">
-            <option value="">Select Responsibility</option>
-            <option *ngFor="let user of db.users" [ngValue]="user"> {{user.firstName}} {{user.lastName}}</option>
-        </select>
+      <select [ngModel]="task.users ||''" name="taskUser">
+        <option value="">Select Responsibility</option>
+        <option *ngFor="let user of db.users" [ngValue]="user"> {{user.firstName}} {{user.lastName}}</option>
+      </select>
 
     </div>
 
     <div>
-        <button (click)="saveTask(task)" class="button">Save</button>
-        <button *ngIf="taskservice.taskPopupOpen" (click)="closeWithoutSave()" class="button btn-cancel">
-            Cancel
-        </button>
+      <button type="submit" [disabled]="!form.valid" class="button">Save</button>
+      <button *ngIf="taskservice.taskPopupOpen" (click)="closeWithoutSave()" class="button btn-cancel">
+        Cancel
+      </button>
     </div>
 
-
-</div>
+  </div>
+</form>
