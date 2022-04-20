@@ -22,6 +22,8 @@ export class DatabaseService {
   public urgentTasks: any = [];
   public todoTasks: any = [];
   public allTasks: any = [];
+  public nextDueDates: any = [];
+  public nextDueDateTask: any = [];
   public backlogEmpty = () => { return (this.backlogtasks.length == 0) }
   public initializationDone = () => {
     let result = this.boards.find((item: any) => { return item.name == 'ToDo' })
@@ -38,28 +40,48 @@ export class DatabaseService {
       .valueChanges({ idField: 'customIdName' })
       .pipe(switchMap((result: any) => {
         this.boards = result;
-
         return this.firestore
           .collection('tasks', ref => ref.orderBy(sortTasksBy, sortTasksOrder))
           .valueChanges({ idField: 'customIdName' });
       }))
-      .subscribe((result) => {
+      .subscribe((result) => {  
+        this.emptyAllArrays();
         this.handleTasks(result);
       });
   }
 
 
-  async handleTasks(tasks: any) {
-    this.emptyAllArrays();
+  handleTasks(tasks: any) {
     tasks.forEach((task: any) => {
-      // task.dueTo = this.convertDateFormat(task, 'en-GB');
-      this.filterAllTasks(task); 
+      this.filterAllTasks(task);
       this.filterUrgentTasks(task);
       this.filterToDoTasks(task);
       this.sortTasksToBoards(task);
+      this.getNextDueDateTask(task);
     })
     this.sortBoardsDescending();
   }
+
+  getNextDueDateTask(task: any) {
+    if(this.nextDueDates.length == 0 ){ // push first task in array --> if only one task exists, this one will be the one with closest deadline
+      this.nextDueDates.push(task);
+      console.log('111 first task in array', task);
+    }
+    else if(this.nextDueDates.length > 0 && (task.dueTo.toMillis() - this.nextDueDates[0].dueTo.toMillis() < 0) ){ // compare dueTo Date in milliseconds
+     // if current task has closer deadline as task before, clear array and save current task as the closest deadline task
+     this.nextDueDates = []; // clear whole array
+     this.nextDueDates.push(task);
+     console.log('222 new task', task);
+    }
+    else if(this.nextDueDates.length > 0 && (task.dueTo.toMillis() - this.nextDueDates[0].dueTo.toMillis() == 0) ){ // two tasks with same dueDate
+      this.nextDueDates.push(task); // save multiple tasks, which have same closest Due date
+      console.log('====', task);
+    }
+    console.log(this.nextDueDates);
+    this.nextDueDateTask = this.nextDueDates[0];
+    
+  }
+
 
   emptyAllArrays() {
     this.boards.forEach((board: any) => board.tasks = []);
@@ -67,6 +89,7 @@ export class DatabaseService {
     this.allTasks = [];
     this.todoTasks = [];
     this.urgentTasks = [];
+    this.nextDueDates = [];
   }
 
   sortTasksToBoards(task: any) {
@@ -84,7 +107,7 @@ export class DatabaseService {
     }
   }
 
-  filterAllTasks(task: any) {    
+  filterAllTasks(task: any) {
     this.allTasks.push(task);
   }
 
@@ -94,17 +117,10 @@ export class DatabaseService {
     }
   }
 
-
-  convertDateFormat(task: any, targetDateFormat: string) {
-    return new Date(task.dueTo['seconds'] * 1000).toLocaleDateString(targetDateFormat);
-    //firestore dates are a timstamp object
-  }
-
   handleBacklogTasks(task: any) {
     this.backlogtasks.push(task);
     // sorting into default order: by deadline
   }
-
 
   // Goal: pinned Task on Top of Board, then all other tasks sorted by createdAt
   sortBoardsDescending() {
@@ -139,6 +155,7 @@ export class DatabaseService {
   }
 
   addDocToCollection(collection: string, doc: object) {
+    console.log('doc to collection task')
     this.firestore.collection(collection).add(doc);
   }
 
@@ -167,3 +184,8 @@ export class DatabaseService {
   //     });
   // }
   // ****************** OLD VERSION FROM SWITCHMAP METHOD ABOVE ********
+
+    // convertDateFormat(task: any, targetDateFormat: string) {
+  //   return new Date(task.dueTo['seconds'] * 1000).toLocaleDateString(targetDateFormat);
+  //firestore dates are a timstamp object
+  // }

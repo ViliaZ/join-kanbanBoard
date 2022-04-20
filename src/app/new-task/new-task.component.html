@@ -1,10 +1,10 @@
 <!-- <form (ngSubmit)="onSubmit(form)" #form="ngForm"> -->
 
-<form (ngSubmit)="submitForm(form)" #form="ngForm">
+<form (ngSubmit)="saveTask(form)" #form="ngForm">
   <div class="sectionOne">
     <!-- task title -->
     <div class="title">
-      <input placeholder="Title" [(ngModel)]="task.title" name="taskTitle">
+      <input placeholder="Title*" [(ngModel)]="task.title" name="taskTitle">
     </div>
 
     <div class="description">
@@ -23,25 +23,19 @@
     </mat-form-field>
 
     <div class="urgency">
-      <!-- <button [class.activeButton]="activeUrgency == 'low'" (click)="setUrgency('low')">Low</button>
-                <button [class.activeButton]="activeUrgency == 'normal'" (click)="setUrgency('normal')">Normal</button>
-                <button [class.activeButton]="activeUrgency == 'urgent'" (click)="setUrgency('urgent')">Urgent</button> -->
+      <label for="low" [class.activeButton]="activeUrgency == 'low'" (click)="setUrgencyButtonColor('low')">Low</label>
+        <input id="low" type="radio" value="low" name="taskUrgency" [ngModel]="task.urgency" >
 
+      <label for="normal" [class.activeButton]="activeUrgency == 'normal'" (click)="setUrgencyButtonColor('normal')">Normal</label>
+        <input id="normal" type="radio" value="normal" name="taskUrgency" [ngModel]="task.urgency" >
 
-      <label for="low" [class.activeButton]="activeUrgency == 'low'">Low</label>
-      <input id="low" type="checkbox" value="Low" name="task.urgency" [ngModel]="task.urgency" required>
-      <label for="normal" [class.activeButton]="activeUrgency == 'low'">Normal</label>
-      <input id="normal" type="checkbox" value="Normal" name="task.urgency" [ngModel]="task.urgency" required>
-      <label for="urgent" [class.activeButton]="activeUrgency == 'low'">Urgent</label>
-      <input id="urgent" type="checkbox" value="Urgent" name="task.urgency" [ngModel]="task.urgency" required>
-
-
-
+      <label for="urgent" [class.activeButton]="activeUrgency == 'urgent'" (click)="setUrgencyButtonColor('urgent')">Urgent</label>
+        <input id="urgent" type="radio" value="urgent" name="taskUrgency" [ngModel]="task.urgency" >
     </div>
 
     <div class="category">
-      <select #catSelect (change)="saveCategory($event)" [ngModel]="task.category||''" name="taskCategory">
-        <option *ngIf="customCategory == ''" value="">Choose a category</option>
+      <select #catSelect  [ngModel]="task.category||''" name="taskCategory" required>
+        <option *ngIf="customCategory == ''" value="">Choose a category*</option>
         <option value="Custom Category"> Add Category</option>
         <option *ngFor="let category of db.categories" value={{category}}>{{ category }} </option>
       </select>
@@ -59,7 +53,7 @@
 
     <div class="user">
       <select [ngModel]="task.users ||''" name="taskUser">
-        <option value="">Select Responsibility</option>
+        <option value="">Select Responsibility*</option>
         <option *ngFor="let user of db.users" [ngValue]="user"> {{user.firstName}} {{user.lastName}}</option>
       </select>
 

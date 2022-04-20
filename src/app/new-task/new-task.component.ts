@@ -33,17 +33,17 @@ export class NewTaskComponent implements OnInit {
   public activeUrgency: string = 'normal';
   public date: any = new Date; // datepicker default date
   public minDate: any = new Date; // minimum date for datepicker
-  ngValue: any = null;
+  // ngValue: any = null;
 
   // via ng Model
   public task: any = {
-    title: 'aaaaaa',
+    title: '',
     description: '',
     dueTo: '',
     urgency: 'normal',
     board: '',
     category: 'Other',
-    users: '',
+    users: 'here',
     isPinnedToBoard: '',
     createdAt: ''
   }
@@ -52,14 +52,14 @@ export class NewTaskComponent implements OnInit {
     this.task = this.taskservice.currentTask;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  setUrgency(urgency: string = 'normal') { // default: normal
-    this.task.urgency = urgency;
+  // sets color for selected choice on clicked button
+  setUrgencyButtonColor(urgency: string = 'normal') { // default: normal
     this.activeUrgency = urgency;
   }
 
-  saveCategory(event: any) {
+  updateCategory(event: any) {
     if (event.target.value == 'Custom Category') {
       this.openCategoryPopUp = true;
       event.target.value = '';
@@ -80,9 +80,7 @@ export class NewTaskComponent implements OnInit {
     this.openCategoryPopUp = false;
   }
 
-
-  // mit onsubmit ersetzen
-  saveTask(task: any) {
+  saveTask(form: any) {
     console.log('editmode?', this.taskservice.editMode);
     console.log('currentTasks?', this.taskservice.currentTask);
 
@@ -91,7 +89,16 @@ export class NewTaskComponent implements OnInit {
       this.task.board = 'backlog'; // default
       this.task.createdAt = new Date().getTime(); // needed for sorting tasks in order
       this.task.isPinnedToBoard = false; // default
+      this.task.urgency = form.value.taskUrgency;
+      this.task.category = form.value.taskCategory;
+      this.task.dueTo = form.value.taskDueDate;
+      this.task.description = form.value.taskDescription;
+      this.task.users = form.value.taskUser;
       this.db.addDocToCollection('tasks', this.task);
+      form.reset();
+      console.log('save task:', this.task)
+
+      // if task already exists and is edited
     } else {
       this.task = this.taskservice.currentTask;
       this.db.updateDoc('tasks', this.task.customIdName, this.task);
@@ -101,20 +108,9 @@ export class NewTaskComponent implements OnInit {
     this.taskservice.taskPopupOpen = false;
   }
 
-
-
-  submitForm(form: any) {
-
-
-    console.log('form abgeschickt', this.task.title)
-
-
-  }
-
   closeWithoutSave() {
     this.taskservice.taskPopupOpen = false;
     this.taskservice.currentTask = {};
     this.taskservice.editMode = false;
   }
-
 }

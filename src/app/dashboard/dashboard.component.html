@@ -1,17 +1,13 @@
 <div class="sectionOne">
-
+    
     <div class="user containerLeft">
-
         <h1 class="welcome">Welcome to Join.</h1>
         <div>Guest User | Full Access</div>
         {{ currentDate | date }}
-
     </div>
 
     <div class="containerRight">
-
         <div class="card statistic">
-
             <div class="row">
                 <div class="row-label">
                     <div >
@@ -21,7 +17,6 @@
                 </div>
                 <div class="fullwidth">
                     <div class="bar" [ngStyle]="{'width': width.backlogTasks}">
-
                     </div>
                 </div>
             </div>
@@ -35,7 +30,6 @@
                 </div>
                 <div class="fullwidth">
                     <div class="bar" [ngStyle]="{'width': width.toDoTasks}">
-
                     </div>
                 </div>
             </div>
@@ -49,11 +43,9 @@
                 </div>
                 <div class="fullwidth">
                     <div class="bar" [ngStyle]="{'width': width.allTasks}">
-
                     </div>
                 </div>
             </div>
-
         </div>
 
 
@@ -67,22 +59,18 @@
 
         <div class="card nextDueTask">
             <img class="icon" src="assets/img/alert.png" alt="inProgress">
-
-            <div class="dueDate"> {{ nextDeadline | date: 'MMM, dd' }} </div>
+            <div class="dueDate"> {{ (db.nextDueDateTask.dueTo*1000 | date: 'MMM, dd')|| ''}} </div>
             <div class="number">
                 Next Deadline
             </div>
 
             <div class="taskDetails-onhover">
                <div>Task Details:</div> 
-               <div><span>On Board:</span> {{ nextDeadlineTask.board }} </div> 
-               <div><span>Category:</span> {{ nextDeadlineTask.category }} </div> 
-               <div *ngIf="nextDeadlineTasks.length > 1"> +{{ nextDeadlineTasks.length-1 }}further task(s)</div> 
+               <div><span>On Board:</span> {{ db.nextDueDateTask.board }} </div>
+               <div><span>Category:</span> {{ db.nextDueDateTask.category }} </div> 
+               <div *ngIf="db.nextDueDates.length > 1"> +{{ db.nextDueDates.length-1 }}further task(s)</div>
             </div>
-
         </div>
-
-
     </div>
 </div>
 <div class="bottompart"><app-new-task class="taskContainer"></app-new-task></div>
