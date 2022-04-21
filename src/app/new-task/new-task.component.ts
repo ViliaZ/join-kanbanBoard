@@ -26,57 +26,93 @@ export class NewTaskComponent implements OnInit {
   @ViewChild('catSelect') categorySelector: any;
 
   public closePopup: boolean = false;
-
   public customCategory: any = '';
   public openCategoryPopUp: boolean = false;
   public currentTask: any;
-  public activeUrgency: string = 'normal';
+  public activeUrgency: string = '';
   public date: any = new Date; // datepicker default date
   public minDate: any = new Date; // minimum date for datepicker
   // ngValue: any = null;
 
   // via ng Model
   public task: any = {
-    title: '',
-    description: '',
-    dueTo: '',
-    urgency: 'normal',
-    board: '',
-    category: 'Other',
-    users: 'here',
-    isPinnedToBoard: '',
-    createdAt: ''
+    'title': '',
+    'description': '',
+    'dueTo': '',
+    'urgency': '',
+    'board': '',
+    'category': '',
+    'users': '',
+    'isPinnedToBoard': '',
+    'createdAt': ''
   }
 
   constructor(public db: DatabaseService, public taskservice: TasksService) {
-    this.task = this.taskservice.currentTask;
+    console.log(this.task);
+
+    // this.task = this.taskservice.currentTask;
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.setCurrentUrgency();
+    console.log(this.task, this.taskservice.currentTask);
+    
+  }
+
+  setCurrentUrgency() {
+    let activeUrgency: string;
+    if (!this.taskservice.editMode) {
+      activeUrgency = 'normal';
+    }
+    else {
+      activeUrgency = this.taskservice.currentTask.urgency;
+    }
+    this.setUrgencyButtonColor(activeUrgency);
+  }
 
   // sets color for selected choice on clicked button
-  setUrgencyButtonColor(urgency: string = 'normal') { // default: normal
-    this.activeUrgency = urgency;
+  setUrgencyButtonColor(activeUrgency: string = 'normal') {
+    this.activeUrgency = activeUrgency;
   }
 
-  checkIfCustomCategory(event: any) {
-    console.log('event');
-    if (event.target.value == 'Custom Category') {
+
+  handleCustomCategory(action: string ,event?: any, form?: any) {
+    console.log('thistask',this.task);
+    if (action == 'checkIfCustomRequest') { 
+      this.checkIfCustomCatRequested(event);
+    }
+    if (action == 'close') {
+      this.customCategory = '';
+      this.openCategoryPopUp = false;
+    }
+    if (action == 'save') {
+      console.log('task after save',this.task);
+      this.db.categories.push(this.customCategory);
+      this.taskservice.currentTask.category = 'testtest';
+
+      this.task.category = this.customCategory;
+      this.openCategoryPopUp = false;
+    }
+  }
+
+  checkIfCustomCatRequested(event: any) {
+    console.log('event', event);
+ 
+    if (event.target.value == 'Custom Category' && !this.openCategoryPopUp) {
       this.openCategoryPopUp = true;
-      event.target.value = '';
-    } 
+    }
   }
 
-  addCustomCategory() {
-  this.db.categories.push(this.customCategory);
-  this.task.category = this.customCategory;
-  this.openCategoryPopUp = false;
-  }
+  // addCustomCategory(value:any) {   
+  //   this.db.categories.push(this.customCategory);
+  //   this.task.category = 'Marketing';
+  //   this.openCategoryPopUp = false;
+  // }
 
-  closeCustomCategory() {
-    this.customCategory = '';
-    this.openCategoryPopUp = false;
-  }
+  // closeCustomCategory() {
+  //   this.customCategory = '';
+  //   this.openCategoryPopUp = false;
+  // }
 
   saveTask(form: any) {
     console.log('editmode?', this.taskservice.editMode);
@@ -104,6 +140,8 @@ export class NewTaskComponent implements OnInit {
       this.taskservice.editMode = false;
     }
     this.taskservice.taskPopupOpen = false;
+    this.setUrgencyButtonColor('normal');
+
   }
 
   closeWithoutSave() {

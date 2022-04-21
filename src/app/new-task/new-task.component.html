@@ -24,21 +24,22 @@
 
     <div class="urgency">
       <label for="low" [class.activeButton]="activeUrgency == 'low'" (click)="setUrgencyButtonColor('low')">Low</label>
-        <input id="low" type="radio" value="low" name="taskUrgency" [ngModel]="task.urgency" >
+        <input id="low" type="radio" value="low" name="taskUrgency" [(ngModel)]="task.urgency" >
 
       <label for="normal" [class.activeButton]="activeUrgency == 'normal'" (click)="setUrgencyButtonColor('normal')">Normal</label>
-        <input id="normal" type="radio" value="normal" name="taskUrgency" [ngModel]="task.urgency" >
+        <input id="normal" type="radio" value="normal" name="taskUrgency" [(ngModel)]="task.urgency" >
 
       <label for="urgent" [class.activeButton]="activeUrgency == 'urgent'" (click)="setUrgencyButtonColor('urgent')">Urgent</label>
-        <input id="urgent" type="radio" value="urgent" name="taskUrgency" [ngModel]="task.urgency" >
+        <input id="urgent" type="radio" value="urgent" name="taskUrgency" [(ngModel)]="task.urgency" >
     </div>
 
     <div class="category">
-      <select  (change)="checkIfCustomCategory($event)" #catSelect  [ngModel]="task.category||''" name="taskCategory" required>
+      <select  (change)="handleCustomCategory('checkIfCustomRequest', $event)" #catSelect [(ngModel)]="task.category" name="taskCategory" >
         <option *ngIf="customCategory == ''" value="">Choose a category*</option>
         <option value="Custom Category"> Add Category </option>
-        <option *ngFor="let category of db.categories" value={{category}}>{{ category }} </option>
+        <option *ngFor="let category of db.categories" value={{category}}>{{ category }}</option>
       </select>
+
 
       <div *ngIf="openCategoryPopUp" class="categoryPopUp">
         <input 
@@ -57,18 +58,23 @@
         </div>
 
         <div>
-          <button (click)="addCustomCategory()" [disabled]="!inputCat.value || inputCat.errors?.['minlength'] ">Save</button>
+          <button (click)="handleCustomCategory('save', $event, form)" [disabled]="!inputCat.value || inputCat.errors?.['minlength'] ">Save</button>
+          <button (click)="handleCustomCategory('close')">Cancel</button>
+        </div>      
+          <!-- <div>
+          <button (click)="addCustomCategory(catSelect.value)" [disabled]="!inputCat.value || inputCat.errors?.['minlength'] ">Save</button>
           <button (click)="closeCustomCategory()">Cancel</button>
-        </div>
+        </div> -->
       </div>
     </div>
 
     <div class="user">
       <select [ngModel]="task.users ||''" required name="taskUser">
         <option value="">Select Responsibility*</option>
-        <option *ngFor="let user of db.users" [ngValue]="user"> {{user.firstName}} {{user.lastName}}</option>
+        <option *ngFor="let user of db.users; index as i" [ngValue]="user"> {{user.firstName}} {{user.lastName}} </option>
       </select>
 
+      <!-- value={{task.users[i]}} -->
     </div>
 
     <div>

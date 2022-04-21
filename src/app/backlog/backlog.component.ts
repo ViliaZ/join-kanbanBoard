@@ -30,6 +30,7 @@ export class BacklogComponent implements OnInit {
   }
 
   editTask(task: any) {
+    console.log(task);
     this.taskservice.currentTask = task;
     this.taskservice.taskPopupOpen = true;
     this.taskservice.editMode = true;
