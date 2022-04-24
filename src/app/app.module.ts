@@ -23,6 +23,8 @@ import { NewTaskComponent } from './new-task/new-task.component';
 import { TaskComponent } from './task/task.component';
 import { LogoAnimationComponent } from './logo-animation/logo-animation.component';
 import { GradientAnimationComponent } from './gradient-animation/gradient-animation.component';
+import { SignupComponent } from './signup/signup.component';
+import { LogoutSuccessComponent } from './logout-success/logout-success.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +37,9 @@ import { GradientAnimationComponent } from './gradient-animation/gradient-animat
     NewTaskComponent,
     TaskComponent,
     LogoAnimationComponent,
-    GradientAnimationComponent
+    GradientAnimationComponent,
+    SignupComponent,
+    LogoutSuccessComponent
   ],
   imports: [
     BrowserModule,

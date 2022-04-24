@@ -5,6 +5,8 @@ import { BoardComponent } from './board/board.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ImprintComponent } from './imprint/imprint.component';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { LogoutSuccessComponent } from './logout-success/logout-success.component';
+import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
 { path: '', component: DashboardComponent },
@@ -12,6 +14,8 @@ const routes: Routes = [
 { path: 'imprint', component: ImprintComponent },
 { path: 'board', component: BoardComponent },
 { path: 'backlog', component: BacklogComponent },
+{ path: 'signup', component: SignupComponent },
+{ path: 'logout', component: LogoutSuccessComponent },
 ];
 
 @NgModule({

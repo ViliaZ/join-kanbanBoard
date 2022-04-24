@@ -1,6 +1,7 @@
 <!-- <form (ngSubmit)="onSubmit(form)" #form="ngForm"> -->
 
 <form (ngSubmit)="saveTask(form)" #form="ngForm">
+
   <div class="sectionOne">
     <!-- task title -->
     <div class="title">
@@ -8,7 +9,7 @@
     </div>
 
     <div class="description">
-      <textarea placeholder="Things to-do ..." [(ngModel)]="task.description" name="taskDescription">
+      <textarea placeholder="Task Description" [(ngModel)]="task.description" name="taskDescription">
             </textarea>
     </div>
   </div>
@@ -82,7 +83,7 @@
         type="submit" 
         [disabled]="!form.valid" 
         class="button">
-        Save
+        Add to Backlog
       </button>
 
       <button 

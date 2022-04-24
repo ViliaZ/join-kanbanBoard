@@ -42,21 +42,22 @@ export class NewTaskComponent implements OnInit {
     'urgency': '',
     'board': '',
     'category': '',
-    'users': '',
+    'users': this.db.users[0],
     'isPinnedToBoard': '',
     'createdAt': ''
   }
 
   constructor(public db: DatabaseService, public taskservice: TasksService) {
-    console.log(this.task);
+    if (this.taskservice.editMode) {
+      this.task = this.taskservice.currentTask;
+    }
 
-    // this.task = this.taskservice.currentTask;
   }
 
   ngOnInit(): void {
     this.setCurrentUrgency();
     console.log(this.task, this.taskservice.currentTask);
-    
+
   }
 
   setCurrentUrgency() {
@@ -76,9 +77,9 @@ export class NewTaskComponent implements OnInit {
   }
 
 
-  handleCustomCategory(action: string ,event?: any, form?: any) {
-    console.log('thistask',this.task);
-    if (action == 'checkIfCustomRequest') { 
+  handleCustomCategory(action: string, event?: any, form?: any) {
+    console.log('thistask', this.task);
+    if (action == 'checkIfCustomRequest') {
       this.checkIfCustomCatRequested(event);
     }
     if (action == 'close') {
@@ -86,10 +87,9 @@ export class NewTaskComponent implements OnInit {
       this.openCategoryPopUp = false;
     }
     if (action == 'save') {
-      console.log('task after save',this.task);
+      console.log('task after save', this.task);
       this.db.categories.push(this.customCategory);
       this.taskservice.currentTask.category = 'testtest';
-
       this.task.category = this.customCategory;
       this.openCategoryPopUp = false;
     }
@@ -97,22 +97,11 @@ export class NewTaskComponent implements OnInit {
 
   checkIfCustomCatRequested(event: any) {
     console.log('event', event);
- 
+
     if (event.target.value == 'Custom Category' && !this.openCategoryPopUp) {
       this.openCategoryPopUp = true;
     }
   }
-
-  // addCustomCategory(value:any) {   
-  //   this.db.categories.push(this.customCategory);
-  //   this.task.category = 'Marketing';
-  //   this.openCategoryPopUp = false;
-  // }
-
-  // closeCustomCategory() {
-  //   this.customCategory = '';
-  //   this.openCategoryPopUp = false;
-  // }
 
   saveTask(form: any) {
     console.log('editmode?', this.taskservice.editMode);

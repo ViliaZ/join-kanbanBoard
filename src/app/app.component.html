@@ -1,4 +1,6 @@
-<app-menu *ngIf="router.url !== '/login'"></app-menu>
+<app-menu 
+  *ngIf=" router.url === '/' || router.url.includes('board') || router.url.includes('backlog') || router.url.includes('imprint')" >
+</app-menu>
 
 <div class="main">
   <router-outlet></router-outlet>

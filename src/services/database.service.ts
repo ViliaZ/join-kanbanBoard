@@ -24,11 +24,9 @@ export class DatabaseService {
   public allTasks: any = [];
   public nextDueDates: any = [];
   public nextDueDateTask: any = [];
-  public backlogEmpty = () => { return (this.backlogtasks.length == 0) }
-  public initializationDone = () => {
-    let result = this.boards.find((item: any) => { return item.name == 'ToDo' })
-    return result
-  }
+
+  public backlogEmpty = () => this.backlogtasks.length == 0;
+  public toDoBoardExists!:any;
 
   constructor(public firestore: AngularFirestore) {
     this.getBoardAndTaskData();
@@ -40,16 +38,24 @@ export class DatabaseService {
       .valueChanges({ idField: 'customIdName' })
       .pipe(switchMap((result: any) => {
         this.boards = result;
+        this.setStaticBoards();
         return this.firestore
           .collection('tasks', ref => ref.orderBy(sortTasksBy, sortTasksOrder))
           .valueChanges({ idField: 'customIdName' });
       }))
-      .subscribe((result) => {  
+      .subscribe((result) => {
         this.emptyAllArrays();
         this.handleTasks(result);
       });
   }
 
+
+  setStaticBoards() { // if no ToDo Board exists yet, create it (ToDo is a static board)
+    this.toDoBoardExists = this.boards.find((i: any) => i.name == 'ToDo');
+    if (this.toDoBoardExists == undefined) {
+      this.addDocToCollection('boards', { name: 'ToDo', tasks: [], createdAt: new Date().getTime() })
+    }
+  }
 
   handleTasks(tasks: any) {
     tasks.forEach((task: any) => {
@@ -63,19 +69,19 @@ export class DatabaseService {
   }
 
   getNextDueDateTask(task: any) {
-    if(this.nextDueDates.length == 0 ){ // push first task in array --> if only one task exists, this one will be the one with closest deadline
+    if (this.nextDueDates.length == 0) { // push first task in array --> if only one task exists, this one will be the one with closest deadline
       this.nextDueDates.push(task);
     }
-    else if(this.nextDueDates.length > 0 && (task.dueTo.toMillis() - this.nextDueDates[0].dueTo.toMillis() < 0) ){ // compare dueTo Date in milliseconds
-     // if current task has closer deadline as task before, clear array and save current task as the closest deadline task
-     this.nextDueDates = []; // clear whole array
-     this.nextDueDates.push(task);
+    else if (this.nextDueDates.length > 0 && (task.dueTo.toMillis() - this.nextDueDates[0].dueTo.toMillis() < 0)) { // compare dueTo Date in milliseconds
+      // if current task has closer deadline as task before, clear array and save current task as the closest deadline task
+      this.nextDueDates = []; // clear whole array
+      this.nextDueDates.push(task);
     }
-    else if(this.nextDueDates.length > 0 && (task.dueTo.toMillis() - this.nextDueDates[0].dueTo.toMillis() == 0) ){ // two tasks with same dueDate
+    else if (this.nextDueDates.length > 0 && (task.dueTo.toMillis() - this.nextDueDates[0].dueTo.toMillis() == 0)) { // two tasks with same dueDate
       this.nextDueDates.push(task); // save multiple tasks, which have same closest Due date
     }
     this.nextDueDateTask = this.nextDueDates[0];
-    
+
   }
 
 
