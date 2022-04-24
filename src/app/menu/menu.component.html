@@ -3,22 +3,38 @@
 
 
 <div class="sectionLeft">
-    <div class="home"><a routerLink="/">
+    <div 
+        [class.concave-btn]="activeNavItem == 'home'"
+        [class.convex-btn]="activeNavItem !== 'home'"
+        class="home default-btn">
+
+        <a routerLink="/">
             <img class="icon" src="assets/img/Logo.svg">
             <span class="tooltiptext">Home</span>
         </a>
+
     </div>
 
-    <a routerLink="/backlog">Backlog</a>
-    <a routerLink="/board">Boards</a>
+    <a 
+        routerLink="/backlog"
+        class="default-btn">
+        Backlog 
+    </a>
+
+    <a 
+        routerLink="/board"
+        class="default-btn"
+        >
+        Boards
+    </a>
 
 </div>
 
 <div class="sectionRight">
-    <a routerLink="/imprint">Imprint</a>
+    <a routerLink="/imprint" class="default-btn">Imprint</a>
 
-    <a routerLink="/login">
+    <a routerLink="/logout" class="default-btn logout">
         <div>Logout</div>
-        <img class="icon" src="assets/img/logout.png" alt="logout">
+        <div><img class="icon" src="assets/img/logout.png" alt="logout"></div>
     </a>
 </div>
