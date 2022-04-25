@@ -3,6 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-direction: column;
     border-radius: 12px;
 
     // width: 55%!important;
@@ -11,7 +12,10 @@
     padding: 64px 54px;
     box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     border-color: #d2ddef !important;
+}
 
+.headline{
+    margin-bottom: 24px;
 }
 
 form {
@@ -220,10 +224,15 @@ button {
     font-style: italic;
 }
 // save-Button
+
+.buttons{
+display: flex;
+gap: 12px;
+
 .button {
     border: none;
     border-radius: 6px;
-    width: 33%;
+    width: 124px;
     height: 42px;
     background-color: var(--accent1);
     color: var(--primary-light);
@@ -238,5 +247,5 @@ button:disabled {
     background-color: unset;
     border: 1px solid var(--accent1);
     color: var(--accent1);
-    margin-top: 8px;
+}
 }

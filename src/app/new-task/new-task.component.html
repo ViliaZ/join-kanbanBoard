@@ -1,4 +1,6 @@
 <!-- <form (ngSubmit)="onSubmit(form)" #form="ngForm"> -->
+  <h3  *ngIf="!taskservice.editMode && (router.url.includes('backlog') || router.url.includes('board'))" class="headline">Add New Task</h3>
+  <h3  *ngIf="taskservice.editMode && (router.url.includes('backlog') || router.url.includes('board'))" class="headline">Edit Task</h3>
 
 <form (ngSubmit)="saveTask(form)" #form="ngForm">
 
@@ -96,20 +98,21 @@
            </select>
      </div>
 
-      <button 
-        type="submit" 
-        [disabled]="!form.valid" 
-        class="button default-btn"
-        >
-        Save
-      </button>
-
-      <button 
-        *ngIf="taskservice.taskPopupOpen" 
-        (click)="closeWithoutSave()" 
-        class="button btn-cancel default-btn">
-        Cancel
-      </button>
+      <div class="buttons">
+        <button
+          type="submit"
+          [disabled]="!form.valid"
+          class="button default-btn"
+          >
+          Save
+        </button>
+        <button
+          *ngIf="taskservice.taskPopupOpen"
+          (click)="closeWithoutSave()"
+          class="button btn-cancel default-btn">
+          Cancel
+        </button>
+      </div>
     </div>
 
   </div>

@@ -26,9 +26,13 @@
   --primary-dark: rgba(22, 4, 54, 0.956);
   --secondary: #27344b;
   --accent1: #e902b3;
+  --urgency-low: yellow;  // urgency low
+  --urgency-normal: yellow;  // urgency low
+  --urgency-urgent: yellow;  // urgency low
+
   --hover: rgba(140, 120, 173, 0.956);
-  --font-bold: 500;
-  --font-xBold: 600;
+  --font-bold: 600;
+  --font-xBold: 800;
   --font-light: 200;
   --font-small: 12px;
   --font-normal: 16px;
@@ -54,10 +58,7 @@
 }
 
 .convex {
-  background: hsla(240, 100%, 98%, 1);
-  background: linear-gradient(315deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
-  background: -moz-linear-gradient(315deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
-  background: -webkit-linear-gradient(315deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
+  background: rgb(250, 250, 253);
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px,
     rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
 }
@@ -68,6 +69,12 @@
   background: linear-gradient(145deg, #ecf1fb, #ecf1fb);
   border-radius: 22%;
   box-shadow: inset 5.71px 5.71px 12px #d4d9e2, inset -5.71px -5.71px 12px #ffffff;
+}
+
+.concave-dark{
+  background: #5B3380;
+border-radius: 15%;
+box-shadow: inset 6.91px 6.91px 28px #5B3380, inset -6.91px -6.91px 28px #5B3380;
 }
 
 h1,

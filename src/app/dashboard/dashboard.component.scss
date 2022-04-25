@@ -45,10 +45,10 @@ h1 {
         flex-direction: column;
         width: fit-content;
 
-        div{
+        div {
             font-weight: var(--font-normal);
         }
-        .date{
+        .date {
             font-size: var(--font-small);
             font-weight: var(--font-light);
 
@@ -93,11 +93,11 @@ h1 {
     background-color: var(--bg-light);
 }
 
-.smallCard{
-    height: 94px!important;
+.smallCard {
+    height: 94px !important;
 }
 
-.icon{
+.icon {
     position: relative;
     display: flex;
     justify-content: center;
@@ -105,8 +105,8 @@ h1 {
     width: 42%;
     height: 100%;
 
-    &:after{
-        content: '';
+    &:after {
+        content: "";
         position: absolute;
         width: 1px;
         background-color: var(--primary-light);
@@ -125,16 +125,21 @@ h1 {
     width: 55%;
     height: 55%;
 
-    img{
+    img {
         width: 34px;
     }
 }
 
-.info{
+.info {
     display: flex;
-    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     padding-left: 24px;
     flex: 1;
+
+    & div:first-child {
+        font-weight: var(--font-bold);
+    }
 }
 
 // Card: Statistics
@@ -244,10 +249,7 @@ h1 {
 
 // Card UrgentTasks
 .urgentTasks {
-
 }
-
-
 
 //*********** New Task Container ************
 

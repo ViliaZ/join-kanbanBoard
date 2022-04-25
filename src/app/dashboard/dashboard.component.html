@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="info">
-                {{ db.urgentTasks.length }}
+                <div>{{ db.urgentTasks.length | number:'2.0' }}</div>
                 <div>Urgent Tasks</div>
             </div>
         </div>
@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div class="info"> 
-                {{ (db.nextDueDateTask.dueTo*1000 | date: 'MMM, dd')|| ''}} 
+                <div>{{ (db.nextDueDateTask.dueTo*1000 | date: 'MMM, dd')|| ''}} </div>
                 <div> Next Deadline</div>
             </div>
 

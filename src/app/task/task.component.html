@@ -4,7 +4,7 @@
 
         <div class="first-row">
             <div>
-                <div class="title">{{ task.title }}</div>
+                <div class="title">{{ task.title | titlecase}}</div>
                 <div class="urgency">{{ task.urgency }}</div>
             </div>
             
@@ -26,12 +26,14 @@
 
 
         <div class="description" [class.animateExpansion]="detailsRequested">
-            {{ task.description }}
+            {{ task.description | titlecase }}
         </div>
 
 
         <div class="information">
-            <div class="user"></div>
+            <div class="user">
+                <img src="assets/img/user.svg" alt="userImage">
+            </div>
             <div class="dueTo">
                 <img src="assets/img/bell.png" alt="due to">
                 {{ task.dueTo.toDate()| date:'yyyy/MM/dd' }}
@@ -41,6 +43,6 @@
 
     <!-- category -->
     <div class="category">
-        {{ task.category }}
+        {{ task.category | titlecase }}
     </div>
 </div>

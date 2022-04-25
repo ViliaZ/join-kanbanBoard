@@ -1,39 +1,47 @@
-    <div class="filterOptions">
-        <div class="sortBy">
-            <img (click)="changeSorting()" src="assets/img/sort.png" alt="sort icon">
-        </div>
-        <span>Search for:</span>
-        <input [(ngModel)]="searchInput" type="filter">
-        <!-- <button (click)="search()">search</button> -->
+<div class="filterOptions">
+    <div class="sortBy">
+        <img (click)="changeSorting()" src="assets/img/sort.png" alt="sort icon">
     </div>
+    <span>Search for:</span>
+    <input class="concave" [(ngModel)]="searchInput" type="filter">
+    <!-- <button (click)="search()">search</button> -->
+</div>
 
-    <div [class.hide]="activeSearch && !evaluateSearchRequest(task)" class="wrapper" *ngFor="let task of db.backlogtasks; index as i">
+   <div class="body-backlog">
 
-        <div  class="taskContainer" >
-            <div class="user margin-right">
-                <img src="assets/img/user.svg">
+        <div 
+            *ngFor="let task of db.backlogtasks; index as i"
+            [class.hide]="activeSearch && !evaluateSearchRequest(task)" 
+            class="wrapper" 
+            >
+            
+            <div  class="taskContainer" >
+                <div class="user margin-right">
+                    <img src="assets/img/user.svg">
+                </div>
+                <div class="text margin-right">
+                    <div class="title">{{ task.title | titlecase }}</div>
+                    <div class="description">{{ task.description | titlecase}}</div>
+                </div>
+                <div class="information margin-right">
+                    <div class="urgency">{{ task.urgency }}</div>
+                    <div class="date">{{ task.dueTo.toDate()| date:'yyyy/MM/dd' }}</div>
+                </div>
+                <div class="buttons">
+                    <button (click)="moveToBoardToDo(task.customIdName)">To Board</button>
+                    <button (click)="deleteTask(task.customIdName)">Delete</button>
+                    <button (click)="editTask(task)">Edit</button>
+                </div>
+
             </div>
-            <div class="text margin-right">
-                <div class="title">{{ task.title | titlecase }}</div>
-                <div class="description">{{ task.description | titlecase}}</div>
+
+            <div class="category">
+                {{ task.category | titlecase }}
             </div>
-            <div class="information margin-right">
-                <div class="urgency">{{ task.urgency }}</div>
-                <div class="date">{{ task.dueTo.toDate()| date:'yyyy/MM/dd' }}</div>
-            </div>
-            <div class="buttons">
-                <button (click)="moveToBoardToDo(task.customIdName)">To Board</button>
-                <button (click)="deleteTask(task.customIdName)">Delete</button>
-                <button (click)="editTask(task)">Edit</button>
-            </div>
+
         </div>
 
-        <div class="category">
-            {{ task.category | titlecase }}
+        <div *ngIf="db.backlogEmpty()" class="emptyBacklog">
+            Boring times ... No tasks in the Backlog.
         </div>
-    </div>
-
-
-    <div *ngIf="db.backlogEmpty()" class="emptyBacklog">
-        Boring times ... No tasks in the Backlog.
     </div>

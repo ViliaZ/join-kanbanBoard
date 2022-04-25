@@ -3,32 +3,36 @@
      <!-- ALERTS  -->
     <div class="alerts">
         <div *ngIf="doublicateAlert && !deleteBoardAlert" class="alertbox">
-            <img src="assets/img/alert.png" alt="alert">
+            <img src="assets/img/alertDelete.svg" alt="alert">
             Invalid choice: Title can`t be empty or already existing.
             <!-- <button (click)="doublicateAlert = false">X</button> -->
         </div>
 
         <div *ngIf="deleteBoardAlert && !doublicateAlert" class="alertDelete">
-            <img src="assets/img/alert.png" alt="alert">
+            <img src="assets/img/alertDelete.svg" alt="alert">
             Please confirm deletion. This will include all board tasks.
-            <button (click)="confirmDelete()" id="confirm">Confirm</button>
-            <button (click)="deleteBoardAlert = false">Cancel</button>
+            <button (click)="confirmDelete()" id="confirm" class="convex">Confirm</button>
+            <button (click)="deleteBoardAlert = false" class="convex">Cancel</button>
         </div>
     </div>
 
     <div class="addNewBoard">
-        <button (click)="addNewBoard()">New Board</button>
         <input 
             [(ngModel)]="newBoardTitle" 
             (keyup.enter)="addNewBoard()"
+            placeholder="New Board"
+            class="concave"
             type="text"
             minlength="2">
+        <button class="convex" (click)="addNewBoard()">
+            Add
+        </button>
+
     </div>
 </div>
 
 
 <div class="body-board">
-
        <!-- COLUMN  -->
     <div *ngFor="let board of db.boards; index as i" class="board">
        <!-- COLUMN HEAD -->

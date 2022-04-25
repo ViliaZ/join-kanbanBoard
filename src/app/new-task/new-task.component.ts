@@ -7,6 +7,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   DatabaseService
 } from 'src/services/database.service';
@@ -47,7 +48,7 @@ export class NewTaskComponent implements OnInit {
     'createdAt': ''
   }
 
-  constructor(public db: DatabaseService, public taskservice: TasksService) {
+  constructor(public db: DatabaseService, public taskservice: TasksService, public router: Router) {
     if (this.taskservice.editMode) {
       this.task = this.taskservice.currentTask;
     }
