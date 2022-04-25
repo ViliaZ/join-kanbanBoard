@@ -92,9 +92,9 @@
     <div class="addTask">
      <div>
        <span>Add Task to</span>
-       <select class="selectSave" (change)="handleCustomCategory('checkIfCustomRequest', $event)" [(ngModel)]="task.board" name="boards" >
-        <option selected value="backlog">Backlog</option>
-        <option *ngFor="let board of db.boards" value={{board}}>{{ board }}</option>
+       <select class="selectSave" [(ngModel)]="task.board" name="board" >
+        <option [selected]="task.board" value='backlog'>Backlog</option>
+        <option *ngFor="let board of db.boards" value={{board.name}}>{{ board.name }}</option>
            </select>
      </div>
 
