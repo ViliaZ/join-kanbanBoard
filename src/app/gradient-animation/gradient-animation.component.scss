@@ -75,21 +75,7 @@
     -ms-transform: rotate(0) translate(200px) rotate(0);
     -o-transform: rotate(0) translate(200px) rotate(0);
   }
-  .animated .wrapper .text {
-    font-size: 60px;
-    font-weight: bold;
-    color: #fff;
-    opacity: 1;
-    filter: unset;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 99;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+
   @keyframes fly {
     100% {
       transform: rotate(2turn) translate(200px) rotate(-2turn);

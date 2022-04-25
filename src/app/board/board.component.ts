@@ -34,18 +34,15 @@ export class BoardComponent implements OnInit {
   async addNewBoard() {
    let duplicate = await this.checkDuplicates(this.newBoardTitle);
    
-  if(this.newBoardTitle.length > 0 && !duplicate){   
+  if (this.newBoardTitle.length > 0 && !duplicate){   
     let newBoard = { 'name': this.newBoardTitle, 'tasks': [], 'editable': false, 'createdAt': new Date().getTime() };
     this.db.addDocToCollection('boards', newBoard);
   }
-  else{
+  else {
     this.newBoardTitle = '';
     this.doublicateAlert = true
     setTimeout(()=>{ this.doublicateAlert = false},2000)
   }
-
-
-
   }
 
   // Board Title Edit
@@ -86,16 +83,15 @@ export class BoardComponent implements OnInit {
   // Check for Title DUPLICATES --> boolean
   async checkDuplicates(inputTitle: string) {
     this.doublicateAlert = false;
-    let findDouplicate = await this.db.boards.filter((board: any) => {
-      return (board.name == inputTitle)
-    })
-    if (findDouplicate.length <= 1) { //  1 means, its existing because ngModel already pushed the new name in local variable in db.service (boards)
-     console.log('NO duplicates')
-      return false
-    }
-    else {
+    let findDouplicate = await this.db.boards.find((board: any) => board.name == inputTitle)    
+
+    if (findDouplicate) { //  1 means, its existing because ngModel already pushed the new name in local variable in db.service (boards)
       console.log('duplicates found')
       return true
+    }
+    else {
+      console.log('no duplicates found')
+      return false
     }
   }
 

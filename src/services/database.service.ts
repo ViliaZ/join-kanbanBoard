@@ -24,32 +24,32 @@ export class DatabaseService {
   public allTasks: any = [];
   public nextDueDates: any = [];
   public nextDueDateTask: any = [];
-
   public backlogEmpty = () => this.backlogtasks.length == 0;
-  public toDoBoardExists!:any;
+  public toDoBoardExists!: any;
 
-  constructor(public firestore: AngularFirestore) {
-    this.getBoardAndTaskData();
+  constructor(public firestore: AngularFirestore) {  
+   this.getBoardAndTaskData();
   }
 
-  getBoardAndTaskData(sortBoardsBy: string = 'createdAt', sortBoardOrder: any = 'asc', sortTasksBy: string = 'isPinnedToBoard', sortTasksOrder: any = 'desc') {
-    this.firestore
+   getBoardAndTaskData(sortBoardsBy: string = 'createdAt', sortBoardOrder: any = 'asc', sortTasksBy: string = 'isPinnedToBoard', sortTasksOrder: any = 'desc') {
+     this.firestore
       .collection('boards', ref => ref.orderBy(sortBoardsBy, sortBoardOrder))  // default sort via timestamp
       .valueChanges({ idField: 'customIdName' })
-      .pipe(switchMap((result: any) => {
+      .pipe(switchMap((result: any) => { // result = boards with tasks
+        // console.log('boards from firestore:', result);
         this.boards = result;
-        this.setStaticBoards();
         return this.firestore
           .collection('tasks', ref => ref.orderBy(sortTasksBy, sortTasksOrder))
           .valueChanges({ idField: 'customIdName' });
       }))
-      .subscribe((result) => {
-        this.emptyAllArrays();
+      .subscribe( async ( result)  => { // result = tasks
+        await this.emptyAllArrays();
+        this.setStaticBoards();
         this.handleTasks(result);
       });
   }
 
-
+  // create initial TODO Board
   setStaticBoards() { // if no ToDo Board exists yet, create it (ToDo is a static board)
     this.toDoBoardExists = this.boards.find((i: any) => i.name == 'ToDo');
     if (this.toDoBoardExists == undefined) {
@@ -58,6 +58,7 @@ export class DatabaseService {
   }
 
   handleTasks(tasks: any) {
+
     tasks.forEach((task: any) => {
       this.filterAllTasks(task);
       this.filterUrgentTasks(task);
@@ -81,12 +82,11 @@ export class DatabaseService {
       this.nextDueDates.push(task); // save multiple tasks, which have same closest Due date
     }
     this.nextDueDateTask = this.nextDueDates[0];
-
   }
 
 
-  emptyAllArrays() {
-    this.boards.forEach((board: any) => board.tasks = []);
+  async emptyAllArrays() {
+    await this.boards.forEach( (board: any) =>  board.tasks = []);
     this.backlogtasks = [];
     this.allTasks = [];
     this.todoTasks = [];
@@ -99,7 +99,7 @@ export class DatabaseService {
       if (task.board === 'backlog') {
         this.handleBacklogTasks(task);
       }
-      else { this.handleBoardTasks(task, i); }
+      else { this.handleBoardTasks(task, i) }
     }
   }
 
@@ -157,7 +157,7 @@ export class DatabaseService {
   }
 
   addDocToCollection(collection: string, doc: object) {
-    console.log('doc to collection task')
+    // console.log('doc to collection task')
     this.firestore.collection(collection).add(doc);
   }
 
