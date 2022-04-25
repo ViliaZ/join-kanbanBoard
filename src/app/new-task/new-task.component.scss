@@ -64,7 +64,7 @@ button{
     background-color: transparent;
 }
 
-// border: 1px solid darkgrey;
+
 .description {
     flex: 1;
     background-color: transparent;
@@ -97,7 +97,7 @@ button{
         text-align: center;
         border-radius: 6px;
         border: none;
-        background-color: lightgrey;
+        background-color: var(--bg);
     }
 }
 
@@ -213,7 +213,7 @@ button{
 }
 
 button:disabled {
-    background-color: lightgrey;
+    background-color:var(--bg);
     color: var(--primary-dark);
 }
 

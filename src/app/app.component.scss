@@ -56,7 +56,6 @@
   bottom: var(--paddingPageTopBottom);
   height: 84px;
   width: 84px;
-  // background: var(--gradientColors);
   z-index: 2;
 
   .plus {
@@ -64,11 +63,13 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background-color: white;
     z-index: 3;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
     cursor: pointer;
 
+// convex Effekt
+background: #ffffff;
+border-radius: 100%;
+box-shadow: 6.91px 6.91px 28px #DFDFDF, -6.91px -6.91px 28px #FFFFFF;
     &:after {
       content: "";
       position: absolute;

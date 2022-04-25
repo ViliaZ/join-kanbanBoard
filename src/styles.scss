@@ -12,8 +12,8 @@
   //   rgba(196, 220, 229, 0.57) 8%,
   //   rgba(193, 162, 216, 0.699) 100%
   // );
-  --bg:linear-gradient(45deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
-  --bg-light:#ecf1fb;
+  --bg: linear-gradient(45deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
+  --bg-light: #ecf1fb;
   --gradientColors: linear-gradient(
     73deg,
     rgba(222, 228, 19, 0.9094231442577031) 10%,
@@ -40,28 +40,35 @@
 
 // neumorphism styles: https://neumorphic.design/
 .concave-btn {
-  box-shadow: inset 2px 2px 5px #b8b9be,inset -3px -3px 7px #fff!important;
+  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff !important;
   border-radius: 6px;
-  // background: #D2DBEE;
-  // box-shadow: inset 10.51px 10.51px 15px #C5CEE0, inset -10.51px -10.51px 15px #DFE8FC;
 }
 
-.default-btn{
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;}
+.concave {
+  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff !important;
+  border-radius: 6px;
+}
 
+.default-btn {
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
 
-.convex{
+.convex {
   background: hsla(240, 100%, 98%, 1);
-
-background: linear-gradient(315deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
-
-background: -moz-linear-gradient(315deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
-
-background: -webkit-linear-gradient(315deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
+  background: linear-gradient(315deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
+  background: -moz-linear-gradient(315deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
+  background: -webkit-linear-gradient(315deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px,
-  rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+    rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
 }
 
+// for dashboard card statisic
+.concave-small {
+  font-weight: var(--font-bold);
+  background: linear-gradient(145deg, #ecf1fb, #ecf1fb);
+  border-radius: 22%;
+  box-shadow: inset 5.71px 5.71px 12px #d4d9e2, inset -5.71px -5.71px 12px #ffffff;
+}
 
 h1,
 h2,

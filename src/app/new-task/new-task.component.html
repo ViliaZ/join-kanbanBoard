@@ -4,18 +4,18 @@
 
   <div class="sectionOne">
     <!-- task title -->
-    <div class="title">
+    <div class="title concave">
       <input placeholder="Title*" [(ngModel)]="task.title" name="taskTitle">
     </div>
 
-    <div class="description">
+    <div class="description concave">
       <textarea placeholder="Task Description" [(ngModel)]="task.description" name="taskDescription">
             </textarea>
     </div>
   </div>
 
   <div class="sectionTwo">
-    <mat-form-field class="datePicker example-full-width" appearance="fill">
+    <mat-form-field class="datePicker example-full-width concave" appearance="fill">
       <mat-label *ngIf="!taskservice.editMode">Choose a Due Date</mat-label>
       <mat-label *ngIf="taskservice.editMode">editmode</mat-label>
       <input [min]="minDate" matInput [(ngModel)]="task.dueTo" name="taskDueDate" required [matDatepicker]="picker">

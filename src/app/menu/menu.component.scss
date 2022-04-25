@@ -95,8 +95,12 @@ a{
     }
 }
 
-.logout div{
+
+
+.logout {
+    padding: 4px 0px!important;
+div{
     display: flex;
-    justify-content: center;
     align-items: center;
+}
 }

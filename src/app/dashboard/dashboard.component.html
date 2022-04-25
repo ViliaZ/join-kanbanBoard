@@ -3,17 +3,20 @@
     <div class="user containerOne">
         <h1 class="welcome">Welcome to Join</h1>
         <div>Guest User | Full Access</div>
-        {{ currentDate | date }}
+       <span class="date">{{ currentDate | date }}</span>
     </div>
 
     <div class="containerTwo">
+
+        <!-- // new card -->
+
         <div class="card statistic convex">
             <div class="row">
                 <div class="row-label">
                     <div >
                         Backlog
                     </div>
-                    <div>{{ db.backlogtasks.length }}</div>
+                    <div class="concave-small">{{ db.backlogtasks.length }}</div>
                 </div>
                 <div class="fullwidth">
                     <div class="bar" [ngStyle]="{'width': width.backlogTasks}">
@@ -26,20 +29,20 @@
                     <div >
                         To-Do`s
                     </div>
-                    <div> {{ db.todoTasks.length }} </div>
+                    <div class="concave-small"> {{ db.todoTasks.length }} </div>
                 </div>
                 <div class="fullwidth">
                     <div class="bar" [ngStyle]="{'width': width.toDoTasks}">
                     </div>
                 </div>
             </div>
-
+         
             <div class="row">
                 <div class="row-label">
                     <div >
                         All Tasks
                     </div>
-                    <div>{{ db.allTasks.length }}</div>
+                    <div class="concave-small">{{ db.allTasks.length }}</div>
                 </div>
                 <div class="fullwidth">
                     <div class="bar" [ngStyle]="{'width': width.allTasks}">
@@ -48,20 +51,31 @@
             </div>
         </div>
 
+        <!-- // new card -->
 
-        <div class="card urgentTasks convex">
-            <img class="icon" src="assets/img/alert.png" alt="inProgress">
-            <div class="number">{{ db.urgentTasks.length }}</div>
-            <div>
-                Urgent Tasks
+        <div class="card urgentTasks smallCard convex">
+            <div class="icon">
+                <div class="icon-wrap ">
+                    <img  src="assets/img/nextDue.svg" alt="inProgress">
+                </div>
+            </div>
+            <div class="info">
+                {{ db.urgentTasks.length }}
+                <div>Urgent Tasks</div>
             </div>
         </div>
 
-        <div class="card nextDueTask convex">
-            <img class="icon" src="assets/img/alert.png" alt="inProgress">
-            <div class="dueDate"> {{ (db.nextDueDateTask.dueTo*1000 | date: 'MMM, dd')|| ''}} </div>
-            <div class="number">
-                Next Deadline
+        <!-- // new card -->
+
+        <div class="card nextDueTask convex smallCard">
+            <div class="icon">
+                <div class="icon-wrap ">
+                    <img  src="assets/img/urgent.svg" alt="inProgress">
+                </div>
+            </div>
+            <div class="info"> 
+                {{ (db.nextDueDateTask.dueTo*1000 | date: 'MMM, dd')|| ''}} 
+                <div> Next Deadline</div>
             </div>
 
             <div class="taskDetails-onhover concave-btn">

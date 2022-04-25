@@ -1,18 +1,19 @@
 :host {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     height: max-content;
     max-height: 100%;
     max-width: var(--maxwidth);
     margin: auto;
-    padding: 8em var(--paddingPage);
+    padding: 3em var(--paddingPage);
     border-radius: 12px;
     font-size: var(--font-normal);
 }
 
 h1 {
     position: relative;
-    margin-bottom: 24px;
+    margin-bottom: 15px;
 
     // pencil stroke
     &:after {
@@ -21,7 +22,7 @@ h1 {
         background-size: contain;
         background-repeat: no-repeat;
         position: absolute;
-        filter: opacity(0.4);
+        filter: opacity(0.6);
         transform: rotateX(34deg) rotateY(-2deg);
         height: 30px;
         width: 210px;
@@ -36,13 +37,23 @@ h1 {
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    gap: 2em;
+    gap: 3em;
 
     .containerOne {
         position: relative;
         display: flex;
         flex-direction: column;
         width: fit-content;
+
+        div{
+            font-weight: var(--font-normal);
+        }
+        .date{
+            font-size: var(--font-small);
+            font-weight: var(--font-light);
+
+            // font-style: italic;
+        }
 
         // white rectangle LEFT
         // &:before {
@@ -61,6 +72,7 @@ h1 {
         // }
     }
 
+    // contains cards
     .containerTwo {
         display: flex;
         flex-direction: column;
@@ -71,31 +83,68 @@ h1 {
 
 .card {
     position: relative;
-    width: 300px;
-    height: 145px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 32px 0px 0px;
+    width: 340px;
+    height: 140px;
     border-radius: 12px;
     background-color: var(--bg-light);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
+}
 
-    .icon {
+.smallCard{
+    height: 94px!important;
+}
+
+.icon{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 42%;
+    height: 100%;
+
+    &:after{
+        content: '';
         position: absolute;
-        left: 14px;
-        top: 14px;
-        width: 34px;
-        height: 34px;
+        width: 1px;
+        background-color: var(--primary-light);
+        height: 80%;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        filter: opacity(1);
     }
 }
 
+.icon-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 55%;
+    height: 55%;
+
+    img{
+        width: 34px;
+    }
+}
+
+.info{
+    display: flex;
+    align-items: center;
+    padding-left: 24px;
+    flex: 1;
+}
+
+// Card: Statistics
 .statistic {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
-    padding: 12px;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 34px;
 
     .row {
         display: flex;
@@ -109,18 +158,16 @@ h1 {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            width: 92px;
+            width: 38%;
             max-width: 114px;
 
             div:last-child {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                background-color: rgba(128, 128, 128, 0.137);
                 padding: 5px;
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
+                width: 24px;
+                height: 24px;
             }
         }
 
@@ -145,12 +192,9 @@ h1 {
     }
 }
 
+// Card: Due Date Task
 .nextDueTask {
     position: relative;
-
-    .dueDate {
-        font-size: 34px;
-    }
 
     .taskDetails-onhover {
         display: none;
@@ -195,31 +239,28 @@ h1 {
             font-size: var(--font-small);
             border-top: 1px solid rgb(190, 190, 190);
         }
-
-        span {
-            font-weight: var(--font-bold);
-        }
     }
 }
 
+// Card UrgentTasks
 .urgentTasks {
-    .number {
-        font-size: 34px;
-    }
+
 }
 
-// New Task Container
+
+
+//*********** New Task Container ************
 
 .sectionTwo {
     height: 100%;
-    width: 50%;
+    width: 56%;
 }
 
 app-new-task {
     width: 100%;
     border-radius: 12px;
     margin-top: 12px;
-    padding: 64px 34px;
+    padding: 64px 54px;
     box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     border-color: #d2ddef !important;
 
