@@ -13,8 +13,11 @@ form {
     justify-content: space-between;
     width: 100%;
     height: fit-content;
-    gap: 44px;
+    gap: 12px;
     border-radius: 12px;
+}
+::placeholder{
+    color: grey;
 }
 
 input,
@@ -31,11 +34,11 @@ input {
     padding: 0px 12px;
 }
 
-select{
+select {
     box-shadow: rgba(117, 117, 117, 0.02) 0px 1px 3px 0px, rgba(101, 110, 118, 0.15) 0px 0px 0px 1px;
 }
 
-button{
+button {
     font-size: 16px;
 }
 
@@ -64,10 +67,8 @@ button{
     background-color: transparent;
 }
 
-
 .description {
     flex: 1;
-    background-color: transparent;
 
     textarea {
         padding: 12px;
@@ -129,17 +130,18 @@ button{
     select {
         width: 100%;
         padding: 4px;
-                border-radius: 6px;
+        border-radius: 6px;
     }
 
     .categoryPopUp {
         position: absolute;
         display: flex;
         justify-content: space-between;
-        top: 0;
-        left: 0;
+        top: 0px;
+        left: 0px;
         right: 0;
-        bottom: 0;
+        bottom: 0px;
+        border-radius: 6px;
         background-color: white;
         font-size: var(--font-small);
 
@@ -149,19 +151,28 @@ button{
         }
         button {
             height: 100%;
-            width: 50px;
+            width: 76px;
             padding-left: 4px;
             padding-right: 4px;
             font-size: var(--font-small);
             color: var(--primary-dark);
-            border: 1px darkgrey solid;
-            border-radius: 2px;
+            border: unset;
             background-color: var(--accent1);
 
             &:disabled {
-                background-color: lightgrey;
-                color: var(--primary-light);
+                background-color: var(--bg-light);
+                color: var(--primary-dark);
             }
+        }
+
+        button:first-child {
+            border-top-left-radius: 6px;
+            border-bottom-left-radius: 6px;
+        }
+
+        button:second-child {
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
         }
 
         .validatorCategory {
@@ -178,29 +189,27 @@ button{
     }
 }
 
-// SAVE TASK 
-.addTask{
+// SAVE TASK
+.addTask {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 1em;
     font-style: italic;
 
-
-    span{
-        margin-left: 8px; 
+    span {
+        margin-left: 8px;
         margin-right: 4px;
     }
 }
 
-.selectSave{
-    width: 100px!important;
+.selectSave {
+    width: 100px !important;
     max-width: 100%;
     border: none;
     box-shadow: none;
     text-decoration: underline;
     font-style: italic;
-
 }
 // save-Button
 .button {
@@ -213,7 +222,7 @@ button{
 }
 
 button:disabled {
-    background-color:var(--bg);
+    background-color: var(--bg);
     color: var(--primary-dark);
 }
 
