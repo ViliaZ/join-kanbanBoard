@@ -3,6 +3,8 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    max-width: var(--maxwidth);
+    margin: auto;
     padding: var(--paddingPageTopBottom) var(--paddingPage);
 }
 

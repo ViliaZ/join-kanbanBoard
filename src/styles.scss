@@ -12,7 +12,7 @@
   //   rgba(196, 220, 229, 0.57) 8%,
   //   rgba(193, 162, 216, 0.699) 100%
   // );
-  --bg:#d7dce6;
+  --bg:linear-gradient(45deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
   --bg-light:#ecf1fb;
   --gradientColors: linear-gradient(
     73deg,
@@ -34,6 +34,8 @@
   --font-normal: 16px;
   --paddingPage: 120px;
   --paddingPageTopBottom: 44px;
+  --maxwidth: 1280px;
+  --maxwidthMenu: 1460px;
 }
 
 // neumorphism styles: https://neumorphic.design/
@@ -49,14 +51,13 @@
 
 
 .convex{
-  background: hsla(223, 21%, 87%, 1);
+  background: hsla(240, 100%, 98%, 1);
 
-background: linear-gradient(315deg, hsla(223, 21%, 87%, 1) 0%, hsla(222, 41%, 92%, 1) 68%);
+background: linear-gradient(315deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
 
-background: -moz-linear-gradient(315deg, hsla(223, 21%, 87%, 1) 0%, hsla(222, 41%, 92%, 1) 68%);
+background: -moz-linear-gradient(315deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
 
-background: -webkit-linear-gradient(315deg, hsla(223, 21%, 87%, 1) 0%, hsla(222, 41%, 92%, 1) 68%);
-
+background: -webkit-linear-gradient(315deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px,
   rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
 }

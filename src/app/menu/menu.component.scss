@@ -1,8 +1,9 @@
 :host {
     position: relative;
     width: 100%;
-    max-width: 100%;
     height: 90px;
+    max-width: var(--maxwidthMenu);
+    margin: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
