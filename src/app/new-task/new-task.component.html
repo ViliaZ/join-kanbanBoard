@@ -24,13 +24,13 @@
     </mat-form-field>
 
     <div class="urgency">
-      <label for="low" [class.activeButton]="activeUrgency == 'low'" (click)="setUrgencyButtonColor('low')">Low</label>
+      <label for="low" [class.activeButton]="activeUrgency == 'low'" class="default-btn" (click)="setUrgencyButtonColor('low')">Low</label>
         <input id="low" type="radio" value="low" name="taskUrgency" [(ngModel)]="task.urgency" >
 
-      <label for="normal" [class.activeButton]="activeUrgency == 'normal'" (click)="setUrgencyButtonColor('normal')">Normal</label>
+      <label for="normal" [class.activeButton]="activeUrgency == 'normal'" class="default-btn" (click)="setUrgencyButtonColor('normal')">Normal</label>
         <input id="normal" type="radio" value="normal" name="taskUrgency" [(ngModel)]="task.urgency" >
 
-      <label for="urgent" [class.activeButton]="activeUrgency == 'urgent'" (click)="setUrgencyButtonColor('urgent')">Urgent</label>
+      <label for="urgent" [class.activeButton]="activeUrgency == 'urgent'" class="default-btn" (click)="setUrgencyButtonColor('urgent')">Urgent</label>
         <input id="urgent" type="radio" value="urgent" name="taskUrgency" [(ngModel)]="task.urgency" >
     </div>
 
@@ -59,8 +59,17 @@
         </div>
 
         <div>
-          <button (click)="handleCustomCategory('save', $event, form)" [disabled]="!inputCat.value || inputCat.errors?.['minlength'] ">Save</button>
-          <button (click)="handleCustomCategory('close')">Cancel</button>
+          <button 
+            (click)="handleCustomCategory('save', $event, form)" 
+            [disabled]="!inputCat.value || inputCat.errors?.['minlength'] "
+            class="default-btn">
+            Save
+          </button>
+          <button 
+            (click)="handleCustomCategory('close')"
+            class="default-btn">
+            Cancel
+          </button>
         </div>      
           <!-- <div>
           <button (click)="addCustomCategory(catSelect.value)" [disabled]="!inputCat.value || inputCat.errors?.['minlength'] ">Save</button>
@@ -78,18 +87,27 @@
       <!-- value={{task.users[i]}} -->
     </div>
 
-    <div>
+    <div class="addTask">
+     <div>
+       <span>Add Task to</span>
+       <select class="selectSave" (change)="handleCustomCategory('checkIfCustomRequest', $event)" [(ngModel)]="task.board" name="boards" >
+        <option selected value="backlog">Backlog</option>
+        <option *ngFor="let board of db.boards" value={{board}}>{{ board }}</option>
+           </select>
+     </div>
+
       <button 
         type="submit" 
         [disabled]="!form.valid" 
-        class="button">
-        Add to Backlog
+        class="button default-btn"
+        >
+        Save
       </button>
 
       <button 
         *ngIf="taskservice.taskPopupOpen" 
         (click)="closeWithoutSave()" 
-        class="button btn-cancel">
+        class="button btn-cancel default-btn">
         Cancel
       </button>
     </div>

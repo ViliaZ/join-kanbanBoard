@@ -1,19 +1,20 @@
 :host {
     display: flex;
     justify-content: space-between;
-    height: 100%;
+    height: max-content;
     max-height: 100%;
-    padding: var(--paddingPageTopBottom) var(--paddingPage);
+    padding: 8em var(--paddingPage);
     border-radius: 12px;
     font-size: var(--font-normal);
 }
 
-h1{
+h1 {
     position: relative;
     margin-bottom: 24px;
 
-    &:after{ 
-        content: '';
+    // pencil stroke
+    &:after {
+        content: "";
         background-image: url(../../assets/img/stroke.svg);
         background-size: contain;
         background-repeat: no-repeat;
@@ -30,43 +31,32 @@ h1{
 //upper part
 .sectionOne {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     flex-direction: column;
     gap: 2em;
-
-
-    // &:before{
-    //     content: '';
-    //     position: absolute;
-    //     border: 1px solid var(--accent1);
-    //     filter: opacity(0.3);
-    //     border-radius: 12px;
-    //     left: -20px; 
-    //     height: 100%;
-    //     width: 44px;
-    //     top: 20px;
-    //     bottom: 120px; 
-    //     z-index: 2;
-    // }
 
     .containerOne {
         position: relative;
         display: flex;
         flex-direction: column;
         width: fit-content;
-        flex: 1;
 
-        &:before{
-        content: '';
-        position: absolute;
-        background-color: var(--primary-light);
-        border-radius: 6px;
-        right: 120%; 
-        height: 40%;
-        width: 544px;
-        z-index: -1;
-    }
+        // white rectangle LEFT
+        // &:before {
+        //     content: "";
+        //     position: absolute;
+        //     background-color: var(--bg-light);
+        //     border-radius: 6px;
+        //     right: 120%;
+        //     height: 40%;
+        //     width: 544px;
+        //     z-index: -1;
+        //     box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px,
+        //         rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+        //     border: 0.0625rem solid rgba(228, 235, 241, 0.05);
+        //     border-color: #d2ddef !important;
+        // }
     }
 
     .containerTwo {
@@ -82,13 +72,12 @@ h1{
     width: 300px;
     height: 145px;
     border-radius: 12px;
-    background-color: var(--primary-light);
+    background-color: var(--bg-light);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    box-shadow: rgb(0 0 0 / 12%) 1px 1px 6px;
 
     .icon {
         position: absolute;
@@ -219,39 +208,45 @@ h1{
 
 // New Task Container
 
-.sectionTwo{
+.sectionTwo {
     height: 100%;
     width: 50%;
 }
 
 app-new-task {
     width: 100%;
-    height: 100%;
     border-radius: 12px;
-    // box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin-top: 12px;
+    padding: 64px 34px;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    border-color: #d2ddef !important;
 
-    &:after{
-        content: '';
-        position: absolute;
-        background-color: var(--primary-light);
-        border-radius: 12px;
-        left: -90px; 
-        right: -200px; 
-        bottom: -12px; 
-        top:12px;
-        z-index: -1;
-    }
+    // big white background
+    // &:after {
+    //     content: "";
+    //     position: absolute;
+    //     background-color: var(--bg);
+    //     border-radius: 12px;
+    //     left: -90px;
+    //     right: -50px;
+    //     bottom: -12px;
+    //     top: 12px;
+    //     z-index: -1;
+    //     box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    //     border-color: #d2ddef !important;
+    // }
 
-    &:before{
-        content: '';
-        position: absolute;
-        border: 1px solid var(--accent1);
-        filter: opacity(0.3);
-        border-radius: 12px;
-        left: -100px; 
-        right: -200px; 
-        bottom: 0px; 
-        top:0px;
-        z-index: 2;
-    }
+    // border element
+    // &:before {
+    //     content: "";
+    //     position: absolute;
+    //     border: 1px solid #fe00e5 !important;
+    //     filter: opacity(0.3);
+    //     border-radius: 12px;
+    //     left: -100px;
+    //     right: -200px;
+    //     bottom: 0px;
+    //     top: 0px;
+    //     z-index: -1;
+    // }
 }

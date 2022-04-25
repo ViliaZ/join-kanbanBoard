@@ -12,7 +12,8 @@
   //   rgba(196, 220, 229, 0.57) 8%,
   //   rgba(193, 162, 216, 0.699) 100%
   // );
-  --bg:#D2DBEE;
+  --bg:#d7dce6;
+  --bg-light:#ecf1fb;
   --gradientColors: linear-gradient(
     73deg,
     rgba(222, 228, 19, 0.9094231442577031) 10%,
@@ -37,28 +38,27 @@
 
 // neumorphism styles: https://neumorphic.design/
 .concave-btn {
-  background: #D2DBEE;
-  border-radius: 25%;
-  box-shadow: inset 10.51px 10.51px 15px #C5CEE0, inset -10.51px -10.51px 15px #DFE8FC;
-}
-
-.convex-btn {
-  background: linear-gradient(145deg, #EDF7FF, #B7BFCF);
-  border-radius: 41%;
-  box-shadow: 15.92px 15.92px 15px #D1DAED, -15.92px -15.92px 15px #D3DCEF;
+  box-shadow: inset 2px 2px 5px #b8b9be,inset -3px -3px 7px #fff!important;
+  border-radius: 6px;
+  // background: #D2DBEE;
+  // box-shadow: inset 10.51px 10.51px 15px #C5CEE0, inset -10.51px -10.51px 15px #DFE8FC;
 }
 
 .default-btn{
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;}
 
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;   
-  border-radius: 6px;
-  // box-shadow: #bfcbe7 0px 14px 20px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
-}
 
 .convex{
-  background: linear-gradient(145deg, #EDF7FF, #B7BFCF);
-  border-radius: 41%;
-  box-shadow: 15.92px 15.92px 15px #D1DAED, -15.92px -15.92px 15px #D3DCEF;
+  background: hsla(223, 21%, 87%, 1);
+
+background: linear-gradient(315deg, hsla(223, 21%, 87%, 1) 0%, hsla(222, 41%, 92%, 1) 68%);
+
+background: -moz-linear-gradient(315deg, hsla(223, 21%, 87%, 1) 0%, hsla(222, 41%, 92%, 1) 68%);
+
+background: -webkit-linear-gradient(315deg, hsla(223, 21%, 87%, 1) 0%, hsla(222, 41%, 92%, 1) 68%);
+
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px,
+  rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
 }
 
 

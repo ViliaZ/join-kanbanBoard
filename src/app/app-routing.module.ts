@@ -10,6 +10,7 @@ import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
 { path: '', component: DashboardComponent },
+{ path: 'home', component: DashboardComponent },
 { path: 'login', component: LoginPageComponent },
 { path: 'imprint', component: ImprintComponent },
 { path: 'board', component: BoardComponent },

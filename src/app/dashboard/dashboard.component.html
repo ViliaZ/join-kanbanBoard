@@ -7,7 +7,7 @@
     </div>
 
     <div class="containerTwo">
-        <div class="card statistic">
+        <div class="card statistic convex">
             <div class="row">
                 <div class="row-label">
                     <div >
@@ -49,7 +49,7 @@
         </div>
 
 
-        <div class="card urgentTasks">
+        <div class="card urgentTasks convex">
             <img class="icon" src="assets/img/alert.png" alt="inProgress">
             <div class="number">{{ db.urgentTasks.length }}</div>
             <div>
@@ -57,14 +57,14 @@
             </div>
         </div>
 
-        <div class="card nextDueTask">
+        <div class="card nextDueTask convex">
             <img class="icon" src="assets/img/alert.png" alt="inProgress">
             <div class="dueDate"> {{ (db.nextDueDateTask.dueTo*1000 | date: 'MMM, dd')|| ''}} </div>
             <div class="number">
                 Next Deadline
             </div>
 
-            <div class="taskDetails-onhover">
+            <div class="taskDetails-onhover concave-btn">
                <div>Task Details:</div> 
                <div><span>On Board:</span> {{ db.nextDueDateTask.board }} </div>
                <div><span>Category:</span> {{ db.nextDueDateTask.category }} </div> 
