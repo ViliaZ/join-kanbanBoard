@@ -1,4 +1,4 @@
-<div class="filterOptions">
+<div *ngIf="!db.backlogEmpty()" class="filterOptions">
     <div class="sortBy">
         <img (click)="changeSorting()" src="assets/img/sort.png" alt="sort icon">
     </div>
@@ -42,6 +42,8 @@
         </div>
 
         <div *ngIf="db.backlogEmpty()" class="emptyBacklog">
-            Boring times ... No tasks in the Backlog.
+            <img *ngIf="db.backlogEmpty()" src="assets/img/notFound.svg" alt="empty Backlog">
+            <h3> No Tasks in the Backlog.</h3>
         </div>
+
     </div>

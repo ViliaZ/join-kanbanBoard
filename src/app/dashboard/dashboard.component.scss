@@ -51,25 +51,7 @@ h1 {
         .date {
             font-size: var(--font-small);
             font-weight: var(--font-light);
-
-            // font-style: italic;
         }
-
-        // white rectangle LEFT
-        // &:before {
-        //     content: "";
-        //     position: absolute;
-        //     background-color: var(--bg-light);
-        //     border-radius: 6px;
-        //     right: 120%;
-        //     height: 40%;
-        //     width: 544px;
-        //     z-index: -1;
-        //     box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px,
-        //         rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
-        //     border: 0.0625rem solid rgba(228, 235, 241, 0.05);
-        //     border-color: #d2ddef !important;
-        // }
     }
 
     // contains cards
@@ -102,7 +84,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 42%;
+    width: 31%;
     height: 100%;
 
     &:after {

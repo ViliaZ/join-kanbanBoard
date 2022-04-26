@@ -3,7 +3,7 @@
     <div class="user containerOne">
         <h1 class="welcome">Welcome to Join</h1>
         <div>Guest User | Full Access</div>
-       <span class="date">{{ currentDate | date }}</span>
+        <span class="date">{{ currentDate | date }}</span>
     </div>
 
     <div class="containerTwo">
@@ -13,7 +13,7 @@
         <div class="card statistic convex">
             <div class="row">
                 <div class="row-label">
-                    <div >
+                    <div>
                         Backlog
                     </div>
                     <div class="concave-small">{{ db.backlogtasks.length }}</div>
@@ -26,7 +26,7 @@
 
             <div class="row">
                 <div class="row-label">
-                    <div >
+                    <div>
                         To-Do`s
                     </div>
                     <div class="concave-small"> {{ db.todoTasks.length }} </div>
@@ -36,10 +36,10 @@
                     </div>
                 </div>
             </div>
-         
+
             <div class="row">
                 <div class="row-label">
-                    <div >
+                    <div>
                         All Tasks
                     </div>
                     <div class="concave-small">{{ db.allTasks.length }}</div>
@@ -56,11 +56,12 @@
         <div class="card urgentTasks smallCard convex">
             <div class="icon">
                 <div class="icon-wrap ">
-                    <img  src="assets/img/nextDue.svg" alt="inProgress">
+                    <img src="assets/img/nextDue.svg" alt="inProgress">
                 </div>
             </div>
             <div class="info">
-                <div>{{ db.urgentTasks.length | number:'2.0' }}</div>
+                <div *ngIf="db.urgentTasks.length > 0">{{ db.urgentTasks.length | number:'2.0'}}</div>
+                <div *ngIf="db.urgentTasks.length == 0">0</div>
                 <div>Urgent Tasks</div>
             </div>
         </div>
@@ -70,19 +71,19 @@
         <div class="card nextDueTask convex smallCard">
             <div class="icon">
                 <div class="icon-wrap ">
-                    <img  src="assets/img/urgent.svg" alt="inProgress">
+                    <img src="assets/img/urgent.svg" alt="inProgress">
                 </div>
             </div>
-            <div class="info"> 
-                <div>{{ (db.nextDueDateTask.dueTo*1000 | date: 'MMM, dd')|| ''}} </div>
+            <div class="info">
+                <div>{{ (db.nextDueDateTask.dueTo*1000 | date: 'MMM, dd') || 'No Tasks'}} </div>
                 <div> Next Deadline</div>
             </div>
 
             <div class="taskDetails-onhover concave-btn">
-               <div>Task Details:</div> 
-               <div><span>On Board:</span> {{ db.nextDueDateTask.board }} </div>
-               <div><span>Category:</span> {{ db.nextDueDateTask.category }} </div> 
-               <div *ngIf="db.nextDueDates.length > 1"> +{{ db.nextDueDates.length-1 }}further task(s)</div>
+                <div>Task Details:</div>
+                <div><span>On Board:</span> {{ db.nextDueDateTask.board }} </div>
+                <div><span>Category:</span> {{ db.nextDueDateTask.category }} </div>
+                <div *ngIf="db.nextDueDates.length > 1"> +{{ db.nextDueDates.length-1 }}further task(s)</div>
             </div>
         </div>
     </div>
