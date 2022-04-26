@@ -25,6 +25,7 @@ import { LogoAnimationComponent } from './logo-animation/logo-animation.componen
 import { GradientAnimationComponent } from './gradient-animation/gradient-animation.component';
 import { SignupComponent } from './signup/signup.component';
 import { LogoutSuccessComponent } from './logout-success/logout-success.component';
+import { ForgotPwComponent } from './forgot-pw/forgot-pw.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +40,8 @@ import { LogoutSuccessComponent } from './logout-success/logout-success.componen
     LogoAnimationComponent,
     GradientAnimationComponent,
     SignupComponent,
-    LogoutSuccessComponent
+    LogoutSuccessComponent,
+    ForgotPwComponent
   ],
   imports: [
     BrowserModule,

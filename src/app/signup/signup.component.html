@@ -3,24 +3,26 @@
     <div class="section-card">
 
         <div class="login">
-            <input placeholder="First Name" type="text">
-            <input placeholder="E-Mail Name" type="text">
-            <input placeholder="Password" type="text">
+            <form #form="ngForm" (ngSubmit)="createNewUser(form)">
 
-            <button routerLink="/">Login</button>
+                <input [(ngModel)]="user.name" required name="userName" placeholder="First Name" type="text">
+                <input [(ngModel)]="user.email" required name="userEmail" placeholder="E-Mail Name" type="email">
+                <input [(ngModel)]="user.password" required name="userPassword" placeholder="Password" type="password">
 
-            <div class="altLogin">
-                <span>Cancel Registration?</span>
-                <span>
-                    <a routerLink="/login">Back to Login</a>
-                    - or -
-                    <a routerLink="/">Enter as Guest</a>
-                </span>
+                <button [disabled]="!form.valid" type="submit">Create Account</button>
 
-            </div>
+                <div class="altLogin">
+                    <span>Cancel Registration?</span>
+                    <span>
+                        <a routerLink="/login">Back to Login</a>
+                        - or -
+                        <a routerLink="/">Enter as Guest</a>
+                    </span>
 
-
+                </div>
+            </form>
         </div>
+
     </div>
 
     <app-gradient-animation class="bg-gradient"></app-gradient-animation>
