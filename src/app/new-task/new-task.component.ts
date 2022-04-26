@@ -14,6 +14,7 @@ import {
 import {
   TasksService
 } from 'src/services/tasks.service';
+import { Form, FormControl } from '@angular/forms';
 
 
 @Component({
@@ -31,7 +32,7 @@ export class NewTaskComponent implements OnInit {
   public openCategoryPopUp: boolean = false;
   public currentTask: any;
   public activeUrgency: string = '';
-  public date: any = new Date; // datepicker default date
+  public date: any; // only for editmode // ngmodel datepicker works with this date
   public minDate: any = new Date; // minimum date for datepicker
   // ngValue: any = null;
 
@@ -39,7 +40,7 @@ export class NewTaskComponent implements OnInit {
   public task: any = {
     'title': '',
     'description': '',
-    'dueTo': '',
+    'dueTo': new Date(),
     'urgency': '',
     'board': 'backlog',
     'category': '',
@@ -48,20 +49,29 @@ export class NewTaskComponent implements OnInit {
     'createdAt': '',
   }
 
+
   constructor(public db: DatabaseService, public taskservice: TasksService, public router: Router) {
-    if (this.taskservice.editMode) {
-      this.task = this.taskservice.currentTask;
-    }
 
   }
 
   ngOnInit(): void {
-    this.setCurrentUrgency();
-    console.log(this.task, this.taskservice.currentTask);
+    if (this.taskservice.editMode) {// EDITMODE only: set current values in all inputfields
+      this.autoFillForm();
+    }
+    this.setUrgencyDefault();
+  }
+
+  // EDITMODE only
+  autoFillForm(){
+    this.task = this.taskservice.currentTask;
+    this.date = new Date(this.taskservice.currentTask.dueTo.toDate());  // cannot use ngModel for date with dueTo --> Error, because conflict with template HTML for date / format issue when I set a value in datepicker
+    this.task.users = this.db.users[0]; // future: hier kommt currentUser hin
+    // use 'date' instead of 'dueTo' in Datepicker! The template inputfield is changed to 'ngModel = date' when in editmode
+console.log('this task after autofill:', this.task.dueTo);
 
   }
 
-  setCurrentUrgency() {
+  setUrgencyDefault() {
     let activeUrgency: string;
     if (!this.taskservice.editMode) {
       activeUrgency = 'normal';
@@ -72,14 +82,13 @@ export class NewTaskComponent implements OnInit {
     this.setUrgencyButtonColor(activeUrgency);
   }
 
-  // sets color for selected choice on clicked button
+  // set color for selected choice on clicked button
   setUrgencyButtonColor(activeUrgency: string = 'normal') {
     this.activeUrgency = activeUrgency;
   }
 
 
   handleCustomCategory(action: string, event?: any, form?: any) {
-    console.log('thistask', this.task);
     if (action == 'checkIfCustomRequest') {
       this.checkIfCustomCatRequested(event);
     }
@@ -88,7 +97,6 @@ export class NewTaskComponent implements OnInit {
       this.openCategoryPopUp = false;
     }
     if (action == 'save') {
-      console.log('task after save', this.task);
       this.db.categories.push(this.customCategory);
       this.taskservice.currentTask.category = 'testtest';
       this.task.category = this.customCategory;
@@ -97,41 +105,50 @@ export class NewTaskComponent implements OnInit {
   }
 
   checkIfCustomCatRequested(event: any) {
-    console.log('event', event);
-
     if (event.target.value == 'Custom Category' && !this.openCategoryPopUp) {
       this.openCategoryPopUp = true;
     }
   }
 
   saveTask(form: any) {
-    console.log('editmode?', this.taskservice.editMode);
-    console.log('currentTasks?', this.taskservice.currentTask);
-
-    // fill the task object with input from ngModel
     if (!this.taskservice.editMode) {
-      this.task.board = form.value.board; // default
-      this.task.createdAt = new Date().getTime(); // needed for sorting tasks in order
-      this.task.isPinnedToBoard = false; // default
-      this.task.urgency = form.value.taskUrgency;
-      this.task.category = form.value.taskCategory;
-      this.task.dueTo = form.value.taskDueDate;
-      this.task.description = form.value.taskDescription;
-      this.task.users = form.value.taskUser;
+      this.saveNewTask(form);
       this.db.addDocToCollection('tasks', this.task);
-      form.reset();
-      console.log('save task:', this.task)
 
-      // if task already exists and is edited
+
     } else {
-      this.task = this.taskservice.currentTask;
-      this.db.updateDoc('tasks', this.task.customIdName, this.task);
-      this.taskservice.currentTask = {};
-      this.taskservice.editMode = false;
+      this.udpateEditedTask();
     }
+    this.resetForm(form);
+  }
+
+  resetForm(form: any){
+    form.reset();
     this.taskservice.taskPopupOpen = false;
     this.setUrgencyButtonColor('normal');
+  }
 
+  saveNewTask(form: any) {  // set values according to ngModel Inputs
+    this.task.board = form.value.board; // default
+    this.task.createdAt = new Date().getTime(); // needed for sorting tasks in order
+    this.task.isPinnedToBoard = false; // default
+    this.task.urgency = form.value.taskUrgency;
+    this.task.category = form.value.taskCategory;
+    this.task.dueTo = form.value.taskDueDate;   
+    this.task.description = form.value.taskDescription;
+    this.task.users = form.value.taskUser;
+  }
+
+  udpateEditedTask() {
+    this.task = this.taskservice.currentTask;
+    this.task.dueTo = this.date;
+    console.log('this task is saved to db:',this.task.dueTo);
+    this.db.updateDoc('tasks', this.task.customIdName, this.task);
+    this.task.dueTo = {seconds: 1651269600, nanoseconds: 0};
+    console.log('this task after saved to db:',this.task.dueTo);
+
+    this.taskservice.currentTask = {};
+    this.taskservice.editMode = false;
   }
 
   closeWithoutSave() {
