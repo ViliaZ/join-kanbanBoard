@@ -32,6 +32,11 @@ form {
     color: grey;
 }
 
+.borderRadiusAdjust{
+    border-top-right-radius: 0px!important;
+    border-bottom-right-radius:  0px!important;
+}
+
 input,
 select {
     font-size: var(--font-normal) !important;

@@ -11,6 +11,7 @@
     font-size: var(--font-normal);
 }
 
+
 h1 {
     position: relative;
     margin-bottom: 15px;
@@ -43,7 +44,8 @@ h1 {
         position: relative;
         display: flex;
         flex-direction: column;
-        width: fit-content;
+        margin:auto;
+        // width: fit-content;
 
         div {
             font-weight: var(--font-normal);
@@ -72,7 +74,6 @@ h1 {
     width: 340px;
     height: 140px;
     border-radius: 12px;
-    background-color: var(--bg-light);
 }
 
 .smallCard {
@@ -240,10 +241,41 @@ h1 {
     width: 56%;
 }
 
+.announcement{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding:  16px 34px;
+    margin-top: 12px;
+    border-radius: 6px;
+    border: 0.003rem solid rgba(128, 128, 128, 0.706);
+    // background: var(--gradientColors);
+
+    div{
+        // color: white!important;
+    }
+
+
+
+    .comingSoon{
+        font-weight: var(--font-bold);
+    }
+
+}
+
+.newTaskWrapper{
+width: 100%;
+height: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
 app-new-task {
     width: 100%;
+    height: 100%;
     border-radius: 12px;
-    margin-top: 12px;
+    margin: 32px;
     padding: 64px 54px;
     box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     border-color: #d2ddef !important;

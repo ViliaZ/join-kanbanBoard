@@ -21,7 +21,7 @@
       <input  
         *ngIf="taskservice.editMode"
         placeholder="Choose a Due Date" 
-        class="concave" 
+        class="concave borderRadiusAdjust" 
         [min]="minDate" 
         matInput 
         [(ngModel)]="date" 
@@ -31,7 +31,7 @@
       <input  
         *ngIf="!taskservice.editMode"
         placeholder="Choose a Due Date" 
-        class="concave" 
+        class="concave borderRadiusAdjust" 
         [min]="minDate" 
         matInput 
         [(ngModel)]="task.dueTo" 

@@ -42,25 +42,26 @@
   --maxwidthMenu: 1460px;
 }
 
-// neumorphism styles: https://neumorphic.design/
-.concave-btn {
-  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff !important;
-  border-radius: 6px;
+
+.default-btn {
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 }
+
+
+.convex {
+  box-shadow: 6px 6px 12px #b8b9be,-6px -6px 12px #fff!important;
+}
+
 
 .concave {
   box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff !important;
   border-radius: 6px;
 }
 
-.default-btn {
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-}
-
-.convex {
-  background: rgb(250, 250, 253);
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px,
-    rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+// neumorphism styles: https://neumorphic.design/
+.concave-btn {
+  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff !important;
+  border-radius: 6px;
 }
 
 // for dashboard card statisic
@@ -161,9 +162,30 @@ mat-option {
 .mat-form-field-appearance-fill .mat-form-field-flex {
   display: flex;
   align-items: center;
-  padding: 0em 0.75em 0 0em!important;
+  padding: 0!important;
 }
 
+.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button{
+  border: unset;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top: grey 0.04em solid;
+  border-right: grey 0.04em solid;
+  border-bottom: grey 0.08em solid;
+  height: 42px!important;
+  // padding: 0.25em 0;
+}
+
+.mat-form-field-infix {
+  padding: 0 0!important;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex{
+  display: flex;
+  align-items: flex-end;
+}
 
 
 // .mat-form-field-wrapper{
