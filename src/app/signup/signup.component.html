@@ -2,8 +2,10 @@
 
     <div class="section-card">
 
+
         <div class="login">
-            <form #form="ngForm" (ngSubmit)="createNewUser(form)">
+            <h2>Sign Up</h2>
+            <form #form="ngForm" (ngSubmit)="onSignUp()">
 
                 <input [(ngModel)]="user.name" required name="userName" placeholder="First Name" type="text">
                 <input [(ngModel)]="user.email" required name="userEmail" placeholder="E-Mail Name" type="email">

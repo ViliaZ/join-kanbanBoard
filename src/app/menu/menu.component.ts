@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { AuthServiceService } from 'src/services/auth-service.service';
 
 @Component({
   selector: 'app-menu',
@@ -13,14 +13,14 @@ export class MenuComponent implements OnInit {
 
   public activeNavItem: string = 'home';
 
-  constructor(public auth: AngularFireAuth, private router: Router) { }
+  constructor(public authService: AuthServiceService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  logout() {   
-    this.auth.signOut().then(()=> this.router.navigate(['/logout']));
+  onLogout() {
+    this.authService.logout();
+    this.authService.isSignedIn = false;
   }
 
-  
 }

@@ -36,17 +36,6 @@ export class TaskComponent implements OnInit {
   }
 
   fixTaskToTop(task: any, event: any) {
-
-    // let currentBoardIndex!: number;
-    // this.db.boards.map((board: any, i: any) => {
-    //   if (board.name == task.board) {
-    //     currentBoardIndex = i }
-    // })
-
-
-    // let tasksArray = this.db.boards[currentBoardIndex].tasks;
-
-    // console.log('currentBoardIndex:', currentBoardIndex);
     if (!task.isPinnedToBoard) {
       this.db.updateDoc('tasks', task.customIdName, { 'isPinnedToBoard': true, 'createdAt': new Date().getTime() });
     }

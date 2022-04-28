@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { getAuth, signInAnonymously } from "firebase/auth";
+import { AuthServiceService } from 'src/services/auth-service.service';
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
+
+
 export class LoginPageComponent implements OnInit {
 
   user: any = {
@@ -16,40 +16,24 @@ export class LoginPageComponent implements OnInit {
     "password": '',
   }
 
-  authentification = getAuth();
-
-  constructor(private router: Router, public auth: AngularFireAuth) { }
+  constructor(public authService: AuthServiceService) { }
 
   ngOnInit(): void {
   }
 
-  login(form: any) {
-    this.auth.signInWithEmailAndPassword(form.value.userEmail, form.value.userPassword)
-    .then((user) => {
-      console.log('neuer Login. User anonymous?', user.user?.isAnonymous, user.user?.email);
-      
-      this.router.navigate([''])
-    }) 
-    .catch((error) => {
-      console.log('User data incorrrect, Please try again', error);
-    });
+  async onlogin(){
+    await this.authService.login(this.user.email, this.user.password);
+    if(this.authService.isLoggedIn){
+      this.authService.isSignedIn = true;
+    }
   }
 
-  loginAsGuest() {
-    signInAnonymously(this.authentification)
-      .then((user) => {
-        console.log('neuer login. User anonymous?', user.user.isAnonymous);
-
-        // result is: 
-
-        
-        this.router.navigate([''])
-      })
-      .catch((error) => {
-        console.error('error occurred:',error);
-        
-        alert('An error occured, please try again');
-      });
+  onloginAsGuest(){
+    this.authService.loginAsGuest();
   }
+
+
+
+
 
 }

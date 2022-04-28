@@ -4,7 +4,7 @@
         <app-logo-animation class="logoAnimation"></app-logo-animation>
 
             <div class="login">
-                <form (ngSubmit)="login(form)" #form="ngForm">
+                <form (ngSubmit)="onlogin()" #form="ngForm">
 
                 <input [(ngModel)]="user.email" required name="userEmail" placeholder="E-Mail Name" type="email">
                 <input [(ngModel)]="user.password" required name="userPassword" placeholder="Password" type="password">
@@ -16,7 +16,7 @@
                     <span>
                         <a routerLink="/signup">Register here</a>
                         - or -
-                        <a (click)="loginAsGuest()">Enter as Guest</a>
+                        <a (click)="onloginAsGuest()">Enter as Guest</a>
                     </span>
                 </div>
             </form>

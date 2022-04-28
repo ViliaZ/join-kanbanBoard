@@ -26,6 +26,7 @@ import { GradientAnimationComponent } from './gradient-animation/gradient-animat
 import { SignupComponent } from './signup/signup.component';
 import { LogoutSuccessComponent } from './logout-success/logout-success.component';
 import { ForgotPwComponent } from './forgot-pw/forgot-pw.component';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +56,8 @@ import { ForgotPwComponent } from './forgot-pw/forgot-pw.component';
     MatButtonToggleModule,
     MatSelectModule,
     AngularFireModule.initializeApp(environment.firebase),
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

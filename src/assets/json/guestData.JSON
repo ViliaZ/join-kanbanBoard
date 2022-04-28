@@ -1,0 +1,39 @@
+{
+  "dummyBoards": [{
+      "name": "DummyBoardOne",
+      "tasks": [],
+      "editable": "true",
+      "createdAt": ""
+    },
+    {
+      "name": "DummyBoardTwo",
+      "tasks": [],
+      "editable": "true",
+      "createdAt": ""
+    },
+    {
+      "name": "DummyBoardThree",
+      "tasks": [],
+      "editable": "true",
+      "createdAt": ""
+    }
+  ],
+  "dummyTasks": [{
+        "board": "DummyBoardOne",
+        "title": "Titel1",
+        "description": "This is a description",
+        "category": "Marketing",
+        "urgency": "normal",
+        "dueTo": 0,
+        "createdAt": "",
+        "isPinnedToBoard": "false",
+        "users": {
+          "firstName": "Guest",
+          "lastName": "User",
+          "userImage": "assets/img/user.png"
+        }
+      }
+
+
+]
+}

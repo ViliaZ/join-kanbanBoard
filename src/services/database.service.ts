@@ -58,7 +58,6 @@ export class DatabaseService {
   }
 
   handleTasks(tasks: any) {
-
     tasks.forEach((task: any) => {
       this.filterAllTasks(task);
       this.filterUrgentTasks(task);
@@ -156,9 +155,9 @@ export class DatabaseService {
     return this.firestore.collection(collection).doc(docID).update(updateData);
   }
 
-  addDocToCollection(collection: string, doc: object) {
+  async addDocToCollection(collection: string, doc: object) {
     // console.log('doc to collection task')
-    this.firestore.collection(collection).add(doc);
+   await this.firestore.collection(collection).add(doc);
   }
 
   deleteDoc(collection: string, docID: string) {
