@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
 import { AuthServiceService } from 'src/services/auth-service.service';
 import { DatabaseService } from 'src/services/database.service';
 
@@ -12,12 +12,15 @@ import { DatabaseService } from 'src/services/database.service';
 export class DashboardComponent implements OnInit {
 
   today: Date = new Date();
-  tomorrow: any = function() { return 1
+  futureDate: any = (date: Date, daysToCount: number) => {
+    const today = new Date(date)
+    const tomorrow = new Date(today.setDate(today.getDate() + daysToCount))
+    return tomorrow
   }
+
 
   variable: string = '';
   currentDate: any = new Date().getTime();
-  public guestIsInitialized: boolean = false;
   public amountUrgentTasks: any = '0'; // default
   public width: any = {  // width of bar diagrams
     allTasks: '0%',
@@ -25,27 +28,32 @@ export class DashboardComponent implements OnInit {
     backlogTasks: '0%'
   }
 
-
   constructor(
     public db: DatabaseService,
     public authService: AuthServiceService,
-    public httpClient: HttpClient) { }
+    public httpClient: HttpClient) {
+      
+     }
 
   ngOnInit(): void {
-    if (!this.guestIsInitialized) {
+    console.log("Guest is Initialized : ", this.db.guestIsInitialized);
+    if (!this.db.guestIsInitialized) {
       this.createDummyData();
     }
+
+    setTimeout(() => {
+      console.log('dashboard', this.db.guestIsInitialized);
+      this.getCurrentStatistics();
+    }, 2000)
+  }
+
     // if(this.authService.guestLoggedIn){
     //   this.createDummyData();
     // }
-    setTimeout(() => {
-      this.getCurrentStatistics();
-    }, 3000)
-  }
 
   createDummyData() {
-    console.log(this.tomorrow);
-    
+    console.log('create Dummy Data');
+
     let dummyData = this.httpClient.get('assets/json/guestData.JSON')
     dummyData.subscribe(async (res: any) => {
       await this.setDummyBoards(res.dummyBoards);
@@ -53,7 +61,7 @@ export class DashboardComponent implements OnInit {
 
       await this.setDummyTasks(res.dummyTasks);
     })
-    this.guestIsInitialized = true;
+    this.db.guestIsInitialized = true;
   }
 
   async setDummyBoards(dummmyBoards: any) {
@@ -64,17 +72,16 @@ export class DashboardComponent implements OnInit {
   }
 
   async setDummyTasks(dummmyTasks: any) {
+    // dynamically adjust JSON data (dueDates) to always get some dummydata in the future, so we never have tasks in the past
+    let daysFromNow = 1;
     for (let i = 0; i < dummmyTasks.length; i++) {
       dummmyTasks[i].createdAt = this.today;
-      dummmyTasks[i].dueTo = this.today;
-      console.log(this.today);
-
-
+      dummmyTasks[i].dueTo = this.futureDate(this.today, daysFromNow);
+      daysFromNow++
       await this.db.addDocToCollection('tasks', dummmyTasks[i]);
     }
   }
 
-  // this.db.addDocToCollection('tasks', this.dummyTasks);
 
   getCurrentStatistics() {
     if (this.db.allTasks.length > 0) {

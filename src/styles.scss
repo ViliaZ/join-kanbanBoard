@@ -187,10 +187,13 @@ mat-option {
   align-items: flex-end;
 }
 
+.mat-form-field-wrapper{
+  padding-bottom: 0px!important;
+}
 
-// .mat-form-field-wrapper{
-//   padding-bottom: 0px!important;
-// }
+.mat-form-field-underline{
+  width: 0%!important;
+}
 
 // .mat-form-field-flex{
 //   align-items: flex-start!important;

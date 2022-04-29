@@ -18,11 +18,42 @@
       "createdAt": ""
     }
   ],
-  "dummyTasks": [{
+  "dummyTasks": [
+    {
         "board": "DummyBoardOne",
         "title": "Titel1",
         "description": "This is a description",
         "category": "Marketing",
+        "urgency": "normal",
+        "dueTo": 0,
+        "createdAt": "",
+        "isPinnedToBoard": "false",
+        "users": {
+          "firstName": "Guest",
+          "lastName": "User",
+          "userImage": "assets/img/user.png"
+        }
+      }, 
+      {
+        "board": "DummyBoardTwo",
+        "title": "Titel2",
+        "description": "This is a description",
+        "category": "Admin",
+        "urgency": "urgent",
+        "dueTo": 0,
+        "createdAt": "",
+        "isPinnedToBoard": "false",
+        "users": {
+          "firstName": "Guest",
+          "lastName": "User",
+          "userImage": "assets/img/user.png"
+        }
+      },
+      {
+        "board": "DummyBoardOne",
+        "title": "Titel3",
+        "description": "This is a description",
+        "category": "Design",
         "urgency": "normal",
         "dueTo": 0,
         "createdAt": "",

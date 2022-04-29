@@ -1,11 +1,9 @@
-<div class="board-top">
-
-     <!-- ALERTS  -->
+<!-- ALERTS  -->
+<!-- <div class="board-top">
     <div class="alerts">
         <div *ngIf="doublicateAlert && !deleteBoardAlert" class="alertbox">
             <img src="assets/img/alertDelete.svg" alt="alert">
             Invalid choice: Title can`t be empty or already existing.
-            <!-- <button (click)="doublicateAlert = false">X</button> -->
         </div>
 
         <div *ngIf="deleteBoardAlert && !doublicateAlert" class="alertDelete">
@@ -15,21 +13,7 @@
             <button (click)="deleteBoardAlert = false" class="convex">Cancel</button>
         </div>
     </div>
-
-    <div class="addNewBoard">
-        <input 
-            [(ngModel)]="newBoardTitle" 
-            (keyup.enter)="addNewBoard()"
-            placeholder="New Board"
-            class="concave"
-            type="text"
-            minlength="2">
-        <button class="convex" (click)="addNewBoard()">
-            Add
-        </button>
-
-    </div>
-</div>
+</div> -->
 
 
 <div class="body-board">
@@ -76,7 +60,7 @@
             (drop)="drop($event, board.name)"
             (dragover)="allowDrop($event)">
 
-            <!-- SINGLE TASK (dynamic) Note: customIdName is set from DB Firestore at subscribe -->
+            <!-- SINGLE TICKET (dynamic) Note: customIdName is set from DB Firestore at subscribe -->
             <app-task *ngFor="let task of board.tasks; index as i" id="{{task.customIdName}}" [task]="task"
                 draggable="true" (dragstart)="drag($event)">
             </app-task>
@@ -96,3 +80,17 @@
         </div>
     </div>
 </div>
+
+<!-- INPUTFIELD NEW BOARD  -->
+<!-- <div class="addNewBoard">
+    <input 
+        [(ngModel)]="newBoardTitle" 
+        (keyup.enter)="addNewBoard()"
+        placeholder="New Board"
+        class="concave"
+        type="text"
+        minlength="2">
+    <button class="convex" (click)="addNewBoard()">
+        Add
+    </button>
+</div> -->

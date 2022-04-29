@@ -40,9 +40,7 @@ export class AuthServiceService {
     await this.auth.signInWithEmailAndPassword(email, password)
       .then((res) => {
         localStorage.setItem('user', JSON.stringify(res.user))
-
         console.log('neuer Login. User anonymous?', res.user?.isAnonymous, res.user?.email);
-
         this.router.navigate([''])
       })
       .catch((error) => {
@@ -56,7 +54,6 @@ export class AuthServiceService {
       .then((res) => {
         this.isLoggedIn = true;
         localStorage.setItem('user', JSON.stringify(res.user))
-
         console.log('neuer login. User anonymous?', res.user.isAnonymous);
 
         // result is: 

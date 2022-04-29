@@ -1,5 +1,4 @@
-import { BaseOverlayDispatcher } from '@angular/cdk/overlay/dispatchers/base-overlay-dispatcher';
-import { Injectable, ɵɵNgOnChangesFeature } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { switchMap } from 'rxjs';
 
@@ -26,13 +25,14 @@ export class DatabaseService {
   public nextDueDateTask: any = [];
   public backlogEmpty = () => this.backlogtasks.length == 0;
   public toDoBoardExists!: any;
+  public guestIsInitialized: boolean = false;  // if true, guest - dummydata donot need to be created again
 
-  constructor(public firestore: AngularFirestore) {  
-   this.getBoardAndTaskData();
+  constructor(public firestore: AngularFirestore) {
+    this.getBoardAndTaskData();
   }
 
-   getBoardAndTaskData(sortBoardsBy: string = 'createdAt', sortBoardOrder: any = 'asc', sortTasksBy: string = 'isPinnedToBoard', sortTasksOrder: any = 'desc') {
-     this.firestore
+  getBoardAndTaskData(sortBoardsBy: string = 'createdAt', sortBoardOrder: any = 'asc', sortTasksBy: string = 'isPinnedToBoard', sortTasksOrder: any = 'desc') {
+    this.firestore
       .collection('boards', ref => ref.orderBy(sortBoardsBy, sortBoardOrder))  // default sort via timestamp
       .valueChanges({ idField: 'customIdName' })
       .pipe(switchMap((result: any) => { // result = boards with tasks
@@ -42,18 +42,20 @@ export class DatabaseService {
           .collection('tasks', ref => ref.orderBy(sortTasksBy, sortTasksOrder))
           .valueChanges({ idField: 'customIdName' });
       }))
-      .subscribe( async ( result)  => { // result = tasks
+      .subscribe(async (result) => { // result = tasks
+        console.log('service',this.guestIsInitialized);
+
         await this.emptyAllArrays();
-        this.setStaticBoards();
+        await this.setStaticBoards();
         this.handleTasks(result);
       });
   }
 
   // create initial TODO Board
-  setStaticBoards() { // if no ToDo Board exists yet, create it (ToDo is a static board)
+  async setStaticBoards() { // if no ToDo Board exists yet, create it (ToDo is a static board)
     this.toDoBoardExists = this.boards.find((i: any) => i.name == 'ToDo');
     if (this.toDoBoardExists == undefined) {
-      this.addDocToCollection('boards', { name: 'ToDo', tasks: [], createdAt: new Date().getTime() })
+      await this.addDocToCollection('boards', { name: 'ToDo', tasks: [], createdAt: new Date().getTime() })
     }
   }
 
@@ -85,7 +87,7 @@ export class DatabaseService {
 
 
   async emptyAllArrays() {
-    await this.boards.forEach( (board: any) =>  board.tasks = []);
+    await this.boards.forEach((board: any) => board.tasks = []);
     this.backlogtasks = [];
     this.allTasks = [];
     this.todoTasks = [];
@@ -95,74 +97,79 @@ export class DatabaseService {
 
   sortTasksToBoards(task: any) {
     for (let i = 0; i < this.boards.length; i++) {
-      if (task.board === 'backlog') {
+      if (task.board === 'backlog') {  // check if backlog task
         this.handleBacklogTasks(task);
       }
       else { this.handleBoardTasks(task, i) }
-    }
   }
+}
 
-  filterUrgentTasks(task: any) {
-    if (task.urgency == 'urgent') {
-      this.urgentTasks.push(task)
-    }
+filterUrgentTasks(task: any) {
+  if (task.urgency == 'urgent') {
+    this.urgentTasks.push(task)
   }
+}
 
-  filterAllTasks(task: any) {
-    this.allTasks.push(task);
+filterAllTasks(task: any) {
+  this.allTasks.push(task);
+}
+
+filterToDoTasks(task: any) {
+  if (task.board == 'ToDo') {
+    this.todoTasks.push(task)
   }
+}
 
-  filterToDoTasks(task: any) {
-    if (task.board == 'ToDo') {
-      this.todoTasks.push(task)
-    }
-  }
-
-  handleBacklogTasks(task: any) {
+handleBacklogTasks(task: any) {   // sorting into default order: by deadline
+  let taskExistsInArray = this.backlogtasks.find((t: any) => t.customIdName == task.customIdName)
+  if (taskExistsInArray == undefined) {  // check if already there -> avoid duplicates
     this.backlogtasks.push(task);
-    // sorting into default order: by deadline
   }
+}
 
-  // Goal: pinned Task on Top of Board, then all other tasks sorted by createdAt
-  sortBoardsDescending() {
-    for (let i = 0; i < this.boards.length; i++) {
-
-      let pinnedTasks: any = [];              // temporary subarrays from the board
-      let unpinnedTasks: any = [];            // temporary subarrays from the board
-      let unpinnedTasksSortByCreationTime: any = [];      // temporary subarrays from the board
-
-      this.boards[i].tasks.map((task: any) => {
-        if (task.isPinnedToBoard) {
-          pinnedTasks.push(task);
-        }
-        if (!task.isPinnedToBoard) {
-          unpinnedTasks.push(task);
-        }
-      }) // sort this array with "createdAt" descending
-      unpinnedTasksSortByCreationTime = unpinnedTasks.sort((a: any, b: any) => Number(a.createdAt) - Number(b.createdAt));
-      this.boards[i].tasks = pinnedTasks.concat(unpinnedTasksSortByCreationTime); // merge subarrays again to final sorted Array
+handleBoardTasks(task: any, i: number) {
+  let taskExistsInArray = this.boards[i].tasks.find((t: any) => t.customIdName == task.customIdName)
+  if (task.board === this.boards[i].name && taskExistsInArray == undefined) {
+    if (task.createdAt){  // necessary??
+      this.boards[i].tasks.push(task);
     }
   }
+}
 
-  handleBoardTasks(task: any, i: number) {
-    if (task.board === this.boards[i].name) {
-      if (task.createdAt)
-        this.boards[i].tasks.push(task);
-    }
-  }
+// Goal: pinned Task on Top of Board, then all other tasks sorted by createdAt
+sortBoardsDescending() {
+  for (let i = 0; i < this.boards.length; i++) {
 
-  updateDoc(collection: string, docID: string, updateData: object): Promise<any> {
-    return this.firestore.collection(collection).doc(docID).update(updateData);
+    let pinnedTasks: any = [];              // temporary subarrays from the board
+    let unpinnedTasks: any = [];            // temporary subarrays from the board
+    let unpinnedTasksSortByCreationTime: any = [];      // temporary subarrays from the board
+
+    this.boards[i].tasks.map((task: any) => {
+      if (task.isPinnedToBoard) {
+        pinnedTasks.push(task);
+      }
+      if (!task.isPinnedToBoard) {
+        unpinnedTasks.push(task);
+      }
+    }) // sort this array with "createdAt" descending
+    unpinnedTasksSortByCreationTime = unpinnedTasks.sort((a: any, b: any) => Number(a.createdAt) - Number(b.createdAt));
+    this.boards[i].tasks = pinnedTasks.concat(unpinnedTasksSortByCreationTime); // merge subarrays again to final sorted Array
   }
+}
+
+
+updateDoc(collection: string, docID: string, updateData: object): Promise < any > {
+  return this.firestore.collection(collection).doc(docID).update(updateData);
+}
 
   async addDocToCollection(collection: string, doc: object) {
-    // console.log('doc to collection task')
-   await this.firestore.collection(collection).add(doc);
-  }
+  // console.log('doc to collection task')
+  await this.firestore.collection(collection).add(doc);
+}
 
-  deleteDoc(collection: string, docID: string) {
-    this.firestore.collection(collection).doc(docID).delete();
-  }
+deleteDoc(collection: string, docID: string) {
+  this.firestore.collection(collection).doc(docID).delete();
+}
 }
 
 // ****************** OLD VERSION FOR REFERENCE: NOW MADE INTO SWITCHMAP METHOD ABOVE ********
