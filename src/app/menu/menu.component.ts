@@ -20,7 +20,6 @@ export class MenuComponent implements OnInit {
 
   onLogout() {
     this.authService.logout();
-    this.authService.isSignedIn = false;
   }
 
 }

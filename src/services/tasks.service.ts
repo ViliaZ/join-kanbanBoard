@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -11,6 +12,5 @@ export class TasksService {
   public editMode: boolean = false;  // turns true if a task is edited
 
   constructor() { }
-
 
 }

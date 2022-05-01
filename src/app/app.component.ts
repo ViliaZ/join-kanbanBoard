@@ -23,12 +23,6 @@ export class AppComponent implements OnInit {
     { this.db.getBoardAndTaskData  }
 
   ngOnInit() {
-
-    // check if user is signed in
-    if (localStorage.getItem('user') !== null) {
-      this.authService.isSignedIn = true;
-    }
-    else { this.authService.isSignedIn = false}
   }
 
   newTaskPopUp() {

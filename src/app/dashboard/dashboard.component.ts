@@ -11,14 +11,7 @@ import { DatabaseService } from 'src/services/database.service';
 })
 export class DashboardComponent implements OnInit {
 
-  today: Date = new Date();
-  futureDate: any = (date: Date, daysToCount: number) => {
-    const today = new Date(date)
-    const tomorrow = new Date(today.setDate(today.getDate() + daysToCount))
-    return tomorrow
-  }
-
-
+  
   variable: string = '';
   currentDate: any = new Date().getTime();
   public amountUrgentTasks: any = '0'; // default
@@ -30,57 +23,18 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     public db: DatabaseService,
-    public authService: AuthServiceService,
-    public httpClient: HttpClient) {
+    public authService: AuthServiceService) {
       
      }
 
   ngOnInit(): void {
-    console.log("Guest is Initialized : ", this.db.guestIsInitialized);
-    if (!this.db.guestIsInitialized) {
-      this.createDummyData();
-    }
-
     setTimeout(() => {
-      console.log('dashboard', this.db.guestIsInitialized);
+      // console.log('dashboard', this.db.guestIsInitialized);
       this.getCurrentStatistics();
     }, 2000)
   }
 
-    // if(this.authService.guestLoggedIn){
-    //   this.createDummyData();
-    // }
-
-  createDummyData() {
-    console.log('create Dummy Data');
-
-    let dummyData = this.httpClient.get('assets/json/guestData.JSON')
-    dummyData.subscribe(async (res: any) => {
-      await this.setDummyBoards(res.dummyBoards);
-      console.log(res);
-
-      await this.setDummyTasks(res.dummyTasks);
-    })
-    this.db.guestIsInitialized = true;
-  }
-
-  async setDummyBoards(dummmyBoards: any) {
-    for (let i = 0; i < dummmyBoards.length; i++) {
-      dummmyBoards[i].createdAt = this.today;
-      await this.db.addDocToCollection('boards', dummmyBoards[i]);
-    }
-  }
-
-  async setDummyTasks(dummmyTasks: any) {
-    // dynamically adjust JSON data (dueDates) to always get some dummydata in the future, so we never have tasks in the past
-    let daysFromNow = 1;
-    for (let i = 0; i < dummmyTasks.length; i++) {
-      dummmyTasks[i].createdAt = this.today;
-      dummmyTasks[i].dueTo = this.futureDate(this.today, daysFromNow);
-      daysFromNow++
-      await this.db.addDocToCollection('tasks', dummmyTasks[i]);
-    }
-  }
+  
 
 
   getCurrentStatistics() {

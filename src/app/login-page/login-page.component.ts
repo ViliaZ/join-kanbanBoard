@@ -22,18 +22,11 @@ export class LoginPageComponent implements OnInit {
   }
 
   async onlogin(){
-    await this.authService.login(this.user.email, this.user.password);
-    if(this.authService.isLoggedIn){
-      this.authService.isSignedIn = true;
-    }
+    this.authService.login(this.user.email, this.user.password);
   }
 
   onloginAsGuest(){
     this.authService.loginAsGuest();
   }
-
-
-
-
 
 }

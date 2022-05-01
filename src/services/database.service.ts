@@ -36,15 +36,12 @@ export class DatabaseService {
       .collection('boards', ref => ref.orderBy(sortBoardsBy, sortBoardOrder))  // default sort via timestamp
       .valueChanges({ idField: 'customIdName' })
       .pipe(switchMap((result: any) => { // result = boards with tasks
-        // console.log('boards from firestore:', result);
         this.boards = result;
         return this.firestore
           .collection('tasks', ref => ref.orderBy(sortTasksBy, sortTasksOrder))
           .valueChanges({ idField: 'customIdName' });
       }))
       .subscribe(async (result) => { // result = tasks
-        console.log('service',this.guestIsInitialized);
-
         await this.emptyAllArrays();
         await this.setStaticBoards();
         this.handleTasks(result);
@@ -101,75 +98,75 @@ export class DatabaseService {
         this.handleBacklogTasks(task);
       }
       else { this.handleBoardTasks(task, i) }
-  }
-}
-
-filterUrgentTasks(task: any) {
-  if (task.urgency == 'urgent') {
-    this.urgentTasks.push(task)
-  }
-}
-
-filterAllTasks(task: any) {
-  this.allTasks.push(task);
-}
-
-filterToDoTasks(task: any) {
-  if (task.board == 'ToDo') {
-    this.todoTasks.push(task)
-  }
-}
-
-handleBacklogTasks(task: any) {   // sorting into default order: by deadline
-  let taskExistsInArray = this.backlogtasks.find((t: any) => t.customIdName == task.customIdName)
-  if (taskExistsInArray == undefined) {  // check if already there -> avoid duplicates
-    this.backlogtasks.push(task);
-  }
-}
-
-handleBoardTasks(task: any, i: number) {
-  let taskExistsInArray = this.boards[i].tasks.find((t: any) => t.customIdName == task.customIdName)
-  if (task.board === this.boards[i].name && taskExistsInArray == undefined) {
-    if (task.createdAt){  // necessary??
-      this.boards[i].tasks.push(task);
     }
   }
-}
 
-// Goal: pinned Task on Top of Board, then all other tasks sorted by createdAt
-sortBoardsDescending() {
-  for (let i = 0; i < this.boards.length; i++) {
-
-    let pinnedTasks: any = [];              // temporary subarrays from the board
-    let unpinnedTasks: any = [];            // temporary subarrays from the board
-    let unpinnedTasksSortByCreationTime: any = [];      // temporary subarrays from the board
-
-    this.boards[i].tasks.map((task: any) => {
-      if (task.isPinnedToBoard) {
-        pinnedTasks.push(task);
-      }
-      if (!task.isPinnedToBoard) {
-        unpinnedTasks.push(task);
-      }
-    }) // sort this array with "createdAt" descending
-    unpinnedTasksSortByCreationTime = unpinnedTasks.sort((a: any, b: any) => Number(a.createdAt) - Number(b.createdAt));
-    this.boards[i].tasks = pinnedTasks.concat(unpinnedTasksSortByCreationTime); // merge subarrays again to final sorted Array
+  filterUrgentTasks(task: any) {
+    if (task.urgency == 'urgent') {
+      this.urgentTasks.push(task)
+    }
   }
-}
+
+  filterAllTasks(task: any) {
+    this.allTasks.push(task);
+  }
+
+  filterToDoTasks(task: any) {
+    if (task.board == 'ToDo') {
+      this.todoTasks.push(task)
+    }
+  }
+
+  handleBacklogTasks(task: any) {   // sorting into default order: by deadline
+    let taskExistsInArray = this.backlogtasks.find((t: any) => t.customIdName == task.customIdName)
+    if (taskExistsInArray == undefined) {  // check if already there -> avoid duplicates
+      this.backlogtasks.push(task);
+    }
+  }
+
+  handleBoardTasks(task: any, i: number) {
+    let taskExistsInArray = this.boards[i].tasks.find((t: any) => t.customIdName == task.customIdName)
+    if (task.board === this.boards[i].name && taskExistsInArray == undefined) {
+      if (task.createdAt) {  // necessary??
+        this.boards[i].tasks.push(task);
+      }
+    }
+  }
+
+  // Goal: pinned Task on Top of Board, then all other tasks sorted by createdAt
+  sortBoardsDescending() {
+    for (let i = 0; i < this.boards.length; i++) {
+
+      let pinnedTasks: any = [];              // temporary subarrays from the board
+      let unpinnedTasks: any = [];            // temporary subarrays from the board
+      let unpinnedTasksSortByCreationTime: any = [];      // temporary subarrays from the board
+
+      this.boards[i].tasks.map((task: any) => {
+        if (task.isPinnedToBoard) {
+          pinnedTasks.push(task);
+        }
+        if (!task.isPinnedToBoard) {
+          unpinnedTasks.push(task);
+        }
+      }) // sort this array with "createdAt" descending
+      unpinnedTasksSortByCreationTime = unpinnedTasks.sort((a: any, b: any) => Number(a.createdAt) - Number(b.createdAt));
+      this.boards[i].tasks = pinnedTasks.concat(unpinnedTasksSortByCreationTime); // merge subarrays again to final sorted Array
+    }
+  }
 
 
-updateDoc(collection: string, docID: string, updateData: object): Promise < any > {
-  return this.firestore.collection(collection).doc(docID).update(updateData);
-}
+  updateDoc(collection: string, docID: string, updateData: object): Promise<any> {
+    return this.firestore.collection(collection).doc(docID).update(updateData);
+  }
 
   async addDocToCollection(collection: string, doc: object) {
-  // console.log('doc to collection task')
-  await this.firestore.collection(collection).add(doc);
-}
+    // console.log('doc to collection task')
+    await this.firestore.collection(collection).add(doc);
+  }
 
-deleteDoc(collection: string, docID: string) {
-  this.firestore.collection(collection).doc(docID).delete();
-}
+  deleteDoc(collection: string, docID: string) {
+    this.firestore.collection(collection).doc(docID).delete();
+  }
 }
 
 // ****************** OLD VERSION FOR REFERENCE: NOW MADE INTO SWITCHMAP METHOD ABOVE ********
