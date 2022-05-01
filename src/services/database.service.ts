@@ -136,7 +136,6 @@ export class DatabaseService {
   // Goal: pinned Task on Top of Board, then all other tasks sorted by createdAt
   sortBoardsDescending() {
     for (let i = 0; i < this.boards.length; i++) {
-
       let pinnedTasks: any = [];              // temporary subarrays from the board
       let unpinnedTasks: any = [];            // temporary subarrays from the board
       let unpinnedTasksSortByCreationTime: any = [];      // temporary subarrays from the board
@@ -154,7 +153,6 @@ export class DatabaseService {
     }
   }
 
-
   updateDoc(collection: string, docID: string, updateData: object): Promise<any> {
     return this.firestore.collection(collection).doc(docID).update(updateData);
   }
@@ -167,6 +165,7 @@ export class DatabaseService {
   deleteDoc(collection: string, docID: string) {
     this.firestore.collection(collection).doc(docID).delete();
   }
+
 }
 
 // ****************** OLD VERSION FOR REFERENCE: NOW MADE INTO SWITCHMAP METHOD ABOVE ********

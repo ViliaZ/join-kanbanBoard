@@ -3,11 +3,10 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { getAuth, onAuthStateChanged, signInAnonymously, UserInfo, UserProfile } from "firebase/auth";
+import { getAuth, onAuthStateChanged, deleteUser, signInAnonymously, UserInfo, UserProfile } from "firebase/auth";
 import { Observable } from 'rxjs';
 import { User } from 'src/models/user';
 import { DatabaseService } from './database.service';
-import { TasksService } from './tasks.service';
 
 @Injectable({
   providedIn: 'root'
@@ -118,8 +117,27 @@ export class AuthServiceService {
   }
 
   async logout(): Promise<void> {
+    // if guest, reset app to default state, delete guest from db
+    if (this.currentUser.isAnonymous) {
+      await this.deleteUserFromFireAuth();
+      await this.deleteGuestDataFromDatabase();
+    }
     await this.fireAuth.signOut()
       .then(() => this.router.navigate(['/login']));
+  }
+
+  async deleteUserFromFireAuth() {
+    await this.auth.deleteUser(this.currentUser.uid)
+      .then(() => {
+        console.log('Successfully deleted guest');
+      })
+      .catch((error: any) => {
+        console.log('Error deleting guest:', error);
+      });
+  }
+
+  async deleteGuestDataFromDatabase(){
+
   }
 
   //just set up to avoid error in forgot-pw comp
@@ -134,7 +152,7 @@ export class AuthServiceService {
       await this.setDummyBoards(jsonData.dummyBoards);
       await this.setDummyTasks(jsonData.dummyTasks);
     })
-    this.userRef.set({guestBoardsInitialized: true}, { merge: true })
+    this.userRef.set({ guestBoardsInitialized: true }, { merge: true })
   }
 
   async setDummyBoards(dummmyBoards: any): Promise<void> {
