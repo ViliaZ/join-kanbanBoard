@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from 'node_modules/@angular/router';
 import { AuthServiceService } from 'src/services/auth-service.service';
@@ -17,16 +18,20 @@ export class AppComponent implements OnInit {
 
   constructor(
     private db: DatabaseService,
-    public router: Router, 
-    public taskservice: TasksService, 
-    public authService: AuthServiceService) 
-    { this.db.getBoardAndTaskData  }
+    public router: Router,
+    private httpClient: HttpClient,
+    public taskservice: TasksService,
+    private authService: AuthServiceService
+    ) 
+    {}
 
   ngOnInit() {
+    this.db.getBoardAndTaskData;
   }
 
   newTaskPopUp() {
     this.taskservice.taskPopupOpen = true;
   }
+
 
 }

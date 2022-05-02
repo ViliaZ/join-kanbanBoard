@@ -18,6 +18,7 @@ export class BacklogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.db.getBoardAndTaskData();
   }
 
   evaluateSearchRequest(task: any): any {

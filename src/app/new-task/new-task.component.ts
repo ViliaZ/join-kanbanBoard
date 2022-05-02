@@ -15,6 +15,7 @@ import {
   TasksService
 } from 'src/services/tasks.service';
 import { Form, FormControl } from '@angular/forms';
+import { AuthServiceService } from 'src/services/auth-service.service';
 
 
 @Component({
@@ -44,13 +45,17 @@ export class NewTaskComponent implements OnInit {
     'urgency': '',
     'board': 'backlog',
     'category': '',
-    'users': this.db.users[0],
+    'users': this.authService.currentUser.uid,
     'isPinnedToBoard': '',
     'createdAt': '',
   }
 
 
-  constructor(public db: DatabaseService, public taskservice: TasksService, public router: Router) {
+  constructor(
+    public db: DatabaseService, 
+    public taskservice: TasksService, 
+    public router: Router,
+    public authService: AuthServiceService) {
 
   }
 
@@ -65,7 +70,7 @@ export class NewTaskComponent implements OnInit {
   autoFillForm(){
     this.task = this.taskservice.currentTask;
     this.date = new Date(this.taskservice.currentTask.dueTo.toDate());  // cannot use ngModel for date with dueTo --> Error, because conflict with template HTML for date / format issue when I set a value in datepicker
-    this.task.users = this.db.users[0]; // future: hier kommt currentUser hin
+    this.task.users = this.authService.currentUser.uid; // future: hier kommt currentUser hin
     // use 'date' instead of 'dueTo' in Datepicker! The template inputfield is changed to 'ngModel = date' when in editmode
 console.log('this task after autofill:', this.task.dueTo);
 
@@ -110,33 +115,38 @@ console.log('this task after autofill:', this.task.dueTo);
     }
   }
 
-  saveTask(form: any) {
+  async saveTask(form: any) {
     if (!this.taskservice.editMode) {
-      this.saveNewTask(form);
+      await this.saveNewTask(form);
+      console.table(this.task);
       this.db.addDocToCollection('tasks', this.task);
-
-
     } else {
       this.udpateEditedTask();
     }
     this.resetForm(form);
   }
 
-  resetForm(form: any){
-    form.reset();
+  async resetForm(form: any){
+   await form.reset();
+    this.task.board ='backlog';
+    this.task.category ='';
+    this.task.dueTo = new Date();
     this.taskservice.taskPopupOpen = false;
     this.setUrgencyButtonColor('normal');
+    console.table(this.task);
+    
   }
 
-  saveNewTask(form: any) {  // set values according to ngModel Inputs
-    this.task.board = form.value.board; // default
-    this.task.createdAt = new Date().getTime(); // needed for sorting tasks in order
-    this.task.isPinnedToBoard = false; // default
-    this.task.urgency = form.value.taskUrgency;
-    this.task.category = form.value.taskCategory;
-    this.task.dueTo = form.value.taskDueDate;   
-    this.task.description = form.value.taskDescription;
-    this.task.users = form.value.taskUser;
+  async saveNewTask(form: any) {  // set values according to ngModel Inputs
+    this.task.board = await form.value.board; // default
+    this.task.createdAt =  new Date().getTime(); // needed for sorting tasks in order
+    this.task.isPinnedToBoard =  false; // default
+    this.task.urgency = await form.value.taskUrgency;
+    this.task.category = await form.value.taskCategory;
+    this.task.dueTo = await form.value.taskDueDate;   
+    this.task.description = await form.value.taskDescription;
+    this.task.users = await form.value.taskUser;
+    this.task.creator = await this.authService.currentUser.uid;
   }
 
   udpateEditedTask() {

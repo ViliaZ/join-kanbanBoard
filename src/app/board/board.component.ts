@@ -28,7 +28,9 @@ export class BoardComponent implements OnInit {
   constructor(public db: DatabaseService, public taskservice: TasksService) {
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.db.getBoardAndTaskData();
+  }
 
   // input New Board
   async addNewBoard() {

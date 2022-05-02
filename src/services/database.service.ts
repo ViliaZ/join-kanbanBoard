@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { switchMap } from 'rxjs';
+import { AuthServiceService } from './auth-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +10,6 @@ import { switchMap } from 'rxjs';
 export class DatabaseService {
 
   public categories: string[] = ['Design', 'Marketing', 'Finance', 'Admin', 'Other']
-  public users: any = [
-    {
-      'firstName': 'Guest',
-      'lastName': 'User',
-      'userImage': 'assets/img/user.png'
-    }
-  ];
   public boards: any = [];
   public backlogtasks: any = [];
   public urgentTasks: any = [];
@@ -27,18 +21,24 @@ export class DatabaseService {
   public toDoBoardExists!: any;
   public guestIsInitialized: boolean = false;  // if true, guest - dummydata donot need to be created again
 
-  constructor(public firestore: AngularFirestore) {
-    this.getBoardAndTaskData();
+  constructor(
+    private firestore: AngularFirestore,
+    private authService: AuthServiceService) {
   }
 
   getBoardAndTaskData(sortBoardsBy: string = 'createdAt', sortBoardOrder: any = 'asc', sortTasksBy: string = 'isPinnedToBoard', sortTasksOrder: any = 'desc') {
+   if (this.authService.currentUser.uid !== undefined) {
     this.firestore
-      .collection('boards', ref => ref.orderBy(sortBoardsBy, sortBoardOrder))  // default sort via timestamp
+      .collection('boards', ref => ref
+      .where('creator', '==', this.authService.currentUser.uid) // show only boards from current user
+      .orderBy(sortBoardsBy, sortBoardOrder))  // default sort via timestamp
       .valueChanges({ idField: 'customIdName' })
       .pipe(switchMap((result: any) => { // result = boards with tasks
         this.boards = result;
         return this.firestore
-          .collection('tasks', ref => ref.orderBy(sortTasksBy, sortTasksOrder))
+          .collection('tasks', ref => ref
+          .where('creator', '==', this.authService.currentUser.uid) // load only tasks from current user
+          .orderBy(sortTasksBy, sortTasksOrder))
           .valueChanges({ idField: 'customIdName' });
       }))
       .subscribe(async (result) => { // result = tasks
@@ -46,13 +46,13 @@ export class DatabaseService {
         await this.setStaticBoards();
         this.handleTasks(result);
       });
-  }
+  }}
 
   // create initial TODO Board
   async setStaticBoards() { // if no ToDo Board exists yet, create it (ToDo is a static board)
-    this.toDoBoardExists = this.boards.find((i: any) => i.name == 'ToDo');
-    if (this.toDoBoardExists == undefined) {
-      await this.addDocToCollection('boards', { name: 'ToDo', tasks: [], createdAt: new Date().getTime() })
+    this.toDoBoardExists = await this.boards.find((i: any) => i.name == 'ToDo');
+    if (this.toDoBoardExists === undefined) {
+       await this.addDocToCollection('boards', { name: 'ToDo', tasks: [], createdAt: new Date().getTime(), creator: this.authService.currentUser.uid})
     }
   }
 
@@ -81,7 +81,6 @@ export class DatabaseService {
     }
     this.nextDueDateTask = this.nextDueDates[0];
   }
-
 
   async emptyAllArrays() {
     await this.boards.forEach((board: any) => board.tasks = []);
@@ -158,7 +157,6 @@ export class DatabaseService {
   }
 
   async addDocToCollection(collection: string, doc: object) {
-    // console.log('doc to collection task')
     await this.firestore.collection(collection).add(doc);
   }
 

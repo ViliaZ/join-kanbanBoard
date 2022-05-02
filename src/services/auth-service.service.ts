@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { getAuth, onAuthStateChanged, deleteUser, signInAnonymously, UserInfo, UserProfile } from "firebase/auth";
-import { Observable } from 'rxjs';
+import { getAuth, onAuthStateChanged, deleteUser, signInAnonymously, UserInfo, UserProfile, Auth, UserCredential } from "firebase/auth";
+import { from, Observable, of } from 'rxjs';
 import { User } from 'src/models/user';
 import { DatabaseService } from './database.service';
 
@@ -18,6 +18,8 @@ export class AuthServiceService {
   userRef!: AngularFirestoreDocument<any>; // will be initialized with change to LoginState
   currentUser: any = {};  // is given at monitorAuthState() with login
   auth: any = getAuth();  // Initialize Firebase Authentication and get a reference to the service
+  coUsers: any = []; // not activly in use yet, holds all OTHER users connected to this board
+  // users array is used in newTask component for-loop for template driven form
 
   // For dummyData:
   today: Date = new Date();
@@ -31,8 +33,7 @@ export class AuthServiceService {
     private router: Router,
     private fireAuth: AngularFireAuth,
     private firestore: AngularFirestore,
-    private httpClient: HttpClient,
-    private db: DatabaseService) {
+    private httpClient: HttpClient) {
     this.monitorAuthState();
   }
 
@@ -42,7 +43,9 @@ export class AuthServiceService {
       if (user) {
         // create a reference to the current user, so that I can access his data easily again
         this.currentUser = user;
-        console.log('Monitor AuthStatus: user logged in', user);
+        if(user.isAnonymous){
+          console.log('currentUser', this.currentUser);
+        }
       }
       else {  // if no user, then returns NULL
         console.log('Monitor AuthStatus: No user or user logged out', user);
@@ -95,7 +98,7 @@ export class AuthServiceService {
     await signInAnonymously(this.auth)
       .then(async (userCredential) => {
         await this.saveGuestToDatabase(userCredential.user);
-        await this.createDummyData();
+        this.createDummyData();
         this.router.navigate([''])
       })
       .catch((error) => {
@@ -109,6 +112,7 @@ export class AuthServiceService {
     let userData = {
       uid: user.uid,  // set the same ID in Database as fireAuth already given this user in fireAuth setup
       isAnonymous: 'true',
+      displayName: 'Guest'
     }
     // create a reference to the current user, so that I can access his data easily again
     this.userRef = this.firestore.doc(`users/${user.uid}`)
@@ -119,8 +123,9 @@ export class AuthServiceService {
   async logout(): Promise<void> {
     // if guest, reset app to default state, delete guest from db
     if (this.currentUser.isAnonymous) {
-      await this.deleteUserFromFireAuth();
-      await this.deleteGuestDataFromDatabase();
+      console.log('yes, is anonymus, we have to delete data here');
+      // await this.deleteUserFromFireAuth();
+      // await this.deleteGuestDataFromDatabase();
     }
     await this.fireAuth.signOut()
       .then(() => this.router.navigate(['/login']));
@@ -136,7 +141,7 @@ export class AuthServiceService {
       });
   }
 
-  async deleteGuestDataFromDatabase(){
+  async deleteGuestDataFromDatabase() {
 
   }
 
@@ -144,7 +149,9 @@ export class AuthServiceService {
   ForgotPassword(passwordResetEmailvalue: any) { }
 
 
-  /******* SET UP DUMMY DATA WITH GUEST LOGIN ****/
+
+
+  /******* DUMMY DATE FOR GUEST USERS ***************/
 
   async createDummyData(): Promise<void> {
     let dummyData$ = this.httpClient.get('assets/json/guestData.JSON');
@@ -152,24 +159,27 @@ export class AuthServiceService {
       await this.setDummyBoards(jsonData.dummyBoards);
       await this.setDummyTasks(jsonData.dummyTasks);
     })
-    this.userRef.set({ guestBoardsInitialized: true }, { merge: true })
+    this.userRef.set({ guestBoardsInitialized: true }, { merge: true }) // consider deleting this, if not needed
   }
 
   async setDummyBoards(dummmyBoards: any): Promise<void> {
-    for (let i = 0; i < dummmyBoards.length; i++) {
+    for (let i = 0; i < dummmyBoards.length; i++) {  // modify static data with dynamic userdata
       dummmyBoards[i].createdAt = this.today;
-      await this.db.addDocToCollection('boards', dummmyBoards[i]);
+      dummmyBoards[i].creator = this.currentUser.uid;
+      await this.firestore.collection('boards').add(dummmyBoards[i]);
     }
   }
 
   async setDummyTasks(dummmyTasks: any) {
-    // dynamically adjust JSON data (dueDates) to always get some dummydata in the future, so we never have tasks in the past
     let daysFromNow = 1;
-    for (let i = 0; i < dummmyTasks.length; i++) {
+    for (let i = 0; i < dummmyTasks.length; i++) { // modify static data with dynamic userdata
+      dummmyTasks[i].creator = this.currentUser.uid;
       dummmyTasks[i].createdAt = this.today;
       dummmyTasks[i].dueTo = this.futureDate(this.today, daysFromNow);
       daysFromNow++
-      await this.db.addDocToCollection('tasks', dummmyTasks[i]);
+      await this.firestore.collection('tasks').add(dummmyTasks[i]);
     }
   }
+
+
 }

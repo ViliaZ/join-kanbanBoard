@@ -12,6 +12,7 @@ import { DatabaseService } from 'src/services/database.service';
 export class DashboardComponent implements OnInit {
 
   
+  currentUser!: any;
   variable: string = '';
   currentDate: any = new Date().getTime();
   public amountUrgentTasks: any = '0'; // default
@@ -28,6 +29,9 @@ export class DashboardComponent implements OnInit {
      }
 
   ngOnInit(): void {
+    this.currentUser = this.authService.currentUser;
+    this.db.getBoardAndTaskData();
+
     setTimeout(() => {
       // console.log('dashboard', this.db.guestIsInitialized);
       this.getCurrentStatistics();
@@ -35,8 +39,6 @@ export class DashboardComponent implements OnInit {
   }
 
   
-
-
   getCurrentStatistics() {
     if (this.db.allTasks.length > 0) {
       this.width.allTasks = '100%';

@@ -55,7 +55,7 @@
 
     <div class="category">
       <select  (change)="handleCustomCategory('checkIfCustomRequest', $event)" #catSelect [(ngModel)]="task.category" name="taskCategory" >
-        <option *ngIf="customCategory == ''" value="">Choose a category*</option>
+        <option disabled *ngIf="customCategory == ''" value="">Choose a category*</option>
         <option value="Custom Category"> Add Category </option>
         <option *ngFor="let category of db.categories" value={{category}}>{{ category }}</option>
       </select>
@@ -80,7 +80,7 @@
         <div>
           <button 
             (click)="handleCustomCategory('save', $event, form)" 
-            [disabled]="!inputCat.value || inputCat.errors?.['minlength'] "
+            [disabled]="!inputCat.value || inputCat.errors?.['minlength']"
             class="default-btn">
             Save
           </button>
@@ -98,9 +98,11 @@
     </div>
 
     <div class="user">
-      <select [ngModel]="task.users ||''" required name="taskUser">
-        <option value="">Select Responsibility*</option>
-        <option [selected]="task.users" *ngFor="let user of db.users; index as i" [ngValue]="user"> {{user.firstName}} {{user.lastName}} </option>
+      <select [(ngModel)]="task.users" required name="taskUser">
+        <option disabled value="">Select Responsibility*</option>
+        <option *ngIf="authService.currentUser.isAnonymous || undefined" value='Guest'>Guest</option>
+        <option *ngIf="!authService.currentUser.isAnonymous" value={{authService.currentUser.displayName}}>{{authService.currentUser.displayName ||''}}</option>
+        <option *ngFor="let user of authService.coUsers; index as i" [ngValue]="user"> {{user.firstName}} {{user.lastName}} </option>
       </select>
 
       <!-- value={{task.users[i]}} -->
@@ -110,7 +112,7 @@
      <div>
        <span>Add Task to</span>
        <select class="selectSave" [(ngModel)]="task.board" name="board" >
-        <option [selected]="task.board" value='backlog'>Backlog</option>
+        <option [selected] *ngIf="task.board=='backlog' || ''" value='backlog'>Backlog</option>
         <option *ngFor="let board of db.boards" value={{board.name}}>{{ board.name }}</option>
            </select>
      </div>
