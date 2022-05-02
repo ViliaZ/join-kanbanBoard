@@ -82,7 +82,7 @@ export class DatabaseService {
     this.nextDueDateTask = this.nextDueDates[0];
   }
 
-  async emptyAllArrays() {
+  async emptyAllArrays(): Promise<void> {
     await this.boards.forEach((board: any) => board.tasks = []);
     this.backlogtasks = [];
     this.allTasks = [];
@@ -100,30 +100,30 @@ export class DatabaseService {
     }
   }
 
-  filterUrgentTasks(task: any) {
+  filterUrgentTasks(task: any): void {
     if (task.urgency == 'urgent') {
       this.urgentTasks.push(task)
     }
   }
 
-  filterAllTasks(task: any) {
+  filterAllTasks(task: any): void {
     this.allTasks.push(task);
   }
 
-  filterToDoTasks(task: any) {
+  filterToDoTasks(task: any): void {
     if (task.board == 'ToDo') {
       this.todoTasks.push(task)
     }
   }
 
-  handleBacklogTasks(task: any) {   // sorting into default order: by deadline
+  handleBacklogTasks(task: any): void {   // sorting into default order: by deadline
     let taskExistsInArray = this.backlogtasks.find((t: any) => t.customIdName == task.customIdName)
     if (taskExistsInArray == undefined) {  // check if already there -> avoid duplicates
       this.backlogtasks.push(task);
     }
   }
 
-  handleBoardTasks(task: any, i: number) {
+  handleBoardTasks(task: any, i: number): void {
     let taskExistsInArray = this.boards[i].tasks.find((t: any) => t.customIdName == task.customIdName)
     if (task.board === this.boards[i].name && taskExistsInArray == undefined) {
       if (task.createdAt) {  // necessary??
@@ -133,7 +133,7 @@ export class DatabaseService {
   }
 
   // Goal: pinned Task on Top of Board, then all other tasks sorted by createdAt
-  sortBoardsDescending() {
+  sortBoardsDescending(): void {
     for (let i = 0; i < this.boards.length; i++) {
       let pinnedTasks: any = [];              // temporary subarrays from the board
       let unpinnedTasks: any = [];            // temporary subarrays from the board
@@ -156,38 +156,12 @@ export class DatabaseService {
     return this.firestore.collection(collection).doc(docID).update(updateData);
   }
 
-  async addDocToCollection(collection: string, doc: object) {
+  async addDocToCollection(collection: string, doc: object): Promise<any> {
     await this.firestore.collection(collection).add(doc);
   }
 
-  deleteDoc(collection: string, docID: string) {
+  deleteDoc(collection: string, docID: string): void {
     this.firestore.collection(collection).doc(docID).delete();
   }
 
 }
-
-// ****************** OLD VERSION FOR REFERENCE: NOW MADE INTO SWITCHMAP METHOD ABOVE ********
-  // getBoardsData() {
-  //   this.firestore
-  //     .collection('boards')
-  //     .valueChanges({ idField: 'customIdName' })
-  //     .subscribe((result: any) => {
-  //       this.boards = result;
-  //       this.getTaskData();
-  //      })
-  // }
-
-  // getTaskData() {
-  //   this.firestore
-  //     .collection('tasks')
-  //     .valueChanges({ idField: 'customIdName' })
-  //     .subscribe((result) => {
-  //       this.handleTasks(result);
-  //     });
-  // }
-  // ****************** OLD VERSION FROM SWITCHMAP METHOD ABOVE ********
-
-    // convertDateFormat(task: any, targetDateFormat: string) {
-  //   return new Date(task.dueTo['seconds'] * 1000).toLocaleDateString(targetDateFormat);
-  //firestore dates are a timstamp object
-  // }
