@@ -37,17 +37,17 @@ export class NewTaskComponent implements OnInit {
   public minDate: any = new Date; // minimum date for datepicker
   // ngValue: any = null;
 
-  // via ng Model
-  public task: any = {
+  // formData
+  public formData: any = {
     'title': '',
     'description': '',
     'dueTo': new Date(),
     'urgency': '',
     'board': 'backlog',
     'category': '',
-    'users': this.authService.currentUser.uid,
-    'isPinnedToBoard': '',
-    'createdAt': '',
+    'responsibility': 'Guest',
+    'isPinnedToBoard': 'false',
+    'createdAt': new Date(),
   }
 
 
@@ -64,15 +64,16 @@ export class NewTaskComponent implements OnInit {
       this.autoFillForm();
     }
     this.setUrgencyDefault();
+    console.log(this.authService.currentUser)
   }
 
   // EDITMODE only
   autoFillForm() {
-    this.task = this.taskservice.currentTask;
+    this.formData = this.taskservice.currentTask;
     this.date = new Date(this.taskservice.currentTask.dueTo.toDate());  // cannot use ngModel for date with dueTo --> Error, because conflict with template HTML for date / format issue when I set a value in datepicker
-    this.task.users = this.authService.currentUser.uid; // future: hier kommt currentUser hin
+    this.formData.responsibility = this.authService.currentUser.uid; // future: hier kommt currentUser hin
     // use 'date' instead of 'dueTo' in Datepicker! The template inputfield is changed to 'ngModel = date' when in editmode
-    console.log('this task after autofill:', this.task.dueTo);
+    console.log('this task after autofill:', this.formData.dueTo);
 
   }
 
@@ -104,7 +105,7 @@ export class NewTaskComponent implements OnInit {
     if (action == 'save') {
       this.db.categories.push(this.customCategory);
       this.taskservice.currentTask.category = 'testtest';
-      this.task.category = this.customCategory;
+      this.formData.category = this.customCategory;
       this.openCategoryPopUp = false;
     }
   }
@@ -116,46 +117,45 @@ export class NewTaskComponent implements OnInit {
   }
 
   async saveTask(form: any) {
-    if (!this.taskservice.editMode) {
-      await this.saveNewTask(form);
-      console.table(this.task);
-      this.db.addDocToCollection('tasks', this.task);
-    } else {
-      this.udpateEditedTask();
-    }
-    this.resetForm(form);
+    console.table(this.formData);
+    
+    // if (!this.taskservice.editMode) {
+    //   await this.saveNewTask(form);
+    //   console.table(this.formData);
+    //   this.db.addDocToCollection('tasks', this.formData);
+    // } else {
+    //   this.udpateEditedTask();
+    // }
+    // this.resetForm(form);
   }
 
   async resetForm(form: any) {
     await form.reset();
-    this.task.board = 'backlog';
-    this.task.category = '';
-    this.task.dueTo = new Date();
     this.taskservice.taskPopupOpen = false;
     this.setUrgencyButtonColor('normal');
-    console.table(this.task);
-
   }
 
-  async saveNewTask(form: any) {  // set values according to ngModel Inputs
-    this.task.board = await form.value.board; // default
-    this.task.createdAt = new Date().getTime(); // needed for sorting tasks in order
-    this.task.isPinnedToBoard = false; // default
-    this.task.urgency = await form.value.taskUrgency;
-    this.task.category = await form.value.taskCategory;
-    this.task.dueTo = await form.value.taskDueDate;
-    this.task.description = await form.value.taskDescription;
-    this.task.users = await form.value.taskUser;
-    this.task.creator = await this.authService.currentUser.uid;
+  async saveNewTask(form: any) {  
+
+
+    // this.formData.board = await form.value.board; 
+    // this.formData.createdAt = new Date().getTime(); 
+    // this.formData.isPinnedToBoard = false; 
+    // this.formData.urgency = await form.value.taskUrgency;
+    // this.formData.category = await form.value.taskCategory;
+    // this.formData.dueTo = await form.value.taskDueDate;
+    // this.formData.description = await form.value.taskDescription;
+    // this.formData.responsibility = await form.value.taskUser;
+    // this.formData.creator = await this.authService.currentUser.uid;
   }
 
   udpateEditedTask() {
-    this.task = this.taskservice.currentTask;
-    this.task.dueTo = this.date;
-    console.log('this task is saved to db:', this.task.dueTo);
-    this.db.updateDoc('tasks', this.task.customIdName, this.task);
-    this.task.dueTo = { seconds: 1651269600, nanoseconds: 0 };
-    console.log('this task after saved to db:', this.task.dueTo);
+    this.formData = this.taskservice.currentTask;
+    this.formData.dueTo = this.date;
+    console.log('this task is saved to db:', this.formData.dueTo);
+    this.db.updateDoc('tasks', this.formData.customIdName, this.formData);
+    this.formData.dueTo = { seconds: 1651269600, nanoseconds: 0 };
+    console.log('this task after saved to db:', this.formData.dueTo);
 
     this.taskservice.currentTask = {};
     this.taskservice.editMode = false;

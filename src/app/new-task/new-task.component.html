@@ -1,18 +1,18 @@
-<!-- <form (ngSubmit)="onSubmit(form)" #form="ngForm"> -->
+
   <h3  *ngIf="!taskservice.editMode && (router.url.includes('backlog') || router.url.includes('board'))" class="headline">Add New Task</h3>
   <h3  *ngIf="taskservice.editMode && (router.url.includes('backlog') || router.url.includes('board'))" class="headline">Edit Task</h3>
 
 <form (ngSubmit)="saveTask(form)" #form="ngForm">
 
   <div class="sectionOne">
-    <!-- task title -->
+
     <div class="title concave">
-      <input placeholder="Title*" [(ngModel)]="task.title" name="taskTitle">
+      <input required placeholder="Title*" [(ngModel)]="formData.title" name="title">
     </div>
 
     <div class="description concave">
-      <textarea placeholder="Task Description" [(ngModel)]="task.description" name="taskDescription">
-            </textarea>
+      <textarea placeholder="Task Description" [(ngModel)]="formData.description" name="description">
+      </textarea>
     </div>
   </div>
 
@@ -20,23 +20,23 @@
     <mat-form-field  class="datePicker example-full-width" appearance="fill">
       <input  
         *ngIf="taskservice.editMode"
+        [(ngModel)]="date" 
+        name="dueto" 
         placeholder="Choose a Due Date" 
         class="concave borderRadiusAdjust" 
         [min]="minDate" 
-        matInput 
-        [(ngModel)]="date" 
-        name="taskDueDate" 
         required 
+        matInput 
         [matDatepicker]="picker">
       <input  
         *ngIf="!taskservice.editMode"
+        [(ngModel)]="formData.dueTo" 
+        name="dueto" 
         placeholder="Choose a Due Date" 
         class="concave borderRadiusAdjust" 
         [min]="minDate" 
-        matInput 
-        [(ngModel)]="task.dueTo" 
-        name="taskDueDate" 
         required 
+        matInput 
         [matDatepicker]="picker">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker ></mat-datepicker>
@@ -44,31 +44,31 @@
 
     <div class="urgency">
       <label for="low" [class.activeButton]="activeUrgency == 'low'" class="default-btn" (click)="setUrgencyButtonColor('low')">Low</label>
-        <input id="low" type="radio" value="low" name="taskUrgency" [(ngModel)]="task.urgency" >
+        <input id="low" type="radio" value="low" name="urgency" [(ngModel)]="formData.urgency" >
 
       <label for="normal" [class.activeButton]="activeUrgency == 'normal'" class="default-btn" (click)="setUrgencyButtonColor('normal')">Normal</label>
-        <input id="normal" type="radio" value="normal" name="taskUrgency" [(ngModel)]="task.urgency" >
+        <input id="normal" type="radio" value="normal" name="urgency" [(ngModel)]="formData.urgency" >
 
       <label for="urgent" [class.activeButton]="activeUrgency == 'urgent'" class="default-btn" (click)="setUrgencyButtonColor('urgent')">Urgent</label>
-        <input id="urgent" type="radio" value="urgent" name="taskUrgency" [(ngModel)]="task.urgency" >
+        <input id="urgent" type="radio" value="urgent" name="urgency" [(ngModel)]="formData.urgency" >
     </div>
 
     <div class="category">
-      <select  (change)="handleCustomCategory('checkIfCustomRequest', $event)" #catSelect [(ngModel)]="task.category" name="taskCategory" >
+      <select  required (change)="handleCustomCategory('checkIfCustomRequest', $event)" #catSelect [(ngModel)]="formData.category" name="category" >
         <option disabled *ngIf="customCategory == ''" value="">Choose a category*</option>
-        <option value="Custom Category"> Add Category </option>
+        <option value="Custom Category">Add Category</option>
         <option *ngFor="let category of db.categories" value={{category}}>{{ category }}</option>
       </select>
 
 
       <div *ngIf="openCategoryPopUp" class="categoryPopUp">
         <input 
+          [(ngModel)]="customCategory" 
+          name="customcategory"
           #inputCat="ngModel" 
           minlength="3"
           maxlength="11"
-          [(ngModel)]="customCategory" 
           type="text" 
-          name="taskCustomCategory"
           placeholder="Custom Category"
           >
         <div 
@@ -90,33 +90,29 @@
             Cancel
           </button>
         </div>      
-          <!-- <div>
-          <button (click)="addCustomCategory(catSelect.value)" [disabled]="!inputCat.value || inputCat.errors?.['minlength'] ">Save</button>
-          <button (click)="closeCustomCategory()">Cancel</button>
-        </div> -->
       </div>
     </div>
 
     <div class="user">
-      <select [(ngModel)]="task.users" required name="taskUser">
-        <option disabled value="">Select Responsibility*</option>
-        <option *ngIf="authService.currentUser.isAnonymous || undefined" value='Guest'>Guest</option>
-        <option *ngIf="!authService.currentUser.isAnonymous" value={{authService.currentUser.displayName}}>{{authService.currentUser.displayName ||''}}</option>
-        <option *ngFor="let user of authService.coUsers; index as i" [ngValue]="user"> {{user.firstName}} {{user.lastName}} </option>
+      <select [(ngModel)]="formData.responsibility" required name="responsibility">
+        <option disabled>Select Responsibility*</option>
+        <option *ngIf="authService.currentUser.displayName !== null" value={{authService.currentUser.displayName}}>{{authService.currentUser.displayName}}</option>
+        <option *ngIf="authService.currentUser.displayName == null" value="Guest">Guest</option>
+      <option *ngFor="let user of authService.coUsers; index as i">{{user.displayName}}</option>
       </select>
-
-      <!-- value={{task.users[i]}} -->
     </div>
 
     <div class="addTask">
      <div>
        <span>Add Task to</span>
-       <select class="selectSave" [(ngModel)]="task.board" name="board" >
-        <option [selected] *ngIf="task.board=='backlog' || ''" value='backlog'>Backlog</option>
-        <option *ngFor="let board of db.boards" value={{board.name}}>{{ board.name }}</option>
+       <select class="selectSave" [(ngModel)]="formData.board" name="board" >
+        <option [selected] value="backlog">Backlog</option>
+        <!-- <option [selected] *ngIf="formData.board=='backlog' || ''">Backlog</option> -->
+        <option *ngFor="let board of db.boards">{{ board.name }}</option>
            </select>
      </div>
 
+     <!-- Buttons -->
       <div class="buttons">
         <button
           type="submit"
@@ -136,3 +132,5 @@
 
   </div>
 </form>
+
+

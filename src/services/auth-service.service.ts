@@ -41,8 +41,7 @@ export class AuthServiceService {
   async monitorAuthState(): Promise<void> {  // triggered: login / logout
     await this.fireAuth.onAuthStateChanged((user) => {
       if (user) {
-        // create a reference to the current user, so that I can access his data easily again
-        this.currentUser = user;
+        this.currentUser = user;  // create a reference to the current user, so that I can access his data easily again
         if(user.isAnonymous){
           console.log('currentUser', this.currentUser);
         }
@@ -74,19 +73,15 @@ export class AuthServiceService {
       emailVerified: user.emailVerified,
       isAnonymous: user.isAnonymous,
     }
-    // create a reference to the current user, so that I can access his data easily again
-    this.userRef = this.firestore.doc(`users/${user.uid}`)
-    // If Doc does not exist, create new one. If it exists, then merge it
-    this.userRef.set(userData, { merge: true });
+    this.userRef = this.firestore.doc(`users/${user.uid}`)  // create a reference to the current user, so that I can access his data easily again
+    this.userRef.set(userData, { merge: true });   // If Doc does not exist, create new one. If it exists, then merge it
   };
 
 
   // Login and navigate to home page
   async login(email: string, password: string): Promise<void> {
     await this.fireAuth.signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        // get User object: userCredential.user
-        console.log('Login(): User successfully logged in', userCredential.user);
+      .then((userCredential) => {  // get User object: userCredential.user
         this.router.navigate(['']);
       })
       .catch((error) => {
@@ -108,21 +103,17 @@ export class AuthServiceService {
   }
 
   async saveGuestToDatabase(user: any) {
-    // set Document user ID the same as UID that is given in FireAuth! for easy access to identify the right user
     let userData = {
       uid: user.uid,  // set the same ID in Database as fireAuth already given this user in fireAuth setup
       isAnonymous: 'true',
       displayName: 'Guest'
     }
-    // create a reference to the current user, so that I can access his data easily again
-    this.userRef = this.firestore.doc(`users/${user.uid}`)
-    // If Doc does not exist, create new one. If it exists, then merge it
-    this.userRef.set(userData, { merge: true });
+    this.userRef = this.firestore.doc(`users/${user.uid}`)// create a reference to the current user, so that I can access his data easily again
+    this.userRef.set(userData, { merge: true }); // If Doc does not exist, create new one. If it exists, then merge it
   }
 
   async logout(): Promise<void> {
-    // if guest, reset app to default state, delete guest from db
-    if (this.currentUser.isAnonymous) {
+    if (this.currentUser.isAnonymous) { // if guest, reset app to default state, delete guest from db
       console.log('yes, is anonymus, we have to delete data here');
       // await this.deleteUserFromFireAuth();
       // await this.deleteGuestDataFromDatabase();
