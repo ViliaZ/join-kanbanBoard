@@ -16,6 +16,7 @@ import {
 } from 'src/services/tasks.service';
 import { Form, FormControl } from '@angular/forms';
 import { AuthServiceService } from 'src/services/auth-service.service';
+import { Task } from 'src/models/task';
 
 
 @Component({
@@ -39,15 +40,15 @@ export class NewTaskComponent implements OnInit {
 
   // formData
   public formData: any = {
-    'title': '',
-    'description': '',
-    'dueTo': new Date(),
-    'urgency': '',
-    'board': 'backlog',
-    'category': '',
-    'responsibility': 'Guest',
-    'isPinnedToBoard': 'false',
-    'createdAt': new Date(),
+    title: '',
+    description: '',
+    dueTo: new Date(),
+    urgency: 'normal',
+    board: 'backlog',
+    category: '',
+    responsibility: 'Guest',
+    isPinnedToBoard: 'false',
+    createdAt: new Date(),
   }
 
 
@@ -74,7 +75,6 @@ export class NewTaskComponent implements OnInit {
     this.formData.responsibility = this.authService.currentUser.uid; // future: hier kommt currentUser hin
     // use 'date' instead of 'dueTo' in Datepicker! The template inputfield is changed to 'ngModel = date' when in editmode
     console.log('this task after autofill:', this.formData.dueTo);
-
   }
 
   setUrgencyDefault() {
@@ -117,7 +117,9 @@ export class NewTaskComponent implements OnInit {
   }
 
   async saveTask(form: any) {
-    console.table(this.formData);
+    console.table('before',this.formData);
+    this.resetForm(form)
+    console.table('after',this.formData);
     
     // if (!this.taskservice.editMode) {
     //   await this.saveNewTask(form);
@@ -129,8 +131,10 @@ export class NewTaskComponent implements OnInit {
     // this.resetForm(form);
   }
 
-  async resetForm(form: any) {
-    await form.reset();
+  async resetForm(form?: any) {
+    let newTask = new Task();
+    let emptyTemplateTask = newTask.getTaskTemplate()
+    this.formData = emptyTemplateTask;
     this.taskservice.taskPopupOpen = false;
     this.setUrgencyButtonColor('normal');
   }

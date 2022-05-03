@@ -14,7 +14,7 @@ export class Task {
 
 
     // obj will be formData Object from newTask component
-    constructor(private authService: AuthServiceService, obj?: any) {
+    constructor(private authService?: AuthServiceService, obj?: any) {
         this.board = obj ? obj.board : '';
         this.title = obj ? obj.title : '';
         this.description = obj ? obj.description : '';
@@ -23,7 +23,7 @@ export class Task {
         this.dueTo = obj ? obj.dueTo : '';
         this.responsibility = obj ? obj.responsibility : '' ;
         this.createdAt = obj ? obj.createdAt  : new Date();
-        this.creator = obj ? obj.creator : this.authService.currentUser.uid;
+        this.creator = obj ? obj.creator : this.authService?.currentUser.uid;
         this.isPinnedToBoard = obj ? obj.isPinnedToBoard : false;
     }
 
@@ -39,6 +39,22 @@ export class Task {
             createdAt: this.createdAt,
             creator: this.creator,
             isPinnedToBoard: this.isPinnedToBoard
+        }
+    }
+
+    // filled with default values of all properties
+    // used to reset formData in newTask component
+   getTaskTemplate(){
+        return {
+            title: '',
+            description: '',
+            dueTo: new Date(),
+            urgency: 'normal',
+            board: 'backlog',
+            category: '',
+            responsibility: 'Guest',
+            isPinnedToBoard: 'false',
+            createdAt: new Date(),
         }
     }
 }
