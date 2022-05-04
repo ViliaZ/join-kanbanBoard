@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~13.2.0",
     "@angular/platform-browser-dynamic": "~13.2.0",
     "@angular/router": "~13.2.0",
+    "angular-date-value-accessor": "^2.0.0",
     "firebase": "^9.6.9",
     "rxfire": "^6.0.0",
     "rxjs": "~7.5.0",

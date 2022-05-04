@@ -25,10 +25,11 @@
             </div>
             <div class="dueTo">
                 <img src="assets/img/bell.png" alt="due to">
-                {{ task.dueTo.toDate()| date:'yyyy/MM/dd' }}
+                {{ task.dueTo | date: 'dd/MM/yyyy' }}
             </div>
         </div>
     </div>
+    <!-- {{ task.dueTo.toDate()| date:'yyyy/MM/dd' }} -->
 
     <!-- category -->
     <div class="category">

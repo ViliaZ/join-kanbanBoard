@@ -2,7 +2,7 @@
   <h3  *ngIf="!taskservice.editMode && (router.url.includes('backlog') || router.url.includes('board'))" class="headline">Add New Task</h3>
   <h3  *ngIf="taskservice.editMode && (router.url.includes('backlog') || router.url.includes('board'))" class="headline">Edit Task</h3>
 
-<form (ngSubmit)="saveTask(form)" #form="ngForm">
+<form (ngSubmit)="onSubmit()" #form="ngForm">
 
   <div class="sectionOne">
 
@@ -18,7 +18,7 @@
 
   <div class="sectionTwo">
     <mat-form-field  class="datePicker example-full-width" appearance="fill">
-      <input  
+      <!-- <input  
         *ngIf="taskservice.editMode"
         [(ngModel)]="date" 
         name="dueto" 
@@ -27,10 +27,9 @@
         [min]="minDate" 
         required 
         matInput 
-        [matDatepicker]="picker">
+        [matDatepicker]="picker"> -->
       <input  
-        *ngIf="!taskservice.editMode"
-        [(ngModel)]="formData.dueTo" 
+        [(ngModel)]="formData.dueTo"
         name="dueto" 
         placeholder="Choose a Due Date" 
         class="concave borderRadiusAdjust" 

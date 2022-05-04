@@ -60,8 +60,8 @@
                     </div>
                 </div>
                 <div class="info">
-                    <div *ngIf="db.urgentTasks.length > 0">{{ db.urgentTasks.length | number:'2.0'}} Tasks</div>
-                    <div *ngIf="db.urgentTasks.length == 0">0 Tasks</div>
+                    <div *ngIf="db.urgentTasks.length > 0; else noUrgentTasks">{{ db.urgentTasks.length | number:'2.0'}} Tasks</div>
+                    <ng-template #noUrgentTasks >0 Tasks</ng-template>
                     <div>Labelled Urgent</div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                     </div>
                 </div>
                 <div class="info">
-                    <div *ngIf="db.nextDueDateTask.length !== 0">{{ (db.nextDueDateTask.dueTo*1000 | date: 'MMM, dd') || 'No Tasks'}} </div>
+                    <div *ngIf="db.nextDueDateTask.length !== 0">{{ (db.nextDueDateTask.dueTo | date: 'dd/MM/yyyy') || 'No Tasks'}} </div>
                     <div *ngIf="db.nextDueDateTask.length == 0">No Deadlines set </div>
                     <div *ngIf="db.nextDueDateTask.length !== 0"> Next Deadline</div>
                 </div>
@@ -84,7 +84,7 @@
                     <div>Task Details:</div>
                     <div><span>On Board:</span> {{ db.nextDueDateTask.board }} </div>
                     <div><span>Category:</span> {{ db.nextDueDateTask.category }} </div>
-                    <div *ngIf="db.nextDueDates.length > 1"> +{{ db.nextDueDates.length-1 }}further task(s)</div>
+                    <div *ngIf="db.nextDueDates.length > 1"> +{{ db.nextDueDates.length }}further task(s)</div>
                 </div>
             </div>
 

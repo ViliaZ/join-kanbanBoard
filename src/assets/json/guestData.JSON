@@ -28,11 +28,7 @@
         "dueTo": 0,
         "createdAt": "",
         "isPinnedToBoard": "false",
-        "users": {
-          "firstName": "Guest",
-          "lastName": "User",
-          "userImage": "assets/img/user.png"
-        }
+        "responsibility": "Guest"
       }, 
       {
         "board": "DummyBoardTwo",
@@ -43,11 +39,7 @@
         "dueTo": 0,
         "createdAt": "",
         "isPinnedToBoard": "false",
-        "users": {
-          "firstName": "Guest",
-          "lastName": "User",
-          "userImage": "assets/img/user.png"
-        }
+        "responsibility": "Guest"
       },
       {
         "board": "DummyBoardOne",
@@ -58,11 +50,7 @@
         "dueTo": 0,
         "createdAt": "",
         "isPinnedToBoard": "false",
-        "users": {
-          "firstName": "Guest",
-          "lastName": "User",
-          "userImage": "assets/img/user.png"
-        }
+        "responsibility": "Guest"
       }
 
 

@@ -51,8 +51,11 @@ export class TaskComponent implements OnInit {
 
 
   editTask(task: any, event: Event){
+    console.log('task selected', task);
+    
     event.stopImmediatePropagation();
     this.tasksservice.currentTask = task;
+    console.log('currentTask.dueTo',this.tasksservice.currentTask.dueTo)
     this.tasksservice.taskPopupOpen = true;
     this.tasksservice.editMode = true;
   }

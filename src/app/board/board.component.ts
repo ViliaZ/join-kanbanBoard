@@ -32,10 +32,9 @@ export class BoardComponent implements OnInit {
     this.db.getBoardAndTaskData();
   }
 
-  // input New Board
+  // inputfield: Add a new board
   async addNewBoard() {
    let duplicate = await this.checkDuplicates(this.newBoardTitle);
-   
   if (this.newBoardTitle.length > 0 && !duplicate){   
     let newBoard = { 'name': this.newBoardTitle, 'tasks': [], 'editable': false, 'createdAt': new Date().getTime() };
     this.db.addDocToCollection('boards', newBoard);
@@ -97,6 +96,7 @@ export class BoardComponent implements OnInit {
     }
   }
 
+  // after Board title was changed, update property "board" on every task obj
   updateTasksOnBoard(newBoardTitle: any, boardIDinFirestore: any, i: number) {
     let tasksOnBoard: [] = this.db.boards[i].tasks;
     if (tasksOnBoard.length > 0) {
@@ -112,7 +112,7 @@ export class BoardComponent implements OnInit {
     this.currentBoard = this.db.boards[i];
   }
 
-  // eventHandler: delete CONFIRMED 
+  // eventHandler: delete CONFIRMED --> close alert
   confirmDelete(): any {
     this.currentBoard.tasks.forEach((task: any) => { // first: delete all tasks on board
       this.db.deleteDoc('tasks', task.customIdName)
@@ -121,6 +121,7 @@ export class BoardComponent implements OnInit {
     this.deleteBoardAlert = false;
   }
 
+  // Click on existing Task to edit
   editTask(task: any) {
     this.taskservice.currentTask = task;
     this.taskservice.taskPopupOpen = true;
@@ -133,7 +134,7 @@ export class BoardComponent implements OnInit {
     this.taskservice.detailsRequested = false;
   }
 
-  // new Task or Edit Task
+  // Trigger: Plus-Button or Click on a existing Task for Editing
   openTaskPopUp() {
     this.taskservice.taskPopupOpen = true;
   }

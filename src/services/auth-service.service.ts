@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
@@ -14,6 +14,9 @@ import { DatabaseService } from './database.service';
 
 export class AuthServiceService {
 
+    // access AuthService in Model Class (e.g. Task) --> access this property
+  static injector: Injector;
+  
   // create a reference to the current user, so that I can access his data easily again
   userRef!: AngularFirestoreDocument<any>; // will be initialized with change to LoginState
   currentUser: any = {};  // is given at monitorAuthState() with login
@@ -47,7 +50,7 @@ export class AuthServiceService {
         }
       }
       else {  // if no user, then returns NULL
-        console.log('Monitor AuthStatus: No user or user logged out', user);
+        console.log('Monitor AuthStatus: No user or user logged out', user);     
       }
     })
   }

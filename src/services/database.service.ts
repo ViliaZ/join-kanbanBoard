@@ -10,7 +10,7 @@ import { AuthServiceService } from './auth-service.service';
 export class DatabaseService {
 
   public categories: string[] = ['Design', 'Marketing', 'Finance', 'Admin', 'Other']
-  public boards: any = [];
+  public boards: any = []; // contains boards and tickets for each board as array
   public backlogtasks: any = [];
   public urgentTasks: any = [];
   public todoTasks: any = [];
@@ -18,7 +18,7 @@ export class DatabaseService {
   public nextDueDates: any = [];
   public nextDueDateTask: any = [];
   public backlogEmpty = () => this.backlogtasks.length == 0;
-  public toDoBoardExists!: any;
+  public toDoBoardExists!: boolean;  // ToDo Board as static (undeletable) Board for EVERY User
   public guestIsInitialized: boolean = false;  // if true, guest - dummydata donot need to be created again
 
   constructor(
@@ -27,59 +27,72 @@ export class DatabaseService {
   }
 
   getBoardAndTaskData(sortBoardsBy: string = 'createdAt', sortBoardOrder: any = 'asc', sortTasksBy: string = 'isPinnedToBoard', sortTasksOrder: any = 'desc') {
-   if (this.authService.currentUser.uid !== undefined) {
-    this.firestore
-      .collection('boards', ref => ref
-      .where('creator', '==', this.authService.currentUser.uid) // show only boards from current user
-      .orderBy(sortBoardsBy, sortBoardOrder))  // default sort via timestamp
-      .valueChanges({ idField: 'customIdName' })
-      .pipe(switchMap((result: any) => { // result = boards with tasks
-        this.boards = result;
-        return this.firestore
-          .collection('tasks', ref => ref
-          .where('creator', '==', this.authService.currentUser.uid) // load only tasks from current user
-          .orderBy(sortTasksBy, sortTasksOrder))
-          .valueChanges({ idField: 'customIdName' });
-      }))
-      .subscribe(async (result) => { // result = tasks
-        await this.emptyAllArrays();
-        await this.setStaticBoards();
-        this.handleTasks(result);
-      });
-  }}
+    if (this.authService.currentUser.uid !== undefined) {
+      this.firestore
+        .collection('boards', ref => ref
+          .where('creator', '==', this.authService.currentUser.uid) // show only boards from current user
+          .orderBy(sortBoardsBy, sortBoardOrder))  // default sort via timestamp
+        .valueChanges({ idField: 'customIdName' })
+        .pipe(switchMap((result: any) => { // result = boards with tasks
+          this.boards = result;
+          return this.firestore
+            .collection('tasks', ref => ref
+              .where('creator', '==', this.authService.currentUser.uid) // load only tasks from current user
+              .orderBy(sortTasksBy, sortTasksOrder))
+            .valueChanges({ idField: 'customIdName' });
+        }))
+        .subscribe(async (result) => { // result = tasks
+          await this.emptyAllArrays();
+          await this.setStaticBoards();
+          this.handleTasks(result);
+        });
+    }
+  }
 
   // create initial TODO Board
   async setStaticBoards() { // if no ToDo Board exists yet, create it (ToDo is a static board)
     this.toDoBoardExists = await this.boards.find((i: any) => i.name == 'ToDo');
     if (this.toDoBoardExists === undefined) {
-       await this.addDocToCollection('boards', { name: 'ToDo', tasks: [], createdAt: new Date().getTime(), creator: this.authService.currentUser.uid})
+      await this.addDocToCollection('boards', { name: 'ToDo', tasks: [], createdAt: new Date().getTime(), creator: this.authService.currentUser.uid })
     }
   }
 
-  handleTasks(tasks: any) {
-    tasks.forEach((task: any) => {
+  async handleTasks(tasks: any) {
+   await tasks.forEach(async(task: any) => {
+      task.dueTo = task.dueTo.toDate();
+      console.log(task.dueTo.getTime());
+
       this.filterAllTasks(task);
       this.filterUrgentTasks(task);
       this.filterToDoTasks(task);
       this.sortTasksToBoards(task);
-      this.getNextDueDateTask(task);
+      await this.getNextDueDateTask(task);
     })
     this.sortBoardsDescending();
   }
 
-  getNextDueDateTask(task: any) {
+  async getNextDueDateTask(task: any) {
+
+    console.log('before: länge nextDueDates',  this.nextDueDates.length);
+
     if (this.nextDueDates.length == 0) { // push first task in array --> if only one task exists, this one will be the one with closest deadline
-      this.nextDueDates.push(task);
+      await this.nextDueDates.push(task);
+      console.log('111 this.nextDueDates ist leer, pushe einen task', this.nextDueDates);
     }
-    else if (this.nextDueDates.length > 0 && (task.dueTo.toMillis() - this.nextDueDates[0].dueTo.toMillis() < 0)) { // compare dueTo Date in milliseconds
+    else if ((this.nextDueDates.length > 0) && (task.dueTo.getMilliseconds() - this.nextDueDates[0].dueTo.getMilliseconds() < 0)) { // compare dueTo Date in milliseconds
       // if current task has closer deadline as task before, clear array and save current task as the closest deadline task
-      this.nextDueDates = []; // clear whole array
-      this.nextDueDates.push(task);
+      this.nextDueDates=[]; // clear whole array
+      await this.nextDueDates.push(task);
+      console.log('222 this.nextDueDates geleert, neuer task rein', this.nextDueDates);
+
     }
-    else if (this.nextDueDates.length > 0 && (task.dueTo.toMillis() - this.nextDueDates[0].dueTo.toMillis() == 0)) { // two tasks with same dueDate
-      this.nextDueDates.push(task); // save multiple tasks, which have same closest Due date
+    else if (this.nextDueDates.length > 0 && (task.dueTo.getTime() - this.nextDueDates[0].dueTo.getTime() == 0)) { // two tasks with same dueDate
+      await this.nextDueDates.push(task); // save multiple tasks, which have same closest Due date
+      console.log('333 gleiche', this.nextDueDates);
+
     }
     this.nextDueDateTask = this.nextDueDates[0];
+    console.log('Final nextDueDates:', this.nextDueDates);
   }
 
   async emptyAllArrays(): Promise<void> {

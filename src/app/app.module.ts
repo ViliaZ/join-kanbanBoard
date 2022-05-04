@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,6 +27,8 @@ import { SignupComponent } from './signup/signup.component';
 import { LogoutSuccessComponent } from './logout-success/logout-success.component';
 import { ForgotPwComponent } from './forgot-pw/forgot-pw.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthServiceService } from 'src/services/auth-service.service';
+import { DateValueAccessorModule } from 'angular-date-value-accessor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +44,10 @@ import { HttpClientModule } from '@angular/common/http';
     GradientAnimationComponent,
     SignupComponent,
     LogoutSuccessComponent,
-    ForgotPwComponent
+    ForgotPwComponent,
+    
+
+
   ],
   imports: [
     BrowserModule,
@@ -57,9 +62,21 @@ import { HttpClientModule } from '@angular/common/http';
     MatSelectModule,
     AngularFireModule.initializeApp(environment.firebase),
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    DateValueAccessorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+
+    // 3 Steps for giving access to AuthService in Model Class (e.g. Task) - as workaround for Constructor DI of AuthService
+    // AuthServiceService:: add injector property
+    // in Model (e.g. Task.ts): acceass AuthService via property (no DI in constructro needded)
+    // in app.module: Add the following: 
+  constructor(private injector: Injector) {
+    AuthServiceService.injector = injector;
+}
+
+ }

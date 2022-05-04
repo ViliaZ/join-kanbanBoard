@@ -34,11 +34,8 @@ export class NewTaskComponent implements OnInit {
   public openCategoryPopUp: boolean = false;
   public currentTask: any;
   public activeUrgency: string = '';
-  public date: any; // only for editmode // ngmodel datepicker works with this date
   public minDate: any = new Date; // minimum date for datepicker
-  // ngValue: any = null;
 
-  // formData
   public formData: any = {
     title: '',
     description: '',
@@ -51,32 +48,21 @@ export class NewTaskComponent implements OnInit {
     createdAt: new Date(),
   }
 
-
   constructor(
     public db: DatabaseService,
     public taskservice: TasksService,
     public router: Router,
     public authService: AuthServiceService) {
-
   }
 
   ngOnInit(): void {
     if (this.taskservice.editMode) {// EDITMODE only: set current values in all inputfields
-      this.autoFillForm();
+      this.formData = this.taskservice.currentTask;
     }
     this.setUrgencyDefault();
-    console.log(this.authService.currentUser)
   }
 
-  // EDITMODE only
-  autoFillForm() {
-    this.formData = this.taskservice.currentTask;
-    this.date = new Date(this.taskservice.currentTask.dueTo.toDate());  // cannot use ngModel for date with dueTo --> Error, because conflict with template HTML for date / format issue when I set a value in datepicker
-    this.formData.responsibility = this.authService.currentUser.uid; // future: hier kommt currentUser hin
-    // use 'date' instead of 'dueTo' in Datepicker! The template inputfield is changed to 'ngModel = date' when in editmode
-    console.log('this task after autofill:', this.formData.dueTo);
-  }
-
+  // Urgency is set per default not via ngModel (only after editing)
   setUrgencyDefault() {
     let activeUrgency: string;
     if (!this.taskservice.editMode) {
@@ -88,12 +74,12 @@ export class NewTaskComponent implements OnInit {
     this.setUrgencyButtonColor(activeUrgency);
   }
 
-  // set color for selected choice on clicked button
+  // set color for selected urgency button
   setUrgencyButtonColor(activeUrgency: string = 'normal') {
     this.activeUrgency = activeUrgency;
   }
 
-
+  // if user choose to set up a custom category
   handleCustomCategory(action: string, event?: any, form?: any) {
     if (action == 'checkIfCustomRequest') {
       this.checkIfCustomCatRequested(event);
@@ -109,58 +95,36 @@ export class NewTaskComponent implements OnInit {
       this.openCategoryPopUp = false;
     }
   }
-
+// checks onchanges() for inputfield category
   checkIfCustomCatRequested(event: any) {
     if (event.target.value == 'Custom Category' && !this.openCategoryPopUp) {
       this.openCategoryPopUp = true;
     }
   }
 
-  async saveTask(form: any) {
-    console.table('before',this.formData);
-    this.resetForm(form)
-    console.table('after',this.formData);
-    
-    // if (!this.taskservice.editMode) {
-    //   await this.saveNewTask(form);
-    //   console.table(this.formData);
-    //   this.db.addDocToCollection('tasks', this.formData);
-    // } else {
-    //   this.udpateEditedTask();
-    // }
-    // this.resetForm(form);
+  // handle Submit of form
+  async onSubmit() {
+    let task = new Task(this.formData);
+    let taskAsJson = task.toJson();
+    if (!this.taskservice.editMode) {
+      this.db.addDocToCollection('tasks', taskAsJson);
+    } else {
+      this.udpateEditedTask();
+    }
+    this.resetForm();
   }
 
-  async resetForm(form?: any) {
-    let newTask = new Task();
-    let emptyTemplateTask = newTask.getTaskTemplate()
+  // reset after save/cancel
+  resetForm() {
+    let emptyTemplateTask = Task.getTaskTemplate(); // calling a static function inside of Task Model
     this.formData = emptyTemplateTask;
     this.taskservice.taskPopupOpen = false;
     this.setUrgencyButtonColor('normal');
   }
 
-  async saveNewTask(form: any) {  
-
-
-    // this.formData.board = await form.value.board; 
-    // this.formData.createdAt = new Date().getTime(); 
-    // this.formData.isPinnedToBoard = false; 
-    // this.formData.urgency = await form.value.taskUrgency;
-    // this.formData.category = await form.value.taskCategory;
-    // this.formData.dueTo = await form.value.taskDueDate;
-    // this.formData.description = await form.value.taskDescription;
-    // this.formData.responsibility = await form.value.taskUser;
-    // this.formData.creator = await this.authService.currentUser.uid;
-  }
-
   udpateEditedTask() {
     this.formData = this.taskservice.currentTask;
-    this.formData.dueTo = this.date;
-    console.log('this task is saved to db:', this.formData.dueTo);
     this.db.updateDoc('tasks', this.formData.customIdName, this.formData);
-    this.formData.dueTo = { seconds: 1651269600, nanoseconds: 0 };
-    console.log('this task after saved to db:', this.formData.dueTo);
-
     this.taskservice.currentTask = {};
     this.taskservice.editMode = false;
   }

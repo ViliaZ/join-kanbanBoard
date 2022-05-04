@@ -25,7 +25,7 @@
                 </div>
                 <div class="information margin-right">
                     <div class="urgency">{{ task.urgency }}</div>
-                    <div class="date">{{ task.dueTo.toDate() | date: 'dd/MM/yyyy'}}</div>
+                    <div class="date">{{ task.dueTo | date: 'dd/MM/yyyy'}}</div>
                 </div>
                 <div class="buttons">
                     <button (click)="moveToBoardToDo(task.customIdName)">To Board</button>
