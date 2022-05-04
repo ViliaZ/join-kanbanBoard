@@ -55,11 +55,10 @@
 
     <div class="category">
       <select  required (change)="handleCustomCategory('checkIfCustomRequest', $event)" #catSelect [(ngModel)]="formData.category" name="category" >
-        <option disabled *ngIf="customCategory == ''" value="">Choose a category*</option>
+        <option disabled value="">Choose a category*</option>
         <option value="Custom Category">Add Category</option>
         <option *ngFor="let category of db.categories" value={{category}}>{{ category }}</option>
       </select>
-
 
       <div *ngIf="openCategoryPopUp" class="categoryPopUp">
         <input 
