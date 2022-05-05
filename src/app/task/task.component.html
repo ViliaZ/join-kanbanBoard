@@ -20,14 +20,14 @@
                 class="icon-pin" 
                 src="assets/img/pin-filled.png" 
                 (click)="fixTaskToTop(task, $event)"
-                [class.pinRotation]="task.isPinnedToBoard==true"
+                [class.pinRotation]="task.isPinnedToBoard"
           >
 
             <img 
                 *ngIf="task.isPinnedToBoard"
                 class="icon-pin-fixed" 
                 src="assets/img/pin-filled.png" 
-                [class.pinRotation]="task.isPinnedToBoard==true"
+                [class.pinRotation]="task.isPinnedToBoard"
                 >
                
         </div>

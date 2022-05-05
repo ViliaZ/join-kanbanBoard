@@ -44,7 +44,7 @@ export class NewTaskComponent implements OnInit {
     board: 'backlog',
     category: '',
     responsibility: 'Guest',
-    isPinnedToBoard: 'false',
+    isPinnedToBoard: false,
     createdAt: new Date(),
   }
 

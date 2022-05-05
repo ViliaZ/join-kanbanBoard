@@ -4,10 +4,11 @@ export interface Task {
     description?: string;
     category: string;
     urgency: string;
-    dueTo: Date;
+    dueTo: Date | string;
     responsibility: string;
-    createdAt: Date;
+    createdAt: Date | string;
     creator: string;
     isPinnedToBoard: boolean;
+    customIdName?: string;
 }
 

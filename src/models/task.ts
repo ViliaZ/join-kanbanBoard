@@ -14,6 +14,7 @@ export class Task {
     public createdAt: any; // date
     public creator: string; // UID from user
     public isPinnedToBoard: boolean;
+    public customIdName?: string;
 
 
 
@@ -29,6 +30,7 @@ export class Task {
         this.createdAt = obj ? obj.createdAt : new Date();
         this.isPinnedToBoard = obj ? obj.isPinnedToBoard : false;
         this.creator = this.service.currentUser.uid;
+        this.customIdName = obj ? obj.customIdName : '';
     }
 
     // transform task properties to  Json Format for communication with backend / Firebase
@@ -58,7 +60,8 @@ export class Task {
             board: 'backlog',
             category: '',
             responsibility: 'Guest',
-            // isPinnedToBoard: 'false',
+            customIdName: '',
+            isPinnedToBoard: false,
         }
     }
 }

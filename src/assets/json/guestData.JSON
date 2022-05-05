@@ -27,7 +27,7 @@
         "urgency": "normal",
         "dueTo": 0,
         "createdAt": "",
-        "isPinnedToBoard": "false",
+        "isPinnedToBoard": false,
         "responsibility": "Guest"
       }, 
       {
@@ -38,7 +38,7 @@
         "urgency": "urgent",
         "dueTo": 0,
         "createdAt": "",
-        "isPinnedToBoard": "false",
+        "isPinnedToBoard": false,
         "responsibility": "Guest"
       },
       {
@@ -49,7 +49,7 @@
         "urgency": "normal",
         "dueTo": 0,
         "createdAt": "",
-        "isPinnedToBoard": "false",
+        "isPinnedToBoard": false,
         "responsibility": "Guest"
       }
 

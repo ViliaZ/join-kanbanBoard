@@ -3,6 +3,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { switchMap } from 'rxjs';
 import { AuthServiceService } from './auth-service.service';
 import { Board } from 'src/models/board';
+import { Task } from 'src/interfaces/task';
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,7 @@ export class DatabaseService {
   public nextDueDates: any = [];
   public nextDueDateTasks: any = [];  // can also be multiple tasks with same due Date
   public backlogEmpty = () => this.backlogtasks.length == 0;
-  public toDoBoardExists!: boolean;  // ToDo Board as static (undeletable) Board for EVERY User
+  public toDoBoardExists: boolean = false;  // ToDo Board as static (undeletable) Board for EVERY User
   public guestIsInitialized: boolean = false;  // if true, guest - dummydata donot need to be created again
 
 
@@ -27,20 +29,20 @@ export class DatabaseService {
     private firestore: AngularFirestore,
     private authService: AuthServiceService) {
   }
-
+// switchmap: https://blog.angular-university.io/rxjs-switchmap-operator/
   getBoardAndTaskData( // all parameters are defined by me
     sortBoardsBy: string = 'createdAt',
     sortBoardOrder: any = 'asc') {
     this.firestore
       .collection('boards', ref => ref
-        .where('creator', '==', 'TLgEoJMbFPhFzoq2JOvppnaojOY2') // show only boards from current user
+        .where('creator', '==', this.authService.currentUser.uid) // show only boards from current user
         .orderBy(sortBoardsBy, sortBoardOrder))  // default sort via timestamp
       .valueChanges({ idField: 'customIdName' })
       .pipe(switchMap((result: any) => { // result = boards with tasks
         this.boards = result;
         return this.firestore
           .collection('tasks', ref => ref
-            .where('creator', '==', 'TLgEoJMbFPhFzoq2JOvppnaojOY2')) // load only tasks from current user
+            .where('creator', '==', this.authService.currentUser.uid)) // load only tasks from current user
           .valueChanges({ idField: 'customIdName' });
       }))
       .subscribe(async (result) => { // result = tasks
@@ -53,11 +55,11 @@ export class DatabaseService {
 
   // create initial ToDo Board
   async setStaticBoards() { // if no ToDo Board exists yet, create it (ToDo is a static board)
-    this.toDoBoardExists = await this.boards.find((i: any) => i.name == 'ToDo');
-    if (this.toDoBoardExists === undefined) {
+    this.toDoBoardExists = await this.boards.some((i: any) => i.name === 'ToDo');  // some() returns boolean
+    if (this.toDoBoardExists === false) {
       let newToDoBoard = Board.getEmptyBoard('ToDo', this.authService.currentUser.uid) // call a static function inside board.ts
       await this.addDocToCollection('boards', newToDoBoard)
-    }
+    } 
   }
 
   // Handle every task:
@@ -70,6 +72,7 @@ export class DatabaseService {
     this.todoTasks = tasks.filter((t: any) => t.board == 'ToDo');
     this.backlogtasks = tasks.filter((t: any) => t.board == 'backlog');
     this.getNextDueDateTask(tasks);
+    this.sortTasksDescending(); // all tasks on each board are sorted - pinned tasks on top
   }
 
   // find 1 or more Tasks with upmost Deadline #1
@@ -105,32 +108,43 @@ export class DatabaseService {
     this.urgentTasks = [];
   }
 
- async sortTasksToBoards(task: any) {
+  async sortTasksToBoards(task: any) {    
     for (let i = 0; i < this.boards.length; i++) {
-      let taskExistsInArray = await this.boards[i].tasks.find((t: any) => t.customIdName == task.customIdName)
-      if (task.board === this.boards[i].name && taskExistsInArray == undefined) {
+      let taskExistsInArray: boolean = await this.boards[i].tasks.some((t: any) => t.customIdName === task.customIdName)  // returns boolean
+      if (task.board === this.boards[i].name && !taskExistsInArray) {
         await this.boards[i].tasks.push(task);
       }
     }
-     this.sortTasksDescending();  // all tasks on each board are sorted - pinned tasks on top
+    console.log('boards in sort into boards',this.boards);
+    for (let i = 0; i < this.boards.length; i++) {
+      let taskExistsInArray: boolean = await this.boards[i].tasks.some((t: any) => t.customIdName === task.customIdName)  // returns boolean
+      if (task.board === this.boards[i].name && !taskExistsInArray) {
+        await this.boards[i].tasks.push(task);
+      }
+    }
   }
 
   // Goal: pinned Task on Top of Board, then all other tasks sorted by createdAt
   async sortTasksDescending(): Promise<void> {
+    console.log('alltasks',this.allTasks);
+    console.log('boards',this.boards);
     for (let i = 0; i < this.boards.length; i++) {
-      let pinnedTasks: [] = [];
-      let unpinnedTasks: [] = [];
-      let unpinnedTasksSortByCreationTime: [] = [];
-      let tasksOnBoard = this.boards[i].tasks;
-      pinnedTasks = await tasksOnBoard.filter((t: any) => t.isPinnedToBoard === true)
-      unpinnedTasks = await tasksOnBoard.filter((t: any) => t.isPinnedToBoard === false)
-      // sort this array with "createdAt" descending
-      unpinnedTasksSortByCreationTime = unpinnedTasks.sort((a: any, b: any) =>  Number(a.createdAt) - Number(b.createdAt));
-      this.boards[i].tasks = pinnedTasks.concat(unpinnedTasksSortByCreationTime); // merge subarrays again to final sorted Array
+      console.log('all tasks current board',this.boards[i].name, this.boards[i].tasks);
+
+      let currentBoardTasks = this.boards[i].tasks;
+      console.log('currentBoardTasks',currentBoardTasks.filter((t:any)=>t.isPinnedToBoard));
+      
+      let pinnedTasks = currentBoardTasks.filter( (t: any) => t.isPinnedToBoard)
+      console.log('pinnedTasks',pinnedTasks);
+      let unpinnedTasks = currentBoardTasks.filter((t: any) => !t.isPinnedToBoard)
+      console.log('unpinnedTasks',unpinnedTasks);
+      // let unpinnedTasksSortByCreationTime = unpinnedTasks.sort((a: any, b: any) => Number(a.createdAt) - Number(b.createdAt));
+      let unpinnedTasksSortByCreationTime = await unpinnedTasks.sort(this.getSortOrder("createdAt"));
+      console.log('unpinnedTasksSortByCreationTime',unpinnedTasksSortByCreationTime);
+
+      this.boards[i].tasks = await pinnedTasks.concat(unpinnedTasksSortByCreationTime); // merge subarrays again to final sorted Array
       // console.table('ENDE name:', this.boards[i].name);
       // console.table('ENDE tasks:', this.boards[i].tasks);
-
-
     }
   }
 
