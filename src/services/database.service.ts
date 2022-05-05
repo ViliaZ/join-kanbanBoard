@@ -89,7 +89,7 @@ export class DatabaseService {
     this.nextDueDateTasks = sortedTasks.filter((task: any) => task.dueTo == sortedTasks[0].dueTo)
   }
 
-  // sorting function for getNextDueDateTask() #2
+  // General sorting function; usesd for getNextDueDateTask() & sortTasksDescending()
   getSortOrder(prop: string) {  // property to be sorted by
     return function (a: any, b: any) {
       if (a[prop] > b[prop]) {
@@ -128,23 +128,13 @@ export class DatabaseService {
   async sortTasksDescending(): Promise<void> {
     console.log('alltasks',this.allTasks);
     console.log('boards',this.boards);
-    for (let i = 0; i < this.boards.length; i++) {
-      console.log('all tasks current board',this.boards[i].name, this.boards[i].tasks);
-
-      let currentBoardTasks = this.boards[i].tasks;
-      console.log('currentBoardTasks',currentBoardTasks.filter((t:any)=>t.isPinnedToBoard));
-      
-      let pinnedTasks = currentBoardTasks.filter( (t: any) => t.isPinnedToBoard)
-      console.log('pinnedTasks',pinnedTasks);
-      let unpinnedTasks = currentBoardTasks.filter((t: any) => !t.isPinnedToBoard)
-      console.log('unpinnedTasks',unpinnedTasks);
-      // let unpinnedTasksSortByCreationTime = unpinnedTasks.sort((a: any, b: any) => Number(a.createdAt) - Number(b.createdAt));
+    for (let i = 0; i < this.boards.length; i++) { 
+      // split tasks array into pinned and unpinned 
+      let pinnedTasks = this.boards[i].tasks.filter( (t: any) => t.isPinnedToBoard)
+      let unpinnedTasks = this.boards[i].tasks.filter((t: any) => !t.isPinnedToBoard)
       let unpinnedTasksSortByCreationTime = await unpinnedTasks.sort(this.getSortOrder("createdAt"));
-      console.log('unpinnedTasksSortByCreationTime',unpinnedTasksSortByCreationTime);
-
+      // concat both task arrays again
       this.boards[i].tasks = await pinnedTasks.concat(unpinnedTasksSortByCreationTime); // merge subarrays again to final sorted Array
-      // console.table('ENDE name:', this.boards[i].name);
-      // console.table('ENDE tasks:', this.boards[i].tasks);
     }
   }
 
