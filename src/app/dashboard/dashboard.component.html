@@ -75,15 +75,15 @@
                     </div>
                 </div>
                 <div class="info">
-                    <div *ngIf="db.nextDueDateTask.length !== 0">{{ (db.nextDueDateTask.dueTo | date: 'dd/MM/yyyy') || 'No Tasks'}} </div>
-                    <div *ngIf="db.nextDueDateTask.length == 0">No Deadlines set </div>
-                    <div *ngIf="db.nextDueDateTask.length !== 0"> Next Deadline</div>
+                    <div *ngIf="db.nextDueDateTasks.length !== 0">{{ db.nextDueDateTasks[0].dueTo || 'No Tasks'}} </div>
+                    <div *ngIf="db.nextDueDateTasks.length == 0">No Deadlines set </div>
+                    <div *ngIf="db.nextDueDateTasks.length !== 0"> Next Deadline</div>
                 </div>
     
                 <div class="taskDetails-onhover concave-btn">
                     <div>Task Details:</div>
-                    <div><span>On Board:</span> {{ db.nextDueDateTask.board }} </div>
-                    <div><span>Category:</span> {{ db.nextDueDateTask.category }} </div>
+                    <div><span>On Board:</span> {{ db.nextDueDateTasks.board }} </div>
+                    <div><span>Category:</span> {{ db.nextDueDateTasks.category }} </div>
                     <div *ngIf="db.nextDueDates.length > 1"> +{{ db.nextDueDates.length }}further task(s)</div>
                 </div>
             </div>

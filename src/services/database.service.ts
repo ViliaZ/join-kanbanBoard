@@ -16,7 +16,7 @@ export class DatabaseService {
   public todoTasks: any = [];
   public allTasks: any = [];
   public nextDueDates: any = [];
-  public nextDueDateTask: any = [];
+  public nextDueDateTasks: any = [];  // can also be multiple tasks with same due Date
   public backlogEmpty = () => this.backlogtasks.length == 0;
   public toDoBoardExists!: boolean;  // ToDo Board as static (undeletable) Board for EVERY User
   public guestIsInitialized: boolean = false;  // if true, guest - dummydata donot need to be created again
@@ -34,6 +34,8 @@ export class DatabaseService {
           .orderBy(sortBoardsBy, sortBoardOrder))  // default sort via timestamp
         .valueChanges({ idField: 'customIdName' })
         .pipe(switchMap((result: any) => { // result = boards with tasks
+          console.log('result', result);
+
           this.boards = result;
           return this.firestore
             .collection('tasks', ref => ref
@@ -42,6 +44,7 @@ export class DatabaseService {
             .valueChanges({ idField: 'customIdName' });
         }))
         .subscribe(async (result) => { // result = tasks
+          this.allTasks = result;
           await this.emptyAllArrays();
           await this.setStaticBoards();
           this.handleTasks(result);
@@ -57,42 +60,46 @@ export class DatabaseService {
     }
   }
 
+  // Handle every task:
   async handleTasks(tasks: any) {
-   await tasks.forEach(async(task: any) => {
-      task.dueTo = task.dueTo.toDate();
-      console.log(task.dueTo.getTime());
-
-      this.filterAllTasks(task);
-      this.filterUrgentTasks(task);
-      this.filterToDoTasks(task);
-      this.sortTasksToBoards(task);
-      await this.getNextDueDateTask(task);
-    })
+    for (let i = 0; i < tasks.length; i++) {   // async await  doesnt work on forEach --> use standard for loop
+      tasks[i].dueTo = await tasks[i].dueTo.toDate();
+      this.filterUrgentTasks(tasks[i]);
+      this.filterToDoTasks(tasks[i]);
+      this.sortTasksToBoards(tasks[i]);
+    }
+    this.getNextDueDateTask(tasks);
     this.sortBoardsDescending();
   }
 
-  async getNextDueDateTask(task: any) {
 
-    console.log('before: länge nextDueDates',  this.nextDueDates.length);
+  // find 1 or more Tasks with upmost Deadline #1
+  getNextDueDateTask(tasks: any) {
+    let sortedTasks = tasks.sort(this.getSortOrder("dueTo")); //Pass the attribute to be sorted on  
+    sortedTasks.map((task: any) => {  // convert each date into year-moonth-day - without time / Goal is to get comparison oonly based on date, not clock time
+      task.dueTo = new Date(task.dueTo).toLocaleString('en', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+      })
+    })
+    // if multiple tasks have the next dueDate, then save all into this.nextDueDateTasks
+    this.nextDueDateTasks = sortedTasks.filter((task: any) => task.dueTo == sortedTasks[0].dueTo)
 
-    if (this.nextDueDates.length == 0) { // push first task in array --> if only one task exists, this one will be the one with closest deadline
-      await this.nextDueDates.push(task);
-      console.log('111 this.nextDueDates ist leer, pushe einen task', this.nextDueDates);
+    console.log('new date:', sortedTasks);
+    console.log('nextDueDateTasks:', this.nextDueDateTasks);
+  }
+
+  // sorting function for getNextDueDateTask() #2
+  getSortOrder(prop: string) {  // property to be sorted by
+    return function (a: any, b: any) {
+      if (a[prop] > b[prop]) {
+        return 1;
+      } else if (a[prop] < b[prop]) {
+        return -1;
+      }
+      return 0;
     }
-    else if ((this.nextDueDates.length > 0) && (task.dueTo.getMilliseconds() - this.nextDueDates[0].dueTo.getMilliseconds() < 0)) { // compare dueTo Date in milliseconds
-      // if current task has closer deadline as task before, clear array and save current task as the closest deadline task
-      this.nextDueDates=[]; // clear whole array
-      await this.nextDueDates.push(task);
-      console.log('222 this.nextDueDates geleert, neuer task rein', this.nextDueDates);
-
-    }
-    else if (this.nextDueDates.length > 0 && (task.dueTo.getTime() - this.nextDueDates[0].dueTo.getTime() == 0)) { // two tasks with same dueDate
-      await this.nextDueDates.push(task); // save multiple tasks, which have same closest Due date
-      console.log('333 gleiche', this.nextDueDates);
-
-    }
-    this.nextDueDateTask = this.nextDueDates[0];
-    console.log('Final nextDueDates:', this.nextDueDates);
   }
 
   async emptyAllArrays(): Promise<void> {
@@ -101,7 +108,6 @@ export class DatabaseService {
     this.allTasks = [];
     this.todoTasks = [];
     this.urgentTasks = [];
-    this.nextDueDates = [];
   }
 
   sortTasksToBoards(task: any) {
@@ -119,9 +125,6 @@ export class DatabaseService {
     }
   }
 
-  filterAllTasks(task: any): void {
-    this.allTasks.push(task);
-  }
 
   filterToDoTasks(task: any): void {
     if (task.board == 'ToDo') {
