@@ -2,6 +2,7 @@ import { BaseOverlayDispatcher } from '@angular/cdk/overlay/dispatchers/base-ove
 import { Component, Input, OnInit } from '@angular/core';
 import { DatabaseService } from 'src/services/database.service';
 import { TasksService } from 'src/services/tasks.service';
+import { LoginPageComponent } from '../login-page/login-page.component';
 
 @Component({
   selector: 'app-task',
@@ -11,35 +12,32 @@ import { TasksService } from 'src/services/tasks.service';
 export class TaskComponent implements OnInit {
 
   @Input() task: any;
-  // public cardIsClicked: any = (task: any) => { return this.tasksservice.currentTask == task } // returns boolean for expand card or not
-  public detailsRequested: boolean = false;
-  public isPinned: boolean = false;
+  // public detailsRequested: boolean = false;
 
-
-  constructor(private db: DatabaseService, public tasksservice: TasksService) {
+  constructor(
+    private db: DatabaseService, 
+    public tasksservice: TasksService) {
   }
 
   ngOnInit(): void {
   }
 
-  expandCard(task: any) {
-    console.log('expandCard')
+  // expandCard(task: any) {
+  //   if (this.tasksservice.currentTask == task) {
+  //     this.detailsRequested = false;
+  //     this.tasksservice.currentTask = {};
+  //   } else {
+  //     this.tasksservice.currentTask = task;
+  //     this.detailsRequested = true;
+  //   }
+  // }
 
-    if (this.tasksservice.currentTask == task) {
-      this.detailsRequested = false;
-      this.tasksservice.currentTask = {};
-    }
-    else {
-      this.tasksservice.currentTask = task;
-      this.detailsRequested = true;
-    }
-  }
-
-  fixTaskToTop(task: any, event: any) {
+  // handle click on Pin Icon
+  async fixTaskToTop(task: any, event: any) {
+    event.stopImmediatePropagation(); // prevent opening task popup on click on task
     if (!task.isPinnedToBoard) {
       this.db.updateDoc('tasks', task.customIdName, { 'isPinnedToBoard': true, 'createdAt': new Date().getTime() });
-    }
-    else {
+    } else {
       this.db.updateDoc('tasks', task.customIdName, { 'isPinnedToBoard': false });
     }
   }
@@ -49,13 +47,11 @@ export class TaskComponent implements OnInit {
     this.db.deleteDoc('tasks', task.customIdName)
   }
 
-
-  editTask(task: any, event: Event){
+  editTask(task: any, event: Event) {
     console.log('task selected', task);
-    
+
     event.stopImmediatePropagation();
     this.tasksservice.currentTask = task;
-    console.log('currentTask.dueTo',this.tasksservice.currentTask.dueTo)
     this.tasksservice.taskPopupOpen = true;
     this.tasksservice.editMode = true;
   }

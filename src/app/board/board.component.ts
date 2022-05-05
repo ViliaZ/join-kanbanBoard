@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { catchError } from 'rxjs';
+import { Board } from 'src/models/board';
+import { AuthServiceService } from 'src/services/auth-service.service';
 import { DatabaseService } from 'src/services/database.service';
 import { TasksService } from 'src/services/tasks.service';
 
@@ -25,7 +27,10 @@ export class BoardComponent implements OnInit {
   doublicateAlert: boolean = false;
   deleteBoardAlert: boolean = false;
 
-  constructor(public db: DatabaseService, public taskservice: TasksService) {
+  constructor(
+    public db: DatabaseService,
+    public taskservice: TasksService,
+    private authService: AuthServiceService) {
   }
 
   ngOnInit(): void {
@@ -34,16 +39,18 @@ export class BoardComponent implements OnInit {
 
   // inputfield: Add a new board
   async addNewBoard() {
-   let duplicate = await this.checkDuplicates(this.newBoardTitle);
-  if (this.newBoardTitle.length > 0 && !duplicate){   
-    let newBoard = { 'name': this.newBoardTitle, 'tasks': [], 'editable': false, 'createdAt': new Date().getTime() };
-    this.db.addDocToCollection('boards', newBoard);
-  }
-  else {
-    this.newBoardTitle = '';
-    this.doublicateAlert = true
-    setTimeout(()=>{ this.doublicateAlert = false},2000)
-  }
+    let duplicate = await this.checkDuplicates(this.newBoardTitle);
+    if (this.newBoardTitle.length > 0 && !duplicate) {
+      let newBoard = Board.getEmptyBoard(this.newBoardTitle, this.authService.currentUser.uid);  // call a static function inside of model board
+      // let newBoard = { 'name': this.newBoardTitle, 'tasks': [], 'editable': false, 'createdAt': new Date().getTime() };
+      this.db.addDocToCollection('boards', newBoard);
+      console.log(newBoard);
+      
+    } else {
+      this.newBoardTitle = '';
+      this.doublicateAlert = true
+      setTimeout(() => { this.doublicateAlert = false }, 2000)
+    }
   }
 
   // Board Title Edit
@@ -69,7 +76,7 @@ export class BoardComponent implements OnInit {
       return
     }
     // handle duplicate check
-    if (await this.checkDuplicates(inputTitle) == false && inputTitle.length > 0){ // no duplicates found, proceed normally
+    if (await this.checkDuplicates(inputTitle) == false && inputTitle.length > 0) { // no duplicates found, proceed normally
       this.db.boards[i].editable = false;
       this.db.updateDoc('boards', boardIDinFirestore, { name: inputTitle });
       this.updateTasksOnBoard(inputTitle, boardIDinFirestore, i); // all tasks must change reference to new board name
@@ -84,7 +91,7 @@ export class BoardComponent implements OnInit {
   // Check for Title DUPLICATES --> boolean
   async checkDuplicates(inputTitle: string) {
     this.doublicateAlert = false;
-    let findDouplicate = await this.db.boards.find((board: any) => board.name == inputTitle)    
+    let findDouplicate = await this.db.boards.find((board: any) => board.name == inputTitle)
 
     if (findDouplicate) { //  1 means, its existing because ngModel already pushed the new name in local variable in db.service (boards)
       console.log('duplicates found')
@@ -145,16 +152,16 @@ export class BoardComponent implements OnInit {
   }
 
   drag(ev: any) {
-    console.log( ev.target.id);
+    console.log(ev.target.id);
     ev.dataTransfer.setData("text", ev.target.id);
-  
+
     // ev.target.id containes the HTML id="" of the div - the id of each task div is set to be the customID in Firestore for the element
   }
 
   drop(ev: any, targetboard: string) {
     ev.preventDefault();
     console.log(targetboard);
-    
+
     let dataID = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(dataID));
     // "data" returns the HTML Id of the dragged element - this id is set to be the customID in Firestore for the element

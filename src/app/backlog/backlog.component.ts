@@ -44,11 +44,11 @@ export class BacklogComponent implements OnInit {
   changeSorting() {
     if (this.orderBacklogtasks == 'desc'){
       this.orderBacklogtasks = 'asc';
-      this.db.getBoardAndTaskData('createdAt', 'asc', 'createdAt', 'asc')  //Arguments: boardSorting + Order; TaskSorting + Order
+      this.db.getBoardAndTaskData('createdAt', 'asc')  //Arguments: boardSorting + Order; TaskSorting + Order
     }
     else {
       this.orderBacklogtasks = 'desc';
-      this.db.getBoardAndTaskData('createdAt', 'asc', 'createdAt', 'desc')  //Arguments: boardSorting + Order; TaskSorting + Order
+      this.db.getBoardAndTaskData('createdAt', 'asc')  //Arguments: boardSorting + Order; TaskSorting + Order
     }
   }
 

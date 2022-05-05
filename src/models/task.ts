@@ -2,7 +2,7 @@ import { AuthServiceService } from "src/services/auth-service.service";
 
 export class Task {
     // workaround for using AuthService without constructor-DependencyInjection in a Model Class (see 2.Answer: https://stackoverflow.com/questions/41432388/how-to-inject-service-into-class-not-component)
-    service: AuthServiceService = AuthServiceService.injector.get(AuthServiceService);
+    private service: AuthServiceService = AuthServiceService.injector.get(AuthServiceService);
 
     public board: string;
     public title: string;
@@ -31,7 +31,7 @@ export class Task {
         this.creator = this.service.currentUser.uid;
     }
 
-    // transform task properties to valid Json Format for communication with backend / Firebase
+    // transform task properties to  Json Format for communication with backend / Firebase
     public toJson() {
         return {
             board: this.board,
@@ -58,7 +58,7 @@ export class Task {
             board: 'backlog',
             category: '',
             responsibility: 'Guest',
-            isPinnedToBoard: 'false',
+            // isPinnedToBoard: 'false',
         }
     }
 }

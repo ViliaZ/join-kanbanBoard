@@ -56,9 +56,12 @@ export class NewTaskComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     if (this.taskservice.editMode) {// EDITMODE only: set current values in all inputfields
       this.formData = this.taskservice.currentTask;
+      console.log('this is currenttask', this.taskservice.currentTask);
     }
+  
     this.setUrgencyDefault();
   }
 

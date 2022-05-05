@@ -14,7 +14,7 @@ import { DatabaseService } from './database.service';
 
 export class AuthServiceService {
 
-    // access AuthService in Model Class (e.g. Task) --> access this property
+  // access AuthService in Model Class (e.g. Task) --> access this property
   static injector: Injector;
   
   // create a reference to the current user, so that I can access his data easily again
@@ -22,7 +22,7 @@ export class AuthServiceService {
   currentUser: any = {};  // is given at monitorAuthState() with login
   auth: any = getAuth();  // Initialize Firebase Authentication and get a reference to the service
   coUsers: any = []; // not activly in use yet, holds all OTHER users connected to this board
-  // users array is used in newTask component for-loop for template driven form
+  // coUsers array is used in newTask component for-loop for template driven form
 
   // For dummyData:
   today: Date = new Date();
@@ -50,7 +50,7 @@ export class AuthServiceService {
         }
       }
       else {  // if no user, then returns NULL
-        console.log('Monitor AuthStatus: No user or user logged out', user);     
+        console.log('TestAccount Logged In', user);     
       }
     })
   }
@@ -67,7 +67,6 @@ export class AuthServiceService {
 
   /* Creating new User Instance of User with user data from sign in with username/password */
   saveUserInDatabase(user: any, name: string): void {
-    // set Document user ID the same as UID that is given in FireAuth! for easy access to identify the right user
     let userData = {
       uid: user.uid,  // set the same ID in Database as fireAuth already given this user in fireAuth setup
       email: user.email,
@@ -135,19 +134,19 @@ export class AuthServiceService {
       });
   }
 
+  // TODO
   async deleteGuestDataFromDatabase() {
-
   }
 
-  //just set up to avoid error in forgot-pw comp
+  // TODO - the function is set up to avoid error in forgot-pw component
   ForgotPassword(passwordResetEmailvalue: any) { }
-
 
 
 
   /******* DUMMY DATE FOR GUEST USERS ***************/
 
   async createDummyData(): Promise<void> {
+    
     let dummyData$ = this.httpClient.get('assets/json/guestData.JSON');
     dummyData$.subscribe(async (jsonData: any) => {
       await this.setDummyBoards(jsonData.dummyBoards);
@@ -156,7 +155,9 @@ export class AuthServiceService {
     this.userRef.set({ guestBoardsInitialized: true }, { merge: true }) // consider deleting this, if not needed
   }
 
+
   async setDummyBoards(dummmyBoards: any): Promise<void> {
+
     for (let i = 0; i < dummmyBoards.length; i++) {  // modify static data with dynamic userdata
       dummmyBoards[i].createdAt = this.today;
       dummmyBoards[i].creator = this.currentUser.uid;
@@ -174,6 +175,4 @@ export class AuthServiceService {
       await this.firestore.collection('tasks').add(dummmyTasks[i]);
     }
   }
-
-
 }

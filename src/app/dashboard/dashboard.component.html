@@ -74,7 +74,8 @@
                         <img src="assets/img/nextDue.svg" alt="nextDue">
                     </div>
                 </div>
-                <div class="info">
+                <div class="info"> 
+                    <!-- Note: nextDueDateTasks.dueTo Times are converted in localtimestring in db service! no pipe necessary--> 
                     <div *ngIf="db.nextDueDateTasks.length !== 0">{{ db.nextDueDateTasks[0].dueTo || 'No Tasks'}} </div>
                     <div *ngIf="db.nextDueDateTasks.length == 0">No Deadlines set </div>
                     <div *ngIf="db.nextDueDateTasks.length !== 0"> Next Deadline</div>

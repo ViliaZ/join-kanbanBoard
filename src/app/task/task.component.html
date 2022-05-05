@@ -1,23 +1,42 @@
-<div (click)="expandCard(task)" class="ticketWrap">
+<div (click)="editTask(task, $event)" class="ticketWrap">
     <div class="singleTicket">
         <div class="first-row">
             <div>
-                <div class="title">{{ task.title | titlecase}}</div>
+                <!-- <div class="title">{{ task.title | titlecase}}</div> -->
+                <div class="title">{{ task.isPinnedToBoard}}</div>
                 <div class="urgency">{{ task.urgency }}</div>
             </div>
-            <img class="icon-edit" src="assets/img/edit.png"
-                (click)="editTask(task, $event)">
-            <img class="icon-delete" src="assets/img/delete.png"
+
+            <!-- <img class="icon-edit" src="assets/img/edit.png"
+                (click)="editTask(task, $event)"> -->
+
+            <img 
+                class="icon-delete" 
+                src="assets/img/delete.png"
                 (click)="deleteTask(task, $event)">
-            <img class="icon-pin" src="assets/img/pin-filled.png" [class.pinRotation]="task.isPinnedToBoard"
-                (click)="fixTaskToTop(task, $event)">
-            <img class="icon-pin-fixed" src="assets/img/pin-filled.png" [class.pinRotation]="task.isPinnedToBoard"
-                *ngIf="task.isPinnedToBoard">
+
+                <!-- PIN ICON -->
+            <img 
+                class="icon-pin" 
+                src="assets/img/pin-filled.png" 
+                (click)="fixTaskToTop(task, $event)"
+                [class.pinRotation]="task.isPinnedToBoard==true"
+          >
+
+            <img 
+                *ngIf="task.isPinnedToBoard"
+                class="icon-pin-fixed" 
+                src="assets/img/pin-filled.png" 
+                [class.pinRotation]="task.isPinnedToBoard==true"
+                >
+               
         </div>
 
-        <div class="description" [class.animateExpansion]="detailsRequested">
+        
+
+        <!-- <div class="description" [class.animateExpansion]="detailsRequested">
             {{ task.description | titlecase }}
-        </div>
+        </div> -->
 
         <div class="information">
             <div class="user">
