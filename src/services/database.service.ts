@@ -36,14 +36,14 @@ export class DatabaseService {
     sortBoardOrder: any = 'asc') {
     this.firestore
       .collection('boards', ref => ref
-        .where('creator', '==', this.authService.currentUser.uid) // show only boards from current user
+        .where('creator', '==', 'TLgEoJMbFPhFzoq2JOvppnaojOY2') // show only boards from current user
         .orderBy(sortBoardsBy, sortBoardOrder))  // default sort via timestamp
       .valueChanges({ idField: 'customIdName' })
       .pipe(switchMap((result: any) => { // result = boards
-        this.boards = result as Board[];
+        this.boards = result as Board[];  // Read More: Type Assertion https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions
         return this.firestore
           .collection('tasks', ref => ref
-            .where('creator', '==', this.authService.currentUser.uid)) // load only tasks from current user
+            .where('creator', '==', 'TLgEoJMbFPhFzoq2JOvppnaojOY2')) // load only tasks from current user
           .valueChanges({ idField: 'customIdName' });
       }))
       .subscribe(async (result) => { // result = tasks

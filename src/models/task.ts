@@ -45,7 +45,8 @@ export class Task {
             responsibility: this.responsibility,
             createdAt: this.createdAt,
             creator: this.creator,
-            isPinnedToBoard: this.isPinnedToBoard
+            isPinnedToBoard: this.isPinnedToBoard,
+            customIdName: this.customIdName
         }
     }
 
@@ -60,8 +61,26 @@ export class Task {
             board: 'backlog',
             category: '',
             responsibility: 'Guest',
-            customIdName: '',
             isPinnedToBoard: false,
+            customIdName: '',
+
+        }
+    }
+// same as toJson() but dueTo Date is modified to suit as correct format for Datepicker
+// use this method to get task that is used in "Editmode" fo fill in current Task values
+    toJsonAndDateFormatted(){
+        return {
+            board: this.board,
+            title: this.title,
+            description: this.description,
+            category: this.category,
+            urgency: this.urgency,
+            dueTo: new Date(this.dueTo),
+            responsibility: this.responsibility,
+            createdAt: this.createdAt,
+            creator: this.creator,
+            isPinnedToBoard: this.isPinnedToBoard,
+            customIdName: this.customIdName
         }
     }
 }

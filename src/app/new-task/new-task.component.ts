@@ -7,7 +7,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Event, Router } from '@angular/router';
 import {
   DatabaseService
 } from 'src/services/database.service';
@@ -46,6 +46,7 @@ export class NewTaskComponent implements OnInit {
     responsibility: 'Guest',
     isPinnedToBoard: false,
     createdAt: new Date(),
+    customIdName: ''
   }
 
   constructor(
@@ -58,8 +59,9 @@ export class NewTaskComponent implements OnInit {
   ngOnInit(): void {
     
     if (this.taskservice.editMode) {// EDITMODE only: set current values in all inputfields
-      this.formData = this.taskservice.currentTask;
-      console.log('this is currenttask', this.taskservice.currentTask);
+      let taskClicked = new Task(this.taskservice.currentTask).toJsonAndDateFormatted();
+      this.formData = taskClicked;
+      console.log('this is currenttask', new Date(this.taskservice.currentTask.dueTo));
     }
   
     this.setUrgencyDefault();
@@ -112,7 +114,7 @@ export class NewTaskComponent implements OnInit {
     if (!this.taskservice.editMode) {
       this.db.addDocToCollection('tasks', taskAsJson);
     } else {
-      this.udpateEditedTask();
+      this.udpateEditedTask(taskAsJson);
     }
     this.resetForm();
   }
@@ -125,9 +127,8 @@ export class NewTaskComponent implements OnInit {
     this.setUrgencyButtonColor('normal');
   }
 
-  udpateEditedTask() {
-    this.formData = this.taskservice.currentTask;
-    this.db.updateDoc('tasks', this.formData.customIdName, this.formData);
+  udpateEditedTask(taskAsJson: any) {
+    this.db.updateDoc('tasks', this.formData.customIdName, taskAsJson);
     this.taskservice.currentTask = {};
     this.taskservice.editMode = false;
   }
