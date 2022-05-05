@@ -3,7 +3,7 @@
         <div class="first-row">
             <div>
                 <!-- <div class="title">{{ task.title | titlecase}}</div> -->
-                <div class="title">{{ task.isPinnedToBoard}}</div>
+                <div class="title">{{ task.title}}</div>
                 <div class="urgency">{{ task.urgency }}</div>
             </div>
 
@@ -29,7 +29,6 @@
                 src="assets/img/pin-filled.png" 
                 [class.pinRotation]="task.isPinnedToBoard"
                 >
-               
         </div>
 
         

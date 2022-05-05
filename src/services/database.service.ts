@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { switchMap } from 'rxjs';
 import { AuthServiceService } from './auth-service.service';
 import { Board } from 'src/models/board';
-import { Task } from 'src/interfaces/task';
+import { Task } from 'src/models/task';
 
 
 @Injectable({
@@ -29,6 +29,7 @@ export class DatabaseService {
     private firestore: AngularFirestore,
     private authService: AuthServiceService) {
   }
+
 // switchmap: https://blog.angular-university.io/rxjs-switchmap-operator/
   getBoardAndTaskData( // all parameters are defined by me
     sortBoardsBy: string = 'createdAt',
@@ -38,15 +39,15 @@ export class DatabaseService {
         .where('creator', '==', this.authService.currentUser.uid) // show only boards from current user
         .orderBy(sortBoardsBy, sortBoardOrder))  // default sort via timestamp
       .valueChanges({ idField: 'customIdName' })
-      .pipe(switchMap((result: any) => { // result = boards with tasks
-        this.boards = result;
+      .pipe(switchMap((result: any) => { // result = boards
+        this.boards = result as Board[];
         return this.firestore
           .collection('tasks', ref => ref
             .where('creator', '==', this.authService.currentUser.uid)) // load only tasks from current user
           .valueChanges({ idField: 'customIdName' });
       }))
       .subscribe(async (result) => { // result = tasks
-        this.allTasks = result;
+        this.allTasks = result as Task[];
         this.emptyAllArrays();
         await this.setStaticBoards();
         await this.handleTasks(result);
@@ -56,7 +57,7 @@ export class DatabaseService {
   // create initial ToDo Board
   async setStaticBoards() { // if no ToDo Board exists yet, create it (ToDo is a static board)
     this.toDoBoardExists = await this.boards.some((i: any) => i.name === 'ToDo');  // some() returns boolean
-    if (this.toDoBoardExists === false) {
+    if (!this.toDoBoardExists) {
       let newToDoBoard = Board.getEmptyBoard('ToDo', this.authService.currentUser.uid) // call a static function inside board.ts
       await this.addDocToCollection('boards', newToDoBoard)
     } 

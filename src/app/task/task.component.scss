@@ -97,7 +97,6 @@
             margin-right: 6px;
             filter: invert(19%) sepia(83%) saturate(707%) hue-rotate(248deg) brightness(47%) contrast(92%);
         }
-
     }
     
     .user {
@@ -129,18 +128,18 @@
     width: 18px;
     height: 18px;
     filter: opacity(0.3) drop-shadow(1px 3px 2px rgba(146, 140, 140, 0.664));
-    transform: rotateZ(0deg);
+    transform: rotateZ(33deg);
     transition: all 300ms ease-in-out;
     z-index: 2;
     cursor: pointer;
 
-    // &:hover{
-    //     filter: opacity(0.8);
-    //     transform: rotateZ(33deg);
-    // }
+    &:hover{
+        filter: opacity(0.8);
+        transform: rotateZ(0deg);
+    }
 
     &.pinRotation {
-        transform: rotateZ(33deg);
+        transform: rotateZ(0deg);
         filter: opacity(0.8);
     }
 }
@@ -155,11 +154,11 @@
     height: 18px;
     z-index: 0;
     filter: opacity(0);
-    transform: rotateZ(0deg);
+    transform: rotateZ(33deg);
     transition: all 300ms ease-in-out;
 
     &.pinRotation {
-        transform: rotateZ(33deg);
+        transform: rotateZ(0deg);
         filter: opacity(0.8);
     }
 }
