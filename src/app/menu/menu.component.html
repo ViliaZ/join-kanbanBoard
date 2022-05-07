@@ -3,11 +3,15 @@
 
 
 <div class="sectionLeft">
-    <div routerLinkActive="concave-btn"
+    <div 
         class="home">
-        <a routerLink="/home">
-            <img class="icon" src="assets/img/Logo.svg">
-            <span class="tooltiptext">HOME</span>
+        <a 
+            routerLink="/"
+            routerLinkActive="concave-btn"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >
+                <img class="icon" src="assets/img/Logo.svg">
+                <span class="tooltiptext">HOME</span>
         </a>
     </div>
 
@@ -28,8 +32,22 @@
 <div class="sectionRight">
     <a routerLink="/imprint" routerLinkActive="concave-btn">IMPRINT</a>
 
-    <a (click)="onLogout()" class="logout">
-        <div>LOGOUT</div>
-        <div><img class="icon" src="assets/img/logout.png" alt="logout"></div>
+    <a class="logout">
+        
+        <div *ngIf="this.authService.currentUser.displayName; else guest">
+            {{this.authService.currentUser.displayName}}
+        </div>
+
+        <ng-template #guest><div>Guest</div></ng-template>
+        <div 
+            *ngIf="openSettings"
+            class="settingsContainer">
+            <div>
+                <img (click)="onLogout()" class="icon" src="assets/img/logout.png" alt="logout">
+            </div>
+        </div>
+        <div>
+            <img (click)="toggleSettings()" class="icon" src="assets/img/user.svg" alt="logout">
+        </div>
     </a>
 </div>

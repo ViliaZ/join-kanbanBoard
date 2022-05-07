@@ -12,6 +12,7 @@ export class MenuComponent implements OnInit {
 
 
   public activeNavItem: string = 'home';
+  public openSettings: boolean = false;
 
   constructor(public authService: AuthServiceService, private router: Router) { }
 
@@ -20,6 +21,15 @@ export class MenuComponent implements OnInit {
 
   onLogout() {
     this.authService.logout();
+  }
+
+  toggleSettings(){
+    if(this.openSettings){
+      this.openSettings = false
+    }
+    else{
+      this.openSettings = true;
+    }
   }
 
 }

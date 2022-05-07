@@ -94,10 +94,14 @@ export class NewTaskComponent implements OnInit {
       this.openCategoryPopUp = false;
     }
     if (action == 'save') {
+      console.log('save');
+      
       this.db.categories.push(this.customCategory);
-      this.taskservice.currentTask.category = 'testtest';
+      // this.taskservice.currentTask.category = 'testtest';
       this.formData.category = this.customCategory;
       this.openCategoryPopUp = false;
+      console.log('formData', this.formData);
+
     }
   }
 // checks onchanges() for inputfield category
