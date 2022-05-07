@@ -35,23 +35,20 @@
   --font-xBold: 800;
   --font-light: 200;
   --font-small: 12px;
-  --font-normal: 16px;
+  --font-normal: 14px;
   --paddingPage: 120px;
   --paddingPageTopBottom: 44px;
   --maxwidth: 1280px;
   --maxwidthMenu: 1460px;
 }
 
-
 .default-btn {
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 }
 
-
 .convex {
   box-shadow: 6px 6px 12px #b8b9be,-6px -6px 12px #fff!important;
 }
-
 
 .concave {
   box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff !important;
@@ -118,6 +115,11 @@ mat-option {
   // background-color: rgb(255, 255, 255);
 }
 
+.mat-form-field-infix {
+  // padding: 0 0 !important;
+  border-top: 0 solid transparent !important;
+}
+
 .mat-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-form-field-flex {
   border-radius: 12px;
   border: 1px solid black;
@@ -175,7 +177,6 @@ mat-option {
   border-right: grey 0.04em solid;
   border-bottom: grey 0.08em solid;
   height: 42px!important;
-  // padding: 0.25em 0;
 }
 
 .mat-form-field-infix {
@@ -194,13 +195,6 @@ mat-option {
 .mat-form-field-underline{
   width: 0%!important;
 }
-
-// .mat-form-field-flex{
-//   align-items: flex-start!important;
-// }
-// .mat-form-field-infix {
-//   display: flex!important;
-// }
 
 mat-button-toggle:hover {
   background-color: red;

@@ -1,11 +1,11 @@
-
-  <h3  *ngIf="!taskservice.editMode && (router.url.includes('backlog') || router.url.includes('board'))" class="headline">Add New Task</h3>
-  <h3  *ngIf="taskservice.editMode && (router.url.includes('backlog') || router.url.includes('board'))" class="headline">Edit Task</h3>
+<h3 *ngIf="!taskservice.editMode && (router.url.includes('backlog') || router.url.includes('board'))" class="headline">
+  Add New Task</h3>
+<h3 *ngIf="taskservice.editMode && (router.url.includes('backlog') || router.url.includes('board'))" class="headline">
+  Edit Task</h3>
 
 <form (ngSubmit)="onSubmit()" #form="ngForm">
 
-  <div class="sectionOne">
-
+  <!-- <div class="sectionOne"> -->
     <div class="title concave">
       <input required placeholder="Title*" [(ngModel)]="formData.title" name="title">
     </div>
@@ -14,121 +14,119 @@
       <textarea placeholder="Task Description" [(ngModel)]="formData.description" name="description">
       </textarea>
     </div>
-  </div>
 
-  <div class="sectionTwo">
-    <mat-form-field  class="datePicker example-full-width" appearance="fill">
-      <!-- <input  
-        *ngIf="taskservice.editMode"
-        [(ngModel)]="date" 
-        name="dueto" 
-        placeholder="Choose a Due Date" 
-        class="concave borderRadiusAdjust" 
-        [min]="minDate" 
-        required 
-        matInput 
-        [matDatepicker]="picker"> -->
-      <input  
-        [(ngModel)]="formData.dueTo"
-        name="dueto" 
-        placeholder="Choose a Due Date" 
-        class="concave borderRadiusAdjust" 
-        [min]="minDate" 
-        required 
-        matInput 
-        [matDatepicker]="picker">
+    <div class="todoItems">
+
+      <div class="itemsHeadline">
+        Add ToDo Items:
+      </div>
+
+        <div class="itemsWrapper">
+          <div>
+            <input type="text" placeholder="Your ToDo">
+          </div>
+
+          <div class="itemsContainer">
+<!--             
+            <div>
+              <input type="checkbox" id="scales" name="scales" checked>
+              <label for="scales">ScalesScalesScalesScalesScales</label>
+            </div>
+            <div>
+              <input type="checkbox" id="horns" name="horns">
+              <label for="horns">Horns</label>
+            </div> -->
+
+          </div>
+        </div>
+
+
+
+    </div>
+
+  <!-- </div> -->
+
+
+
+  <!-- <div class="sectionTwo"> -->
+    <mat-form-field class="datePicker example-full-width" appearance="fill">
+      <input [(ngModel)]="formData.dueTo" name="dueto" placeholder="Choose a Due Date"
+        class="concave borderRadiusAdjust" [min]="minDate" required matInput [matDatepicker]="picker">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker ></mat-datepicker>
+      <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
     <div class="urgency">
-      <label for="low" [class.activeButton]="activeUrgency == 'low'" class="default-btn" (click)="setUrgencyButtonColor('low')">Low</label>
-        <input id="low" type="radio" value="low" name="urgency" [(ngModel)]="formData.urgency" >
+      <label for="low" [class.activeButton]="activeUrgency == 'low'" class="default-btn"
+        (click)="setUrgencyButtonColor('low')">Low</label>
+      <input id="low" type="radio" value="low" name="urgency" [(ngModel)]="formData.urgency">
 
-      <label for="normal" [class.activeButton]="activeUrgency == 'normal'" class="default-btn" (click)="setUrgencyButtonColor('normal')">Normal</label>
-        <input id="normal" type="radio" value="normal" name="urgency" [(ngModel)]="formData.urgency" >
+      <label for="normal" [class.activeButton]="activeUrgency == 'normal'" class="default-btn"
+        (click)="setUrgencyButtonColor('normal')">Normal</label>
+      <input id="normal" type="radio" value="normal" name="urgency" [(ngModel)]="formData.urgency">
 
-      <label for="urgent" [class.activeButton]="activeUrgency == 'urgent'" class="default-btn" (click)="setUrgencyButtonColor('urgent')">Urgent</label>
-        <input id="urgent" type="radio" value="urgent" name="urgency" [(ngModel)]="formData.urgency" >
+      <label for="urgent" [class.activeButton]="activeUrgency == 'urgent'" class="default-btn"
+        (click)="setUrgencyButtonColor('urgent')">Urgent</label>
+      <input id="urgent" type="radio" value="urgent" name="urgency" [(ngModel)]="formData.urgency">
     </div>
 
     <div class="category">
-      <select  required (change)="handleCustomCategory('checkIfCustomRequest', $event)" #catSelect [(ngModel)]="formData.category" name="category" >
+      <select required (change)="handleCustomCategory('checkIfCustomRequest', $event)" #catSelect
+        [(ngModel)]="formData.category" name="category">
         <option disabled value="">Choose a category*</option>
         <option value="Custom Category">Add Category</option>
         <option *ngFor="let category of db.categories" value={{category}}>{{ category }}</option>
       </select>
 
       <div *ngIf="openCategoryPopUp" class="categoryPopUp">
-        <input 
-          [(ngModel)]="customCategory" 
-          name="customcategory"
-          #inputCat="ngModel" 
-          minlength="3"
-          maxlength="11"
-          type="text" 
-          placeholder="Custom Category"
-          >
-        <div 
-          *ngIf="inputCat.errors?.['minlength'] || inputCat.errors?.['maxlength']"
-          class="validatorCategory">
+        <input [(ngModel)]="customCategory" name="customcategory" #inputCat="ngModel" minlength="3" maxlength="11"
+          type="text" placeholder="Custom Category">
+        <div *ngIf="inputCat.errors?.['minlength'] || inputCat.errors?.['maxlength']" class="validatorCategory">
           Please use 3-10 characters.
         </div>
 
         <div>
-          <button 
-            (click)="handleCustomCategory('save', $event, form)" 
-            [disabled]="!inputCat.value || inputCat.errors?.['minlength']"
-            class="default-btn">
+          <button (click)="handleCustomCategory('save', $event, form)"
+            [disabled]="!inputCat.value || inputCat.errors?.['minlength']" class="default-btn">
             Save
           </button>
-          <button 
-            (click)="handleCustomCategory('close')"
-            class="default-btn">
+          <button (click)="handleCustomCategory('close')" class="default-btn">
             Cancel
           </button>
-        </div>      
+        </div>
       </div>
     </div>
 
     <div class="user">
       <select [(ngModel)]="formData.responsibility" required name="responsibility">
         <option disabled>Select Responsibility*</option>
-        <option *ngIf="authService.currentUser.displayName !== null" value={{authService.currentUser.displayName}}>{{authService.currentUser.displayName}}</option>
+        <option *ngIf="authService.currentUser.displayName !== null" value={{authService.currentUser.displayName}}>
+          {{authService.currentUser.displayName}}</option>
         <option *ngIf="authService.currentUser.displayName == null" value="Guest">Guest</option>
-      <option *ngFor="let user of authService.coUsers; index as i">{{user.displayName}}</option>
+        <option *ngFor="let user of authService.coUsers; index as i">{{user.displayName}}</option>
       </select>
     </div>
 
     <div class="addTask">
-     <div>
-       <span>Add Task to</span>
-       <select class="selectSave" [(ngModel)]="formData.board" name="board" >
-        <option [selected] value="backlog">Backlog</option>
-        <!-- <option [selected] *ngIf="formData.board=='backlog' || ''">Backlog</option> -->
-        <option *ngFor="let board of db.boards">{{ board.name }}</option>
-           </select>
-     </div>
+      <div>
+        <span>Add Task to</span>
+        <select class="selectSave" [(ngModel)]="formData.board" name="board">
+          <option [selected] value="backlog">Backlog</option>
+          <!-- <option [selected] *ngIf="formData.board=='backlog' || ''">Backlog</option> -->
+          <option *ngFor="let board of db.boards">{{ board.name }}</option>
+        </select>
+      </div>
 
-     <!-- Buttons -->
+      <!-- Buttons -->
       <div class="buttons">
-        <button
-          type="submit"
-          [disabled]="!form.valid"
-          class="button default-btn"
-          >
+        <button type="submit" [disabled]="!form.valid" class="button default-btn">
           Save
         </button>
-        <button
-          *ngIf="taskservice.taskPopupOpen"
-          (click)="closeWithoutSave()"
-          class="button btn-cancel default-btn">
+        <button *ngIf="taskservice.taskPopupOpen" (click)="closeWithoutSave()" class="button btn-cancel default-btn">
           Cancel
         </button>
       </div>
     </div>
-
-  </div>
+<!-- 
+  </div> -->
 </form>
-
-
