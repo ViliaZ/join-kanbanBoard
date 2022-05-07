@@ -166,6 +166,7 @@ h1 {
             background-color: rgba(128, 128, 128, 0.137);
             margin-left: 12px;
             border-radius: 6px;
+            transition: all 250ms linear;
 
             .bar {
                 display: flex;
@@ -176,6 +177,8 @@ h1 {
                 height: 100%;
                 font-size: var(--font-small);
                 color: var(--primary-light);
+                transition: all 250ms linear;
+
             }
         }
     }
@@ -276,8 +279,8 @@ app-new-task {
     width: 100%;
     height: 100%;
     border-radius: 12px;
-    margin: 32px;
-    padding: 64px 54px;
+    margin: 22px;
+    padding: 34px 54px;
     box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     border-color: #d2ddef !important;
 

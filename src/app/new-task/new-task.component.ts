@@ -28,6 +28,7 @@ export class NewTaskComponent implements OnInit {
 
   @Input() newTask: boolean | undefined;
   @ViewChild('catSelect') categorySelector: any;
+  @ViewChild('newTodo') newTodo: any;
 
   public closePopup: boolean = false;
   public customCategory: any = '';
@@ -48,7 +49,7 @@ export class NewTaskComponent implements OnInit {
     isPinnedToBoard: false,
     createdAt: new Date(),
     customIdName: '',
-    todos: []
+    todos: ['hello', 'here']
   }
 
   constructor(
@@ -138,15 +139,18 @@ export class NewTaskComponent implements OnInit {
     this.taskservice.editMode = false;
   }
 
-  handleTodo(action: string){    
+  handleTodo(action: string){  
+   console.log( this.newToDoItem);
+   console.log( this.formData);
+    
     if (action == 'save') {
       this.formData.todos.push(this.newToDoItem); 
-      this.newToDoItem = '';  // ngModel variable
-
-      console.log('save');
+      console.log('save',this.newToDoItem );
+      this.newToDoItem='';
+      console.log( this.formData);
     }
     if (action == 'clear') {
-      this.newToDoItem = '';  // ngModel variable
+      this.newToDoItem='';
       console.log('clear');
     }
   }

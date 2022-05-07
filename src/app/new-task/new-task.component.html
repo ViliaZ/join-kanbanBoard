@@ -4,8 +4,10 @@
   Edit Task</h3>
 
 <form (ngSubmit)="onSubmit()" #form="ngForm">
-  <div class="title concave">
-    <input required placeholder="Title*" [(ngModel)]="formData.title" name="title">
+  <div class="title concave posRel">
+    <input #title="ngModel" required placeholder="Title*" [(ngModel)]="formData.title" name="title">
+    <app-validator [text]="'Title is required.'" *ngIf="title.errors?.['required'] && title.touched">
+    </app-validator>
   </div>
 
   <div class="description concave">
@@ -14,19 +16,21 @@
   </div>
 
   <div class="todoItems">
+
     <div class="itemsHeadline posRel">
       <span>Checklist:</span>
       <div class="posRel">
-        <input #newTodo (keyup.enter)="handleTodo('save')" [(ngModel)]="newToDoItem" name="todos" type="text"
-          placeholder="ToDo ... ">
-        <app-validator *ngIf="newTodo.value.length <2 && newTodo.value" [text]="'Min. 3 characters'"></app-validator>
+        <input #newTodo="ngModel" (keyup.enter)="handleTodo('save')" [(ngModel)]="newToDoItem" name="todos" type="text"
+          placeholder="ToDo ... " minlength="3">
+        <app-validator *ngIf="newTodo.errors?.['minlength']" [text]="'Min. 3 characters'"></app-validator>
       </div>
-      <button [disabled]="newToDoItem.length < 3" (click)="handleTodo('save')">+</button>
-      <button (click)="handleTodo('clear')">x</button>
-
+      <!-- assign type to button, bc they are seen as submit form buttons-->
+      <button  type="button" [disabled]="newTodo.errors?.['minlength'] || newToDoItem.length == 0" (click)="handleTodo('save')">+</button>
+      <button  type="button" (click)="handleTodo('clear')">x</button>
     </div>
+
     <div class="itemsContainer">
-      <div *ngFor="let todo of formData.todos; index as i">
+      <div *ngFor="let todo of formData.todos; index as i" class="row">
         <input type="checkbox" id={{todo}} name={{todo}} disabled>
         <label for={{todo}}>{{todo}}</label>
       </div>
