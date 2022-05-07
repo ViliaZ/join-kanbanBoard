@@ -7,6 +7,7 @@ export class Task {
     public board: string;
     public title: string;
     public description: string;
+    public todos: [];
     public category: string;
     public urgency: string;
     public dueTo: any; // date
@@ -23,6 +24,7 @@ export class Task {
         this.board = obj ? obj.board : '';
         this.title = obj ? obj.title : '';
         this.description = obj ? obj.description : '';
+        this.todos = obj ? obj.todos : [];
         this.category = obj ? obj.category : '';
         this.urgency = obj ? obj.urgency : '';
         this.dueTo = obj ? obj.dueTo : new Date();
@@ -39,6 +41,7 @@ export class Task {
             board: this.board,
             title: this.title,
             description: this.description,
+            todos: this.todos,
             category: this.category,
             urgency: this.urgency,
             dueTo: this.dueTo,
@@ -55,6 +58,7 @@ export class Task {
         return {
             title: '',
             description: '',
+            todos: [],
             createdAt: new Date(),
             dueTo: new Date(),
             urgency: 'normal',
@@ -63,7 +67,6 @@ export class Task {
             responsibility: 'Guest',
             isPinnedToBoard: false,
             customIdName: '',
-
         }
     }
 // same as toJson() but dueTo Date is modified to suit as correct format for Datepicker
@@ -73,6 +76,7 @@ export class Task {
             board: this.board,
             title: this.title,
             description: this.description,
+            todos: this.todos,
             category: this.category,
             urgency: this.urgency,
             dueTo: new Date(this.dueTo),

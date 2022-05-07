@@ -35,6 +35,7 @@ export class NewTaskComponent implements OnInit {
   public currentTask: any;
   public activeUrgency: string = '';
   public minDate: any = new Date; // minimum date for datepicker
+  public newToDoItem: string = '';  // input field for adding todo Items
 
   public formData: any = {
     title: '',
@@ -46,7 +47,8 @@ export class NewTaskComponent implements OnInit {
     responsibility: 'Guest',
     isPinnedToBoard: false,
     createdAt: new Date(),
-    customIdName: ''
+    customIdName: '',
+    todos: []
   }
 
   constructor(
@@ -57,13 +59,11 @@ export class NewTaskComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
     if (this.taskservice.editMode) {// EDITMODE only: set current values in all inputfields
       let taskClicked = new Task(this.taskservice.currentTask).toJsonAndDateFormatted();
       this.formData = taskClicked;
       console.log('this is currenttask', new Date(this.taskservice.currentTask.dueTo));
     }
-  
     this.setUrgencyDefault();
   }
 
@@ -93,15 +93,11 @@ export class NewTaskComponent implements OnInit {
       this.customCategory = '';
       this.openCategoryPopUp = false;
     }
-    if (action == 'save') {
-      console.log('save');
-      
+    if (action == 'save') {     
       this.db.categories.push(this.customCategory);
       // this.taskservice.currentTask.category = 'testtest';
       this.formData.category = this.customCategory;
       this.openCategoryPopUp = false;
-      console.log('formData', this.formData);
-
     }
   }
 // checks onchanges() for inputfield category
@@ -130,7 +126,6 @@ export class NewTaskComponent implements OnInit {
     this.taskservice.taskPopupOpen = false;
     this.setUrgencyButtonColor('normal');
   }
-
   udpateEditedTask(taskAsJson: any) {
     this.db.updateDoc('tasks', this.formData.customIdName, taskAsJson);
     this.taskservice.currentTask = {};
@@ -141,5 +136,18 @@ export class NewTaskComponent implements OnInit {
     this.taskservice.taskPopupOpen = false;
     this.taskservice.currentTask = {};
     this.taskservice.editMode = false;
+  }
+
+  handleTodo(action: string){    
+    if (action == 'save') {
+      this.formData.todos.push(this.newToDoItem); 
+      this.newToDoItem = '';  // ngModel variable
+
+      console.log('save');
+    }
+    if (action == 'clear') {
+      this.newToDoItem = '';  // ngModel variable
+      console.log('clear');
+    }
   }
 }

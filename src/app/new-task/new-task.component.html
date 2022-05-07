@@ -4,129 +4,110 @@
   Edit Task</h3>
 
 <form (ngSubmit)="onSubmit()" #form="ngForm">
+  <div class="title concave">
+    <input required placeholder="Title*" [(ngModel)]="formData.title" name="title">
+  </div>
 
-  <!-- <div class="sectionOne"> -->
-    <div class="title concave">
-      <input required placeholder="Title*" [(ngModel)]="formData.title" name="title">
-    </div>
-
-    <div class="description concave">
-      <textarea placeholder="Task Description" [(ngModel)]="formData.description" name="description">
+  <div class="description concave">
+    <textarea placeholder="Task Description" [(ngModel)]="formData.description" name="description">
       </textarea>
-    </div>
+  </div>
 
-    <div class="todoItems">
-
-      <div class="itemsHeadline">
-        Add ToDo Items:
+  <div class="todoItems">
+    <div class="itemsHeadline posRel">
+      <span>Checklist:</span>
+      <div class="posRel">
+        <input #newTodo (keyup.enter)="handleTodo('save')" [(ngModel)]="newToDoItem" name="todos" type="text"
+          placeholder="ToDo ... ">
+        <app-validator *ngIf="newTodo.value.length <2 && newTodo.value" [text]="'Min. 3 characters'"></app-validator>
       </div>
-
-        <div class="itemsWrapper">
-          <div>
-            <input type="text" placeholder="Your ToDo">
-          </div>
-
-          <div class="itemsContainer">
-<!--             
-            <div>
-              <input type="checkbox" id="scales" name="scales" checked>
-              <label for="scales">ScalesScalesScalesScalesScales</label>
-            </div>
-            <div>
-              <input type="checkbox" id="horns" name="horns">
-              <label for="horns">Horns</label>
-            </div> -->
-
-          </div>
-        </div>
-
-
+      <button [disabled]="newToDoItem.length < 3" (click)="handleTodo('save')">+</button>
+      <button (click)="handleTodo('clear')">x</button>
 
     </div>
-
-  <!-- </div> -->
-
-
-
-  <!-- <div class="sectionTwo"> -->
-    <mat-form-field class="datePicker example-full-width" appearance="fill">
-      <input [(ngModel)]="formData.dueTo" name="dueto" placeholder="Choose a Due Date"
-        class="concave borderRadiusAdjust" [min]="minDate" required matInput [matDatepicker]="picker">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-
-    <div class="urgency">
-      <label for="low" [class.activeButton]="activeUrgency == 'low'" class="default-btn"
-        (click)="setUrgencyButtonColor('low')">Low</label>
-      <input id="low" type="radio" value="low" name="urgency" [(ngModel)]="formData.urgency">
-
-      <label for="normal" [class.activeButton]="activeUrgency == 'normal'" class="default-btn"
-        (click)="setUrgencyButtonColor('normal')">Normal</label>
-      <input id="normal" type="radio" value="normal" name="urgency" [(ngModel)]="formData.urgency">
-
-      <label for="urgent" [class.activeButton]="activeUrgency == 'urgent'" class="default-btn"
-        (click)="setUrgencyButtonColor('urgent')">Urgent</label>
-      <input id="urgent" type="radio" value="urgent" name="urgency" [(ngModel)]="formData.urgency">
+    <div class="itemsContainer">
+      <div *ngFor="let todo of formData.todos; index as i">
+        <input type="checkbox" id={{todo}} name={{todo}} disabled>
+        <label for={{todo}}>{{todo}}</label>
+      </div>
     </div>
+  </div>
 
-    <div class="category">
-      <select required (change)="handleCustomCategory('checkIfCustomRequest', $event)" #catSelect
-        [(ngModel)]="formData.category" name="category">
-        <option disabled value="">Choose a category*</option>
-        <option value="Custom Category">Add Category</option>
-        <option *ngFor="let category of db.categories" value={{category}}>{{ category }}</option>
-      </select>
+  <mat-form-field class="datePicker example-full-width" appearance="fill">
+    <input [(ngModel)]="formData.dueTo" name="dueto" placeholder="Choose a Due Date" class="concave borderRadiusAdjust"
+      [min]="minDate" required matInput [matDatepicker]="picker">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
 
-      <div *ngIf="openCategoryPopUp" class="categoryPopUp">
+  <div class="urgency">
+    <label for="low" [class.activeButton]="activeUrgency == 'low'" class="default-btn"
+      (click)="setUrgencyButtonColor('low')">Low</label>
+    <input id="low" type="radio" value="low" name="urgency" [(ngModel)]="formData.urgency">
+
+    <label for="normal" [class.activeButton]="activeUrgency == 'normal'" class="default-btn"
+      (click)="setUrgencyButtonColor('normal')">Normal</label>
+    <input id="normal" type="radio" value="normal" name="urgency" [(ngModel)]="formData.urgency">
+
+    <label for="urgent" [class.activeButton]="activeUrgency == 'urgent'" class="default-btn"
+      (click)="setUrgencyButtonColor('urgent')">Urgent</label>
+    <input id="urgent" type="radio" value="urgent" name="urgency" [(ngModel)]="formData.urgency">
+  </div>
+
+  <div class="category">
+    <select required (change)="handleCustomCategory('checkIfCustomRequest', $event)" #catSelect
+      [(ngModel)]="formData.category" name="category">
+      <option disabled value="">Choose a category*</option>
+      <option value="Custom Category">Add Category</option>
+      <option *ngFor="let category of db.categories" value={{category}}>{{ category }}</option>
+    </select>
+
+    <div *ngIf="openCategoryPopUp" class="categoryPopUp posRel">
         <input [(ngModel)]="customCategory" name="customcategory" #inputCat="ngModel" minlength="3" maxlength="11"
           type="text" placeholder="Custom Category">
-        <div *ngIf="inputCat.errors?.['minlength'] || inputCat.errors?.['maxlength']" class="validatorCategory">
-          Please use 3-10 characters.
-        </div>
-
-        <div>
-          <button (click)="handleCustomCategory('save', $event, form)"
-            [disabled]="!inputCat.value || inputCat.errors?.['minlength']" class="default-btn">
-            Save
-          </button>
-          <button (click)="handleCustomCategory('close')" class="default-btn">
-            Cancel
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="user">
-      <select [(ngModel)]="formData.responsibility" required name="responsibility">
-        <option disabled>Select Responsibility*</option>
-        <option *ngIf="authService.currentUser.displayName !== null" value={{authService.currentUser.displayName}}>
-          {{authService.currentUser.displayName}}</option>
-        <option *ngIf="authService.currentUser.displayName == null" value="Guest">Guest</option>
-        <option *ngFor="let user of authService.coUsers; index as i">{{user.displayName}}</option>
-      </select>
-    </div>
-
-    <div class="addTask">
+        <app-validator [text]="'Min. 3 / Max. 10 characters'"
+          *ngIf="inputCat.errors?.['minlength'] || inputCat.errors?.['maxlength']">
+        </app-validator>
       <div>
-        <span>Add Task to</span>
-        <select class="selectSave" [(ngModel)]="formData.board" name="board">
-          <option [selected] value="backlog">Backlog</option>
-          <!-- <option [selected] *ngIf="formData.board=='backlog' || ''">Backlog</option> -->
-          <option *ngFor="let board of db.boards">{{ board.name }}</option>
-        </select>
-      </div>
 
-      <!-- Buttons -->
-      <div class="buttons">
-        <button type="submit" [disabled]="!form.valid" class="button default-btn">
+        <button (click)="handleCustomCategory('save', $event, form)"
+          [disabled]="!inputCat.value || inputCat.errors?.['minlength']" class="default-btn">
           Save
         </button>
-        <button *ngIf="taskservice.taskPopupOpen" (click)="closeWithoutSave()" class="button btn-cancel default-btn">
+        <button (click)="handleCustomCategory('close')" class="default-btn">
           Cancel
         </button>
       </div>
     </div>
-<!-- 
-  </div> -->
+  </div>
+
+  <div class="user">
+    <select [(ngModel)]="formData.responsibility" required name="responsibility">
+      <option disabled>Select Responsibility*</option>
+      <option *ngIf="authService.currentUser.displayName !== null" value={{authService.currentUser.displayName}}>
+        {{authService.currentUser.displayName}}</option>
+      <option *ngIf="authService.currentUser.displayName == null" value="Guest">Guest</option>
+      <option *ngFor="let user of authService.coUsers; index as i">{{user.displayName}}</option>
+    </select>
+  </div>
+
+  <div class="addTask">
+    <div>
+      <span>Add Task to</span>
+      <select class="selectSave" [(ngModel)]="formData.board" name="board">
+        <option [selected] value="backlog">Backlog</option>
+        <option *ngFor="let board of db.boards">{{ board.name }}</option>
+      </select>
+    </div>
+
+    <!-- Buttons -->
+    <div class="buttons">
+      <button type="submit" [disabled]="!form.valid" class="button default-btn">
+        Save
+      </button>
+      <button *ngIf="taskservice.taskPopupOpen" (click)="closeWithoutSave()" class="button btn-cancel default-btn">
+        Cancel
+      </button>
+    </div>
+  </div>
 </form>

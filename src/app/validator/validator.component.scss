@@ -1,0 +1,21 @@
+:host{
+    position: absolute; 
+    bottom: 0px;
+    transform: translateY(100%); 
+    left: 0px; 
+    padding: 4px 4px 4px 0px; 
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    font-size: var(--font-small);
+    border-radius: 8px;
+
+    p{
+        color: var(--accent1)!important;
+    }
+
+    .alignTop{
+        transform: translateY(0%)!important; 
+
+    }
+}

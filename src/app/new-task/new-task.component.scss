@@ -24,7 +24,7 @@ form {
     justify-content: space-between;
     width: 100%;
     height: fit-content;
-    gap: 12px;
+    gap: 18px;
     border-radius: 12px;
 }
 ::placeholder {
@@ -43,7 +43,7 @@ select {
     height: 42px;
     background-color: transparent;
     border: unset;
-    border-radius: 6px;    
+    border-radius: 6px;
 }
 
 input {
@@ -57,7 +57,6 @@ select {
 button {
     font-size: 16px;
 }
-
 
 .demo-inline-calendar-card {
     width: 300px;
@@ -83,52 +82,58 @@ button {
 // ********  Todo Items *******//
 .todoItems {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
     padding: 12px;
     width: 100%;
 
     // left side
-    .itemsHeadline{
+    .itemsHeadline {
         display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        height: 42px;  // to matcht the input field on right side
-        width: 40%;
-        min-width: fit-content;
-    }
+        flex-direction: row;
+        align-items: flex-end;
+        width: 100%;
+        gap: 12px;
 
-    // right side: inputfield + items
-    .itemsWrapper{
-        width: 60%;
+        input{
+            flex:1;
+            display: flex;
+            justify-content: flex-end;
+            padding: 0px 0px!important;
+            align-items: flex-end!important;
+            height: 32px;
+            padding-bottom: 0px; 
+            border-radius: 0px;
+            border-bottom: 1px solid grey;
+        }
     }
-
     // only contains items
     .itemsContainer {
         width: 100%;
         max-height: 80px;
         overflow: auto;
-        padding: 4px 8px;
+        margin-top: 8px;
 
         div {
             display: flex;
             flex-direction: row;
+            flex-wrap: wrap;
             justify-content: flex-start;
-            width: 100%;
+            // align-items: center;
+            width: 50%;
             overflow-x: auto;
         }
 
-        label{
+        label {
             overflow-x: hide;
         }
 
-        input{
-            height: 14px!important;
-            width: 14px!important;
+        input[type="checkbox"] {
+            height: 14px !important;
+            width: 14px !important;
             min-height: 14px;
             min-width: 14px;
-            margin: 0.4rem;
+            margin-right: 0.4rem;
             border-radius: 12%;
         }
     }
@@ -227,18 +232,6 @@ button {
         button:second-child {
             border-top-right-radius: 6px;
             border-bottom-right-radius: 6px;
-        }
-
-        .validatorCategory {
-            position: absolute;
-            bottom: -32px;
-            left: 0;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            padding-left: 4px;
-            padding-right: 4px;
-            background-color: white;
-            color: red;
         }
     }
 }

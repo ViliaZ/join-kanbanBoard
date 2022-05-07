@@ -23,6 +23,7 @@
         "board": "DummyBoardOne",
         "title": "Titel1",
         "description": "This is a description",
+        "todos": ["first", "second", "third"],
         "category": "Marketing",
         "urgency": "normal",
         "dueTo": 0,
@@ -34,6 +35,7 @@
         "board": "DummyBoardTwo",
         "title": "Titel2",
         "description": "This is a description",
+        "todos": ["aaa", "bbb", "cccc", "dddd"],
         "category": "Admin",
         "urgency": "urgent",
         "dueTo": 0,
@@ -45,6 +47,7 @@
         "board": "DummyBoardOne",
         "title": "Titel3",
         "description": "This is a description",
+        "todos": ["justone"],
         "category": "Design",
         "urgency": "normal",
         "dueTo": 0,
@@ -52,7 +55,5 @@
         "isPinnedToBoard": false,
         "responsibility": "Guest"
       }
-
-
 ]
 }

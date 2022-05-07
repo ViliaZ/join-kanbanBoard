@@ -29,6 +29,8 @@ import { ForgotPwComponent } from './forgot-pw/forgot-pw.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthServiceService } from 'src/services/auth-service.service';
 import { DateValueAccessorModule } from 'angular-date-value-accessor';
+import { ValidatorComponent } from './validator/validator.component';
+import { TooltipComponent } from './tooltip/tooltip.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +47,8 @@ import { DateValueAccessorModule } from 'angular-date-value-accessor';
     SignupComponent,
     LogoutSuccessComponent,
     ForgotPwComponent,
+    ValidatorComponent,
+    TooltipComponent,
     
 
 

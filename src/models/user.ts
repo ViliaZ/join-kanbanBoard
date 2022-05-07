@@ -7,6 +7,7 @@ export class User {
     public isAnonymous: boolean;
     public guestBoardsInitialized?: boolean;
     public isLoggedIn: boolean;
+    public customCategories: [];  // user can create custom categories for their tasks
 
     constructor(obj?: any) {
         this.uid = obj ? obj.uid : '';
@@ -17,6 +18,7 @@ export class User {
         this.isAnonymous = obj ? obj.isAnonymous : '';
         this.guestBoardsInitialized = obj ? obj.guestInitialized : '';
         this.isLoggedIn = obj ? obj.isLoggedIn : '';
+        this.customCategories = obj ? obj.isLoggedIn : [];
     }
 
     public toJson() {
@@ -28,7 +30,8 @@ export class User {
             emailVerified: this.emailVerified,
             isAnonymous: this.isAnonymous,
             guestBoardsInitialized: this.guestBoardsInitialized,
-            isLoggedIn: this.isLoggedIn
+            isLoggedIn: this.isLoggedIn,
+            customCategories: this.customCategories
         }
     }
 }
