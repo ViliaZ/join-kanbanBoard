@@ -8,43 +8,6 @@
     border-radius: 12px 12px 12px 12px;
 }
 
-//*********  expand card animation *********
-.description {
-    overflow-x: hidden;
-    overflow-y: hidden;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    max-height: 0px;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    word-break: break-all;
-
-    &.animateExpansion {
-        animation: expandTextBox 1.2s ease-in-out forwards;
-    }
-}
-
-@keyframes expandTextBox {
-    from {
-        max-height: 0px;
-        overflow-y: hidden;
-    }
-    to{
-        max-height: 200px;
-        overflow-y: auto;
-    }
-    
-}
-
-.first-row {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
 .singleTicket {
     display: flex;
     flex-direction: column;
@@ -58,56 +21,98 @@
     cursor: pointer;
     overflow: auto;
     box-shadow: rgb(0 0 0 / 12%) 1px 1px 6px;
+}
+
+.first-row {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    .dueTo {
+        display: flex;
+        align-items: center;
+        font-size: var(--font-small);
+
+        img {
+            width: 18px;
+            height: 18px;
+            margin-right: 6px;
+            filter: invert(19%) sepia(83%) saturate(707%) hue-rotate(248deg) brightness(47%) contrast(92%);
+        }
+    }
+}
+
+.secondRow {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
 
     .title {
-        font-weight: bold;
-        width: 155px;
         overflow-wrap: break-word;
-
+        font-weight: 600;
     }
+}
+
+// Progressbar
+
+.progress {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: var(--font-small);
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.barWrapper {
+    width: 100%;
+    flex: 1;
+    height: 8px;
+    border-radius: 3px;
+    background-color: rgba(211, 211, 211, 0.557);
+    border-radius: 3px;
+
+    // percent progress
+    .progressBar{
+        height: 8px;
+        width: 10%;
+        background-color: var(--accent1);
+        border-radius: 3px;
+    }
+}
+
+.thirdRow {
+    width: 100%;
+    height: 36px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(211, 211, 211, 0.689);
+    padding-top: 8px;
+    font-size: var(--font-small);
+
     .urgency {
         text-align: center;
         padding: 0px 8px 1px 8px;
         max-width: max-content;
-        background-color:var(--urgency-low);
+        background-color: var(--urgency-low);
         border-radius: 6px;
         margin-top: 6px;
         margin-bottom: 4px;
         font-size: 12px;
     }
-}
 
-.information {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 12px;
-    font-size: 12px;
-    color: grey;
-
-    .dueTo{
-        display: flex;
-        align-items: center;
-    
-        img{
-            width: 16px;
-            height: 16px; 
-            margin-right: 6px;
-            filter: invert(19%) sepia(83%) saturate(707%) hue-rotate(248deg) brightness(47%) contrast(92%);
-        }
+    img {
+        width: 22px;
+        height: 22px;
     }
-    
-    .user {
-        width: 30px;
-        height: 30px;
-        border-radius: 6px;
 
-        img{
-            width: 28px;
-            height: 28px;
-        }
+    .todos {
     }
 }
 
@@ -118,7 +123,7 @@
     padding: 4px;
 }
 
-// ************** ICON **************
+// ************** ICONS **************
 
 .icon-pin {
     display: none;
@@ -133,7 +138,7 @@
     z-index: 2;
     cursor: pointer;
 
-    &:hover{
+    &:hover {
         filter: opacity(0.8);
         transform: rotateZ(0deg);
     }
@@ -163,7 +168,7 @@
     }
 }
 
-.icon-delete{
+.icon-delete {
     position: absolute;
     right: 16px;
     top: 0px;
@@ -173,12 +178,12 @@
     display: none;
     cursor: pointer;
 
-    &:hover{
+    &:hover {
         filter: opacity(0.8);
     }
 }
 
-.icon-edit{
+.icon-edit {
     position: absolute;
     right: 40px;
     top: 0px;
@@ -188,7 +193,7 @@
     filter: opacity(0.3);
     cursor: pointer;
 
-    &:hover{
+    &:hover {
         filter: opacity(0.8);
     }
 }
@@ -198,11 +203,35 @@
         display: flex;
     }
 
-    :hover .icon-delete{
+    :hover .icon-delete {
         display: block;
     }
 
-    :hover .icon-edit{
+    :hover .icon-edit {
         display: block;
     }
 }
+
+// NOT IN USE ATM
+.description {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    max-height: 0px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    word-break: break-all;
+}
+
+// @keyframes expandTextBox {
+//     from {
+//         max-height: 0px;
+//         overflow-y: hidden;
+//     }
+//     to{
+//         max-height: 200px;
+//         overflow-y: auto;
+//     }
+// }
