@@ -14,7 +14,7 @@ export class BacklogComponent implements OnInit {
   public orderBacklogtasks: string = 'desc'
 
   constructor(public db: DatabaseService, public taskservice: TasksService) {
-    this.db.getBoardAndTaskData()  //Arguments possible: boardSorting + Order; TaskSorting + Order
+    this.db.getBoardAndTaskData();  //Arguments possible: boardSorting + Order; TaskSorting + Order
   }
 
   ngOnInit(): void {
@@ -32,7 +32,7 @@ export class BacklogComponent implements OnInit {
 
   editTask(task: any) {
     console.log('this task is edited', task);
-    this.taskservice.currentTask = task;
+    this.taskservice.currentTask = task as Task;
     this.taskservice.taskPopupOpen = true;
     this.taskservice.editMode = true;
   }
@@ -42,13 +42,18 @@ export class BacklogComponent implements OnInit {
   }
 
   changeSorting() {
+   
     if (this.orderBacklogtasks == 'desc'){
+      console.log( '11',this.orderBacklogtasks);
+
       this.orderBacklogtasks = 'asc';
-      this.db.getBoardAndTaskData('createdAt', 'asc')  //Arguments: boardSorting + Order; TaskSorting + Order
+      this.db.getBoardAndTaskData('createdAt', 'asc', 'dueTo', 'asc')  //Arguments: boardSorting + Order; TaskSorting + Order
     }
     else {
+      console.log( '22',this.orderBacklogtasks);
+
       this.orderBacklogtasks = 'desc';
-      this.db.getBoardAndTaskData('createdAt', 'asc')  //Arguments: boardSorting + Order; TaskSorting + Order
+      this.db.getBoardAndTaskData('createdAt', 'asc', 'dueTo', 'desc')  //Arguments: boardSorting + Order; TaskSorting + Order
     }
   }
 

@@ -68,21 +68,20 @@
   justify-content: center;
   right: var(--paddingPage);
   bottom: var(--paddingPageTopBottom);
-  height: 84px;
-  width: 84px;
+  height: 64px;
+  width: 64px;
   z-index: 2;
 
   .plus {
     position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
+    width: 80%;
+    height: 80%;
+    border-radius: 12%;
     z-index: 3;
     cursor: pointer;
 
 // convex Effekt
 background: #ffffff;
-border-radius: 100%;
 box-shadow: 6.91px 6.91px 28px #DFDFDF, -6.91px -6.91px 28px #FFFFFF;
     &:after {
       content: "";
