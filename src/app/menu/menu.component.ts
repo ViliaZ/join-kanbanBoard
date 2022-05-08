@@ -10,11 +10,13 @@ import { AuthServiceService } from 'src/services/auth-service.service';
 
 export class MenuComponent implements OnInit {
 
-
+  public newBoardTitle: string = '';
   public activeNavItem: string = 'home';
   public openSettings: boolean = false;
 
-  constructor(public authService: AuthServiceService, private router: Router) { }
+  constructor(
+    public authService: AuthServiceService, 
+    public router: Router) { }
 
   ngOnInit(): void {
   }
@@ -23,13 +25,19 @@ export class MenuComponent implements OnInit {
     this.authService.logout();
   }
 
-  toggleSettings(){
-    if(this.openSettings){
+  toggleSettings() {
+    if (this.openSettings) {
       this.openSettings = false
     }
-    else{
+    else {
       this.openSettings = true;
     }
   }
 
+  newTaskPopUp() { }
+
+  // handle Inputfield to add new Board title
+  addNewBoard() {
+
+  }
 }

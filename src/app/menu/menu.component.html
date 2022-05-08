@@ -1,42 +1,31 @@
 <!-- position absolute -->
 <div class="border-bottom"></div>
 
-
 <div class="sectionLeft">
+    <!-- User Image -->
+    <div class="user">
+        <img (mouseenter)="openSettings = true" (click)="toggleSettings()" src="assets/img/user.svg" alt="logout">
+       
+        <div *ngIf="openSettings" class="settingsContainer" (mouseenter)="openSettings = true"
+            (mouseleave)="openSettings = false">
 
-    <div 
-        *ngIf="openSettings" class="settingsContainer"
-        (mouseenter)="openSettings = true" 
-        (mouseleave)="openSettings = false">
-
-        <div class="settingContent">
-            <div class="name"> {{ this.authService.currentUser.displayName || 'Guest User' }}</div>
-            <div class="logout settingEl" >
-                <a routerLink="/logout" >Logout</a>
-                <img  (click)="onLogout()" class="icon" src="assets/img/logout.png" alt="logout">
+            <div class="settingContent">
+                <div class="name"> {{ this.authService.currentUser.displayName || 'Guest User' }}</div>
+                <div class="logout">
+                    <a routerLink="/logout">Logout</a>
+                    <!-- <img (click)="onLogout()" class="icon" src="assets/img/logout.png" alt="logout"> -->
+                </div>
+                <div>
+                    <a routerLink="/imprint">Imprint</a>
+                </div>
             </div>
-            <div><a routerLink="/imprint" >Imprint</a></div>
+
         </div>
-
     </div>
-
-    <div>
-        <img  (mouseenter)="openSettings = true" (click)="toggleSettings()" class="icon-user" src="assets/img/user.svg" alt="logout">
-    </div>
-
-    <a class="logout">
-        <!-- <div *ngIf="this.authService.currentUser.displayName">
-            {{ this.authService.currentUser.displayName || 'Guest' }}
-        </div>
-
-        <ng-template *ngIf="!this.authService.currentUser.displayName" #guest><div>Guest</div></ng-template> -->
-
-  
-    </a>
 
 
     <a routerLink="/" routerLinkActive="concave-btn" [routerLinkActiveOptions]="{ exact: true }">
-        HOME
+        DASHBOARD
     </a>
 
 
@@ -51,4 +40,28 @@
 </div>
 
 <div class="sectionRight">
+
+    <!-- INPUTFIELD NEW BOARD  -->
+    <div 
+        *ngIf="router.url.includes('board')"
+        class="addNewBoard">
+        <input 
+            [(ngModel)]="newBoardTitle" 
+            (keyup.enter)="addNewBoard()"
+            placeholder="New Board"
+            class="concave"
+            type="text"
+            minlength="2">
+        <button class="convex" (click)="addNewBoard()">
+            Add
+        </button>
+    </div>
+
+    <div 
+        *ngIf="router.url.includes('backlog') || router.url.includes('board')"
+        (click)="newTaskPopUp()" 
+        class="plus-wrapper">
+        <span class="plus"></span>
+    </div>
+
 </div>

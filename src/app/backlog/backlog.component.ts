@@ -9,7 +9,7 @@ import { TasksService } from 'src/services/tasks.service';
 })
 export class BacklogComponent implements OnInit {
 
-  searchInput: string = '';
+  public searchInput: string = '';
   public activeSearch: CallableFunction = () => { return (this.searchInput.length > 3) }
   public orderBacklogtasks: string = 'desc'
 
@@ -22,8 +22,11 @@ export class BacklogComponent implements OnInit {
   }
 
   evaluateSearchRequest(task: any): any {
+    console.log('serach');
+    
     let taskToString = JSON.stringify(task);
-    return taskToString.includes(this.searchInput)
+    let toLowerCaseString = taskToString.toLowerCase()
+    return toLowerCaseString.includes(this.searchInput.toLowerCase())
   }
 
   moveToBoardToDo(idInFirestore: string) {
@@ -42,7 +45,6 @@ export class BacklogComponent implements OnInit {
   }
 
   changeSorting() {
-   
     if (this.orderBacklogtasks == 'desc'){
       console.log( '11',this.orderBacklogtasks);
 

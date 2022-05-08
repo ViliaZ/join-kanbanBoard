@@ -17,22 +17,21 @@ a {
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    height: 40px;
+    height: 28px;
     width: fit-content;
     padding: 4px 16px;
 }
 
-.icon {
-    width: 12px;
-    height: 12px;
-    margin-left: 8px;
-    cursor: pointer;
-    filter: invert(19%) sepia(83%) saturate(707%) hue-rotate(248deg) brightness(47%) contrast(92%);
-}
+.user {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
 
-.icon-user {
-    width: 32px;
-    height: 32px;
+    img {
+        width: 32px;
+        height: 32px;
+    }
 }
 
 .border-bottom {
@@ -45,7 +44,6 @@ a {
 }
 
 .sectionLeft {
-    position: relative;
     display: flex;
     align-items: center;
     gap: 1em;
@@ -54,32 +52,10 @@ a {
         position: absolute;
         z-index: 100;
         bottom: 0;
-        left: 0;
+        right: 50%;
         padding-top: 20px;
-        transform: translateY(78%);
+        transform: translateY(88%) translateX(50%);
         transform-origin: top;
-
-        .settingContent {
-            background-color: white;
-            width: fit-content;
-            border-radius: 6px;
-            padding: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-
-            .name{
-                font-size: var(--font-small);
-                border-bottom: 1px solid lightgrey;
-                padding-bottom: 4px;
-                color: rgb(181, 181, 181);
-            }
-             a {
-                &:hover {
-                    color: var(--accent1);
-                }
-            }
-        }
 
         a {
             padding: unset;
@@ -90,9 +66,104 @@ a {
             display: flex;
             align-items: center;
             justify-content: flex-start;
+
+            img {
+                width: 12px;
+                height: 12px;
+                margin-left: 8px;
+                cursor: pointer;
+                filter: invert(19%) sepia(83%) saturate(707%) hue-rotate(248deg) brightness(47%) contrast(92%);
+            }
+        }
+
+        .settingContent {
+            background-color: white;
+            width: max-content;
+            border-radius: 6px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            .name {
+                font-size: var(--font-small);
+                border-bottom: 1px solid lightgrey;
+                padding-bottom: 6px;
+                color: rgb(181, 181, 181);
+            }
+            a {
+                &:hover {
+                    color: var(--accent1);
+                }
+            }
         }
     }
 }
 
 .sectionRight {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+
+/**** Plus Button *****/
+
+.plus-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: var(--paddingPage);
+    bottom: var(--paddingPageTopBottom);
+    height: 60px;
+    width: 60px;
+    z-index: 2;
+
+    .plus {
+        position: relative;
+        width: 60%;
+        height: 60%;
+        border-radius: 12%;
+        z-index: 3;
+        cursor: pointer;
+        // convex Effekt
+        background: #eef0f4;
+        border-radius: 19%;
+        box-shadow: 5.71px 5.71px 8px #e9ebef, -5.71px -5.71px 8px #f3f5f9;
+        //   background:var(--bg-light);
+        border: var(--bg-light) 2px solid;
+
+        &:after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 50%;
+            transform: translate(-50%, 50%);
+            width: 26px;
+            height: 4px;
+            background: var(--gradientColors);
+            border: var(--gradientColors) 1px solid;
+            border-radius: 3px;
+            z-index: 12;
+        }
+
+        &:before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 50%;
+            transform: translate(-50%, 50%);
+            height: 26px;
+            width: 4px;
+            background: var(--gradientColors);
+            border-radius: 3px;
+            border: var(--gradientColors) 1px solid;
+            z-index: 11;
+        }
+    }
+
+    &:hover {
+        color: white;
+    }
 }

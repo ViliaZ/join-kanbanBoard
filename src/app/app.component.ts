@@ -14,14 +14,11 @@ import { TasksService } from 'src/services/tasks.service';
 export class AppComponent implements OnInit {
 
   title = 'join-kanbanBoard';
-
-
+  
   constructor(
     private db: DatabaseService,
     public router: Router,
-    private httpClient: HttpClient,
     public taskservice: TasksService,
-    private authService: AuthServiceService
     ) 
     {}
 

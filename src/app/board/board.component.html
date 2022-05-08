@@ -1,5 +1,5 @@
 <!-- ALERTS  -->
-<!-- <div class="board-top">
+<div class="board-top">
     <div class="alerts">
         <div *ngIf="doublicateAlert && !deleteBoardAlert" class="alertbox">
             <img src="assets/img/alertDelete.svg" alt="alert">
@@ -13,7 +13,7 @@
             <button (click)="deleteBoardAlert = false" class="convex">Cancel</button>
         </div>
     </div>
-</div> -->
+</div>
 
 
 <div class="body-board">
@@ -25,8 +25,7 @@
                 #boardTitle 
                 [(ngModel)]="board.name" 
                 [disabled]="!board.editable" 
-                (click)="stopPropagation($event)"
-                >
+                (click)="stopPropagation($event)">
             <span 
                 *ngIf="board.name =='ToDo'" 
                 class="showOnHover">
@@ -37,8 +36,7 @@
                 (click)="saveBoardTitle(board.name, board.customIdName, i)"
                 [class.disabledIcon]="board.name =='ToDo'" 
                 class="iconEdit"
-                src="assets/img/save.png" 
-                >
+                src="assets/img/save.png" >
             <img 
                 *ngIf="!board.editable" 
                 [class.disabledIcon]="board.name =='ToDo'" 
@@ -56,12 +54,12 @@
         <!-- COLUMN BODY WITH TICKETS -->
         <div 
             class="wrapperTickets" 
-            id="{{board.name}}" 
+            id={{board.name}}
             (drop)="drop($event, board.name)"
             (dragover)="allowDrop($event)">
 
             <!-- SINGLE TICKET (dynamic) Note: customIdName is set from DB Firestore at subscribe -->
-            <app-task *ngFor="let task of board.tasks; index as i" id="{{task.customIdName}}" [task]="task"
+            <app-task *ngFor="let task of board.tasks; index as i" id={{task.customIdName}} [task]="task"
                 draggable="true" (dragstart)="drag($event)">
             </app-task>
 
@@ -80,16 +78,4 @@
     </div>
 </div>
 
-<!-- INPUTFIELD NEW BOARD  -->
-<div class="addNewBoard">
-    <input 
-        [(ngModel)]="newBoardTitle" 
-        (keyup.enter)="addNewBoard()"
-        placeholder="New Board"
-        class="concave"
-        type="text"
-        minlength="2">
-    <button class="convex" (click)="addNewBoard()">
-        Add
-    </button>
-</div>
+
