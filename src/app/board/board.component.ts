@@ -40,21 +40,19 @@ export class BoardComponent implements OnInit {
     console.log('log', this.eventEmitterService.subscription);
     if (this.eventEmitterService.subscription == undefined) {
       this.eventEmitterService.subscription = this.eventEmitterService.
-        callBoardEventHandler.subscribe(() => {
-          this.addNewBoard();
+        callBoardEventHandler.subscribe((data: string) => {
+          this.addNewBoard(data);
         });
     }
   }
 
 
-  // // inputfield: Add a new board
-  async addNewBoard() {
-    alert('Emitter funktioniert');
-
-    let duplicate = await this.checkDuplicates(this.newBoardTitle);
-    if (this.newBoardTitle.length > 0 && !duplicate) {
-      let newBoard = Board.getEmptyBoard(this.newBoardTitle, this.authService.currentUser.uid);  // call a static function inside of model board
-      // let newBoard = { 'name': this.newBoardTitle, 'tasks': [], 'editable': false, 'createdAt': new Date().getTime() };
+  // newBoardName is received via Eventemitterservice from Menu component
+  // userinput string from inputfield for adding a new board
+  async addNewBoard(newBoardName: string) {
+    let duplicate = await this.checkDuplicates(newBoardName);
+    if (newBoardName.length > 0 && !duplicate) {
+      let newBoard = Board.getEmptyBoard(newBoardName, this.authService.currentUser.uid);  // call a static function inside of model board
       this.db.addDocToCollection('boards', newBoard);
       console.log(newBoard);
 

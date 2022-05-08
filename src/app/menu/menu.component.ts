@@ -24,7 +24,8 @@ export class MenuComponent implements OnInit {
   }
 
   handleNewBoardAdding(){
-    this.eventEmitterService.onNewBoardAdding();    
+    this.eventEmitterService.onNewBoardAdding(this.newBoardTitle);   
+    this.newBoardTitle = ''; 
   }
 
   onLogout() {

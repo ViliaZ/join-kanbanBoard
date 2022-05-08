@@ -14,8 +14,8 @@ export class EventemitterService {
     
   constructor() { }    
     
-  onNewBoardAdding() {    
-    this.callBoardEventHandler.emit();   
+  onNewBoardAdding(newBoardName: string) {    
+    this.callBoardEventHandler.emit(newBoardName);   
   } 
 
 
