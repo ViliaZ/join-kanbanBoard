@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthServiceService } from 'src/services/auth-service.service';
 import { EventemitterService } from 'src/services/eventemitter.service';
+import { TasksService } from 'src/services/tasks.service';
 
 @Component({
   selector: 'app-menu',
@@ -20,7 +21,8 @@ export class MenuComponent implements OnInit {
   constructor(
     public authService: AuthServiceService, 
     public router: Router, 
-    private eventEmitterService: EventemitterService) { }
+    private eventEmitterService: EventemitterService,
+    private taskservice: TasksService) { }
 
   ngOnInit(): void {
   }
@@ -48,6 +50,8 @@ export class MenuComponent implements OnInit {
     }
   }
 
-  newTaskPopUp() { }
+newTaskPopUp() {
+    this.taskservice.taskPopupOpen = true;
+  } 
 
 }

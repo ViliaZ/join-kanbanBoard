@@ -5,7 +5,7 @@
     <!-- User Image -->
     <div class="user">
         <img (mouseenter)="openSettings = true" (click)="toggleSettings()" src="assets/img/user.svg" alt="logout">
-       
+
         <div *ngIf="openSettings" class="settingsContainer" (mouseenter)="openSettings = true"
             (mouseleave)="openSettings = false">
 
@@ -50,44 +50,31 @@
           </form>
     </div> -->
 
-    <div
-        (click)="expandInputfield = true"
-        [class.concave]="expandInputfield"
-        *ngIf="router.url.includes('board')"
-        class="container"
-        >
+    <div (click)="expandInputfield = true" [class.concave]="expandInputfield" *ngIf="router.url.includes('board')"
+        class="container">
         <form>
-        <input 
-            [(ngModel)]="newBoardTitle" 
-            name="newBoardTitle"
-            placeholder="+ NEW BOARD"
-            [class.expandAnimation]="expandInputfield"
-            (blur)="expandInputfield=false"
-            type="search"
-            minlength="2">
-        <button 
-            type="submit" 
-            [class.expandAnimation]="expandInputfield"
-            (click)="handleNewBoardAdding(); stopPropagation($event)" >
-            Add
-        </button>
-    </form>
+            <input [(ngModel)]="newBoardTitle" name="newBoardTitle" placeholder="+ NEW BOARD"
+                [class.expandAnimation]="expandInputfield" (blur)="expandInputfield=false" type="search" minlength="2">
+            <button type="submit" [class.expandAnimation]="expandInputfield"
+                (click)="handleNewBoardAdding(); stopPropagation($event)">
+                Add
+            </button>
+        </form>
     </div>
 
-    <div 
-        *ngIf="router.url.includes('backlog') || router.url.includes('board')"
-        (click)="newTaskPopUp()" 
+    <!-- <div class="lastLogin"> Last Login: {{ currentDate | date: 'mediumDate' }}</div> -->
+    <div>
+        <div href="" class="info" *ngIf="router.url.includes('home')">
+            <span>Help</span>
+            <img src="/assets/img/info.svg" alt="help">
+        </div>
+
+    </div>
+
+    <div *ngIf="router.url.includes('backlog') || router.url.includes('board')" (click)="newTaskPopUp()"
         class="plus-wrapper">
         <span class="plus"></span>
     </div>
 
-    <!-- <div class="lastLogin"> Last Login: {{ currentDate | date: 'mediumDate' }}</div> -->
-<div 
-   >
-<div href="" class="info" *ngIf="router.url.includes('home')">
-   <span>Help</span> 
-    <img src="/assets/img/info.svg" alt="help">
-</div>
-    
-</div>
+
 </div>

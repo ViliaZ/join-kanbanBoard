@@ -56,15 +56,24 @@
 
   <div class="urgency">
     <label for="low" [class.activeButton]="activeUrgency == 'low'" class="default-btn"
-      (click)="setUrgencyButtonColor('low')">Low</label>
+      (click)="setUrgencyButtonColor('low')">
+      <img src="assets/img/lowprio.svg" alt="lowprio">
+      Low
+    </label>
     <input id="low" type="radio" value="low" name="urgency" [(ngModel)]="formData.urgency">
 
     <label for="normal" [class.activeButton]="activeUrgency == 'normal'" class="default-btn"
-      (click)="setUrgencyButtonColor('normal')">Normal</label>
+      (click)="setUrgencyButtonColor('normal')">
+      <img src="assets/img/mediumprio.svg" alt="highprio">
+      Medium
+    </label>
     <input id="normal" type="radio" value="normal" name="urgency" [(ngModel)]="formData.urgency">
 
     <label for="urgent" [class.activeButton]="activeUrgency == 'urgent'" class="default-btn"
-      (click)="setUrgencyButtonColor('urgent')">Urgent</label>
+      (click)="setUrgencyButtonColor('urgent')">
+      <img src="assets/img/highprio.svg" alt="highprio">
+      Urgent
+    </label>
     <input id="urgent" type="radio" value="urgent" name="urgency" [(ngModel)]="formData.urgency">
   </div>
 

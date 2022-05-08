@@ -14,7 +14,7 @@ import { TasksService } from 'src/services/tasks.service';
 export class AppComponent implements OnInit {
 
   title = 'join-kanbanBoard';
-  
+
   constructor(
     private db: DatabaseService,
     public router: Router,
@@ -25,10 +25,5 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.db.getBoardAndTaskData;
   }
-
-  newTaskPopUp() {
-    this.taskservice.taskPopupOpen = true;
-  }
-
 
 }

@@ -39,10 +39,10 @@
   background-color: white;
   width: 55%;
   height: fit-content;
-  top: 45%;
+  top: 0;
   left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 110;
+  // transform: translate(-50%, -50%);
+  z-index: 210;
 }
 
 .blurOverlay {
@@ -60,60 +60,3 @@
   border: 1px solid rgba(255, 255, 255, 0.18);
   z-index: 90;
 }
-
-// .plus-wrapper {
-//   position: absolute;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   right: var(--paddingPage);
-//   bottom: var(--paddingPageTopBottom);
-//   height: 64px;
-//   width: 64px;
-//   z-index: 2;
-
-//   .plus {
-//     position: relative;
-//     width: 80%;
-//     height: 80%;
-//     border-radius: 12%;
-//     z-index: 3;
-//     cursor: pointer;
-
-//     // convex Effekt
-//     background: #ffffff;
-//     box-shadow: 6.91px 6.91px 28px #dfdfdf, -6.91px -6.91px 28px #ffffff;
-//     &:after {
-//       content: "";
-//       position: absolute;
-//       left: 50%;
-//       bottom: 50%;
-//       transform: translate(-50%, 50%);
-//       width: 44px;
-//       height: 6px;
-//       background-color: rgba(242, 77, 179, 0.978);
-//       border: rgb(103, 31, 247) 1px solid;
-
-//       border-radius: 3px;
-//       z-index: 12;
-//     }
-
-//     &:before {
-//       content: "";
-//       position: absolute;
-//       left: 50%;
-//       bottom: 50%;
-//       transform: translate(-50%, 50%);
-//       height: 44px;
-//       width: 6px;
-//       background-color: rgb(249, 249, 19);
-//       border-radius: 3px;
-//       border: rgba(242, 77, 179, 0.37) 1px solid;
-//       z-index: 11;
-//     }
-//   }
-
-//   &:hover {
-//     color: white;
-//   }
-// }
