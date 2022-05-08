@@ -11,6 +11,7 @@ import { EventemitterService } from 'src/services/eventemitter.service';
 
 export class MenuComponent implements OnInit {
 
+  public currentDate: Date = new Date();
   public expandInputfield: boolean = false;
   public newBoardTitle: string = '';
   public activeNavItem: string = 'home';

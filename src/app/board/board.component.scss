@@ -10,12 +10,12 @@
 
 .alertContainer {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     min-height: 60px;
 
     .addNewBoard {
-        padding: 8px;
+        padding: 6px;
         cursor: pointer;
 
         input {
@@ -55,7 +55,6 @@
     z-index: -1;
 }
 
-
 .board {
     height: 100%;
     margin-bottom: 24px;
@@ -72,8 +71,9 @@
         input {
             background-color: unset;
             border: unset;
-            font-weight: var(--font-bold);
-            border-radius: 12px;
+            font-weight: var(--font-xbold);
+            border-radius: 4px;
+            padding: 2px 4px;
             margin-left: 4px;
             margin-right: 8px;
             flex: 1;
@@ -84,7 +84,7 @@
             height: 16px;
             filter: opacity(0);
             transition: all 150ms ease-in-out;
-            margin-left: 8px;
+            margin-left: 10px;
         }
 
         &:hover .iconEdit {
@@ -237,28 +237,38 @@
     background-color: white;
     width: max-content;
     border-radius: 12px;
-    padding: 16px;
+    padding: 0px 0px 0px 16px;
     transition: 250ms all ease-in-out;
 
     button {
-        margin-left: 4px;
         border: unset;
-        background-color: var(--primary-dark);
-        padding: 4px 6px;
-        border-radius: 3px;
+        background-color: white;
+        padding: 16px 10px;
+        height: 100%;
         cursor: pointer;
+    }
 
+    #btn-confirm {
+        margin-left: 24px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;   
+    
         &:hover {
-            color: var(--hover);
+            color: var(--accent1);
         }
     }
 
-    #confirm {
-        background-color: white;
-        color: var(--primary-dark);
+
+    #btn-cancel {
+        border-bottom-left-radius: 0px;
+        border-top-left-radius: 0px;
+        border-bottom-right-radius: 8px;
+        border-top-right-radius: 8px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;    
+        background-color:  var(--accent1);
+        color:  var(--primary-light);
 
         &:hover {
-            color: var(--hover);
+            color:  var(--bg);
         }
     }
 

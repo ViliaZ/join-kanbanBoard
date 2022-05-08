@@ -33,7 +33,7 @@
 
   --hover: rgba(140, 120, 173, 0.956);
   --font-bold: 400;
-  --font-xBold: 600;
+  --font-xbold: 600;
   --font-light: 200;
   --font-small: 12px;
   --font-normal: 14px;
@@ -84,6 +84,12 @@ h3 {
 
 h1 {
   font-size: 32px;
+}
+
+h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color:rgba(140, 120, 173, 0.956)
 }
 
 html,

@@ -50,7 +50,6 @@
           </form>
     </div> -->
 
-
     <div
         (click)="expandInputfield = true"
         [class.concave]="expandInputfield"
@@ -82,4 +81,13 @@
         <span class="plus"></span>
     </div>
 
+    <!-- <div class="lastLogin"> Last Login: {{ currentDate | date: 'mediumDate' }}</div> -->
+<div 
+   >
+<div href="" class="info" *ngIf="router.url.includes('home')">
+   <span>Help</span> 
+    <img src="/assets/img/info.svg" alt="help">
+</div>
+    
+</div>
 </div>

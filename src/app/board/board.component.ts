@@ -27,7 +27,7 @@ export class BoardComponent implements OnInit {
   currentBoard: any = {}; // board to delete
   doublicateAlert: boolean = false;
   deleteBoardAlert: boolean = false;
-
+  
   constructor(
     public db: DatabaseService,
     public taskservice: TasksService,
@@ -125,6 +125,7 @@ export class BoardComponent implements OnInit {
 
   // eventHandler: delete Board REQUEST--> opens Confirmation Alert
   deleteBoard(i: number, event: Event) {
+    
     this.deleteBoardAlert = true;
     this.currentBoard = this.db.boards[i];
   }
