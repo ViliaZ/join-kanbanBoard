@@ -11,6 +11,7 @@ import { EventemitterService } from 'src/services/eventemitter.service';
 
 export class MenuComponent implements OnInit {
 
+  public expandInputfield: boolean = false;
   public newBoardTitle: string = '';
   public activeNavItem: string = 'home';
   public openSettings: boolean = false;
@@ -21,6 +22,11 @@ export class MenuComponent implements OnInit {
     private eventEmitterService: EventemitterService) { }
 
   ngOnInit(): void {
+  }
+
+  stopPropagation(event: Event) {
+    console.log(event);
+    event.stopImmediatePropagation();
   }
 
   handleNewBoardAdding(){
@@ -42,10 +48,5 @@ export class MenuComponent implements OnInit {
   }
 
   newTaskPopUp() { }
-
-  // inputfield: Add a new board
-  async addNewBoard() {
-  }
-
 
 }

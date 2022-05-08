@@ -10,6 +10,7 @@
     padding-left: var(--paddingPage);
     padding-right: var(--paddingPage);
     font-size: 14px;
+    transition: all 500ms ease-in-out;
 }
 
 a {
@@ -107,7 +108,6 @@ a {
     gap: 12px;
 }
 
-
 /**** Plus Button *****/
 
 .plus-wrapper {
@@ -168,7 +168,6 @@ a {
     }
 }
 
-
 // ****** Input Search *******
 .container {
     display: flex;
@@ -180,6 +179,7 @@ a {
 form {
     color: #555;
     display: flex;
+    justify-content: flex-end;
     padding: 2px;
     border: none;
     border-radius: 5px;
@@ -187,33 +187,53 @@ form {
 }
 
 input[type="search"] {
+    width: 100%;
     border: none;
     background: transparent;
     margin: 0;
-    padding: 4px 8px;
     font-size: 14px;
+    text-align: right;
     border: unset;
     border-radius: 6px;
-}
+    padding: 4px 0px;
+    transition: all 500ms ease-in-out;
+    cursor: pointer;
 
-input[type="search"]::placeholder {
-    color: #bbb;
+    input[type="search"]::placeholder {
+        color: var(--primary-dark);
+    }
+
+    &.expandAnimation {
+        width: 100%;
+        padding: 4px 8px;
+        text-align: left;
+
+        &::placeholder {
+            color: rgb(173, 172, 172);
+        }
+    }
 }
 
 button[type="submit"] {
     text-indent: -999px;
     overflow: hidden;
-    width: 40px;
+    width: 0px;
     padding: 0;
     margin: 0;
     border: unset;
     background-color: transparent;
-    background-image: url('../../assets/img/add.svg');
+    filter: opacity(0);
+    background-image: url("../../assets/img/add.svg");
     background-size: 40%;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: left;
     cursor: pointer;
     opacity: 0.4;
+
+    &.expandAnimation {
+        width: 40px;
+        filter: opacity(1);
+    }
 }
 
 button[type="submit"]:hover {

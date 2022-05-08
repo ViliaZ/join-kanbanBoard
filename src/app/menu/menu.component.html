@@ -51,18 +51,27 @@
     </div> -->
 
 
-    <div 
+    <div
+        (click)="expandInputfield = true"
+        [class.concave]="expandInputfield"
         *ngIf="router.url.includes('board')"
-        class="container concave">
+        class="container"
+        >
         <form>
         <input 
             [(ngModel)]="newBoardTitle" 
             name="newBoardTitle"
-            (keyup.enter)="addNewBoard()"
-            placeholder="Add New Board"
+            placeholder="+ NEW BOARD"
+            [class.expandAnimation]="expandInputfield"
+            (blur)="expandInputfield=false"
             type="search"
             minlength="2">
-        <button type="submit" (click)="addNewBoard(); handleNewBoardAdding()">Add</button>
+        <button 
+            type="submit" 
+            [class.expandAnimation]="expandInputfield"
+            (click)="handleNewBoardAdding(); stopPropagation($event)" >
+            Add
+        </button>
     </form>
     </div>
 
