@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthServiceService } from 'src/services/auth-service.service';
+import { EventemitterService } from 'src/services/eventemitter.service';
 
 @Component({
   selector: 'app-menu',
@@ -16,9 +17,14 @@ export class MenuComponent implements OnInit {
 
   constructor(
     public authService: AuthServiceService, 
-    public router: Router) { }
+    public router: Router, 
+    private eventEmitterService: EventemitterService) { }
 
   ngOnInit(): void {
+  }
+
+  handleNewBoardAdding(){
+    this.eventEmitterService.onNewBoardAdding();    
   }
 
   onLogout() {

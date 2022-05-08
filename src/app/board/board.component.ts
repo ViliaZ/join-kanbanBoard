@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { catchError } from 'rxjs';
 import { Board } from 'src/models/board';
 import { AuthServiceService } from 'src/services/auth-service.service';
 import { DatabaseService } from 'src/services/database.service';
+import { EventemitterService } from 'src/services/eventemitter.service';
 import { TasksService } from 'src/services/tasks.service';
 
 @Component({
@@ -30,22 +31,33 @@ export class BoardComponent implements OnInit {
   constructor(
     public db: DatabaseService,
     public taskservice: TasksService,
-    private authService: AuthServiceService) {
+    private authService: AuthServiceService,
+    private eventEmitterService: EventemitterService) {
   }
 
   ngOnInit(): void {
     this.db.getBoardAndTaskData();
+    console.log('log', this.eventEmitterService.subscription);
+    if (this.eventEmitterService.subscription == undefined) {
+      this.eventEmitterService.subscription = this.eventEmitterService.
+        callBoardEventHandler.subscribe(() => {
+          this.addNewBoard();
+        });
+    }
   }
+
 
   // // inputfield: Add a new board
   async addNewBoard() {
+    alert('Emitter funktioniert');
+
     let duplicate = await this.checkDuplicates(this.newBoardTitle);
     if (this.newBoardTitle.length > 0 && !duplicate) {
       let newBoard = Board.getEmptyBoard(this.newBoardTitle, this.authService.currentUser.uid);  // call a static function inside of model board
       // let newBoard = { 'name': this.newBoardTitle, 'tasks': [], 'editable': false, 'createdAt': new Date().getTime() };
       this.db.addDocToCollection('boards', newBoard);
       console.log(newBoard);
-      
+
     } else {
       this.newBoardTitle = '';
       this.doublicateAlert = true

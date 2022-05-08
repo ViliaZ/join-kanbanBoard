@@ -57,11 +57,12 @@
         <form>
         <input 
             [(ngModel)]="newBoardTitle" 
+            name="newBoardTitle"
             (keyup.enter)="addNewBoard()"
             placeholder="Add New Board"
             type="search"
             minlength="2">
-        <button type="submit" (click)="addNewBoard()">Add</button>
+        <button type="submit" (click)="addNewBoard(); handleNewBoardAdding()">Add</button>
     </form>
     </div>
 
