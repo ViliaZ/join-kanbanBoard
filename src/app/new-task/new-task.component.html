@@ -25,8 +25,8 @@
         <app-validator *ngIf="newTodo.errors?.['minlength']" [text]="'Min. 3 characters'"></app-validator>
       </div>
       <!-- assign type to button, bc they are seen as submit form buttons-->
-      <button  type="button" [disabled]="newTodo.errors?.['minlength'] || newToDoItem.length == 0" (click)="handleTodo('save')">+</button>
-      <button  type="button" (click)="handleTodo('clear')">x</button>
+      <button  type="button"  class="btn-add"  [disabled]="newTodo.errors?.['minlength'] || newToDoItem.length == 0" (click)="handleTodo('save')"></button>
+      <button  type="button" class="btn-clear" (click)="handleTodo('clear')"></button>
     </div>
 
     <!-- render unchecked items -->

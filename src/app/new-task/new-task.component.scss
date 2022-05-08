@@ -94,11 +94,11 @@ button {
         align-items: flex-end;
         width: 100%;
 
-        span{
+        span {
             margin-right: 8px;
         }
 
-        .inputWrap{
+        .inputWrap {
             flex: 1;
             width: 100%;
         }
@@ -113,15 +113,40 @@ button {
             border-radius: 0px;
             border-bottom: 1px solid grey;
 
-        }
-
-        button{
-            width: 34px;
+            &::placeholder{
+                margin-left: 20px;
+            }
         }
     }
 
-    
-// only contains items
+    // buttons add and cancel
+.btn-add {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-color: transparent;
+    background-image: url(../../assets/img/add.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    cursor: pointer;
+}
+
+.btn-clear {
+    width: 24px;
+    height: 24px;
+    border: none;
+    border: none;
+    background-color: transparent;
+    background-image: url(../../assets/img/cancel.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    cursor: pointer;
+
+}
+
+    // only contains items
     .itemsContainer {
         width: 100%;
         max-height: 80px;
@@ -150,12 +175,14 @@ button {
             margin-right: 0.4rem;
             border-radius: 12%;
 
-            &:checked{
+            &:checked {
                 background-color: red;
             }
         }
     }
 }
+
+
 
 .urgency {
     display: flex;
