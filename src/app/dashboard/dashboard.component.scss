@@ -234,10 +234,6 @@ h1 {
     }
 }
 
-// Card UrgentTasks
-.urgentTasks {
-}
-
 //*********** New Task Container ************
 
 .sectionTwo {
@@ -255,16 +251,9 @@ h1 {
     border: 0.003rem solid rgba(128, 128, 128, 0.706);
     // background: var(--gradientColors);
 
-    div{
-        // color: white!important;
-    }
-
-
-
     .comingSoon{
         font-weight: var(--font-bold);
     }
-
 }
 
 .newTaskWrapper{

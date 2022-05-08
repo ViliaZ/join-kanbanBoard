@@ -49,7 +49,9 @@ export class NewTaskComponent implements OnInit {
     isPinnedToBoard: false,
     createdAt: new Date(),
     customIdName: '',
-    todos: ['hello', 'here']
+    allTodos: '',
+    uncheckedTodos: [],
+    checkedTodos: []
   }
 
   constructor(
@@ -61,9 +63,10 @@ export class NewTaskComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.taskservice.editMode) {// EDITMODE only: set current values in all inputfields
-      let taskClicked = new Task(this.taskservice.currentTask).toJsonAndDateFormatted();
+      let taskClicked = new Task(this.taskservice.currentTask).getEditmodeTask();
       this.formData = taskClicked;
       console.log('this is currenttask', new Date(this.taskservice.currentTask.dueTo));
+      console.log(this.formData);
     }
     this.setUrgencyDefault();
   }
@@ -94,14 +97,13 @@ export class NewTaskComponent implements OnInit {
       this.customCategory = '';
       this.openCategoryPopUp = false;
     }
-    if (action == 'save') {     
+    if (action == 'save') {
       this.db.categories.push(this.customCategory);
-      // this.taskservice.currentTask.category = 'testtest';
       this.formData.category = this.customCategory;
       this.openCategoryPopUp = false;
     }
   }
-// checks onchanges() for inputfield category
+  // checks onchanges() for inputfield category
   checkIfCustomCatRequested(event: any) {
     if (event.target.value == 'Custom Category' && !this.openCategoryPopUp) {
       this.openCategoryPopUp = true;
@@ -110,12 +112,11 @@ export class NewTaskComponent implements OnInit {
 
   // handle Submit of form
   async onSubmit() {
-    let task = new Task(this.formData);
-    let taskAsJson = task.toJson();
+    let task = new Task(this.formData).toJson();
     if (!this.taskservice.editMode) {
-      this.db.addDocToCollection('tasks', taskAsJson);
+      this.db.addDocToCollection('tasks', task);
     } else {
-      this.udpateEditedTask(taskAsJson);
+      this.udpateEditedTask(task);
     }
     this.resetForm();
   }
@@ -139,19 +140,24 @@ export class NewTaskComponent implements OnInit {
     this.taskservice.editMode = false;
   }
 
-  handleTodo(action: string){  
-   console.log( this.newToDoItem);
-   console.log( this.formData);
-    
+  handleTodo(action: string) {
+    console.log(this.newToDoItem);
+    console.log(this.formData);
+
     if (action == 'save') {
-      this.formData.todos.push(this.newToDoItem); 
-      console.log('save',this.newToDoItem );
-      this.newToDoItem='';
-      console.log( this.formData);
+      this.formData.uncheckedTodos.push(this.newToDoItem);
+      console.log('save', this.newToDoItem);
+      this.newToDoItem = '';
+      console.log(this.formData);
     }
     if (action == 'clear') {
-      this.newToDoItem='';
+      this.newToDoItem = '';
       console.log('clear');
     }
+  }
+
+  markChecked(indexUnchecked: number, todo: string) {
+    this.formData.checkedTodos.push(todo); 
+    this.formData.uncheckedTodos.splice(indexUnchecked,1)
   }
 }

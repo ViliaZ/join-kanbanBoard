@@ -24,7 +24,6 @@ export class DatabaseService {
   public toDoBoardExists: boolean = false;  // ToDo Board as static (undeletable) Board for EVERY User
   public guestIsInitialized: boolean = false;  // if true, guest - dummydata donot need to be created again
 
-
   constructor(
     private firestore: AngularFirestore,
     private authService: AuthServiceService) {
@@ -49,13 +48,13 @@ export class DatabaseService {
             .orderBy(sortTasksBy, sortTasksOrder))  // default sort via timestamp
           .valueChanges({ idField: 'customIdName' })
       }))
-      .subscribe(async (result) => { // result = tasks
+      .subscribe(async (result) => { // result = tasks[]
         this.emptyAllArrays();
-        this.allTasks = result as Task[];  // must be called after all Arrays are empty
+        result.forEach((task) => this.allTasks.push(new Task(task).toJson()))  // must be called after all Arrays are empty
+        // this.allTasks = result as Task[]; 
         await this.setStaticBoards();
         await this.handleTasks(result);
       });
-      
   }
 
   // create initial ToDo Board
@@ -69,6 +68,7 @@ export class DatabaseService {
 
   // Handle every task:
   async handleTasks(tasks: any) {
+    console.log(this.allTasks);
     for (let i = 0; i < tasks.length; i++) {   // async await  doesnt work on forEach --> use standard for-loop
       tasks[i].dueTo = await tasks[i].dueTo.toDate();
       await this.sortTasksToBoards(tasks[i]);

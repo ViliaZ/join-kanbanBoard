@@ -34,11 +34,12 @@
 
     <a class="logout">
         
-        <div *ngIf="this.authService.currentUser.displayName; else guest">
-            {{this.authService.currentUser.displayName}}
+        <!-- <div *ngIf="this.authService.currentUser.displayName">
+            {{ this.authService.currentUser.displayName || 'Guest' }}
         </div>
 
-        <ng-template #guest><div>Guest</div></ng-template>
+        <ng-template *ngIf="!this.authService.currentUser.displayName" #guest><div>Guest</div></ng-template> -->
+
         <div 
             *ngIf="openSettings"
             class="settingsContainer">

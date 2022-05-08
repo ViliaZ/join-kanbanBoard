@@ -21,17 +21,7 @@ export class TaskComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  // expandCard(task: any) {
-  //   if (this.tasksservice.currentTask == task) {
-  //     this.detailsRequested = false;
-  //     this.tasksservice.currentTask = {};
-  //   } else {
-  //     this.tasksservice.currentTask = task;
-  //     this.detailsRequested = true;
-  //   }
-  // }
-
+  
   // handle click on Pin Icon
   async fixTaskToTop(task: any, event: any) {
     event.stopImmediatePropagation(); // prevent opening task popup on click on task

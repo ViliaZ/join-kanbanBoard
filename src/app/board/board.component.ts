@@ -35,6 +35,7 @@ export class BoardComponent implements OnInit {
 
   ngOnInit(): void {
     this.db.getBoardAndTaskData();
+  
   }
 
   // inputfield: Add a new board
