@@ -35,10 +35,9 @@ export class BoardComponent implements OnInit {
 
   ngOnInit(): void {
     this.db.getBoardAndTaskData();
-  
   }
 
-  // inputfield: Add a new board
+  // // inputfield: Add a new board
   async addNewBoard() {
     let duplicate = await this.checkDuplicates(this.newBoardTitle);
     if (this.newBoardTitle.length > 0 && !duplicate) {

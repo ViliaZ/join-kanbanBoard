@@ -36,8 +36,9 @@ export class MenuComponent implements OnInit {
 
   newTaskPopUp() { }
 
-  // handle Inputfield to add new Board title
-  addNewBoard() {
-
+  // inputfield: Add a new board
+  async addNewBoard() {
   }
+
+
 }

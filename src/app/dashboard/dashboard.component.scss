@@ -12,7 +12,6 @@
     font-size: var(--font-normal);
 }
 
-
 h1 {
     position: relative;
     margin-bottom: 15px;
@@ -45,7 +44,7 @@ h1 {
         position: relative;
         display: flex;
         flex-direction: column;
-        margin:auto;
+        margin: auto;
         // width: fit-content;
 
         div {
@@ -178,7 +177,6 @@ h1 {
                 font-size: var(--font-small);
                 color: var(--primary-light);
                 transition: all 250ms linear;
-
             }
         }
     }
@@ -241,27 +239,28 @@ h1 {
     width: 56%;
 }
 
-.announcement{
+.announcement {
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding:  16px 34px;
+    padding: 16px 34px;
     margin-top: 12px;
     border-radius: 6px;
     border: 0.003rem solid rgba(128, 128, 128, 0.706);
     // background: var(--gradientColors);
 
-    .comingSoon{
+    .comingSoon {
         font-weight: var(--font-bold);
     }
 }
 
-.newTaskWrapper{
-width: 100%;
-height: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
+.newTaskWrapper {
+    width: 100%;
+    min-width: 400px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 app-new-task {

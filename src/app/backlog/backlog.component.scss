@@ -1,4 +1,4 @@
-:host{
+:host {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -6,18 +6,20 @@
     height: 100%;
     max-height: 100%;
     margin: auto;
-    padding: 20px  var(--paddingPage) var(--paddingPageTopBottom) var(--paddingPage) ;
+    padding: 20px var(--paddingPage) var(--paddingPageTopBottom) var(--paddingPage);
 }
 
-.body-backlog{
+.body-backlog {
     overflow: auto;
 }
 
+
+// ****** Input Search *******
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 form {
@@ -27,9 +29,9 @@ form {
     border: none;
     border-radius: 5px;
     margin: 0;
-  }
-  
-  input[type="search"] {
+}
+
+input[type="search"] {
     border: none;
     background: transparent;
     margin: 0;
@@ -37,37 +39,44 @@ form {
     font-size: 14px;
     border: unset;
     border-radius: 6px;
-  }
-  
-  input[type="search"]::placeholder {
+}
+
+input[type="search"]::placeholder {
     color: #bbb;
-  }
-  
-  button[type="submit"] {
+}
+
+button[type="submit"] {
     text-indent: -999px;
     overflow: hidden;
     width: 40px;
     padding: 0;
     margin: 0;
     border: unset;
-    background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E") no-repeat center;
+    background: transparent
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E")
+        no-repeat center;
     cursor: pointer;
     opacity: 0.5;
-  }
-  
-  button[type="submit"]:hover {
-    opacity: 1;
-  }
-  
-  button[type="submit"]:focus,
-input[type="search"]:focus {
-  outline: none;
+}
 
-  &::-webkit-search-cancel-button{
-    filter: brightness(0) saturate(1) opacity(0.4);
-    cursor: pointer;
+button[type="submit"]:hover {
+    opacity: 1;
 }
+
+button[type="submit"]:focus,
+input[type="search"]:focus {
+    outline: none;
+
+    &::-webkit-search-cancel-button {
+        filter: brightness(0) saturate(1) opacity(0.4);
+        cursor: pointer;
+    }
 }
+
+// ****** *******
+
+
+
 .backlogSettings {
     display: flex;
     justify-content: flex-end;
@@ -76,19 +85,19 @@ input[type="search"]:focus {
     padding: 20px 0px 36px 0px;
 }
 
-.sortBy{
+.sortBy {
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
 
-    img{
+    img {
         height: 16px;
         width: 16px;
         margin-right: 10px;
         transition: all 200ms ease-in-out;
 
-        &:hover{
+        &:hover {
             filter: opacity(0.5);
         }
     }
@@ -103,7 +112,7 @@ input[type="search"]:focus {
     border-radius: 12px;
     text-align: center;
 
-    img{
+    img {
         width: 200px;
         filter: opacity(0.6);
         margin-bottom: 40px;
@@ -131,7 +140,7 @@ input[type="search"]:focus {
     min-height: 124px;
 
     // user image
-    img {  
+    img {
         border-radius: 8px;
         width: 45px;
         height: 45px;
@@ -153,7 +162,7 @@ input[type="search"]:focus {
 .information {
     .urgency {
         padding: 0px 8px 1px 8px;
-        background-color:var(--urgency-low);
+        background-color: var(--urgency-low);
         text-align: center;
         border-radius: 6px;
         margin-top: 4px;
@@ -163,10 +172,8 @@ input[type="search"]:focus {
     .date {
         color: lightgrey;
         color: rgb(158, 157, 157);
-        }
+    }
 }
-
-
 
 .text {
     flex: 1;
@@ -199,6 +206,6 @@ input[type="search"]:focus {
     }
 }
 
-.hide{
+.hide {
     display: none;
 }

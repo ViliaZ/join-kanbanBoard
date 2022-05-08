@@ -1,21 +1,3 @@
-<!-- ALERTS  -->
-<div class="board-top">
-    <div class="alerts">
-        <div *ngIf="doublicateAlert && !deleteBoardAlert" class="alertbox">
-            <img src="assets/img/alertDelete.svg" alt="alert">
-            Invalid choice: Title can`t be empty or already existing.
-        </div>
-
-        <div *ngIf="deleteBoardAlert && !doublicateAlert" class="alertDelete">
-            <img src="assets/img/alertDelete.svg" alt="alert">
-            Please confirm deletion. This will include all board tasks.
-            <button (click)="confirmDelete()" id="confirm" class="convex">Confirm</button>
-            <button (click)="deleteBoardAlert = false" class="convex">Cancel</button>
-        </div>
-    </div>
-</div>
-
-
 <div class="body-board">
        <!-- COLUMN  -->
     <div *ngFor="let board of db.boards; index as i" class="board">
@@ -74,6 +56,23 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- ALERTS  -->
+<div class="alertContainer">
+    <div class="alerts">
+        <div *ngIf="doublicateAlert && !deleteBoardAlert" class="alertbox">
+            <img src="assets/img/alertDelete.svg" alt="alert">
+            Invalid choice: Title can`t be empty or already existing.
+        </div>
+
+        <div *ngIf="deleteBoardAlert && !doublicateAlert" class="alertDelete">
+            <img src="assets/img/alertDelete.svg" alt="alert">
+            Please confirm deletion. This will include all board tasks.
+            <button (click)="confirmDelete()" id="confirm" class="convex">Confirm</button>
+            <button (click)="deleteBoardAlert = false" class="convex">Cancel</button>
         </div>
     </div>
 </div>

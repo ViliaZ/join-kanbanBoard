@@ -6,7 +6,7 @@
     flex-direction: column;
     border-radius: 12px;
 
-    // width: 55%!important;
+    min-width: 380px;
     border-radius: 12px;
     margin-top: 12px;
     padding: 64px 54px;
@@ -23,6 +23,7 @@ form {
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
+    min-width: 380px;
     height: fit-content;
     gap: 18px;
     border-radius: 12px;
@@ -143,7 +144,6 @@ button {
     background-repeat: no-repeat;
     background-size: 50%;
     cursor: pointer;
-
 }
 
     // only contains items
@@ -176,7 +176,6 @@ button {
             border-radius: 12%;
 
             &:checked {
-                background-color: red;
             }
         }
     }
@@ -191,7 +190,7 @@ button {
 
     input {
         width: 33%;
-        padding: 8px 16px;
+        padding: 2px 16px;
         border: none;
         display: none;
     }

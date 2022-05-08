@@ -42,19 +42,27 @@
 <div class="sectionRight">
 
     <!-- INPUTFIELD NEW BOARD  -->
+
+    <!-- <div class="container concave">
+        <form>
+            <input [(ngModel)]="searchInput" name="searchInput" type="search" placeholder="Search...">
+            <button type="submit">Search</button>
+          </form>
+    </div> -->
+
+
     <div 
         *ngIf="router.url.includes('board')"
-        class="addNewBoard">
+        class="container concave">
+        <form>
         <input 
             [(ngModel)]="newBoardTitle" 
             (keyup.enter)="addNewBoard()"
-            placeholder="New Board"
-            class="concave"
-            type="text"
+            placeholder="Add New Board"
+            type="search"
             minlength="2">
-        <button class="convex" (click)="addNewBoard()">
-            Add
-        </button>
+        <button type="submit" (click)="addNewBoard()">Add</button>
+    </form>
     </div>
 
     <div 
