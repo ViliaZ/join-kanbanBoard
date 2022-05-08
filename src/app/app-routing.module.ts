@@ -9,7 +9,7 @@ import { LogoutSuccessComponent } from './logout-success/logout-success.componen
 import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
-{ path: '', component: DashboardComponent },
+{ path: '', redirectTo: 'home', pathMatch: 'full' },
 { path: 'home', component: DashboardComponent },
 { path: 'login', component: LoginPageComponent },
 { path: 'imprint', component: ImprintComponent },
