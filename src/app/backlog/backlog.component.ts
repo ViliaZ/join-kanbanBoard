@@ -9,8 +9,9 @@ import { TasksService } from 'src/services/tasks.service';
 })
 export class BacklogComponent implements OnInit {
 
+  public searchItemFound: boolean = false; // alerts if search doesnt find result
   public searchInput: string = '';
-  public activeSearch: CallableFunction = () => { return (this.searchInput.length > 3) }
+  public activeSearch: CallableFunction = () => {return (this.searchInput.length > 0) }
   public orderBacklogtasks: string = 'desc'
 
   constructor(public db: DatabaseService, public taskservice: TasksService) {
@@ -18,15 +19,14 @@ export class BacklogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.db.getBoardAndTaskData();
+    this.db.getBoardAndTaskData();   
   }
 
+  // returns boolean
   evaluateSearchRequest(task: any): any {
-    console.log('serach');
-    
-    let taskToString = JSON.stringify(task);
-    let toLowerCaseString = taskToString.toLowerCase()
-    return toLowerCaseString.includes(this.searchInput.toLowerCase())
+      let taskToString = JSON.stringify(task).toLowerCase();
+      let searchItemFound = taskToString.includes(this.searchInput.toLowerCase());
+      return searchItemFound  // boolean
   }
 
   moveToBoardToDo(idInFirestore: string) {

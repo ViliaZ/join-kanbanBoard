@@ -11,9 +11,10 @@
     </div>
 </div>
 
+
 <div class="body-backlog">
 
-    <div *ngFor="let task of db.backlogtasks; index as i" [class.hide]="activeSearch && !evaluateSearchRequest(task)"
+    <div *ngFor="let task of db.backlogtasks; index as i" [class.hide]="activeSearch() && !evaluateSearchRequest(task)"
         class="wrapper">
 
         <div class="taskContainer">
