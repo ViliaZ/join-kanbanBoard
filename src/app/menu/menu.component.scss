@@ -12,7 +12,7 @@
     font-size: 14px;
 }
 
-a{
+a {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,13 +22,17 @@ a{
     padding: 4px 16px;
 }
 
-
-
-.icon{
-    width: 16px;
-    height: 16px;
-    cursor:pointer;
+.icon {
+    width: 12px;
+    height: 12px;
+    margin-left: 8px;
+    cursor: pointer;
     filter: invert(19%) sepia(83%) saturate(707%) hue-rotate(248deg) brightness(47%) contrast(92%);
+}
+
+.icon-user {
+    width: 32px;
+    height: 32px;
 }
 
 .border-bottom {
@@ -40,67 +44,55 @@ a{
     bottom: 0;
 }
 
-.sectionLeft{
-    display: flex;
-    align-items: center;
-    
-    gap: 1em;
-}
-
-.sectionRight{
-    display: flex;
-    align-items: center;
-    gap: 1em;
-
-    a{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-      &:hover div{
-          color: var(--hover);
-      }
-    }
-
-
-    img{
-        margin-left: 8px;
-    }
-}
-
-
-.home{
+.sectionLeft {
     position: relative;
     display: flex;
-    justify-content: center;
     align-items: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 6px;
+    gap: 1em;
 
-    .tooltiptext{
+    .settingsContainer {
         position: absolute;
-        background-color: white;
-        border-radius: 6px;
-        padding: 2px 6px;
-        top: -26px;
-        left: -12px;
-        font-size: 12px;
-        filter: opacity(0);
-        transition: all 200ms ease-in;
-    }
+        z-index: 100;
+        bottom: 0;
+        left: 0;
+        padding-top: 20px;
+        transform: translateY(78%);
+        transform-origin: top;
 
-    &:hover .tooltiptext{
-    filter: opacity(1);
+        .settingContent {
+            background-color: white;
+            width: fit-content;
+            border-radius: 6px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            .name{
+                font-size: var(--font-small);
+                border-bottom: 1px solid lightgrey;
+                padding-bottom: 4px;
+                color: rgb(181, 181, 181);
+            }
+             a {
+                &:hover {
+                    color: var(--accent1);
+                }
+            }
+        }
+
+        a {
+            padding: unset;
+            height: unset;
+        }
+
+        .logout {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
     }
 }
 
-
-
-.logout {
-    padding: 4px 0px!important;
-div{
-    display: flex;
-    align-items: center;
-}
+.sectionRight {
 }

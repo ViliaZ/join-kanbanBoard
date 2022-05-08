@@ -3,52 +3,52 @@
 
 
 <div class="sectionLeft">
+
     <div 
-        class="home">
-        <a 
-            routerLink="/"
-            routerLinkActive="concave-btn"
-            [routerLinkActiveOptions]="{ exact: true }"
-            >
-                <img class="icon" src="assets/img/Logo.svg">
-                <span class="tooltiptext">HOME</span>
-        </a>
+        *ngIf="openSettings" class="settingsContainer"
+        (mouseenter)="openSettings = true" 
+        (mouseleave)="openSettings = false">
+
+        <div class="settingContent">
+            <div class="name"> {{ this.authService.currentUser.displayName || 'Guest User' }}</div>
+            <div class="logout settingEl" >
+                <a routerLink="/logout" >Logout</a>
+                <img  (click)="onLogout()" class="icon" src="assets/img/logout.png" alt="logout">
+            </div>
+            <div><a routerLink="/imprint" >Imprint</a></div>
+        </div>
+
     </div>
 
-    <a 
-        routerLink="/backlog"
-        routerLinkActive="concave-btn">
-        BACKLOG 
-    </a>
-
-    <a 
-        routerLink="/board"
-        routerLinkActive="concave-btn">
-        BOARDS
-    </a>
-
-</div>
-
-<div class="sectionRight">
-    <a routerLink="/imprint" routerLinkActive="concave-btn">IMPRINT</a>
+    <div>
+        <img  (mouseenter)="openSettings = true" (click)="toggleSettings()" class="icon-user" src="assets/img/user.svg" alt="logout">
+    </div>
 
     <a class="logout">
-        
         <!-- <div *ngIf="this.authService.currentUser.displayName">
             {{ this.authService.currentUser.displayName || 'Guest' }}
         </div>
 
         <ng-template *ngIf="!this.authService.currentUser.displayName" #guest><div>Guest</div></ng-template> -->
 
-        <div 
-            *ngIf="openSettings"
-            class="settingsContainer">
-            <div>
-                <img (click)="onLogout()" class="icon" src="assets/img/logout.png" alt="logout">
-            </div>
-        </div>
-        <div>
-            <img (click)="toggleSettings()" class="icon" src="assets/img/user.svg" alt="logout">
-        </div>
+  
     </a>
+
+
+    <a routerLink="/" routerLinkActive="concave-btn" [routerLinkActiveOptions]="{ exact: true }">
+        HOME
+    </a>
+
+
+    <a routerLink="/backlog" routerLinkActive="concave-btn">
+        BACKLOG
+    </a>
+
+    <a routerLink="/board" routerLinkActive="concave-btn">
+        BOARDS
+    </a>
+
+</div>
+
+<div class="sectionRight">
 </div>
