@@ -13,7 +13,7 @@
         font-weight: var(--font-light);
         transform: translateX(50px) translateY(10px);
         filter: opacity(0.2);
-        animation: entryOpacity 5s  ease-in-out forwards;
+        animation: entryOpacity 2.4s  ease-in-out forwards;
     }
 }
 // easy entry animation
@@ -62,7 +62,7 @@
             rgba(233, 62, 199, 1) 100%
         );
 
-        animation: entryStroke 6s ease-in-out forwards;
+        animation: entryStroke 4s ease-in-out forwards;
     }
 
     @keyframes entryStroke {
@@ -78,11 +78,11 @@
             right: unset;
             height: 3px;
             width: 0%;
-            filter: opacity(0.6);
+            filter: opacity(0.5);
         }
         50% {
             left: 0;
-            right: 0;
+            right: unset;
             height: 6px;
             width: 100%;
             filter: opacity(1);
@@ -109,7 +109,7 @@
     transform: translateX(65%);
     translate: all ease-in-out;
     animation: Janimate 7s ease-in-out forwards;
-    animation-delay: 1.5s;
+    animation-delay: 0.5s;
     filter: opacity(0);
 
     @keyframes Janimate {
@@ -134,10 +134,9 @@
 
 .o {
     z-index: 8;
-    // transform: translateX(65%);
     translate: all ease-in-out;
-    animation: oToLeft 4s ease-in-out forwards;
-    animation-delay: 3.2s;
+    animation: oToLeft 3s ease-in-out forwards;
+    animation-delay: 1.2s;
     filter: opacity(0);
 
     @keyframes oToLeft {
@@ -145,7 +144,7 @@
             transform: translateX(0%);
             filter: opacity(0);
         }
-        70% {
+        60% {
             transform: translateX(-18%);
             filter: opacity(1);
         }
@@ -160,7 +159,7 @@
     z-index: 10;
     translate: all ease-in-out;
     animation: iToLeft 4s ease-in-out forwards;
-    animation-delay: 3.8s;
+    animation-delay: 1.4s;
     filter: opacity(0);
 
     @keyframes iToLeft {
@@ -168,8 +167,8 @@
             transform: translateX(0%);
             filter: opacity(0);
         }
-        50% {
-            transform: translateX(-96%);
+        60% {
+            transform: translateX(-86%);
             filter: opacity(1);
         }
         100% {
@@ -183,8 +182,8 @@
     position: relative;
     z-index: 8;
     translate: all ease-in-out;
-    animation: nToLeft 5s ease-in-out forwards;
-    animation-delay: 4.2s;
+    animation: nToLeft 6s ease-in-out forwards;
+    animation-delay: 1.8s;
     filter: opacity(0);
 
     @keyframes nToLeft {
@@ -192,8 +191,12 @@
             transform: translateX(0%);
             filter: opacity(0);
         }
-        50% {
-            transform: translateX(-62%);
+        40% {
+            transform: translateX(-48%);
+            filter: opacity(1);
+        }
+        80% {
+            transform: translateX(-18%);
             filter: opacity(1);
         }
         100% {
@@ -211,8 +214,8 @@
     height: 6px;
     border-radius: 2px;
     background-color: rgba(240, 104, 188, 0.822);
-    animation: horizontalLine 1s ease-in-out forwards;
-    animation-delay: 1.5s;
+    animation: horizontalLine 2s ease-in-out forwards;
+    animation-delay: 0.5s;
 
     &:after {
         position: absolute;
@@ -225,12 +228,12 @@
         border-radius: 2px;
         background-color: rgba(248, 232, 0, 0.87);
         animation: verticalLine 1.3s ease-in-out forwards;
-        animation-delay: 3.5s;
+        animation-delay: 3s;
     }
 
     @keyframes verticalLine {
         0% {
-            filter: opacity(0);
+            filter: opacity(0.3);
             height: 0px;
         }
         100% {
