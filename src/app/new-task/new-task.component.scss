@@ -5,7 +5,6 @@
     justify-content: space-between;
     flex-direction: column;
     border-radius: 12px;
-
     min-width: 380px;
     border-radius: 12px;
     margin-top: 12px;
@@ -29,7 +28,8 @@ form {
     border-radius: 12px;
 }
 ::placeholder {
-    color: grey;
+    color: rgba(128, 128, 128, 0.581);
+    font-size: 16px !important;
 }
 
 .borderRadiusAdjust {
@@ -39,7 +39,7 @@ form {
 
 input,
 select {
-    font-size: var(--font-normal) !important;
+    font-size: 16px !important;
     width: 100%;
     height: 42px;
     background-color: transparent;
@@ -114,74 +114,82 @@ button {
             border-radius: 0px;
             border-bottom: 1px solid grey;
 
-            &::placeholder{
+            &::placeholder {
                 margin-left: 20px;
             }
         }
     }
 
-    // buttons add and cancel
-.btn-add {
-    width: 24px;
-    height: 24px;
-    border: none;
-    background-color: transparent;
-    background-image: url(../../assets/img/add.svg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 50%;
-    cursor: pointer;
-}
+    // buttons add and cancel new Todos (Checklist)
 
-.btn-clear {
-    width: 24px;
-    height: 24px;
-    border: none;
-    border: none;
-    background-color: transparent;
-    background-image: url(../../assets/img/cancel.svg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 50%;
-    cursor: pointer;
-}
+    .default-btn {
+        display: flex;
+        gap: 0.2em;
 
-    // only contains items
-    .itemsContainer {
-        width: 100%;
-        max-height: 80px;
-        overflow: auto;
-        margin-top: 8px;
-
-        .row {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            align-items: center;
-            width: 50%;
-            overflow-x: auto;
+        .btn-icon {
+            width: 24px;
+            height: 24px;
         }
+    }
+    // add new todo item to checklist
+    .btn-add {
+        width: 24px;
+        height: 24px;
+        border: none;
+        background-color: transparent;
+        background-image: url(../../assets/img/add.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 50%;
+        cursor: pointer;
+    }
 
-        label {
-            overflow-x: hide;
-        }
-
-        input[type="checkbox"] {
-            height: 14px !important;
-            width: 14px !important;
-            min-height: 14px;
-            min-width: 14px;
-            margin-right: 0.4rem;
-            border-radius: 12%;
-
-            &:checked {
-            }
-        }
+    .btn-clear {
+        width: 24px;
+        height: 24px;
+        border: none;
+        background-color: transparent;
+        background-image: url(../../assets/img/cancel.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 50%;
+        cursor: pointer;
     }
 }
 
+// contains checklist items
+.itemsContainer {
+    width: 100%;
+    max-height: 80px;
+    overflow: auto;
+    margin-top: 8px;
 
+    .row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        width: 50%;
+        overflow-x: auto;
+    }
+
+    label {
+        overflow-x: hide;
+    }
+
+    input[type="checkbox"] {
+        height: 14px !important;
+        width: 14px !important;
+        min-height: 14px;
+        min-width: 14px;
+        margin-right: 0.4rem;
+        border-radius: 12%;
+
+        &:checked {
+        }
+    }
+}
 
 .urgency {
     display: flex;
@@ -206,7 +214,7 @@ button {
         background-color: var(--bg);
     }
 
-    img{
+    img {
         width: 18px;
         height: 18px;
         margin-right: 4px;
@@ -268,7 +276,7 @@ button {
             padding-left: 4px;
             padding-right: 4px;
             font-size: var(--font-small);
-            color: var(--primary-dark);
+            color: var(--primary-light);
             border: unset;
             background-color: var(--accent1);
 
@@ -290,18 +298,13 @@ button {
     }
 }
 
-// SAVE TASK TO BOARD INPUT
+// MAIN SAVE BUTTON
 .addTask {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 1em;
     font-style: italic;
-
-    span {
-        margin-left: 8px;
-        margin-right: 4px;
-    }
 }
 
 .selectSave {
@@ -313,28 +316,70 @@ button {
     font-style: italic;
 }
 
-// save-Button
+// two main buttons
 .buttons {
     display: flex;
     gap: 12px;
 
     .button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
         border: none;
         border-radius: 6px;
         width: 124px;
-        height: 42px;
+        height: 36px;
         background-color: var(--accent1);
-        color: var(--primary-light);
+
+        span {
+            color: var(--primary-light);
+            font-weight: 500;
+        }
+
+        img {
+            filter: invert(1);
+        }
     }
 
     button:disabled {
         background-color: var(--bg);
         color: var(--primary-dark);
+        border: 1px solid var(--accent1);
+
+        span {
+            color: var(--accent1);
+        }
+
+        img {
+            filter: invert(0);
+        }
     }
 
     .btn-cancel {
+        background-color: unset !important;
+
+        span{
+            color: var(--primary-dark)!important;
+            font-weight: unset; 
+        }
+        img{
+            filter: none;
+        }
+    }
+
+    .btn-clear {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
         background-color: unset;
-        border: 1px solid var(--accent1);
-        color: var(--accent1);
+        border: none;
+        
+    }
+
+    img {
+        width: 12px;
+        height: 12px;
     }
 }

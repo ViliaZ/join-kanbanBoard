@@ -1,14 +1,12 @@
 <app-menu
-  *ngIf=" router.url === '/' || router.url.includes('home') || router.url.includes('board') || router.url.includes('backlog') || router.url.includes('imprint')">
+  *ngIf="!taskservice.taskPopupOpen && (router.url === '/' || router.url.includes('home') || router.url.includes('board') || router.url.includes('backlog') || router.url.includes('imprint'))">
 </app-menu>
 
 <div class="main">
   <router-outlet></router-outlet>
-  <app-new-task *ngIf="!taskservice.taskPopupOpen; else asPopup"></app-new-task>
 </div>
 
-<ng-template #asPopup>
-  <app-new-task class="asOverlay"></app-new-task>
-</ng-template>
+<app-new-task *ngIf="taskservice.taskPopupOpen" class="asOverlay"></app-new-task>
+
 
 <div *ngIf="this.taskservice.taskPopupOpen" class="blurOverlay"></div>

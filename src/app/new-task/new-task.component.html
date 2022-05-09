@@ -116,21 +116,36 @@
 
   <div class="addTask">
     <div>
-      <span>Add Task to</span>
+      <span>Save to</span>
       <select class="selectSave" [(ngModel)]="formData.board" name="board">
         <option [selected] value="backlog">Backlog</option>
         <option *ngFor="let board of db.boards">{{ board.name }}</option>
       </select>
     </div>
 
+
+
+
     <!-- Buttons -->
+
     <div class="buttons">
-      <button type="submit" [disabled]="!form.valid" class="button default-btn">
-        Save
-      </button>
+
       <button *ngIf="taskservice.taskPopupOpen" (click)="closeWithoutSave()" class="button btn-cancel default-btn">
-        Cancel
+        <img class="btn-main" src="assets/img/cancel.svg" alt="save">
+        <span>Cancel</span> 
       </button>
+
+      
+      <button *ngIf="!taskservice.taskPopupOpen" (click)="closeWithoutSave()" class="btn-clear">
+        <img class="btn-clear" src="assets/img/cancel.svg" alt="save">
+        <span>Clear</span> 
+      </button>
+
+      <button type="submit" [disabled]="!form.valid" class="button default-btn btn-save">
+        <img  src="assets/img/add.svg" alt="save">
+        <span>Save</span>
+      </button>
+
     </div>
   </div>
 </form>
