@@ -9,7 +9,7 @@
     border-radius: 12px;
     margin-top: 12px;
     padding: 32px 54px;
-    box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    // box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     border-color: #d2ddef !important;
 }
 
@@ -350,6 +350,10 @@ button {
     font-style: italic;
 }
 
+svg {
+    fill: currentColor;
+}
+
 // two main buttons
 .buttons {
     display: flex;
@@ -366,27 +370,27 @@ button {
         height: 36px;
         background-color: var(--accent1);
 
-        span {
-            color: var(--primary-light);
-            font-weight: 500;
+        svg {
+            stroke: var(--primary-light);
         }
 
-        img {
-            filter: invert(1);
+        span {
+            font-weight: 500;
+            color:  var(--primary-light);
         }
     }
 
     button:disabled {
         background-color: var(--bg);
-        color: var(--primary-dark);
-        border: 1px solid var(--accent1);
+        color: var(--accent1);
+        border: 1px solid currentColor;
 
         span {
             color: var(--accent1);
         }
 
-        img {
-            filter: invert(0);
+        svg {
+            stroke: var(--accent1);
         }
     }
 
@@ -396,9 +400,6 @@ button {
         span {
             color: var(--primary-dark) !important;
             font-weight: unset;
-        }
-        img {
-            filter: none;
         }
     }
 
@@ -411,7 +412,7 @@ button {
         border: none;
     }
 
-    img {
+    svg {
         width: 12px;
         height: 12px;
     }

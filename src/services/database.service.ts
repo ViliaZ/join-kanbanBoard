@@ -30,7 +30,7 @@ export class DatabaseService {
   }
 
   // switchmap: https://blog.angular-university.io/rxjs-switchmap-operator/
-  getBoardAndTaskData( // all parameters are defined by me
+  async getBoardAndTaskData( // all parameters are defined by me
     sortBoardsBy: string = 'createdAt',
     sortBoardOrder: any = 'asc',
     sortTasksBy: string = 'dueTo',

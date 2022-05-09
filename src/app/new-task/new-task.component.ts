@@ -75,7 +75,7 @@ export class NewTaskComponent implements OnInit {
   setUrgencyDefault() {
     let activeUrgency: string;
     if (!this.taskservice.editMode) {
-      activeUrgency = 'normal';
+      activeUrgency = 'medium';
     }
     else {
       activeUrgency = this.taskservice.currentTask.urgency;
@@ -112,10 +112,12 @@ export class NewTaskComponent implements OnInit {
 
   // handle Submit of form
   async onSubmit() {
+    alert('save ausgeführt')
     let task = new Task(this.formData).toJson();
     if (!this.taskservice.editMode) {
+      console.log('saved dieser Task', task);
       this.db.addDocToCollection('tasks', task);
-    } else {
+    } else {      
       this.udpateEditedTask(task);
     }
     this.resetForm();
@@ -128,6 +130,7 @@ export class NewTaskComponent implements OnInit {
     this.taskservice.taskPopupOpen = false;
     this.setUrgencyButtonColor('normal');
   }
+
   udpateEditedTask(taskAsJson: any) {
     this.db.updateDoc('tasks', this.formData.customIdName, taskAsJson);
     this.taskservice.currentTask = {};
@@ -141,8 +144,6 @@ export class NewTaskComponent implements OnInit {
   }
 
   handleTodo(action: string) {
-    console.log('formData',this.formData);
-
     if (action == 'save') {
       this.formData.uncheckedTodos.push(this.newToDoItem);
       console.log('save', this.newToDoItem);

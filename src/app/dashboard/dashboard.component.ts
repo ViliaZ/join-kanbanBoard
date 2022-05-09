@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
+import { initializeApp } from 'firebase/app';
 import { AuthServiceService } from 'src/services/auth-service.service';
 import { DatabaseService } from 'src/services/database.service';
 
@@ -11,8 +12,6 @@ import { DatabaseService } from 'src/services/database.service';
 })
 export class DashboardComponent implements OnInit {
 
-  
-  currentUser!: any;
   variable: string = '';
   currentDate: any = new Date().getTime();
   public amountUrgentTasks: any = '0'; // default
@@ -24,22 +23,22 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     public db: DatabaseService,
-    public authService: AuthServiceService) {
-      
-     }
+    public authService: AuthServiceService) { }
 
-  ngOnInit(): void {
-    this.currentUser = this.authService.currentUser;
-    this.db.getBoardAndTaskData();
-
-    setTimeout(() => {
-      // console.log('dashboard', this.db.guestIsInitialized);
-      this.getCurrentStatistics();
-    }, 2000)
+  ngOnInit(): void {    
+    this.init();
+    // setTimeout(() => {
+    //   this.getStatistics();
+    // }, 2000)
   }
 
+  async init(){
+    await this.db.getBoardAndTaskData();
+    this.getStatistics();
+  }
   
-  getCurrentStatistics() {
+  getStatistics() {
+    console.log('alltasks',this.db.allTasks);
     if (this.db.allTasks.length > 0) {
       this.width.allTasks = '100%';
       this.getWidthToDoTasks();
