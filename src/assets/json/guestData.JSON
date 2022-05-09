@@ -2,20 +2,20 @@
   "dummyBoards": [{
       "name": "DummyBoardOne",
       "tasks": [],
-      "editable": "true",
-      "createdAt": ""
+      "editable": false,
+      "createdAt": "05/06/2022"
     },
     {
       "name": "DummyBoardTwo",
       "tasks": [],
-      "editable": "true",
-      "createdAt": ""
+      "editable": false,
+      "createdAt": "04/06/2022"
     },
     {
       "name": "DummyBoardThree",
       "tasks": [],
-      "editable": "true",
-      "createdAt": ""
+      "editable": false,
+      "createdAt": "03/06/2022"
     }
   ],
   "dummyTasks": [

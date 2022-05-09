@@ -13,7 +13,6 @@
     overflow: auto;
 }
 
-
 // ****** Input Search *******
 .container {
     display: flex;
@@ -74,8 +73,6 @@ input[type="search"]:focus {
 }
 
 // ****** *******
-
-
 
 .backlogSettings {
     display: flex;
@@ -163,18 +160,37 @@ input[type="search"]:focus {
 .information {
     .urgency {
         padding: 0px 8px 1px 8px;
-        background-color: var(--urgency-low);
+        color: white;
         text-align: center;
         border-radius: 6px;
         margin-top: 4px;
         margin-bottom: 4px;
         font-size: 12px;
     }
+
+    .low {
+        background-color: rgba(239, 204, 66, 0.767)!important;
+    }
+    .medium {
+        background: rgb(245, 228, 7);
+        background: linear-gradient(
+            302deg,
+            rgba(245, 228, 7, 0.578890931372549) 7%,
+            rgba(241, 49, 190, 0.528470763305322) 74%
+        );
+    }
+    .urgent {
+        background-color: rgba(233, 0, 183, 0.393)!important;
+    }
+
     .date {
         color: lightgrey;
         color: rgb(158, 157, 157);
+        font-size: var(--font-small);
     }
 }
+
+
 
 .text {
     flex: 1;

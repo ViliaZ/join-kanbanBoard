@@ -94,7 +94,7 @@ export class Task {
             checkedTodos: [],
             createdAt: new Date(),
             dueTo: new Date(),
-            urgency: 'normal',
+            urgency: 'medium',
             board: 'backlog',
             category: '',
             responsibility: 'Guest',

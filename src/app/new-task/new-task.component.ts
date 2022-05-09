@@ -42,7 +42,7 @@ export class NewTaskComponent implements OnInit {
     title: '',
     description: '',
     dueTo: new Date(),
-    urgency: 'normal',
+    urgency: 'medium',
     board: 'backlog',
     category: '',
     responsibility: 'Guest',
@@ -84,7 +84,7 @@ export class NewTaskComponent implements OnInit {
   }
 
   // set color for selected urgency button
-  setUrgencyButtonColor(activeUrgency: string = 'normal') {
+  setUrgencyButtonColor(activeUrgency: string = 'medium') {
     this.activeUrgency = activeUrgency;
   }
 
@@ -141,8 +141,7 @@ export class NewTaskComponent implements OnInit {
   }
 
   handleTodo(action: string) {
-    console.log(this.newToDoItem);
-    console.log(this.formData);
+    console.log('formData',this.formData);
 
     if (action == 'save') {
       this.formData.uncheckedTodos.push(this.newToDoItem);

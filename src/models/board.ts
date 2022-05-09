@@ -17,7 +17,7 @@ export class Board {
         this.name = obj ? obj.name : '';
         this.createdAt = obj ? obj.createdAt  : new Date();
         this.creator = this.service.currentUser.uid;
-        this.editable = obj ? obj.editable : true
+        this.editable = obj ? obj.editable : false
         this.tasks = obj ? obj.tasks : [];
     }
 
@@ -36,7 +36,7 @@ export class Board {
             name: boardName,
             createdAt: new Date().getTime(),
             creator: creatorUiD,
-            editable: true,
+            editable: false,
             tasks: []
         }
     }

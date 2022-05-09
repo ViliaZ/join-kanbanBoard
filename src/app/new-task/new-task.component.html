@@ -15,15 +15,19 @@
       </textarea>
   </div>
 
+
+
   <!-- CHECKLIST ITEMS / TODOs -->
   <div class="todoItems">
+
     <div class="itemsHeadline posRel">
       <span>Checklist:</span>
       <div class="inputWrap posRel">
-        <input #newTodo="ngModel" (keyup.enter)="handleTodo('save')" [(ngModel)]="newToDoItem" name="todos" type="text"
+        <input #newTodo="ngModel" [(ngModel)]="newToDoItem" name="todos" type="text"
           placeholder=" + Add New Item " minlength="3">
         <app-validator *ngIf="newTodo.errors?.['minlength']" [text]="'Min. 3 characters'"></app-validator>
       </div>
+
       <!-- assign type to button, bc they are seen as submit form buttons-->
       <button  type="button"  class="btn-add"  [disabled]="newTodo.errors?.['minlength'] || newToDoItem.length == 0" (click)="handleTodo('save')"></button>
       <button  type="button" class="btn-clear" (click)="handleTodo('clear')"></button>
@@ -62,12 +66,12 @@
     </label>
     <input id="low" type="radio" value="low" name="urgency" [(ngModel)]="formData.urgency">
 
-    <label for="normal" [class.activeButton]="activeUrgency == 'normal'" 
-      (click)="setUrgencyButtonColor('normal')">
+    <label for="medium" [class.activeButton]="activeUrgency == 'medium'" 
+      (click)="setUrgencyButtonColor('medium')">
       <img src="assets/img/mediumprio.svg" alt="highprio">
       Medium
     </label>
-    <input id="normal" type="radio" value="normal" name="urgency" [(ngModel)]="formData.urgency">
+    <input id="medium" type="radio" value="medium" name="urgency" [(ngModel)]="formData.urgency">
 
     <label for="urgent" [class.activeButton]="activeUrgency == 'urgent'" 
       (click)="setUrgencyButtonColor('urgent')">
@@ -77,8 +81,6 @@
     <input id="urgent" type="radio" value="urgent" name="urgency" [(ngModel)]="formData.urgency">
   </div>
 
-
-  
 
   <div class="category">
     <select required (change)="handleCustomCategory('checkIfCustomRequest', $event)" #catSelect
@@ -118,16 +120,14 @@
   </div>
 
   <div class="addTask">
-    <div>
+
+    <div class="containerLeft">
       <span>Save to</span>
       <select class="selectSave" [(ngModel)]="formData.board" name="board">
         <option [selected] value="backlog">Backlog</option>
         <option *ngFor="let board of db.boards">{{ board.name }}</option>
       </select>
     </div>
-
-
-
 
     <!-- Buttons -->
 

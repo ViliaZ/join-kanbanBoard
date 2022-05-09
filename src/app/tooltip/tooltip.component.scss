@@ -1,0 +1,23 @@
+:host{
+    position: absolute; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-light);
+    bottom: 0px;
+    transform: translateY(80%); 
+    left: 0px; 
+    padding: 4px 8px 4px 8px; 
+    width: 100%;
+    font-size: var(--font-small);
+    border-radius: 4px;
+
+    p{
+        color: var(--accent1)!important;
+    }
+
+    .alignTop{
+        transform: translateY(0%)!important; 
+
+    }
+}

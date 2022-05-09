@@ -18,12 +18,12 @@
     margin-bottom: 32px;
     color: var(--accent1);
 
-    &::after{
+    &::after {
         position: absolute;
         bottom: -8px;
         left: 50%;
         transform: translateX(-50%);
-        content:'';
+        content: "";
         width: 65%;
         height: 0.04rem;
         background-color: lightgrey;
@@ -112,7 +112,6 @@ button {
         span {
             margin-right: 8px;
             font-size: 14px;
-
         }
 
         .inputWrap {
@@ -123,7 +122,7 @@ button {
         input {
             display: flex;
             justify-content: flex-end;
-            padding: 0px 0px !important;
+            padding: 0px 8px !important;
             align-items: flex-end !important;
             height: 21px;
             padding-bottom: 0px;
@@ -333,9 +332,18 @@ button {
     font-style: italic;
 }
 
+.containerLeft {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+
+    span {
+        font-size: 14px;
+        white-space: nowrap;
+    }
+}
+
 .selectSave {
-    width: 100px !important;
-    max-width: 100%;
     border: none;
     box-shadow: none;
     text-decoration: underline;
@@ -385,11 +393,11 @@ button {
     .btn-cancel {
         background-color: unset !important;
 
-        span{
-            color: var(--primary-dark)!important;
-            font-weight: unset; 
+        span {
+            color: var(--primary-dark) !important;
+            font-weight: unset;
         }
-        img{
+        img {
             filter: none;
         }
     }
@@ -401,7 +409,6 @@ button {
         gap: 6px;
         background-color: unset;
         border: none;
-        
     }
 
     img {

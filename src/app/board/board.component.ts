@@ -37,7 +37,11 @@ export class BoardComponent implements OnInit {
 
   ngOnInit(): void {
     this.db.getBoardAndTaskData();
-    console.log('log', this.eventEmitterService.subscription);
+    this.listenToEventEmitter();
+  }
+
+  // get updates if user filled inputfield for new board title (in menu comp) via EventemitterService
+  listenToEventEmitter(){
     if (this.eventEmitterService.subscription == undefined) {
       this.eventEmitterService.subscription = this.eventEmitterService.
         callBoardEventHandler.subscribe((data: string) => {
@@ -79,17 +83,17 @@ export class BoardComponent implements OnInit {
     console.log('stoppropagation', event);
   }
 
-  async saveBoardTitle(inputTitle: string, boardIDinFirestore: any, i: number) {
-    if (inputTitle === 'backlog' || inputTitle === 'Backlog') {
+  async saveBoardTitle(boardTitle: any, boardIDinFirestore: any, i: number) {
+    if (boardTitle === 'backlog' || boardTitle === 'Backlog') {
       alert('Backlog Tasks are already sorted to "Backlog" Section. Please choose another Title')
       this.setFocusToTitle(i);
       return
     }
     // handle duplicate check
-    if (await this.checkDuplicates(inputTitle) == false && inputTitle.length > 0) { // no duplicates found, proceed normally
+    if (await this.checkDuplicates(boardTitle) == false && boardTitle.length > 0) { // no duplicates found, proceed normally
       this.db.boards[i].editable = false;
-      this.db.updateDoc('boards', boardIDinFirestore, { name: inputTitle });
-      this.updateTasksOnBoard(inputTitle, boardIDinFirestore, i); // all tasks must change reference to new board name
+      this.db.updateDoc('boards', boardIDinFirestore, { name: boardTitle });
+      this.updateTasksOnBoard(boardTitle, boardIDinFirestore, i); // all tasks must change reference to new board name
     }
     else { // duplicates found
       this.doublicateAlert = true;
@@ -125,7 +129,6 @@ export class BoardComponent implements OnInit {
 
   // eventHandler: delete Board REQUEST--> opens Confirmation Alert
   deleteBoard(i: number, event: Event) {
-    
     this.deleteBoardAlert = true;
     this.currentBoard = this.db.boards[i];
   }
@@ -165,7 +168,6 @@ export class BoardComponent implements OnInit {
   drag(ev: any) {
     console.log(ev.target.id);
     ev.dataTransfer.setData("text", ev.target.id);
-
     // ev.target.id containes the HTML id="" of the div - the id of each task div is set to be the customID in Firestore for the element
   }
 

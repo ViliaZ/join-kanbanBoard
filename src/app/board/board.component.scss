@@ -98,22 +98,6 @@
             filter: opacity(0.2) !important;
             cursor: unset;
         }
-
-        .showOnHover {
-            display: none;
-        }
-
-        &:hover .showOnHover {
-            position: absolute;
-            display: inline;
-            background-color: white;
-            border-radius: 3px;
-            padding: 3px 6px;
-            bottom: -18px;
-            right: 0;
-            font-size: 12px;
-            font-style: italic;
-        }
     }
 }
 

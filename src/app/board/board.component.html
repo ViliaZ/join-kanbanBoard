@@ -2,31 +2,29 @@
        <!-- COLUMN  -->
     <div *ngFor="let board of db.boards; index as i" class="board">
        <!-- COLUMN HEAD -->
-        <div class="headColumn">
+        <div class="headColumn" #title>
             <input 
                 #boardTitle 
-                [(ngModel)]="board.name" 
                 [disabled]="!board.editable" 
+                value={{board.name}} 
+                (keyup.enter)="saveBoardTitle(boardTitle.value,board.customIdName, i)"
                 (click)="stopPropagation($event)">
-            <span 
-                *ngIf="board.name =='ToDo'" 
-                class="showOnHover">
-                No title edits. 'ToDo' is a fixed board.
-            </span>
+                <!-- <app-tooltip #ttTodoTitle  [text]="'No edits. ToDo board is fixed.'"></app-tooltip> -->
+
             <img    
                 *ngIf="board.editable"     
-                (click)="saveBoardTitle(board.name, board.customIdName, i)"
+                (click)="saveBoardTitle(boardTitle.value, board.customIdName, i)"
                 [class.disabledIcon]="board.name =='ToDo'" 
                 class="iconEdit"
                 src="assets/img/save.png" >
             <img 
-                *ngIf="board.editable" 
+                *ngIf="!board.editable" 
                 [class.disabledIcon]="board.name =='ToDo'" 
                 (click)="enterEditMode(i)" 
                 src="assets/img/edit.png"
                 class="iconEdit">
             <img 
-                *ngIf="board.editable" 
+                *ngIf="!board.editable" 
                 [class.disabledIcon]="board.name =='ToDo'" 
                 (click)="deleteBoard(i,$event)"
                 src="assets/img/delete.png" 
