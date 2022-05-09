@@ -32,6 +32,7 @@ import { DateValueAccessorModule } from 'angular-date-value-accessor';
 import { ValidatorComponent } from './validator/validator.component';
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { EventemitterService } from 'src/services/eventemitter.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,9 +51,6 @@ import { EventemitterService } from 'src/services/eventemitter.service';
     ForgotPwComponent,
     ValidatorComponent,
     TooltipComponent,
-    
-
-
   ],
   imports: [
     BrowserModule,
@@ -64,6 +62,7 @@ import { EventemitterService } from 'src/services/eventemitter.service';
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonToggleModule,
+    MatTooltipModule,
     MatSelectModule,
     AngularFireModule.initializeApp(environment.firebase),
     FormsModule,

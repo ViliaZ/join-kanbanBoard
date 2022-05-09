@@ -1,25 +1,25 @@
 export class User {
     public uid: string;
-    public email: string;
-    public displayName?: string;
+    public email?: string;
+    public displayName: string;
     public photoURL?: string;
-    public emailVerified: boolean;
+    public emailVerified?: boolean;
     public isAnonymous: boolean;
     public guestBoardsInitialized?: boolean;
-    public isLoggedIn: boolean;
-    public customCategories: [];  // user can create custom categories for their tasks
+    public customCategories?: any;  // user can create custom categories for their tasks
+    public lastlogin?: any; 
 
     constructor(obj?: any) {
         this.uid = obj ? obj.uid : '';
-        this.email = obj ? obj.email : '';
-        this.displayName = obj ? obj.displayName : '';
-        this.photoURL = obj ? obj.photoURL : '';
-        this.emailVerified = obj ? obj.emailVerified : '';
-        this.isAnonymous = obj ? obj.isAnonymous : '';
-        this.guestBoardsInitialized = obj ? obj.guestInitialized : '';
-        this.isLoggedIn = obj ? obj.isLoggedIn : '';
-        this.customCategories = obj ? obj.isLoggedIn : [];
-    }
+        this.email = obj.email ? obj.email : '';
+        this.displayName = obj.displayName ? obj.displayName : '';
+        this.photoURL = obj.photoURL ? obj.photoURL : '';
+        this.emailVerified = obj.emailVerified ? obj.emailVerified : false;
+        this.isAnonymous = obj.isAnonymous ? obj.isAnonymous : true;
+        this.customCategories = obj.customCategories ? obj.customCategories : [];
+        this.lastlogin = obj.lastlogin ? obj.lastlogin : new Date();
+        this.guestBoardsInitialized = obj.guestBoardsInitialized ? obj.guestBoardsInitialized : false;
+        }
 
     public toJson() {
         return {
@@ -30,8 +30,8 @@ export class User {
             emailVerified: this.emailVerified,
             isAnonymous: this.isAnonymous,
             guestBoardsInitialized: this.guestBoardsInitialized,
-            isLoggedIn: this.isLoggedIn,
-            customCategories: this.customCategories
+            customCategories: this.customCategories,
+            lastlogin: this.lastlogin
         }
     }
 }

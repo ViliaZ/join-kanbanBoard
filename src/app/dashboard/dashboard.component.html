@@ -3,8 +3,9 @@
     
         <div class="user containerOne cardText">
             <h1 class="welcome">Welcome to Join</h1>
-            <div>Guest User | Full Access</div>
-            <span class="date">{{ currentDate | date }}</span>
+            <div>{{authService.user ? authService.user.displayName  : 'User'}} | Full Access</div>
+            <span class="date">Last Login: {{ authService.user ? (authService.user.lastlogin | date: 'MMM d') : (currentDate |  date: 'MMM d')}}</span>
+
         </div>
     
         <div class="containerTwo">
@@ -18,7 +19,7 @@
                         </div>
                         <div class="concave-small">{{ db.backlogtasks.length }}</div>
                     </div>
-                    <div class="fullwidth">
+                    <div class="fullwidth concave" >
                         <div class="bar" [ngStyle]="{'width': width.backlogTasks}">
                         </div>
                     </div>
@@ -31,7 +32,7 @@
                         </div>
                         <div class="concave-small"> {{ db.todoTasks.length }} </div>
                     </div>
-                    <div class="fullwidth">
+                    <div class="fullwidth concave">
                         <div class="bar" [ngStyle]="{'width': width.toDoTasks}">
                         </div>
                     </div>
@@ -44,7 +45,7 @@
                         </div>
                         <div class="concave-small">{{ db.allTasks.length }}</div>
                     </div>
-                    <div class="fullwidth">
+                    <div class="fullwidth concave">
                         <div class="bar" [ngStyle]="{'width': width.allTasks}">
                         </div>
                     </div>

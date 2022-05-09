@@ -68,7 +68,7 @@ export class DatabaseService {
 
   // Handle every task:
   async handleTasks(tasks: any) {
-    console.log(this.allTasks);
+    // console.log('this.allTasks', this.allTasks);
     for (let i = 0; i < tasks.length; i++) {   // async await  doesnt work on forEach --> use standard for-loop
       tasks[i].dueTo = await tasks[i].dueTo.toDate();
       await this.sortTasksToBoards(tasks[i]);

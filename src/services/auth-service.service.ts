@@ -18,7 +18,8 @@ export class AuthServiceService {
   
   // create a reference to the current user, so that I can access his data easily again
   userRef!: AngularFirestoreDocument<any>; // will be initialized with change to LoginState
-  currentUser: any = {};  // is given at monitorAuthState() with login
+  user!: User; // is given as User object after login
+  currentUser: any = {};  // is the firebase format user given at monitorAuthState() with login
   auth: any = getAuth();  // Initialize Firebase Authentication and get a reference to the service
   coUsers: any = []; // not activly in use yet, holds all OTHER users connected to this board
   // coUsers array is used in newTask component for-loop for template driven form
@@ -74,8 +75,10 @@ export class AuthServiceService {
       emailVerified: user.emailVerified,
       isAnonymous: user.isAnonymous,
     }
+    this.user = new User(userData);  // assign it for later use in App
+    let newSignUpUser = new User(userData).toJson();      // save to database in json-format:
     this.userRef = this.firestore.doc(`users/${user.uid}`)  // create a reference to the current user, so that I can access his data easily again
-    this.userRef.set(userData, { merge: true });   // If Doc does not exist, create new one. If it exists, then merge it
+    this.userRef.set(newSignUpUser, { merge: true });   // If Doc does not exist, create new one. If it exists, then merge it
   };
 
 
@@ -91,7 +94,7 @@ export class AuthServiceService {
   }
 
   async loginAsGuest(): Promise<void> {
-    await signInAnonymously(this.auth)
+    await signInAnonymously(this.auth)  // function provided by firestore
       .then(async (userCredential) => {
         await this.saveGuestToDatabase(userCredential.user);
         this.createDummyData();
@@ -106,12 +109,15 @@ export class AuthServiceService {
   async saveGuestToDatabase(user: any) {
     let userData = {
       uid: user.uid,  // set the same ID in Database as fireAuth already given this user in fireAuth setup
-      isAnonymous: 'true',
+      isAnonymous: user.isAnonymous,
       displayName: 'Guest'
     }
+    this.user = new User(userData); // save for later use in app
+    let newGuest = new User(userData).toJson();  // save as Json Format to database
     this.userRef = this.firestore.doc(`users/${user.uid}`)// create a reference to the current user, so that I can access his data easily again
-    this.userRef.set(userData, { merge: true }); // If Doc does not exist, create new one. If it exists, then merge it
+    this.userRef.set(newGuest, { merge: true }); // If Doc does not exist, create new one. If it exists, then merge it
   }
+  
 
   async logout(): Promise<void> {
     if (this.currentUser.isAnonymous) { // if guest, reset app to default state, delete guest from db

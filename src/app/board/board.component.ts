@@ -5,6 +5,8 @@ import { AuthServiceService } from 'src/services/auth-service.service';
 import { DatabaseService } from 'src/services/database.service';
 import { EventemitterService } from 'src/services/eventemitter.service';
 import { TasksService } from 'src/services/tasks.service';
+import { TooltipPosition } from '@angular/material/tooltip';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-board',
@@ -28,6 +30,9 @@ export class BoardComponent implements OnInit {
   doublicateAlert: boolean = false;
   deleteBoardAlert: boolean = false;
   
+  // Info: Tooltip possible Positions
+  positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
+
   constructor(
     public db: DatabaseService,
     public taskservice: TasksService,

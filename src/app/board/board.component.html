@@ -2,7 +2,8 @@
        <!-- COLUMN  -->
     <div *ngFor="let board of db.boards; index as i" class="board">
        <!-- COLUMN HEAD -->
-        <div class="headColumn" #title>
+        <div class="headColumn" matTooltip="Info about the action"
+        [matTooltipPosition]="'above'">
             <input 
                 #boardTitle 
                 [disabled]="!board.editable" 
@@ -10,7 +11,6 @@
                 (keyup.enter)="saveBoardTitle(boardTitle.value,board.customIdName, i)"
                 (click)="stopPropagation($event)">
                 <!-- <app-tooltip #ttTodoTitle  [text]="'No edits. ToDo board is fixed.'"></app-tooltip> -->
-
             <img    
                 *ngIf="board.editable"     
                 (click)="saveBoardTitle(boardTitle.value, board.customIdName, i)"
