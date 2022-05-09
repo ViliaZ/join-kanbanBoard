@@ -33,7 +33,7 @@
         display: flex;
         align-items: center;
         font-size: var(--font-small);
-        color: grey;
+        color: rgba(128, 128, 128, 0.759);
 
         img {
             width: 18px;
@@ -58,15 +58,30 @@
     width: 100%;
 
     .urgency {
-        text-align: center;
-        padding: 0px 8px 1px 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+        padding: 2px 8px 2px 8px;
+        height: 14px;
         max-width: max-content;
-        background-color: var(--urgency-low);
-        border-radius: 4px;
+        border-radius: 3px;
         margin-top: 6px;
         margin-bottom: 4px;
         font-size: 12px;
         color: var(--primary-light);
+
+        // urgency Colors
+    }
+    .low{
+        background-color:rgba(239, 204, 66, 0.767);
+    }
+    .medium{
+        background: rgb(245,228,7);
+        background: linear-gradient(302deg, rgba(245,228,7,0.578890931372549) 7%, rgba(241,49,190,0.528470763305322) 74%);
+    }
+    .urgent{
+        background-color:rgba(233, 0, 183, 0.393);
     }
 
     img {
@@ -74,6 +89,8 @@
         height: 22px;
     }
 }
+
+
 
 // Progressbar
 

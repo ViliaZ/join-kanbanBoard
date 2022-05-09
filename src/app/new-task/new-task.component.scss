@@ -8,13 +8,26 @@
     min-width: 380px;
     border-radius: 12px;
     margin-top: 12px;
-    padding: 64px 54px;
+    padding: 32px 54px;
     box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     border-color: #d2ddef !important;
 }
 
 .headline {
-    margin-bottom: 24px;
+    position: relative;
+    margin-bottom: 32px;
+    color: var(--accent1);
+
+    &::after{
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        content:'';
+        width: 65%;
+        height: 0.04rem;
+        background-color: lightgrey;
+    }
 }
 
 form {
@@ -29,7 +42,7 @@ form {
 }
 ::placeholder {
     color: rgba(128, 128, 128, 0.581);
-    font-size: 16px !important;
+    font-size: 14px !important;
 }
 
 .borderRadiusAdjust {
@@ -39,7 +52,7 @@ form {
 
 input,
 select {
-    font-size: 16px !important;
+    font-size: 14px !important;
     width: 100%;
     height: 42px;
     background-color: transparent;
@@ -56,7 +69,7 @@ select {
 }
 
 button {
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .demo-inline-calendar-card {
@@ -71,6 +84,7 @@ button {
     flex: 1;
 
     textarea {
+        font-size: 14px;
         padding: 12px;
         resize: none;
         height: 100%;
@@ -97,6 +111,8 @@ button {
 
         span {
             margin-right: 8px;
+            font-size: 14px;
+
         }
 
         .inputWrap {
@@ -112,7 +128,7 @@ button {
             height: 21px;
             padding-bottom: 0px;
             border-radius: 0px;
-            border-bottom: 1px solid grey;
+            border-bottom: 1px solid lightgrey;
 
             &::placeholder {
                 margin-left: 20px;
@@ -170,12 +186,13 @@ button {
         flex-wrap: wrap;
         justify-content: flex-start;
         align-items: center;
-        width: 50%;
+        width: 100%;
         overflow-x: auto;
     }
 
     label {
         overflow-x: hide;
+        font-size: 12px;
     }
 
     input[type="checkbox"] {
@@ -193,39 +210,48 @@ button {
 
 .urgency {
     display: flex;
-    gap: 12px;
+    justify-content: space-between;
+    // gap: 12px;
     width: 100%;
 
     input {
         width: 33%;
-        padding: 2px 16px;
+        padding: 2px 14px;
         border: none;
         display: none;
     }
 
     label {
         display: flex;
-        width: 33%;
-        padding: 8px 16px;
+        width: 30%;
+        height: 26px;
+        font-size: 14px;
         text-align: center;
         justify-content: center;
+        align-items: center;
         border-radius: 6px;
         border: none;
         background-color: var(--bg);
+        box-shadow: rgb(117 117 117 / 2%) 0px 1px 3px 0px, rgb(101 110 118 / 15%) 0px 0px 0px 1px;
     }
 
     img {
-        width: 18px;
-        height: 18px;
-        margin-right: 4px;
-        margin-top: 2px;
+        width: 14px;
+        height: 14px;
+        margin-right: 8px;
         filter: opacity(0.7);
     }
 }
 
 .activeButton {
-    background-color: var(--accent1) !important;
-    color: var(--primary-light);
+    // background-color: var(--accent1) !important;
+    // color: var(--primary-light);
+    box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff !important;
+    border-radius: 6px;
+
+    // img{
+    //     filter: invert(1);
+    // }
 }
 
 .datePicker {

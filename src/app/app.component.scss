@@ -36,13 +36,21 @@
 
 .asOverlay {
   position: absolute;
+  display: flex;
   background-color: white;
   width: 55%;
+  max-width: 600px;
+  height: -moz-fit-content;
   height: fit-content;
+  min-height: 70%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 210;
+  flex-direction: column;
+  justify-content: center;
+  overflow: auto;
+
 }
 
 .blurOverlay {

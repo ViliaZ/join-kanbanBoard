@@ -1,6 +1,6 @@
 <h3 *ngIf="!taskservice.editMode && (router.url.includes('backlog') || router.url.includes('board'))" class="headline">
   Add New Task</h3>
-<h3 *ngIf="taskservice.editMode && (router.url.includes('backlog') || router.url.includes('board'))" class="headline">
+<h3 *ngIf="taskservice.editMode" class="headline">
   Edit Task</h3>
 
 <form (ngSubmit)="onSubmit()" #form="ngForm">
@@ -21,7 +21,7 @@
       <span>Checklist:</span>
       <div class="inputWrap posRel">
         <input #newTodo="ngModel" (keyup.enter)="handleTodo('save')" [(ngModel)]="newToDoItem" name="todos" type="text"
-          placeholder=" + ToDo " minlength="3">
+          placeholder=" + Add New Item " minlength="3">
         <app-validator *ngIf="newTodo.errors?.['minlength']" [text]="'Min. 3 characters'"></app-validator>
       </div>
       <!-- assign type to button, bc they are seen as submit form buttons-->
@@ -55,27 +55,30 @@
   </mat-form-field>
 
   <div class="urgency">
-    <label for="low" [class.activeButton]="activeUrgency == 'low'" class="default-btn"
+    <label for="low" [class.activeButton]="activeUrgency == 'low'" 
       (click)="setUrgencyButtonColor('low')">
       <img src="assets/img/lowprio.svg" alt="lowprio">
       Low
     </label>
     <input id="low" type="radio" value="low" name="urgency" [(ngModel)]="formData.urgency">
 
-    <label for="normal" [class.activeButton]="activeUrgency == 'normal'" class="default-btn"
+    <label for="normal" [class.activeButton]="activeUrgency == 'normal'" 
       (click)="setUrgencyButtonColor('normal')">
       <img src="assets/img/mediumprio.svg" alt="highprio">
       Medium
     </label>
     <input id="normal" type="radio" value="normal" name="urgency" [(ngModel)]="formData.urgency">
 
-    <label for="urgent" [class.activeButton]="activeUrgency == 'urgent'" class="default-btn"
+    <label for="urgent" [class.activeButton]="activeUrgency == 'urgent'" 
       (click)="setUrgencyButtonColor('urgent')">
       <img src="assets/img/highprio.svg" alt="highprio">
       Urgent
     </label>
     <input id="urgent" type="radio" value="urgent" name="urgency" [(ngModel)]="formData.urgency">
   </div>
+
+
+  
 
   <div class="category">
     <select required (change)="handleCustomCategory('checkIfCustomRequest', $event)" #catSelect

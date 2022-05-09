@@ -12,7 +12,7 @@
             <div class="settingContent">
                 <div class="name"> {{ this.authService.currentUser.displayName || 'Guest User' }}</div>
                 <div class="logout">
-                    <a routerLink="/logout">Logout</a>
+                    <a (click)="authService.logout()">Logout</a>
                     <!-- <img (click)="onLogout()" class="icon" src="assets/img/logout.png" alt="logout"> -->
                 </div>
                 <div>

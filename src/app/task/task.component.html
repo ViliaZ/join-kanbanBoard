@@ -25,16 +25,14 @@
         </div>
 
         <div class="secondRow">
-            <div class="urgency">{{ task.urgency }}</div>
+            <div class="urgency {{task.urgency}}">{{ task.urgency }}</div>
             <img src="assets/img/user.svg" alt="userImage">
-
         </div>
 
         <div class="thirdRow">
             <div class="progress">
-                <div class="barWrapper">
+                <div class="barWrapper concave">
                     <div class="progressBar" [ngStyle]="{'width': task.percentCheckedTodos+'%'}"></div>
-                    
                 </div>
                 <div class="todos"> {{ task.checkedTodos.length }} / {{ task.allTodos }} done</div>
             </div>

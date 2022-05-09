@@ -40,7 +40,7 @@
     margin-top: 30px;
     display: flex;
     justify-content: flex-start;
-    gap: 20px;
+    gap: 30px;
     max-height: 100%;
     overflow: auto;
 }
@@ -57,6 +57,7 @@
 
 .board {
     height: 100%;
+    width: 260px;
     margin-bottom: 24px;
 
     .headColumn {
@@ -65,13 +66,14 @@
         justify-content: space-between;
         align-items: center;
         max-width: 100%;
-        padding: 8px 0px 10px 0px;
+        padding: 8px 0px 18px 0px;
         transition: all 300ms ease-in-out;
 
         input {
             background-color: unset;
             border: unset;
             font-weight: var(--font-xbold);
+            font-size: 16px;
             border-radius: 4px;
             padding: 2px 4px;
             margin-left: 4px;
@@ -188,27 +190,51 @@
 //********** PLACEHOLDER TiCKET **************
 
 .ticketWrapPlaceholder {
-    height: 150px;
+    // display: flex;
+    // justify-content: space-between;
+    // height: 150px;
     border-radius: 12px 12px 12px 12px !important;
-    border: 3px dashed white;
+    border: 3px dashed rgba(255, 255, 255, 0.624);
 }
 
 .plaecholderTicket {
-    width: 250px;
+
+    width: 100%;
     background-color: unset;
     border-radius: 12px 12px 12px 12px !important;
     box-shadow: unset;
+
+    .rowTwo{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .urgency{
+        height: 10px;
+        width: 74px;
+        padding: 0px 8px 1px 8px;
+        background-color:rgba(255, 255, 255, 0.421);
+        border-radius: 3px;
+        // margin-top: 4px;
+        // margin-bottom: 4px;       
+    }
     .title,
     .date {
-        color: rgb(161, 159, 159) !important;
+        color:  rgba(255, 255, 255, 0.654) !important;
     }
     .user {
-        background-color: rgba(211, 211, 211, 0.493) !important;
+        width: 36px;
+        height: 36px;
+        border-radius: 6px;
+        background-color: rgba(255, 255, 255, 0.654) !important;
         font-size: 18px;
-        color: rgb(161, 159, 159) !important;
+        color:rgba(211, 211, 211, 0.647) !important;
         display: flex;
         align-items: center;
         justify-content: center;
+        // margin-top: 24px;
     }
 }
 
