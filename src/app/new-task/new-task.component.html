@@ -11,7 +11,7 @@
   </div>
 
   <div class="description concave">
-    <textarea placeholder="Task Description" [(ngModel)]="formData.description" name="description">
+    <textarea placeholder="Description" [(ngModel)]="formData.description" name="description">
       </textarea>
   </div>
 
@@ -112,7 +112,7 @@
       <option disabled>Select Responsibility*</option>
       <option *ngIf="authService.currentUser.displayName !== null" value={{authService.currentUser.displayName}}>
         {{authService.currentUser.displayName}}</option>
-      <option *ngIf="authService.currentUser.displayName == null" value="Guest">Guest</option>
+      <option *ngIf="authService.currentUser.displayName == null" value="Guest">Guest User</option>
       <option *ngFor="let user of authService.coUsers; index as i">{{user.displayName}}</option>
     </select>
   </div>

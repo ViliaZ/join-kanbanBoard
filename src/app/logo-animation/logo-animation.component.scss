@@ -8,10 +8,11 @@
         content: "[ kanban & more ]";
         color: white;
         position: absolute;
-        bottom: 18px;
+        bottom: 10px;
         letter-spacing: 3px;
         font-weight: var(--font-light);
-        transform: translateX(50px) translateY(10px);
+        font-size: 12px;
+        transform: translateX(38px) translateY(10px);
         filter: opacity(0.2);
         animation: entryOpacity 2.4s  ease-in-out forwards;
     }
@@ -28,7 +29,7 @@
 
 .logo-wrapper {
     width: 100%;
-    font-size: 100px;
+    font-size: 78px;
     font-weight: bold;
     display: flex;
     justify-content: center;
@@ -47,7 +48,7 @@
         content: "";
         position: absolute;
         z-index: 9;
-        top: 72px;
+        top: 56px;
         width: 300px;
         height: 3px;
         margin-left: 4px;
