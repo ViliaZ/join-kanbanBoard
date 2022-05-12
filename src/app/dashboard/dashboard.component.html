@@ -61,7 +61,7 @@
         <div class="card statistic convex">
             <div class="row">
                 <div class="row-label">
-                    <div>Backlog</div>
+                    <div>In Backlog</div>
                     <div class="concave-small">{{ db.backlogtasks.length }}</div>
                 </div>
                 <div class="fullwidth concave-small">
@@ -70,21 +70,11 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="row-label">
-                    <div>On ToDo</div>
-                    <div class="concave-small"> {{ db.todoTasks.length }} </div>
-                </div>
-                <div class="fullwidth concave-small">
-                    <div class="bar" [ngStyle]="{'width': width.toDoTasks}">
-                    </div>
-                </div>
-            </div>
 
             <div class="row">
                 <div class="row-label">
-                    <div>All Tasks</div>
-                    <div class="concave-small">{{ db.allTasks.length }}</div>
+                    <div>In Progress</div>
+                    <div class="concave-small">{{ db.allTasks.length - db.backlogtasks.length}}</div>
                 </div>
                 <div class="fullwidth concave-small">
                     <div class="bar" [ngStyle]="{'width': width.allTasks}">

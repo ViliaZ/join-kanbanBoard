@@ -194,14 +194,20 @@ button {
     }
 
     input[type="checkbox"] {
-        height: 14px !important;
-        width: 14px !important;
-        min-height: 14px;
-        min-width: 14px;
+        padding: 0px 0px;
+        height: 12px !important;
+        width: 12px !important;
+        min-height: 12px;
+        min-width: 12px;
         margin-right: 0.4rem;
         border-radius: 12%;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -o-appearance: none;
+        appearance: none;
 
-        &:checked {
+        &:disabled {
+            background-color: rgba(128, 128, 128, 0.181);
         }
     }
 }
@@ -209,7 +215,6 @@ button {
 .urgency {
     display: flex;
     justify-content: space-between;
-    // gap: 12px;
     width: 100%;
 
     input {
@@ -242,14 +247,8 @@ button {
 }
 
 .activeButton {
-    // background-color: var(--accent1) !important;
-    // color: var(--primary-light);
     box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff !important;
     border-radius: 6px;
-
-    // img{
-    //     filter: invert(1);
-    // }
 }
 
 .datePicker {
@@ -315,7 +314,7 @@ button {
             border-bottom-left-radius: 6px;
         }
 
-        button:second-child {
+        button:last-child {
             border-top-right-radius: 6px;
             border-bottom-right-radius: 6px;
         }
@@ -376,7 +375,7 @@ svg {
 
         span {
             font-weight: 500;
-            color:  var(--primary-light);
+            color: var(--primary-light);
         }
     }
 

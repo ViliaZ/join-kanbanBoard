@@ -7,8 +7,6 @@
             <input 
                 #boardTitle 
                 [disabled]="!board.editable"
-                
-
                 value={{board.name}} 
                 (keyup.enter)="saveBoardTitle(boardTitle.value, board.customIdName, i)"
                 (click)="stopPropagation($event)">
