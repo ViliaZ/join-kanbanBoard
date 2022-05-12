@@ -12,9 +12,7 @@ import { DatabaseService } from 'src/services/database.service';
 })
 export class DashboardComponent implements OnInit {
 
-  variable: string = '';
   currentDate: any = new Date().getTime();
-  public amountUrgentTasks: any = '0'; // default
   public width: any = {  // width of bar diagrams
     allTasks: '0%',
     toDoTasks: '0%',
@@ -27,9 +25,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {    
     this.init();
-    // setTimeout(() => {
-    //   this.getStatistics();
-    // }, 2000)
   }
 
   async init(){

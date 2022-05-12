@@ -15,7 +15,6 @@ export class BacklogComponent implements OnInit {
   public orderBacklogtasks: string = 'desc'
 
   constructor(public db: DatabaseService, public taskservice: TasksService) {
-    this.db.getBoardAndTaskData();  //Arguments possible: boardSorting + Order; TaskSorting + Order
   }
 
   ngOnInit(): void {

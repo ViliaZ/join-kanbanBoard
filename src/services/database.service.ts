@@ -36,7 +36,7 @@ export class DatabaseService {
     sortBoardOrder: any = 'asc',
     sortTasksBy: string = 'dueTo',
     sortTasksOrder: any = 'asc') {
-      console.log('log',this.authService.currentUser.uid);
+      console.log('currentUser exists',this.authService.currentUser.uid);
       
     this.firestore
       .collection('boards', ref => ref
