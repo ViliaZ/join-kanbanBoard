@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
   }
 
   async init(){
-    await this.db.getBoardAndTaskData();
+      await this.db.getBoardAndTaskData();
     this.getStatistics();
   }
   

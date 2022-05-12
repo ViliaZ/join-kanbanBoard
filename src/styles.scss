@@ -6,6 +6,8 @@
   color: var(--primary-dark);
 }
 
+
+
 :root {
   // --bg: linear-gradient(
   //   356deg,
@@ -13,7 +15,7 @@
   //   rgba(193, 162, 216, 0.699) 100%
   // );
   --bg: linear-gradient(45deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
-  --bg-light: #ecf1fb;
+  --bg-light:linear-gradient(45deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
   --gradientColors: linear-gradient(
     73deg,
     #F5EC07 10%,

@@ -36,6 +36,38 @@
         "responsibility": "Guest"
       }, 
       {
+        "board": "backlog",
+        "title": "This is a Backlogtask",
+        "description": "This is a description",
+        "percentUncheckedTodos": 80,
+        "percentCheckedTodos": 20,
+        "uncheckedTodos": ["first", "second", "third", "fourth"],
+        "checkedTodos": ["111"],
+        "allTodos": "5",
+        "category": "Marketing",
+        "urgency": "low",
+        "dueTo": 0,
+        "createdAt": "",
+        "isPinnedToBoard": false,
+        "responsibility": "Guest"
+      }, 
+      {
+        "board": "ToDo",
+        "title": "Test Task for Guest User",
+        "description": "Your description here .....",
+        "percentUncheckedTodos": 20,
+        "percentCheckedTodos": 80,
+        "uncheckedTodos": ["first"],
+        "checkedTodos": ["111", "second", "third", "fourth"],
+        "allTodos": "5",
+        "category": "Marketing",
+        "urgency": "low",
+        "dueTo": 0,
+        "createdAt": "",
+        "isPinnedToBoard": false,
+        "responsibility": "Guest"
+      }, 
+      {
         "board": "DummyBoardTwo",
         "title": "Titel2",
         "description": "This is a description",

@@ -1,86 +1,36 @@
 <div class="sectionOne">
-
     <div class="user containerOne cardText">
         <h1 class="welcome">Welcome to Join</h1>
-        <div>{{authService.user ? authService.user.displayName : 'User'}} | Full Access</div>
+        <div>{{authService.user?.displayName || 'User'}} | Full Access</div>
         <span class="date">Last Login: {{ authService.user ? (authService.user.lastlogin | date: 'MMM d') : (currentDate
-            |  date: 'MMM d')}}</span>
+            | date: 'MMM d')}}</span>
         <!-- <span *ngIf="authService.user.isAnonymous || authService.user.isAnonymous == undefined " class="date">One-time{{ authService.user ? (authService.user.lastlogin | date: 'MMM d') : (currentDate |  date: 'MMM d')}}</span> -->
-
     </div>
 
     <div class="containerTwo">
-        <!-- // new card -->
-        <div class="card statistic convex">
-            <div class="row">
-                <div class="row-label">
-                    <div>
-                        Backlog
-                    </div>
-                    <div class="concave-small">{{ db.backlogtasks.length }}</div>
-                </div>
-                <div class="fullwidth concave-small">
-                    <div class="bar" [ngStyle]="{'width': width.backlogTasks}">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="row-label">
-                    <div>
-                        On ToDo
-                    </div>
-                    <div class="concave-small"> {{ db.todoTasks.length }} </div>
-                </div>
-                <div class="fullwidth concave-small">
-                    <div class="bar" [ngStyle]="{'width': width.toDoTasks}">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="row-label">
-                    <div>
-                        All Tasks
-                    </div>
-                    <div class="concave-small">{{ db.allTasks.length }}</div>
-                </div>
-                <div class="fullwidth concave-small">
-                    <div class="bar" [ngStyle]="{'width': width.allTasks}">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
         <div class="cardRow">
-
             <!-- // new card -->
             <div class="card urgentTasks convex">
-
                 <div class="iconContainer">
                     <div class="icon-wrap ">
                         <img src="assets/img/urgent.svg" alt="urgent">
                     </div>
                 </div>
-
                 <div class="text">
-                    <div>{{ (db.urgentTasks.length >2) ? db.urgentTasks.length : '0'}}</div>
+                    <div>{{ db.urgentTasks.length || '0'}}</div>
                     <span>Urgent</span>
                 </div>
             </div>
 
             <!-- // new card -->
-            <div class="allTasks ">
+            <div class="allTasks convex">
                 <span>{{ db.allTasks.length }}</span>
-                <div>All Tasks</div>
+                <div>Tasks</div>
             </div>
-
         </div>
 
         <!-- // new card -->
         <div class="card nextDueTask convex">
-
             <div class="iconContainer">
                 <div class="icon-wrap ">
                     <img src="assets/img/nextDue.svg" alt="nextDue">
@@ -97,19 +47,49 @@
             </div>
 
             <div class="taskDetails-onhover concave-btn">
-                <div *ngIf="db.nextDueDates.length == 0" class="amountTasks"> 0 Tasks</div>
-                
-                <div *ngIf="db.nextDueDates.length == 1" class="amountTasks"> {{db.nextDueDates.length}} Task</div>
-                <div *ngIf="db.nextDueDates.length > 1" class="amountTasks"> {{db.nextDueDates.length}} Tasks</div>
-                    <div class="details">
-                        <div>
-                            <b> On Board: </b> {{ db.nextDueDateTasks.board  || 'No Task to track.'}}
-                        </div>
-                        <div>
-                            <b>Category:</b> {{ db.nextDueDateTasks.category || 'No Task to track.'}}
-                        </div>
+                <div *ngIf="db.nextDueDateTasks.length == 0" class="amountTasks">0 Tasks</div>
+                <div *ngIf="db.nextDueDateTasks.length == 1" class="amountTasks"> 1 Task</div>
+                <div *ngIf="db.nextDueDateTasks.length > 1" class="amountTasks"> {{ db.nextDueDateTasks.length }} Tasks</div>
+                <div class="details">
+                    <div><b> On Board: </b> {{ db.nextDueDateTasks[0]?.board || 'n.a.'}}</div>
+                    <div class="furtherTasks" *ngIf="db.nextDueDateTasks.length > 1"> +{{ db.nextDueDateTasks.length -1}} further task(s)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- // new card -->
+        <div class="card statistic convex">
+            <div class="row">
+                <div class="row-label">
+                    <div>Backlog</div>
+                    <div class="concave-small">{{ db.backlogtasks.length }}</div>
+                </div>
+                <div class="fullwidth concave-small">
+                    <div class="bar" [ngStyle]="{'width': width.backlogTasks}">
                     </div>
-                <div *ngIf="db.nextDueDates.length > 1"> +{{ db.nextDueDates.length }}further task(s)</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="row-label">
+                    <div>On ToDo</div>
+                    <div class="concave-small"> {{ db.todoTasks.length }} </div>
+                </div>
+                <div class="fullwidth concave-small">
+                    <div class="bar" [ngStyle]="{'width': width.toDoTasks}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="row-label">
+                    <div>All Tasks</div>
+                    <div class="concave-small">{{ db.allTasks.length }}</div>
+                </div>
+                <div class="fullwidth concave-small">
+                    <div class="bar" [ngStyle]="{'width': width.allTasks}">
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -117,7 +97,6 @@
         <div class="cardText invitationGuest">
             Explore Join by using the test data provided. <br>Or add your own tasks to the Kanban System.
         </div>
-
     </div>
 </div>
 

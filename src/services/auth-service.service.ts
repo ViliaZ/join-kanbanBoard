@@ -15,7 +15,7 @@ export class AuthServiceService {
 
   // access AuthService in Model Class (e.g. Task) --> access this property
   static injector: Injector;
-  
+
   // create a reference to the current user, so that I can access his data easily again
   userRef!: AngularFirestoreDocument<any>; // will be initialized with change to LoginState
   user!: User; // is given as User object after login
@@ -45,12 +45,12 @@ export class AuthServiceService {
     await this.fireAuth.onAuthStateChanged((user) => {
       if (user) {
         this.currentUser = user;  // create a reference to the current user, so that I can access his data easily again
-        if(user.isAnonymous){
-          console.log('currentUser', this.currentUser);
+        if (user.isAnonymous) {
+          console.log('user.isAnonymous (Guest):', this.currentUser);
         }
       }
-      else {  // if no user, then returns NULL
-        console.log('TestAccount Logged In', user);     
+      else {  // if no user at all , then returns NULL
+        console.log('TestAccount Logged In', user);
       }
     })
   }
@@ -97,7 +97,7 @@ export class AuthServiceService {
     await signInAnonymously(this.auth)  // function provided by firestore
       .then(async (userCredential) => {
         await this.saveGuestToDatabase(userCredential.user);
-        this.createDummyData();
+        await this.createDummyData();
         this.router.navigate([''])
       })
       .catch((error) => {
@@ -112,16 +112,16 @@ export class AuthServiceService {
       isAnonymous: user.isAnonymous,
       displayName: 'Guest'
     }
-    this.user = new User(userData); // save for later use in app
+    this.user = new User(userData); // KEEP it!  for later use in app (we  need a version without toJson() there!)
     let newGuest = new User(userData).toJson();  // save as Json Format to database
     this.userRef = this.firestore.doc(`users/${user.uid}`)// create a reference to the current user, so that I can access his data easily again
     this.userRef.set(newGuest, { merge: true }); // If Doc does not exist, create new one. If it exists, then merge it
   }
-  
+
 
   async logout(): Promise<void> {
     if (this.currentUser.isAnonymous) { // if guest, reset app to default state, delete guest from db
-      console.log('yes, is anonymus, we have to delete data here');
+      console.log('Anonymous logged out, we have to delete data here');
       // await this.deleteUserFromFireAuth();
       // await this.deleteGuestDataFromDatabase();
     }
@@ -151,7 +151,6 @@ export class AuthServiceService {
   /******* DUMMY DATE FOR GUEST USERS ***************/
 
   async createDummyData(): Promise<void> {
-    
     let dummyData$ = this.httpClient.get('assets/json/guestData.JSON');
     dummyData$.subscribe(async (jsonData: any) => {
       await this.setDummyBoards(jsonData.dummyBoards);
@@ -162,7 +161,6 @@ export class AuthServiceService {
 
 
   async setDummyBoards(dummmyBoards: any): Promise<void> {
-
     for (let i = 0; i < dummmyBoards.length; i++) {  // modify static data with dynamic userdata
       dummmyBoards[i].createdAt = this.today;
       dummmyBoards[i].creator = this.currentUser.uid;

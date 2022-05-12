@@ -18,11 +18,12 @@ export class DatabaseService {
   public urgentTasks: any = [];
   public todoTasks: any = [];
   public allTasks: any = [];
-  public nextDueDates: any = [];
+  // public nextDueDates: any = [];
   public nextDueDateTasks: any = [];  // can also be multiple tasks with same due Date
   public backlogEmpty = () => this.backlogtasks.length == 0;
   public toDoBoardExists: boolean = false;  // ToDo Board as static (undeletable) Board for EVERY User
   public guestIsInitialized: boolean = false;  // if true, guest - dummydata donot need to be created again
+
 
   constructor(
     private firestore: AngularFirestore,
@@ -35,6 +36,8 @@ export class DatabaseService {
     sortBoardOrder: any = 'asc',
     sortTasksBy: string = 'dueTo',
     sortTasksOrder: any = 'asc') {
+      console.log('log',this.authService.currentUser.uid);
+      
     this.firestore
       .collection('boards', ref => ref
         .where('creator', '==', this.authService.currentUser.uid) // show only boards from current user
@@ -90,7 +93,7 @@ export class DatabaseService {
         year: 'numeric',
       })
     })
-    // if multiple tasks have the next dueDate, then save all into this.nextDueDateTasks
+    // this.nextDueDateTasks contains all Tasks with next dueDate - even if multiple task with same deadline
     this.nextDueDateTasks = sortedTasks.filter((task: any) => task.dueTo == sortedTasks[0].dueTo)
   }
 
