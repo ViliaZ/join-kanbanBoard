@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { catchError } from 'rxjs';
 import { Board } from 'src/models/board';
 import { AuthServiceService } from 'src/services/auth-service.service';
 import { DatabaseService } from 'src/services/database.service';
 import { EventemitterService } from 'src/services/eventemitter.service';
 import { TasksService } from 'src/services/tasks.service';
 import { TooltipPosition } from '@angular/material/tooltip';
-import { FormControl } from '@angular/forms';
+import { LogoAnimationComponent } from '../logo-animation/logo-animation.component';
 
 @Component({
   selector: 'app-board',
@@ -24,12 +23,18 @@ export class BoardComponent implements OnInit {
     setTimeout(() => { allTitles[currentTitle].nativeElement.focus() }, 200)
   }
 
+  alerts: any = {  // NOTE: save as objects to be able to pass them as parameter references | otherwise boolean (primitive) variables cannot be handled as references when given as a parameter in setAlert()
+    backlogAlert: { flag: false },  // 
+    editsProhibited: { flag: false }, // no Edits on Todo board
+    duplicateAlert: { flag: false },
+    confirmDeletion: { flag: false }
+  }
+
+  alertStatusON: boolean = false; // toggles alerts open, for setTimeout() 
   editMode: boolean = false;  // title edits
   newBoardTitle: any = '';  // from inputfield ngModel (to ADD a new Board)
   currentBoard: any = {}; // board to delete
-  doublicateAlert: boolean = false;
-  deleteBoardAlert: boolean = false;
-  
+
   // Info: Tooltip possible Positions
   positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
 
@@ -38,6 +43,7 @@ export class BoardComponent implements OnInit {
     public taskservice: TasksService,
     private authService: AuthServiceService,
     private eventEmitterService: EventemitterService) {
+
   }
 
   ngOnInit(): void {
@@ -46,7 +52,7 @@ export class BoardComponent implements OnInit {
   }
 
   // get updates if user filled inputfield for new board title (in menu comp) via EventemitterService
-  listenToEventEmitter(){
+  listenToEventEmitter() {
     if (this.eventEmitterService.subscription == undefined) {
       this.eventEmitterService.subscription = this.eventEmitterService.
         callBoardEventHandler.subscribe((data: string) => {
@@ -55,7 +61,6 @@ export class BoardComponent implements OnInit {
     }
   }
 
-
   // newBoardName is received via Eventemitterservice from Menu component
   // userinput string from inputfield for adding a new board
   async addNewBoard(newBoardName: string) {
@@ -63,20 +68,22 @@ export class BoardComponent implements OnInit {
     if (newBoardName.length > 0 && !duplicate) {
       let newBoard = Board.getEmptyBoard(newBoardName, this.authService.currentUser.uid);  // call a static function inside of model board
       this.db.addDocToCollection('boards', newBoard);
-      console.log(newBoard);
 
     } else {
       this.newBoardTitle = '';
-      this.doublicateAlert = true
-      setTimeout(() => { this.doublicateAlert = false }, 2000)
+      this.setAlert(this.alerts.duplicateAlert);
     }
   }
 
   // Board Title Edit
   enterEditMode(i: number) {
-    this.doublicateAlert = false;
-    this.db.boards[i].editable = true;  // this change is only affecting local variable in db service (not the database in firestore) --> otherwise data would be newly rendered
+    if (this.db.boards[i].name == 'ToDo') {
+      this.setAlert(this.alerts.editsProhibited);
+      return
+    }
+    this.db.boards[i].editable = true;  // set LOCALLY in db.service (not in firestore) --> otherwise data would be newly rendered
     this.setFocusToTitle(i);
+    console.log('BEFORE: this.alerts und this.alertStatusON', this.alerts, this.alertStatusON);
   }
 
   // Board Title Edit exit
@@ -88,31 +95,42 @@ export class BoardComponent implements OnInit {
     console.log('stoppropagation', event);
   }
 
-  async saveBoardTitle(boardTitle: any, boardIDinFirestore: any, i: number) {
-    if (boardTitle === 'backlog' || boardTitle === 'Backlog') {
-      alert('Backlog Tasks are already sorted to "Backlog" Section. Please choose another Title')
+  async saveBoardTitle(inputData: any, boardIDinFirestore: any, i: number) {
+    console.log('allAlerts', this.alerts);
+
+    if (inputData.length === 0) { // handle empty input  
+      console.log('null', inputData.length);
+      this.setAlert(this.alerts.duplicateAlert);
       this.setFocusToTitle(i);
       return
     }
-    // handle duplicate check
-    if (await this.checkDuplicates(boardTitle) == false && boardTitle.length > 0) { // no duplicates found, proceed normally
-      this.db.boards[i].editable = false;
-      this.db.updateDoc('boards', boardIDinFirestore, { name: boardTitle });
-      this.updateTasksOnBoard(boardTitle, boardIDinFirestore, i); // all tasks must change reference to new board name
-    }
-    else { // duplicates found
-      this.doublicateAlert = true;
+    else if (inputData === 'backlog' || inputData === 'Backlog') {
+      this.setAlert(this.alerts.backlogAlert);
       this.setFocusToTitle(i);
+      return
     }
-
+    else if (this.db.boards[i].name == inputData) {  // if no changes are made
+      this.db.boards[i].editable = false;  // only local change in db.service (no new render from db firestore)
+      return
+    }
+    else if (await this.checkDuplicates(inputData) == true) { // handle duplicates found
+      console.log('duplicates found in save');
+      this.setAlert(this.alerts.duplicateAlert);
+      this.setFocusToTitle(i);
+      return
+    }
+    // handle success case --> no duplicates, no backlog, inputdata.length > 0
+    else {
+      this.db.updateDoc('boards', boardIDinFirestore, { name: inputData });
+      this.updateTasksOnBoard(inputData, boardIDinFirestore, i); // all tasks must change reference to new board name
+    }
   }
 
   // Check for Title DUPLICATES --> boolean
   async checkDuplicates(inputTitle: string) {
-    this.doublicateAlert = false;
-    let findDouplicate = await this.db.boards.find((board: any) => board.name == inputTitle)
-
-    if (findDouplicate) { //  1 means, its existing because ngModel already pushed the new name in local variable in db.service (boards)
+    this.alerts.duplicateAlert.flag = false;
+    let foundDouplicate = await this.db.boards.some((board: any) => board.name == inputTitle)
+    if (foundDouplicate) {
       console.log('duplicates found')
       return true
     }
@@ -132,10 +150,26 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  // eventHandler: delete Board REQUEST--> opens Confirmation Alert
-  deleteBoard(i: number, event: Event) {
-    this.deleteBoardAlert = true;
+  // EventHandler: delete Board REQUEST--> opens Confirmation Alert
+  deleteBoard(i: number) {
+    if (this.db.boards[i].name == 'ToDo') {
+      console.log('is Todo Board - no delete', this.db.boards[i]);
+      this.setAlert(this.alerts.editsProhibited);
+      return
+    }
+    console.log('BEFORE: this.alerts und this.alertStatusON', this.alerts, this.alertStatusON);
+
+    this.setAlert(this.alerts.confirmDeletion);
     this.currentBoard = this.db.boards[i];
+  }
+
+  setAlert(alertName: any, status: boolean = true) { // NOTE: alertName is an object, because a boolean variable is not assignable as a reference --> make it an object as a workaround
+    alertName.flag = status;
+    this.alertStatusON = status;                          // alertpopup open (true) / close (false)
+    if (alertName == this.alerts.confirmDeletion) { return } // because this alert must be actively be closed by user 
+    setTimeout(() => {  // reset
+      alertName.flag = false;
+      this.alertStatusON = false }, 4500);  // to close popup
   }
 
   // eventHandler: delete CONFIRMED --> close alert
@@ -144,7 +178,11 @@ export class BoardComponent implements OnInit {
       this.db.deleteDoc('tasks', task.customIdName)
     });
     this.db.deleteDoc('boards', this.currentBoard.customIdName);
-    this.deleteBoardAlert = false;
+    this.setAlert(this.alerts.confirmDeletion, false); // reset alert
+  }
+
+  cancelDelete() {
+    this.alerts.confirmDeletion.flag = false;
   }
 
   // Click on existing Task to edit
@@ -183,7 +221,6 @@ export class BoardComponent implements OnInit {
     let dataID = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(dataID));
     // "data" returns the HTML Id of the dragged element - this id is set to be the customID in Firestore for the element
-
     // change 'board' to new board in firestore
     try {
       this.db.updateDoc('tasks', dataID, { board: targetboard });

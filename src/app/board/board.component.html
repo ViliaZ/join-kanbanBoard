@@ -6,9 +6,11 @@
         [matTooltipPosition]="'above'">
             <input 
                 #boardTitle 
-                [disabled]="!board.editable" 
+                [disabled]="!board.editable"
+                
+
                 value={{board.name}} 
-                (keyup.enter)="saveBoardTitle(boardTitle.value,board.customIdName, i)"
+                (keyup.enter)="saveBoardTitle(boardTitle.value, board.customIdName, i)"
                 (click)="stopPropagation($event)">
                 <!-- <app-tooltip #ttTodoTitle  [text]="'No edits. ToDo board is fixed.'"></app-tooltip> -->
             <img    
@@ -26,7 +28,7 @@
             <img 
                 *ngIf="!board.editable" 
                 [class.disabledIcon]="board.name =='ToDo'" 
-                (click)="deleteBoard(i,$event)"
+                (click)="deleteBoard(i)"
                 src="assets/img/delete.png" 
                 class="iconEdit">
         </div>
@@ -61,19 +63,30 @@
 
 <!-- ALERTS  -->
 <div class="alertContainer">
-    <div class="alerts">
-        <div *ngIf="doublicateAlert && !deleteBoardAlert" class="alertbox">
+
+        <div *ngIf="alertStatusON && alerts.duplicateAlert.flag" class="alertbox">
             <img src="assets/img/alertDelete.svg" alt="alert">
             Invalid choice: Title can`t be empty or already existing.
+        </div>        
+        
+        <div *ngIf="alertStatusON && alerts.backlogAlert.flag" class="alertbox">
+            <img src="assets/img/alertDelete.svg" alt="alert">
+            Backlog Tasks are already sorted to "Backlog" Section. Please choose another title.
         </div>
 
-        <div *ngIf="deleteBoardAlert" class="alertDelete">
+        <div *ngIf="alertStatusON && alerts.editsProhibited.flag" class="alertbox">
+            <img src="assets/img/alertDelete.svg" alt="alert">
+            'ToDo' is a fixed board. Edits not permitted. 
+        </div>        
+
+
+        <div *ngIf="alertStatusON && alerts.confirmDeletion.flag" class="alertDelete">
             <img src="assets/img/alertDelete.svg" alt="alert">
             Please confirm deletion. This will include all board tasks.
             <button (click)="confirmDelete()" id="btn-confirm">Confirm</button>
-            <button (click)="deleteBoardAlert = false" id="btn-cancel" >Cancel</button>
+            <button (click)="cancelDelete()" id="btn-cancel" >Cancel</button>
         </div>
-    </div>
+
 </div>
 
 

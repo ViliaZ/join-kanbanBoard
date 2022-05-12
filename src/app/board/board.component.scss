@@ -10,6 +10,7 @@
 
 .alertContainer {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 60px;
@@ -95,7 +96,7 @@
         }
 
         &:hover .disabledIcon {
-            filter: opacity(0.2) !important;
+            filter: opacity(0.1) !important;
             cursor: unset;
         }
     }
@@ -248,6 +249,7 @@
     button {
         border: unset;
         background-color: white;
+        font-weight: var(--font-xbold);
         padding: 16px 10px;
         height: 100%;
         cursor: pointer;
@@ -256,7 +258,6 @@
     #btn-confirm {
         margin-left: 24px;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;   
-    
         &:hover {
             color: var(--accent1);
         }
