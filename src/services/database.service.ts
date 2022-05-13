@@ -151,8 +151,8 @@ export class DatabaseService {
     await this.firestore.collection(collection).add(doc);
   }
 
-  deleteDoc(collection: string, docID: string): void {
-    this.firestore.collection(collection).doc(docID).delete();
+  async deleteDoc(collection: string, docID: string): Promise<void> {
+    await this.firestore.collection(collection).doc(docID).delete();
   }
 
 }

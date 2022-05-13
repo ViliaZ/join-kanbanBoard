@@ -4,15 +4,21 @@
 <div class="sectionLeft">
     <!-- User Image -->
     <div class="user">
-        <img (mouseenter)="openSettings = true" (click)="toggleSettings()" src="assets/img/user.svg" alt="logout">
+        <img 
+            (mouseenter)="openSettings = true" 
+            (click)="toggleSettings()" 
+            src="assets/img/user.svg" 
+            alt="logout">
 
-        <div *ngIf="openSettings" class="settingsContainer" (mouseenter)="openSettings = true"
+        <div   
+            *ngIf="openSettings" class="settingsContainer" 
+            (mouseenter)="openSettings = true"
             (mouseleave)="openSettings = false">
 
             <div class="settingContent">
                 <div class="name"> {{ this.authService.currentUser.displayName || 'Guest User' }}</div>
                 <div class="logout">
-                    <a (click)="authService.logout()">Logout</a>
+                    <a (click)="onLogout()">Logout</a>
                     <!-- <img (click)="onLogout()" class="icon" src="assets/img/logout.png" alt="logout"> -->
                 </div>
                 <div>
@@ -23,55 +29,67 @@
         </div>
     </div>
 
-
-    <a routerLink="/home" routerLinkActive="concave-btn" [routerLinkActiveOptions]="{ exact: true }">
+    <a 
+        routerLink="/home" 
+        routerLinkActive="concave-btn" 
+        [routerLinkActiveOptions]="{ exact: true }">
         DASHBOARD
     </a>
 
-
-    <a routerLink="/backlog" routerLinkActive="concave-btn">
+    <a  
+        routerLink="/backlog" 
+        routerLinkActive="concave-btn">
         BACKLOG
     </a>
 
-    <a routerLink="/board" routerLinkActive="concave-btn">
+    <a 
+        routerLink="/board" 
+        routerLinkActive="concave-btn">
         BOARDS
     </a>
 
 </div>
 
 <div class="sectionRight">
-
     <!-- INPUTFIELD NEW BOARD  -->
-
-    <!-- <div class="container concave">
-        <form>
-            <input [(ngModel)]="searchInput" name="searchInput" type="search" placeholder="Search...">
-            <button type="submit">Search</button>
-          </form>
-    </div> -->
-
-    <div (click)="expandInputfield = true" [class.concave]="expandInputfield" *ngIf="router.url.includes('board')"
+    <div 
+        (click)="expandInputfield = true" 
+        [class.concave]="expandInputfield" 
+        *ngIf="router.url.includes('board')"
         class="container">
+
         <form>
-            <input [(ngModel)]="newBoardTitle" name="newBoardTitle" placeholder="+ NEW BOARD"
-                [class.expandAnimation]="expandInputfield" (blur)="expandInputfield=false" type="search" minlength="2">
-            <button type="submit" [class.expandAnimation]="expandInputfield"
+            <input 
+                [(ngModel)]="newBoardTitle" 
+                name="newBoardTitle" 
+                placeholder="+ NEW BOARD"
+                [class.expandAnimation]="expandInputfield" 
+                (blur)="expandInputfield=false" 
+                type="search" 
+                minlength="2">
+            <button 
+                type="submit" 
+                [class.expandAnimation]="expandInputfield"
                 (click)="handleNewBoardAdding(); stopPropagation($event)">
                 Add
             </button>
         </form>
+
     </div>
 
-    <!-- <div class="lastLogin"> Last Login: {{ currentDate | date: 'mediumDate' }}</div> -->
     <div>
-        <div href="" class="info" *ngIf="router.url.includes('home')">
+        <div
+            href="" class="info" 
+            *ngIf="router.url.includes('home')">
             <span>Help</span>
             <img src="/assets/img/info.svg" alt="help">
         </div>
 
     </div>
 
-    <div *ngIf="router.url.includes('backlog') || router.url.includes('board')" (click)="newTaskPopUp()"
+    <div 
+        *ngIf="router.url.includes('backlog') || router.url.includes('board')" 
+        (click)="newTaskPopUp()"
         class="plus-wrapper">
         <span class="plus"></span>
     </div>

@@ -169,7 +169,8 @@ export class BoardComponent implements OnInit {
     if (alertName == this.alerts.confirmDeletion) { return } // because this alert must be actively be closed by user 
     setTimeout(() => {  // reset
       alertName.flag = false;
-      this.alertStatusON = false }, 4500);  // to close popup
+      this.alertStatusON = false
+    }, 4500);  // to close popup
   }
 
   // eventHandler: delete CONFIRMED --> close alert

@@ -120,32 +120,27 @@ export class AuthServiceService {
 
 
   async logout(): Promise<void> {
-    if (this.currentUser.isAnonymous) { // if guest, reset app to default state, delete guest from db
-      console.log('Anonymous logged out, we have to delete data here');
-      // await this.deleteUserFromFireAuth();
-      // await this.deleteGuestDataFromDatabase();
-    }
     await this.fireAuth.signOut()
-      .then(() => this.router.navigate(['/login']));
+    .then(() => this.router.navigate(['/login']));
+
   }
 
   async deleteUserFromFireAuth() {
-    await this.auth.deleteUser(this.currentUser.uid)
-      .then(() => {
-        console.log('Successfully deleted guest');
-      })
-      .catch((error: any) => {
-        console.log('Error deleting guest:', error);
-      });
+    await this.auth.currentUser.delete();
+    // await this.auth.deleteUser(this.currentUser.uid)
+    //   .then(() => {
+    //     console.log('Successfully deleted guest');
+    //   })
+    //   .catch((error: any) => {
+    //     console.log('Error deleting guest:', error);
+    //   });
   }
 
-  // TODO
-  async deleteGuestDataFromDatabase() {
-  }
+
+
 
   // TODO - the function is set up to avoid error in forgot-pw component
   ForgotPassword(passwordResetEmailvalue: any) { }
-
 
 
   /******* DUMMY DATE FOR GUEST USERS ***************/
@@ -158,7 +153,6 @@ export class AuthServiceService {
     })
     this.userRef.set({ guestBoardsInitialized: true }, { merge: true }) // consider deleting this, if not needed
   }
-
 
   async setDummyBoards(dummmyBoards: any): Promise<void> {
     for (let i = 0; i < dummmyBoards.length; i++) {  // modify static data with dynamic userdata

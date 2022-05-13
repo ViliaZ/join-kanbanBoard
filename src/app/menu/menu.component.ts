@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthServiceService } from 'src/services/auth-service.service';
+import { DatabaseService } from 'src/services/database.service';
 import { EventemitterService } from 'src/services/eventemitter.service';
 import { TasksService } from 'src/services/tasks.service';
 
@@ -22,7 +23,8 @@ export class MenuComponent implements OnInit {
     public authService: AuthServiceService, 
     public router: Router, 
     private eventEmitterService: EventemitterService,
-    private taskservice: TasksService) { }
+    private taskservice: TasksService,
+    private db: DatabaseService) { }
 
   ngOnInit(): void {
   }
@@ -37,9 +39,17 @@ export class MenuComponent implements OnInit {
     this.newBoardTitle = ''; 
   }
 
-  onLogout() {
-    this.authService.logout();
-  }
+  async onLogout() {
+    if (this.authService.currentUser.isAnonymous) {
+      await this.authService.deleteUserFromFireAuth();
+      // delete from user collection
+      await this.db.deleteDoc('users', this.authService.currentUser.uid)   
+      // delete Tasks on every Board
+
+      }
+      // delete all Board Collections if not already automatically 
+    }
+
 
   toggleSettings() {
     if (this.openSettings) {
