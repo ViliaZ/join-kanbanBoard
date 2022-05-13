@@ -1,98 +1,98 @@
-<!-- position absolute -->
-<div class="border-bottom"></div>
 
-<div class="sectionLeft">
-    <!-- User Image -->
-    <div class="user">
-        <img 
-            (mouseenter)="openSettings = true" 
-            (click)="toggleSettings()" 
-            src="assets/img/user.svg" 
-            alt="logout">
-
-        <div   
-            *ngIf="openSettings" class="settingsContainer" 
-            (mouseenter)="openSettings = true"
-            (mouseleave)="openSettings = false">
-
-            <div class="settingContent">
-                <div class="name"> {{ this.authService.currentUser.displayName || 'Guest User' }}</div>
-                <div class="logout">
-                    <a (click)="onLogout()">Logout</a>
-                    <!-- <img (click)="onLogout()" class="icon" src="assets/img/logout.png" alt="logout"> -->
+<div class="wrapper">
+    <div class="sectionLeft">
+        <!-- User Image -->
+        <div class="user">
+            <img
+                (mouseenter)="openSettings = true"
+                (click)="toggleSettings()"
+                src="assets/img/user.svg"
+                alt="logout">
+    
+            <div
+                *ngIf="openSettings" class="settingsContainer"
+                (mouseenter)="openSettings = true"
+                (mouseleave)="openSettings = false">
+    
+                <div class="settingContent">
+                    <div class="name"> {{ this.authService.currentUser.displayName || 'Guest User' }}</div>
+                    <div class="logout">
+                        <a (click)="authService.logout()">Logout</a>
+                        <!-- <img (click)="onLogout()" class="icon" src="assets/img/logout.png" alt="logout"> -->
+                    </div>
+                    <div>
+                        <a routerLink="/imprint">Imprint</a>
+                    </div>
                 </div>
-                <div>
-                    <a routerLink="/imprint">Imprint</a>
-                </div>
+    
             </div>
-
         </div>
+    
+        <a
+            routerLink="/home"
+            routerLinkActive="concave-btn"
+            [routerLinkActiveOptions]="{ exact: true }">
+            DASHBOARD
+        </a>
+    
+        <a
+            routerLink="/backlog"
+            routerLinkActive="concave-btn">
+            BACKLOG
+        </a>
+    
+        <a
+            routerLink="/board"
+            routerLinkActive="concave-btn">
+            BOARDS
+        </a>
+    
     </div>
-
-    <a 
-        routerLink="/home" 
-        routerLinkActive="concave-btn" 
-        [routerLinkActiveOptions]="{ exact: true }">
-        DASHBOARD
-    </a>
-
-    <a  
-        routerLink="/backlog" 
-        routerLinkActive="concave-btn">
-        BACKLOG
-    </a>
-
-    <a 
-        routerLink="/board" 
-        routerLinkActive="concave-btn">
-        BOARDS
-    </a>
-
-</div>
-
-<div class="sectionRight">
-    <!-- INPUTFIELD NEW BOARD  -->
-    <div 
-        (click)="expandInputfield = true" 
-        [class.concave]="expandInputfield" 
-        *ngIf="router.url.includes('board')"
-        class="container">
-
-        <form>
-            <input 
-                [(ngModel)]="newBoardTitle" 
-                name="newBoardTitle" 
-                placeholder="+ NEW BOARD"
-                [class.expandAnimation]="expandInputfield" 
-                (blur)="expandInputfield=false" 
-                type="search" 
-                minlength="2">
-            <button 
-                type="submit" 
-                [class.expandAnimation]="expandInputfield"
-                (click)="handleNewBoardAdding(); stopPropagation($event)">
-                Add
-            </button>
-        </form>
-
-    </div>
-
-    <div>
+    
+    <div class="sectionRight">
+        <!-- INPUTFIELD NEW BOARD  -->
         <div
-            href="" class="info" 
-            *ngIf="router.url.includes('home')">
-            <span>Help</span>
-            <img src="/assets/img/info.svg" alt="help">
+            (click)="expandInputfield = true"
+            [class.concave]="expandInputfield"
+            *ngIf="router.url.includes('board')"
+            class="container">
+    
+            <form>
+                <input
+                    [(ngModel)]="newBoardTitle"
+                    name="newBoardTitle"
+                    placeholder="+ NEW BOARD"
+                    [class.expandAnimation]="expandInputfield"
+                    (blur)="expandInputfield=false"
+                    type="search"
+                    minlength="2">
+                <button
+                    type="submit"
+                    [class.expandAnimation]="expandInputfield"
+                    (click)="handleNewBoardAdding(); stopPropagation($event)">
+                    Add
+                </button>
+            </form>
+    
         </div>
-
+    
+        <div>
+            <div
+                href="" class="info"
+                *ngIf="router.url.includes('home')">
+                <span>Help</span>
+                <img src="/assets/img/info.svg" alt="help">
+            </div>
+    
+        </div>
+    
+        <div
+            *ngIf="router.url.includes('backlog') || router.url.includes('board')"
+            (click)="newTaskPopUp()"
+            class="plus-wrapper">
+            <span class="plus"></span>
+        </div>
+    
+    
     </div>
-
-    <div 
-        *ngIf="router.url.includes('backlog') || router.url.includes('board')" 
-        (click)="newTaskPopUp()"
-        class="plus-wrapper">
-        <span class="plus"></span>
-    </div>
-
-
 </div>

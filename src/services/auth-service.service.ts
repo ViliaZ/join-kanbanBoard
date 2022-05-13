@@ -50,6 +50,7 @@ export class AuthServiceService {
         }
       }
       else {  // if no user at all , then returns NULL
+        // alert('no user found. Return to login')
         console.log('TestAccount Logged In', user);
       }
     })
@@ -122,18 +123,17 @@ export class AuthServiceService {
   async logout(): Promise<void> {
     await this.fireAuth.signOut()
     .then(() => this.router.navigate(['/login']));
-
   }
 
   async deleteUserFromFireAuth() {
     await this.auth.currentUser.delete();
-    // await this.auth.deleteUser(this.currentUser.uid)
-    //   .then(() => {
-    //     console.log('Successfully deleted guest');
-    //   })
-    //   .catch((error: any) => {
-    //     console.log('Error deleting guest:', error);
-    //   });
+    await this.auth.deleteUser(this.currentUser.uid)
+      .then(() => {
+        console.log('Successfully deleted guest');
+      })
+      .catch((error: any) => {
+        console.log('Error deleting guest:', error);
+      });
   }
 
 

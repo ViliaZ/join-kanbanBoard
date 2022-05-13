@@ -43,7 +43,7 @@ export class MenuComponent implements OnInit {
     if (this.authService.currentUser.isAnonymous) {
       await this.authService.deleteUserFromFireAuth();
       // delete from user collection
-      await this.db.deleteDoc('users', this.authService.currentUser.uid)   
+      // await this.db.deleteDoc('users', this.authService.currentUser.uid)   
       // delete Tasks on every Board
       }
       // delete all Board Collections if not already automatically 

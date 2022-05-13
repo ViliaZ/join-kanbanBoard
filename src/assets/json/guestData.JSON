@@ -37,7 +37,7 @@
       }, 
       {
         "board": "backlog",
-        "title": "This is a Backlogtask",
+        "title": "Test Backlogtask",
         "description": "This is a description",
         "percentUncheckedTodos": 80,
         "percentCheckedTodos": 20,
@@ -53,7 +53,7 @@
       }, 
       {
         "board": "ToDo",
-        "title": "Test Task for Guest User",
+        "title": "Test Task ",
         "description": "Your description here .....",
         "percentUncheckedTodos": 20,
         "percentCheckedTodos": 80,
