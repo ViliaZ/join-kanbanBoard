@@ -5,23 +5,28 @@
     height: 100vh;
     max-width: var(--maxwidth);
     margin: auto;
-    max-width: var(--maxwidth);
-    margin: auto;
     background-color:var(--bg);
-    padding: 6rem 10rem;
     color: var(--primary-light);
-
 
     .wrapper {
         position: relative;
-        width: 60vw;
+        margin: auto; 
         height: 100%;
         max-height: 550px;
+        max-width: 580px;
         display: flex;
         border-radius: 44px;
-        max-width: 700px;
         overflow: hidden;
         box-shadow: #1a116063 0px 40px 90px -20px, #1a11605c 0px 30px 40px -30px;
+        
+        @media only screen and (max-width: 900px){
+            width: 80vw;
+        }
+
+        @media only screen and (max-width: 5500px){
+            width: 90vw;
+        }
+
 
         &::after {
             position: absolute;
@@ -81,6 +86,10 @@
     border-radius: 10px;
     border-radius: 44px 0px 0px 44px;
     z-index: 10;
+
+    @media only screen and (max-width: 900px){
+        width: 70%;
+    }
 
     &::after {
         position: absolute;

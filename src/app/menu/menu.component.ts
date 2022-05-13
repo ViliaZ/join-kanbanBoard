@@ -45,7 +45,6 @@ export class MenuComponent implements OnInit {
       // delete from user collection
       await this.db.deleteDoc('users', this.authService.currentUser.uid)   
       // delete Tasks on every Board
-
       }
       // delete all Board Collections if not already automatically 
     }
