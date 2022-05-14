@@ -18,7 +18,7 @@ export class AuthServiceService {
 
   // create a reference to the current user, so that I can access his data easily again
   userRef!: AngularFirestoreDocument<any>; // will be initialized with change to LoginState
-  user!: User; // is given as User object after login
+  user$!: User; // is given as User object after login
   currentUser: any = {};  // is the firebase format user given at monitorAuthState() with login
   auth: any = getAuth();  // Initialize Firebase Authentication and get a reference to the service
   coUsers: any = []; // not activly in use yet, holds all OTHER users connected to this board
@@ -56,6 +56,10 @@ export class AuthServiceService {
     })
   }
 
+
+
+  
+
   // automatically user will also be logged in afterwards
   async createNewUser(email: string, password: string, name: string): Promise<void> {
     await this.fireAuth.createUserWithEmailAndPassword(email, password)
@@ -76,7 +80,7 @@ export class AuthServiceService {
       emailVerified: user.emailVerified,
       isAnonymous: user.isAnonymous,
     }
-    this.user = new User(userData);  // assign it for later use in App
+    this.user$ = new User(userData);  // assign it for later use in App
     let newSignUpUser = new User(userData).toJson();      // save to database in json-format:
     this.userRef = this.firestore.doc(`users/${user.uid}`)  // create a reference to the current user, so that I can access his data easily again
     this.userRef.set(newSignUpUser, { merge: true });   // If Doc does not exist, create new one. If it exists, then merge it
@@ -87,6 +91,10 @@ export class AuthServiceService {
   async login(email: string, password: string): Promise<void> {
     await this.fireAuth.signInWithEmailAndPassword(email, password)
       .then((userCredential) => {  // get User object: userCredential.user
+        console.log('userCredential',userCredential);
+        console.log('this.user after login',this.user$);
+        
+        // this.user$ = new User(userCredential);
         this.router.navigate(['']);
       })
       .catch((error) => {
@@ -113,12 +121,11 @@ export class AuthServiceService {
       isAnonymous: user.isAnonymous,
       displayName: 'Guest'
     }
-    this.user = new User(userData); // KEEP it!  for later use in app (we  need a version without toJson() there!)
+    this.user$ = new User(userData); // KEEP it!  for later use in app (we  need a version without toJson() there!)
     let newGuest = new User(userData).toJson();  // save as Json Format to database
     this.userRef = this.firestore.doc(`users/${user.uid}`)// create a reference to the current user, so that I can access his data easily again
     this.userRef.set(newGuest, { merge: true }); // If Doc does not exist, create new one. If it exists, then merge it
   }
-
 
   async logout(): Promise<void> {
     await this.fireAuth.signOut()
@@ -135,8 +142,6 @@ export class AuthServiceService {
         console.log('Error deleting guest:', error);
       });
   }
-
-
 
 
   // TODO - the function is set up to avoid error in forgot-pw component

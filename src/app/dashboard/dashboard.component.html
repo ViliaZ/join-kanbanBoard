@@ -1,8 +1,8 @@
 <div class="sectionOne">
     <div class="user containerOne cardText">
         <h1 class="welcome">Welcome to Join</h1>
-        <div>{{authService.user?.displayName || 'User'}} | Full Access</div>
-        <span class="date">Last Login: {{ authService.user ? (authService.user.lastlogin | date: 'MMM d') : (currentDate
+        <div>{{authService.user$?.displayName || 'User'}} | Full Access</div>
+        <span class="date">Last Login: {{ authService.user$ ? (authService.user$.lastlogin | date: 'MMM d') : (currentDate
             | date: 'MMM d')}}</span>
         <!-- <span *ngIf="authService.user.isAnonymous || authService.user.isAnonymous == undefined " class="date">One-time{{ authService.user ? (authService.user.lastlogin | date: 'MMM d') : (currentDate |  date: 'MMM d')}}</span> -->
     </div>

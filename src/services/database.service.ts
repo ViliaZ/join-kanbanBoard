@@ -54,7 +54,7 @@ export class DatabaseService {
           .valueChanges({ idField: 'customIdName' })
       }))
       .subscribe(async (result) => {               // result = tasks[]
-        console.log(this.boards);
+        // console.log(this.boards);
 
         this.emptyAllArrays();
         result.forEach((task) => this.allTasks.push(new Task(task).toJson()))  // must be called after all Arrays are empty
