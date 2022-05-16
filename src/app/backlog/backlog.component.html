@@ -1,4 +1,4 @@
-<div *ngIf="!db.backlogEmpty()" class="backlogSettings">
+<!-- <div *ngIf="!db.backlogEmpty()" class="backlogSettings">
     <div class="sortBy">
         <img (click)="changeSorting()" src="assets/img/sort.png" alt="sort icon">
     </div>
@@ -9,7 +9,7 @@
             <button type="submit">Search</button>
           </form>
     </div>
-</div>
+</div> -->
 
 
 <div class="body-backlog">
@@ -43,8 +43,9 @@
 
     </div>
 
+
     <div *ngIf="db.backlogEmpty()" class="emptyBacklog">
-        <img *ngIf="db.backlogEmpty()" src="assets/img/notFound.svg" alt="empty Backlog">
+        <img *ngIf="db.backlogEmpty()" src="assets/img/notFound.svg" alt="emptyBacklog">
         <h3> No Tasks in the Backlog.</h3>
     </div>
 

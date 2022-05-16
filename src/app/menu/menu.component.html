@@ -5,7 +5,7 @@
         <div class="user">
             <img
                 (mouseenter)="openSettings = true"
-                (click)="toggleSettings()"
+                (click)="toggleUserSubMenu()"
                 src="assets/img/user.svg"
                 alt="logout">
     
@@ -50,13 +50,30 @@
     </div>
     
     <div class="sectionRight">
+
+    <!-- SEARCH AND FILTETR FOR BACKLOG  -->
+
+        <div *ngIf="!db.backlogEmpty()" class="backlogSettings">
+            <div class="sortBy">
+                <img (click)="handleBacklogSorting()" src="assets/img/sort.png" alt="sort icon">
+            </div>
+
+            <div class="container concave">
+                <form>
+                    <input [(ngModel)]="searchInput" name="searchInput" type="search" placeholder="Find task ...">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        </div> 
+
+
+
         <!-- INPUTFIELD NEW BOARD  -->
         <div
             (click)="expandInputfield = true"
             [class.concave]="expandInputfield"
             *ngIf="router.url.includes('board')"
             class="container">
-    
             <form>
                 <input
                     [(ngModel)]="newBoardTitle"
@@ -73,9 +90,9 @@
                     Add
                 </button>
             </form>
-    
         </div>
     
+        <!-- Help Link -->
         <div>
             <div
                 href="" class="info"
@@ -83,9 +100,10 @@
                 <span>Help</span>
                 <img src="/assets/img/info.svg" alt="help">
             </div>
-    
         </div>
     
+
+        <!-- // Plus Button -->
         <div
             *ngIf="router.url.includes('backlog') || router.url.includes('board')"
             (click)="newTaskPopUp()"

@@ -18,13 +18,15 @@ export class MenuComponent implements OnInit {
   public newBoardTitle: string = '';
   public activeNavItem: string = 'home';
   public openSettings: boolean = false;
+  public searchInput: string = '';  // search input for backlog in menu component 
+
 
   constructor(
     public authService: AuthServiceService, 
     public router: Router, 
     private eventEmitterService: EventemitterService,
     private taskservice: TasksService,
-    private db: DatabaseService) { }
+    public db: DatabaseService) { }
 
   ngOnInit(): void {
   }
@@ -39,6 +41,12 @@ export class MenuComponent implements OnInit {
     this.newBoardTitle = ''; 
   }
 
+  handleBacklogSorting(){
+    console.log('handleBacklogSorting');
+    
+    this.eventEmitterService.onBacklogSorting('emit');   
+  }
+
   async onLogout() {
     if (this.authService.currentUser.isAnonymous) {
       await this.authService.deleteUserFromFireAuth();
@@ -50,7 +58,7 @@ export class MenuComponent implements OnInit {
     }
 
 
-  toggleSettings() {
+    toggleUserSubMenu() {
     if (this.openSettings) {
       this.openSettings = false
     }
