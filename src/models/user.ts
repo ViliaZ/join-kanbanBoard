@@ -5,7 +5,7 @@ export class User {
     public photoURL?: string;
     public emailVerified?: boolean;
     public isAnonymous: boolean;
-    public guestBoardsInitialized?: boolean;
+    public dummyDataCreated?: boolean;
     public customCategories?: any;  // user can create custom categories for their tasks
     public lastlogin?: any; 
 
@@ -18,7 +18,7 @@ export class User {
         this.isAnonymous = obj.isAnonymous ? obj.isAnonymous : true;
         this.customCategories = obj.customCategories ? obj.customCategories : [];
         this.lastlogin = obj.lastlogin ? obj.lastlogin : new Date();
-        this.guestBoardsInitialized = obj.guestBoardsInitialized ? obj.guestBoardsInitialized : false;
+        this.dummyDataCreated = obj.dummyDataCreated ? obj.dummyDataCreated : false;
         }
 
     public toJson() {
@@ -29,7 +29,7 @@ export class User {
             photoURL: this.photoURL,
             emailVerified: this.emailVerified,
             isAnonymous: this.isAnonymous,
-            guestBoardsInitialized: this.guestBoardsInitialized,
+            dummyDataCreated: this.dummyDataCreated,
             customCategories: this.customCategories,
             lastlogin: this.lastlogin
         }

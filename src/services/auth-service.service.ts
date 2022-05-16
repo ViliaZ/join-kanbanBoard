@@ -13,17 +13,18 @@ import { DatabaseService } from './database.service';
 
 export class AuthServiceService {
 
-  // access AuthService in Model Class (e.g. Task) --> access this property
-  static injector: Injector;
+  
+  static injector: Injector; // access AuthService in Model Class (e.g. Task) --> access this property
 
   // create a reference to the current user, so that I can access his data easily again
   userRef!: AngularFirestoreDocument<any>; // will be initialized with change to LoginState
-  user$!: User; // is given as User object after login
-  currentUser: any = {};  // is the firebase format user given at monitorAuthState() with login
-  auth: any = getAuth();  // Initialize Firebase Authentication and get a reference to the service
-  coUsers: any = []; // not activly in use yet, holds all OTHER users connected to this board
-  // coUsers array is used in newTask component for-loop for template driven form
-
+  user$!: User;             // is given as User object after login
+  currentUser: any = {};    // is the firebase format user given at monitorAuthState() with login
+  auth: any = getAuth();    // Initialize Firebase Authentication and get a reference to the service
+  
+  // not activly in use yet, holds all OTHER users connected to this board / coUsers array is used in newTask component for-loop for template driven form
+  coUsers: any = []; 
+  
   // For dummyData:
   today: Date = new Date();
   futureDate: any = (date: Date, daysToCount: number) => {
@@ -40,8 +41,8 @@ export class AuthServiceService {
     this.monitorAuthState();
   }
 
-  // initialized as soon as App starts
-  async monitorAuthState(): Promise<void> {  // triggered: login / logout
+
+  async monitorAuthState(): Promise<void> {  
     await this.fireAuth.onAuthStateChanged((user) => {
       if (user) {
         this.currentUser = user;  // create a reference to the current user, so that I can access his data easily again
@@ -49,24 +50,19 @@ export class AuthServiceService {
           console.log('user.isAnonymous (Guest):', this.currentUser);
         }
       }
-      else {  // if no user at all , then returns NULL
+      else {  // if no user returns NULL
         // alert('no user found. Return to login')
         console.log('TestAccount Logged In', user);
       }
     })
   }
 
-
-
-  
-
-  // automatically user will also be logged in afterwards
   async createNewUser(email: string, password: string, name: string): Promise<void> {
     await this.fireAuth.createUserWithEmailAndPassword(email, password)
-      .then((userCredential: any) => {  // usercredential contains all infos, .user is userInfo
+      .then(async (userCredential: any) => {  // usercredential.user contains userInfo
         this.saveUserInDatabase(userCredential.user, name);
-        // this.addNewUserToCollection()
-        this.router.navigate([''])
+        await this.createDummyData();
+        this.router.navigate([''])  // automatically logged in
       })
   }
 
@@ -87,15 +83,15 @@ export class AuthServiceService {
   };
 
 
-  // Login and navigate to home page
-  async login(email: string, password: string): Promise<void> {
+  
+  async login(email: string, password: string): Promise<void> {  
     await this.fireAuth.signInWithEmailAndPassword(email, password)
       .then((userCredential) => {  // get User object: userCredential.user
-        console.log('userCredential',userCredential);
-        console.log('this.user after login',this.user$);
-        
+        console.log('userCredential', userCredential);
+        console.log('this.user after login', this.user$);
+
         // this.user$ = new User(userCredential);
-        this.router.navigate(['']);
+        this.router.navigate(['']); 
       })
       .catch((error) => {
         console.log('Login(): User data incorrrect, Please try again', error);
@@ -129,7 +125,7 @@ export class AuthServiceService {
 
   async logout(): Promise<void> {
     await this.fireAuth.signOut()
-    .then(() => this.router.navigate(['/login']));
+      .then(() => this.router.navigate(['/login']));
   }
 
   async deleteUserFromFireAuth() {
@@ -156,7 +152,7 @@ export class AuthServiceService {
       await this.setDummyBoards(jsonData.dummyBoards);
       await this.setDummyTasks(jsonData.dummyTasks);
     })
-    this.userRef.set({ guestBoardsInitialized: true }, { merge: true }) // consider deleting this, if not needed
+    this.userRef.set({ dummyDataCreated: true }, { merge: true }) // consider deleting this, if not needed
   }
 
   async setDummyBoards(dummmyBoards: any): Promise<void> {

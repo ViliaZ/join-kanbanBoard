@@ -5,7 +5,7 @@ export interface User {
     photoURL: string,
     emailVerified: boolean,
     isAnonymous: boolean,
-    guestBoardsInitialized: boolean,
+    dummyDataCreated: boolean,
     isLoggedIn: boolean
 }
 
