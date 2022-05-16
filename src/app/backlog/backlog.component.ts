@@ -23,23 +23,35 @@ export class BacklogComponent implements OnInit {
 
   ngOnInit(): void {
     this.db.getBoardAndTaskData();   
-    this.listenToEventEmitter();
-    console.log('handleBacklogSorting im init');
-
+    this.listenToEventEmitterSorting();
+    this.listenToEventEmitterSearching();
   }
 
-  listenToEventEmitter(){  
-    console.log('listenToEventEmitter');
+  listenToEventEmitterSorting(){  
+    console.log('BACKLOG: listenToEventEmitterSorting');
     if (this.eventEmitterService.subscription == undefined) {
       this.eventEmitterService.subscription = this.eventEmitterService.
-        callBacklogEventHandler.subscribe(() => {
+      callBacklogSortEventHandler.subscribe(() => {
           this.toggleBacklogSorting();  // is called, if sorting in menu comp is requested
         }
         );
     }
   }
 
-  evaluateSearchRequest(task: any): any {
+  listenToEventEmitterSearching(){  // search Input for find tasks in backlog
+    console.log('BACKLOG: listenToEventEmitterSearching');
+    // if (this.eventEmitterService.subscription == undefined) {
+      this.eventEmitterService.subscription = this.eventEmitterService.
+      callBacklogFilterEventHandler.subscribe((data: string) => {  
+          this.searchInput = data;
+        }
+        );
+    // }
+  }
+
+  // bound in template - gives back boolean for every rendered task
+  isFilteredTask(task: any): any {
+    console.log('BACKLOG: evaluateSearchRequest');
       let taskToString = JSON.stringify(task).toLowerCase();
       let searchItemFound = taskToString.includes(this.searchInput.toLowerCase());
       return searchItemFound  // boolean
@@ -61,26 +73,15 @@ export class BacklogComponent implements OnInit {
   }
 
   toggleBacklogSorting() {  // default is desc
-
-    if (this.orderBacklogtasks == 'desc'){
-      console.log('desc');
-      
+    if (this.orderBacklogtasks == 'desc'){     
       this.orderBacklogtasks = 'asc';
       this.db.getBoardAndTaskData('createdAt', 'asc', 'dueTo', 'asc')  //Arguments: boardSorting + Order; TaskSorting + Order
     }
     else {
-      console.log('asc');
-
       this.orderBacklogtasks = 'desc';
       this.db.getBoardAndTaskData('createdAt', 'asc', 'dueTo', 'desc')  //Arguments: boardSorting + Order; TaskSorting + Order
     }
   }
-
-  // gets Data from eventemitter / Menu component with filter-Icon
-  callBacklogEventHandler(){
-
-  }
-
 
 }
 

@@ -52,15 +52,14 @@
     <div class="sectionRight">
 
     <!-- SEARCH AND FILTETR FOR BACKLOG  -->
-
-        <div *ngIf="!db.backlogEmpty()" class="backlogSettings">
+        <div *ngIf="!db.backlogEmpty() && router.url.includes('backlog')" class="backlogSettings">
             <div class="sortBy">
                 <img (click)="handleBacklogSorting()" src="assets/img/sort.png" alt="sort icon">
             </div>
 
             <div class="container concave">
-                <form>
-                    <input [(ngModel)]="searchInput" name="searchInput" type="search" placeholder="Find task ...">
+                <form (ngSubmit)="handleBacklogFiltering()">
+                    <input [(ngModel)]="searchInput"  (ngModelChange)="handleBacklogFiltering()" name="searchInput" type="search" placeholder="SEARCH BACKLOG ...">
                     <button type="submit">Search</button>
                 </form>
             </div>
@@ -73,7 +72,7 @@
             (click)="expandInputfield = true"
             [class.concave]="expandInputfield"
             *ngIf="router.url.includes('board')"
-            class="container">
+            class="newBoard">
             <form>
                 <input
                     [(ngModel)]="newBoardTitle"
