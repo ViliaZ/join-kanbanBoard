@@ -1,15 +1,13 @@
 <div class="wrapper">
-
     <div class="section-card">
-
-
         <div class="login">
             <h2>Sign Up</h2>
             <form #form="ngForm" (ngSubmit)="onSignUp()">
 
-                <input [(ngModel)]="user.name" required name="userName" placeholder="First Name" type="text">
-                <input [(ngModel)]="user.email" required name="userEmail" placeholder="E-Mail Name" type="email">
-                <input [(ngModel)]="user.password" required name="userPassword" placeholder="Password" type="password">
+                <input [(ngModel)]="user.name" #userName="ngModel"  minlength="3" required name="userName" placeholder="First Name*" type="text">
+                <input [(ngModel)]="user.email" #userEmail="ngModel" required name="userEmail" placeholder="E-Mail*"
+                    type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"> 
+                <input [(ngModel)]="user.password" required name="userPassword" placeholder="Password*" type="password">
 
                 <button [disabled]="!form.valid" type="submit">Create Account</button>
 
@@ -20,9 +18,20 @@
                         - or -
                         <a routerLink="/">Enter as Guest</a>
                     </span>
-
                 </div>
             </form>
+        </div>
+
+<!-- Validators -->
+        <div class="validators">
+            <div *ngIf="userName.touched" class="validator">
+                <p *ngIf="userName.errors?.['required']">Name is a required field!</p>
+                <p *ngIf="userName.errors?.['minlength']">Minimum 3 characters.</p>
+            </div>
+            <div *ngIf="userEmail.touched" class="validator">
+                <p *ngIf="userEmail.errors?.['required']">Email is a required field!</p>
+                <p *ngIf="userEmail.errors?.['pattern']">Please us a valid Email format.</p>
+            </div>
         </div>
 
     </div>

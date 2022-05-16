@@ -1,17 +1,18 @@
 :host {
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 100%;
     height: 100vh;
     max-width: var(--maxwidth);
     margin: auto;
-    background-color:var(--bg);
+    background-color: var(--bg);
     padding: 6rem 10rem;
     color: var(--primary-light);
 }
 
-h2{
-    color: white!important;
+h2 {
+    color: white !important;
     margin-bottom: 28px;
 }
 
@@ -21,7 +22,9 @@ h2{
     height: 100%;
     display: flex;
     border-radius: 44px;
-    max-width: 1200px;
+    max-height: 550px;
+    max-width: 580px;
+
     overflow: hidden;
     box-shadow: #1a116063 0px 40px 90px -20px, #1a11605c 0px 30px 40px -30px;
 
@@ -32,6 +35,34 @@ h2{
         top: 0;
         bottom: 0;
         z-index: 0;
+    }
+}
+
+
+// inside "wrapper"
+.validators {
+    position: absolute;
+    bottom: 18px;
+    left: 0;
+    right: 0;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: var(--font-small);
+    text-align: center;
+    padding: 0px 18px 6px 18px;
+
+    .validator{
+        display: flex;
+        justify-content: center;       
+        align-items: center;
+
+        p {
+            color:yellow;
+            font-size: var(--font-small);
+            text-align: center;
+        }
     }
 }
 
@@ -75,8 +106,7 @@ h2{
         padding: 16px;
         margin-bottom: 12px;
         height: 40px;
-        border: 1px solid var(--primary-light);
-        border-radius: 20px;
+        border-radius: 12px;
         background-color: transparent;
         color: var(--primary-light);
         text-align: center;
@@ -120,14 +150,17 @@ h2{
     button {
         width: 100%;
         padding: 8px;
-        margin-top: 1em;
         border-radius: 20px;
         border: unset;
         color: white !important;
         font-size: 16px;
-        letter-spacing: 3px;
+        letter-spacing: 2px;
         background: rgb(222, 228, 19);
         background: var(--gradientColors);
+
+        &:hover{
+            filter: opacity(0.8);
+        }
     }
 }
 
@@ -139,8 +172,8 @@ h2{
     align-items: center;
     margin-top: 32px;
 
-
-    span, a{
+    span,
+    a {
         color: var(--primary-light);
         font-size: 14px;
         font-style: italic;

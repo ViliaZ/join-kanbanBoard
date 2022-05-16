@@ -6,8 +6,8 @@
             <div class="login">
                 <form (ngSubmit)="onlogin()" #form="ngForm">
 
-                <input [(ngModel)]="user.email" required name="userEmail" placeholder="E-Mail Name" type="email">
-                <input [(ngModel)]="user.password" required name="userPassword" placeholder="Password" type="password">
+                <input [(ngModel)]="user.email" #userEmail="ngModel" required name="userEmail" placeholder="E-Mail" type="email">
+                <input [(ngModel)]="user.password" #userPassword="ngModel" required name="userPassword" placeholder="Password" type="password">
 
                 <button [disabled]="!form.valid" type="submit">Login</button>
 
@@ -22,6 +22,16 @@
             </form>
             </div>
 
+<!-- Validators -->
+<div class="validators">
+    <div *ngIf="userPassword.touched" class="validator">
+        <p *ngIf="userPassword.errors?.['required']">Password is required.</p>
+    </div>
+    <div *ngIf="userEmail.touched" class="validator">
+        <p *ngIf="userEmail.errors?.['required']">Please use your Email address.</p>
+        <p *ngIf="userEmail.errors?.['pattern']">Please us a valid Email format.</p>
+    </div>
+</div>
     </div>
 
     <app-gradient-animation class="bg-gradient"></app-gradient-animation>
