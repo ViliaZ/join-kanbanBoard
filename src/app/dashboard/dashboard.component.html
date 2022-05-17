@@ -8,6 +8,7 @@
     </div>
 
     <div class="containerTwo">
+
         <div class="cardRow">
             <!-- // new card -->
             <div class="card urgentTasks convex">
@@ -31,71 +32,68 @@
 
         <!-- // new card -->
 
-        <div class="cardRow">
-            <div class="card nextDueTask convex">
-                <div class="iconContainer">
-                    <div class="icon-wrap ">
-                        <img src="assets/img/nextDue.svg" alt="nextDue">
+        <div class="rowsBottom">
+            <div class="cardRow">
+                <div class="card nextDueTask convex">
+                    <div class="iconContainer">
+                        <div class="icon-wrap ">
+                            <img src="assets/img/nextDue.svg" alt="nextDue">
+                        </div>
+                    </div>
+                    <div class="info">
+                        <!-- Note: nextDueDateTasks.dueTo Times are converted in localtimestring in db service! no pipe necessary-->
+                        <div *ngIf="db.nextDueDateTasks.length == 0; else nextDueDates">No Due Dates to track.</div>
+                        <ng-template #nextDueDates>
+                            <div class="dueDate">{{ db.nextDueDateTasks[0].dueTo || 'No Tasks'}} </div>
+                            <div>Upcoming Deadline</div>
+                        </ng-template>
+                    </div>
+                    <div class="taskDetails-onhover concave-btn">
+                        <div *ngIf="db.nextDueDateTasks.length == 0" class="amountTasks">0 Tasks</div>
+                        <div *ngIf="db.nextDueDateTasks.length == 1" class="amountTasks"> 1 Task</div>
+                        <div *ngIf="db.nextDueDateTasks.length > 1" class="amountTasks"> {{ db.nextDueDateTasks.length }}
+                            Tasks</div>
+                        <div class="details">
+                            <div><b> On Board: </b> {{ db.nextDueDateTasks[0]?.board || 'n.a.'}}</div>
+                            <div class="furtherTasks" *ngIf="db.nextDueDateTasks.length > 1"> +{{ db.nextDueDateTasks.length
+                                -1}} further task(s)</div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="info">
-                    <!-- Note: nextDueDateTasks.dueTo Times are converted in localtimestring in db service! no pipe necessary-->
-                    <div *ngIf="db.nextDueDateTasks.length == 0; else nextDueDates">No Due Dates to track.</div>
-                    <ng-template #nextDueDates>
-                        <div class="dueDate">{{ db.nextDueDateTasks[0].dueTo || 'No Tasks'}} </div>
-                        <div>Upcoming Deadline</div>
-                    </ng-template>
-                </div>
-
-                <div class="taskDetails-onhover concave-btn">
-                    <div *ngIf="db.nextDueDateTasks.length == 0" class="amountTasks">0 Tasks</div>
-                    <div *ngIf="db.nextDueDateTasks.length == 1" class="amountTasks"> 1 Task</div>
-                    <div *ngIf="db.nextDueDateTasks.length > 1" class="amountTasks"> {{ db.nextDueDateTasks.length }}
-                        Tasks</div>
-                    <div class="details">
-                        <div><b> On Board: </b> {{ db.nextDueDateTasks[0]?.board || 'n.a.'}}</div>
-                        <div class="furtherTasks" *ngIf="db.nextDueDateTasks.length > 1"> +{{ db.nextDueDateTasks.length
-                            -1}} further task(s)</div>
+            </div>
+            <!-- // new card -->
+            <div class="cardRow">
+                <div class="card statistic convex">
+                    <div class="row">
+                        <div class="row-label">
+                            <div>In Backlog</div>
+                            <div class="concave-small">{{ db.backlogtasks.length }}</div>
+                        </div>
+                        <div class="fullwidth concave-small">
+                            <div class="bar" [ngStyle]="{'width': width.backlogTasks}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="row-label">
+                            <div>In Progress</div>
+                            <div class="concave-small">{{ db.allTasks.length - db.backlogtasks.length}}</div>
+                        </div>
+                        <div class="fullwidth concave-small">
+                            <div class="bar" [ngStyle]="{'width': width.allTasks}">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- // new card -->
-        <div class="cardRow">
-            <div class="card statistic convex">
-                <div class="row">
-                    <div class="row-label">
-                        <div>In Backlog</div>
-                        <div class="concave-small">{{ db.backlogtasks.length }}</div>
-                    </div>
-                    <div class="fullwidth concave-small">
-                        <div class="bar" [ngStyle]="{'width': width.backlogTasks}">
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="row-label">
-                        <div>In Progress</div>
-                        <div class="concave-small">{{ db.allTasks.length - db.backlogtasks.length}}</div>
-                    </div>
-                    <div class="fullwidth concave-small">
-                        <div class="bar" [ngStyle]="{'width': width.allTasks}">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- // new card -->
-        <div class="row">
+        <!-- <div class="row">
             <div class="cardText invitationGuest">
                 Explore Join by using the test data provided. <br>Or add your own tasks to the Kanban System.
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 

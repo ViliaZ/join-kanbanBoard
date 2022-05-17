@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box !important;
   font-family: "Poppins", sans-serif;
+  font-size: calc(6px + 6 * ((100vw - 320px) / 680));  // min 16px max 22px
   color: var(--primary-dark);
 }
 
@@ -43,6 +44,16 @@
   --paddingPageTopBottom: 44px;
   --maxwidth: 1280px;
   --maxwidthMenu: 1460px;
+
+
+  // FLuid Type
+  --font-size-sm: clamp(0.8rem, 0.17vw + 0.76rem, 0.89rem);
+--font-size-base: clamp(1rem, 0.34vw + 0.91rem, 1.19rem);
+--font-size-md: clamp(1.25rem, 0.61vw + 1.1rem, 1.58rem);
+--font-size-lg: clamp(1.56rem, 1vw + 1.31rem, 2.11rem);
+--font-size-xl: clamp(1.95rem, 1.56vw + 1.56rem, 2.81rem);
+--font-size-xxl: clamp(2.44rem, 2.38vw + 1.85rem, 3.75rem);
+--font-size-xxxl: clamp(3.05rem, 3.54vw + 2.17rem, 5rem);
 }
 
 .default-btn {
@@ -85,11 +96,11 @@ h3 {
 }
 
 h1 {
-  font-size: 32px;
+  font-size: calc(1.75em + 0.6vw);
 }
 
 h3 {
-  font-size: 20px;
+  font-size: calc(1em + 0.08vw);
   font-weight: 600;
   color:rgba(140, 120, 173, 0.956)
 }
