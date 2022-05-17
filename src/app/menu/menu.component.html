@@ -1,19 +1,13 @@
-
 <div class="wrapper">
     <div class="sectionLeft">
         <!-- User Image -->
-        <div class="user">
-            <img
-                (mouseenter)="openSettings = true"
-                (click)="toggleUserSubMenu()"
-                src="assets/img/user.svg"
+        <div class="user" *ngIf="hideMobileMenu">
+            <img (mouseenter)="openSettings = true" (click)="toggleUserSubMenu()" src="assets/img/user.svg"
                 alt="logout">
-    
-            <div
-                *ngIf="openSettings" class="settingsContainer"
-                (mouseenter)="openSettings = true"
+
+            <div *ngIf="openSettings" class="settingsContainer" (mouseenter)="openSettings = true"
                 (mouseleave)="openSettings = false">
-    
+
                 <div class="settingContent">
                     <div class="name"> {{ this.authService.currentUser.displayName || 'Guest User' }}</div>
                     <div class="logout">
@@ -24,34 +18,28 @@
                         <a routerLink="/imprint">Imprint</a>
                     </div>
                 </div>
-    
+
             </div>
         </div>
-    
-        <a
-            routerLink="/home"
-            routerLinkActive="concave-btn"
+
+        <a *ngIf="hideMobileMenu" routerLink="/home" routerLinkActive="concave-btn"
             [routerLinkActiveOptions]="{ exact: true }">
             DASHBOARD
         </a>
-    
-        <a
-            routerLink="/backlog"
-            routerLinkActive="concave-btn">
+
+        <a *ngIf="hideMobileMenu" routerLink="/backlog" routerLinkActive="concave-btn">
             BACKLOG
         </a>
-    
-        <a
-            routerLink="/board"
-            routerLinkActive="concave-btn">
+
+        <a *ngIf="hideMobileMenu" routerLink="/board" routerLinkActive="concave-btn">
             BOARDS
         </a>
-    
+
     </div>
-    
+
     <div class="sectionRight">
 
-    <!-- SEARCH AND FILTETR FOR BACKLOG  -->
+        <!-- SEARCH AND FILTETR FOR BACKLOG  -->
         <div *ngIf="!db.backlogEmpty() && router.url.includes('backlog')" class="backlogSettings">
             <div class="sortBy">
                 <img (click)="handleBacklogSorting()" src="assets/img/sort.png" alt="sort icon">
@@ -59,57 +47,69 @@
 
             <div class="container concave">
                 <form (ngSubmit)="handleBacklogFiltering()">
-                    <input [(ngModel)]="searchInput"  (ngModelChange)="handleBacklogFiltering()" name="searchInput" type="search" placeholder="SEARCH BACKLOG ...">
+                    <input [(ngModel)]="searchInput" (ngModelChange)="handleBacklogFiltering()" name="searchInput"
+                        type="search" placeholder="SEARCH BACKLOG ...">
                     <button type="submit">Search</button>
                 </form>
             </div>
-        </div> 
+        </div>
 
 
 
         <!-- INPUTFIELD NEW BOARD  -->
-        <div
-            (click)="expandInputfield = true"
-            [class.concave]="expandInputfield"
-            *ngIf="router.url.includes('board')"
+        <div (click)="expandInputfield = true" [class.concave]="expandInputfield" *ngIf="router.url.includes('board')"
             class="newBoard">
             <form>
-                <input
-                    [(ngModel)]="newBoardTitle"
-                    name="newBoardTitle"
-                    placeholder="+ NEW BOARD"
-                    [class.expandAnimation]="expandInputfield"
-                    (blur)="expandInputfield=false"
-                    type="search"
+                <input [(ngModel)]="newBoardTitle" name="newBoardTitle" placeholder="+ NEW BOARD"
+                    [class.expandAnimation]="expandInputfield" (blur)="expandInputfield=false" type="search"
                     minlength="2">
-                <button
-                    type="submit"
-                    [class.expandAnimation]="expandInputfield"
+                <button type="submit" [class.expandAnimation]="expandInputfield"
                     (click)="handleNewBoardAdding(); stopPropagation($event)">
                     Add
                 </button>
             </form>
         </div>
-    
+
         <!-- Help Link -->
         <div>
-            <div
-                href="" class="info"
-                *ngIf="router.url.includes('home')">
+            <div href="" class="info" *ngIf="router.url.includes('home') && hideMobileMenu">
                 <span>Help</span>
                 <img src="/assets/img/info.svg" alt="help">
             </div>
         </div>
-    
 
         <!-- // Plus Button -->
-        <div
-            *ngIf="router.url.includes('backlog') || router.url.includes('board')"
-            (click)="newTaskPopUp()"
-            class="plus-wrapper">
+        <div *ngIf="(router.url.includes('backlog') || router.url.includes('board')) && hideMobileMenu && !hamburgerMenuOpen"
+            (click)="newTaskPopUp()" class="plus-wrapper">
             <span class="plus"></span>
         </div>
-    
-    
+
+        <div *ngIf="!hideMobileMenu"  [class.isActive]="hamburgerMenuOpen" (click)="toggleHamburgerMenu()" class="hamburgerMenu">
+            XXX
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ************** MOBILE VERSION *****************-->
+
+
+<div class="wrapperMobile" *ngIf="!hideMobileMenu" [class.expand]="hamburgerMenuOpen" >
+    <a routerLink="/home" (click)="hamburgerMenuOpen = false" routerLinkActive="concave-btn" [routerLinkActiveOptions]="{ exact: true }">
+        DASHBOARD </a>
+    <a routerLink="/backlog" (click)="hamburgerMenuOpen = false" routerLinkActive="concave-btn">
+        BACKLOG</a>
+    <a routerLink="/board" (click)="hamburgerMenuOpen = false" routerLinkActive="concave-btn">
+        BOARDS</a>
+    <a routerLink="/imprint" (click)="hamburgerMenuOpen = false">
+        IMPRINT</a>
+    <div class="logout">
+        <img src="/assets/img/logout.svg" alt="help">
+        <a (click)="authService.logout()">LOGOUT</a>
+    </div>
+    <div class="help">
+        <img src="/assets/img/info.svg" alt="help">
+        <div>HELP</div>
     </div>
 </div>

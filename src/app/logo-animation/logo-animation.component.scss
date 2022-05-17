@@ -4,6 +4,7 @@
     margin: 1rem;
     margin-left: 18px;
 
+
     &::after {
         content: "[ kanban & more ]";
         color: white;
@@ -11,7 +12,7 @@
         bottom: 10px;
         letter-spacing: 3px;
         font-weight: var(--font-light);
-        font-size: 12px;
+        font-size: 12px!important;
         transform: translateX(38px) translateY(10px);
         filter: opacity(0.2);
         animation: entryOpacity 2.4s  ease-in-out forwards;
@@ -29,7 +30,7 @@
 
 .logo-wrapper {
     width: 100%;
-    font-size: 78px;
+    font-size: 78px!important;
     font-weight: bold;
     display: flex;
     justify-content: center;

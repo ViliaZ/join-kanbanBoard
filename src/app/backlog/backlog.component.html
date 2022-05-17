@@ -1,34 +1,24 @@
-<!-- <div *ngIf="!db.backlogEmpty()" class="backlogSettings">
-    <div class="sortBy">
-        <img (click)="changeSorting()" src="assets/img/sort.png" alt="sort icon">
-    </div>
-
-    <div class="container concave">
-        <form>
-            <input [(ngModel)]="searchInput" name="searchInput" type="search" placeholder="Find task ...">
-            <button type="submit">Search</button>
-          </form>
-    </div>
-</div> -->
-
-
 <div class="body-backlog">
 
     <div *ngFor="let task of db.backlogtasks; index as i" [class.hide]="activeSearch() && !isFilteredTask(task)"
         class="wrapper">
 
         <div class="taskContainer">
+            
             <div class="user margin-right">
                 <img src="assets/img/user.svg">
             </div>
+
             <div class="text margin-right">
                 <div class="title">{{ task.title | titlecase }}</div>
                 <div class="description">{{ task.description | titlecase}}</div>
             </div>
+
             <div class="information margin-right">
                 <div class="urgency {{task.urgency}}">{{ task.urgency }}</div>
                 <div class="date">{{ task.dueTo | date: 'mediumDate'}}</div>
             </div>
+
             <div class="buttons">
                 <button (click)="moveToBoardToDo(task.customIdName)">To Board</button>
                 <button (click)="deleteTask(task.customIdName)">Delete</button>

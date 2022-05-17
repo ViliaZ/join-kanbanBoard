@@ -6,6 +6,10 @@
     max-width: var(--maxwidth);
     margin: auto;
     padding: var(--paddingPageTopBottom) var(--paddingPage);
+    
+    @media only screen and (max-width: 900px){
+        padding: 44px;
+    }
 }
 
 h1{

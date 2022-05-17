@@ -3,7 +3,6 @@
   padding: 0;
   box-sizing: border-box !important;
   font-family: "Poppins", sans-serif;
-  font-size: calc(6px + 6 * ((100vw - 320px) / 680));  // min 16px max 22px
   color: var(--primary-dark);
 }
 
@@ -39,7 +38,7 @@
   --font-xbold: 600;
   --font-light: 200;
   --font-small: 12px;
-  --font-normal: 14px;
+  --font-normal: clamp(0.95rem, 0.17vw + 0.76rem, 0.89rem);
   --paddingPage: 120px;
   --paddingPageTopBottom: 44px;
   --maxwidth: 1280px;
@@ -100,7 +99,7 @@ h1 {
 }
 
 h3 {
-  font-size: calc(1em + 0.08vw);
+  font-size: calc(1.25em + 0.08vw)!important;
   font-weight: 600;
   color:rgba(140, 120, 173, 0.956)
 }
@@ -108,6 +107,7 @@ h3 {
 html,
 body {
   height: 100%;
+  font-size: var(--font-normal);  // min 16px max 22px
 }
 body {
   margin: 0;
@@ -127,7 +127,6 @@ body {
 
 mat-option {
   background-color: lightgrey;
-  color: green !important;
 
   &:hover {
     background-color: white !important;

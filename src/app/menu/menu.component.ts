@@ -1,9 +1,15 @@
+
+import { Breakpoints } from '@angular/cdk/layout/breakpoints';
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthServiceService } from 'src/services/auth-service.service';
 import { DatabaseService } from 'src/services/database.service';
 import { EventemitterService } from 'src/services/eventemitter.service';
 import { TasksService } from 'src/services/tasks.service';
+import {
+  BreakpointObserver,
+  BreakpointState
+} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-menu',
@@ -21,22 +27,42 @@ export class MenuComponent implements OnInit {
   public searchInput: string = '';  // search input for backlog in menu component 
   // private currentRoute: string;
   private event$: any;  // events of routing
+  public hideMobileMenu: boolean = true;
+  public hamburgerMenuOpen: boolean = false;
 
   constructor(
     public authService: AuthServiceService,
     public router: Router,
     private eventEmitterService: EventemitterService,
     private taskservice: TasksService,
-    public db: DatabaseService) {
+    public db: DatabaseService,
+    public breakpointObserver: BreakpointObserver) {
     this.getCurrentRoute();
   }
+
+  ngOnInit(): void {
+    this.startBreakpointObserver();
+  }
+
+  startBreakpointObserver() {    // https://www.digitalocean.com/community/tutorials/angular-breakpoints-angular-cdk
+    this.breakpointObserver
+      .observe(['(min-width: 800px)'])
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.hideMobileMenu = true;
+        } else {
+          this.hideMobileMenu = false;
+        }
+      });
+  }
+
 
   ngOnDestroy() {
     this.event$.unsubscribe();
   }
 
-  ngOnInit(): void {
-    // console.log(this.router.isActive('/backlog', true));
+  toggleHamburgerMenu() {
+    this.hamburgerMenuOpen = !this.hamburgerMenuOpen;
   }
 
   getCurrentRoute() {
@@ -84,12 +110,7 @@ export class MenuComponent implements OnInit {
 
 
   toggleUserSubMenu() {
-    if (this.openSettings) {
-      this.openSettings = false
-    }
-    else {
-      this.openSettings = true;
-    }
+    this.openSettings = !this.openSettings;
   }
 
   newTaskPopUp() {

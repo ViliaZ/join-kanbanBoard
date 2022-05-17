@@ -39,17 +39,24 @@
 }
 
 .taskContainer {
-    flex: 1;
-    background-color: rgb(255, 255, 255);
-    border-radius: 12px 2px 2px 12px;
-    box-shadow: rgb(0 0 0 / 12%) 1px 1px 6px;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    width: 100%;
     gap: 32px;
+    flex: 1;
     padding: 12px 26px;
+    width: 100%;
     min-height: 124px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 12px 2px 2px 12px;
+    box-shadow: rgb(0 0 0 / 12%) 1px 1px 6px;
+
+
+    @media only screen and (max-width: 700px) {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 
     // user image
     img {

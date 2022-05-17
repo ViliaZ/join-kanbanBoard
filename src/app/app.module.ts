@@ -33,6 +33,8 @@ import { ValidatorComponent } from './validator/validator.component';
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { EventemitterService } from 'src/services/eventemitter.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { LayoutModule } from '@angular/cdk/layout';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +69,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     AngularFireModule.initializeApp(environment.firebase),
     FormsModule,
     HttpClientModule,
-    DateValueAccessorModule
+    DateValueAccessorModule,
+    LayoutModule
   ],
   providers: [EventemitterService],
   bootstrap: [AppComponent]

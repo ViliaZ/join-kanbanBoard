@@ -73,7 +73,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-size: var(--font-small);
+    font-size: 12px;
     text-align: center;
     padding: 0px 18px 6px 18px;
 
@@ -84,7 +84,7 @@
 
         p {
             color:yellow;
-            font-size: var(--font-small);
+            font-size: 12px;
             text-align: center;
         }
     }
@@ -113,10 +113,6 @@
     border-radius: 10px;
     border-radius: 44px 0px 0px 44px;
     z-index: 10;
-
-    @media only screen and (max-width: 900px){
-        width: 70%;
-    }
 
     &::after {
         position: absolute;
