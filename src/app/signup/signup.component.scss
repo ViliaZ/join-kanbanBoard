@@ -1,4 +1,9 @@
 :host {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0; 
+    top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -7,7 +12,6 @@
     max-width: var(--maxwidth);
     margin: auto;
     background-color: var(--bg);
-    padding: 6rem 10rem;
     color: var(--primary-light);
 }
 
@@ -24,9 +28,19 @@ h2 {
     border-radius: 44px;
     max-height: 550px;
     max-width: 580px;
-
     overflow: hidden;
     box-shadow: #1a116063 0px 40px 90px -20px, #1a11605c 0px 30px 40px -30px;
+
+
+    @media only screen and (max-width: 900px){
+        width: 80vw;
+    }
+
+    @media only screen and (max-width: 550px){
+        width: 100vw;
+        max-height: unset;
+        border-radius: unset;
+    }
 
     .bg-gradient {
         position: absolute;
