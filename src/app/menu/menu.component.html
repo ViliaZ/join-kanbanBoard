@@ -40,7 +40,7 @@
     <div class="sectionRight">
 
         <!-- SEARCH AND FILTETR FOR BACKLOG  -->
-        <div *ngIf="!db.backlogEmpty() && router.url.includes('backlog')" class="backlogSettings">
+        <div *ngIf="!db.backlogEmpty() && router.url.includes('backlog') && !hamburgerMenuOpen" class="backlogSettings">
             <div class="sortBy">
                 <img (click)="handleBacklogSorting()" src="assets/img/sort.png" alt="sort icon">
             </div>
@@ -57,7 +57,7 @@
 
 
         <!-- INPUTFIELD NEW BOARD  -->
-        <div (click)="expandInputfield = true" [class.concave]="expandInputfield" *ngIf="router.url.includes('board')"
+        <div (click)="expandInputfield = true" [class.concave]="expandInputfield" *ngIf="router.url.includes('board') && !hamburgerMenuOpen"
             class="newBoard">
             <form>
                 <input [(ngModel)]="newBoardTitle" name="newBoardTitle" placeholder="+ NEW BOARD"
@@ -84,8 +84,13 @@
             <span class="plus"></span>
         </div>
 
-        <div *ngIf="!hideMobileMenu"  [class.isActive]="hamburgerMenuOpen" (click)="toggleHamburgerMenu()" class="hamburgerMenu">
-            XXX
+        <div *ngIf="!hideMobileMenu"  [class.isActive]="hamburgerMenuOpen"  class="hamburgerMenu">
+            <label for="check" >
+                <input type="checkbox" id="check" (click)="toggleHamburgerMenu()"/> 
+                <span></span>
+                <span></span>
+                <span></span>
+              </label>
         </div>
 
     </div>
@@ -104,12 +109,12 @@
         BOARDS</a>
     <a routerLink="/imprint" (click)="hamburgerMenuOpen = false">
         IMPRINT</a>
-    <div class="logout">
+    <a class="logout" (click)="authService.logout()">
         <img src="/assets/img/logout.svg" alt="help">
-        <a (click)="authService.logout()">LOGOUT</a>
-    </div>
-    <div class="help">
+        LOGOUT
+    </a>
+    <a class="help">
         <img src="/assets/img/info.svg" alt="help">
-        <div>HELP</div>
-    </div>
+        HELP
+    </a>
 </div>

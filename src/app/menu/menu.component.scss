@@ -5,13 +5,18 @@
     right: 0;
     width: 90vw;
     max-width: 1200px;
-    height: 14vh;
+    height: 12vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: auto;
     border-bottom: 1px solid rgb(255, 255, 255);
+    background-color: #e5e9f5;
     z-index: 100;
+
+    @media only screen and (max-width: 800px) {
+        height: 8vh;
+    }
 }
 
 .wrapperMobile {
@@ -37,6 +42,10 @@
 
     a,
     div {
+        width: 132px;
+        padding: 0;
+        margin: 0;
+        align-content: center;
         color: var(--primary-dark);
         font-size: 16px;
         font-weight: var(--font-bold);
@@ -52,7 +61,7 @@
 
     img {
         height: 16px;
-        margin-right: 8px;
+        margin-right: 6px;
         align-self: center;
     }
 
@@ -442,4 +451,67 @@ input[type="search"]:focus {
     cursor: pointer;
     position: relative;
     z-index: 1000;
+    display: grid;
+    place-items: center;
 }
+
+label{
+    display:flex;
+     flex-direction:column;
+     width:35px;
+     cursor:pointer;
+   }
+   
+   label span{
+     background: #fff;
+     border-radius:3px;
+     height:3.5px;
+     margin: 3.5px 0;
+     transition: .4s  cubic-bezier(0.68, -0.6, 0.32, 1.6);
+   
+   }
+   
+   
+   span:nth-of-type(1){
+     width:50%;
+     
+   }
+   
+   span:nth-of-type(2){
+     width:100%;
+   }
+   
+   
+   span:nth-of-type(3){
+     width:75%;
+    
+   }
+   
+   
+   input[type="checkbox"]{
+     display:none;
+   }
+   
+   
+   input[type="checkbox"]:checked ~ span:nth-of-type(1){
+     transform-origin:bottom;
+     transform:rotatez(45deg) translate(4px,0px)
+   }
+   
+   
+   input[type="checkbox"]:checked ~ span:nth-of-type(2){
+     
+     transform-origin:top;
+     transform:rotatez(-45deg)
+   }
+   
+   
+   input[type="checkbox"]:checked ~ span:nth-of-type(3){
+     
+     transform-origin:bottom;
+     width:50%;
+     transform: translate(15px,-5px) rotatez(45deg);
+   
+   }
+   
+

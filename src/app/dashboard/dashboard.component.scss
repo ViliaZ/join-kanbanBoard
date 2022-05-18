@@ -49,7 +49,10 @@ h1 {
 
     @media only screen and (max-width: 1000px) {
         width: 100%;
+        gap: unset;
+
     }
+
 
     .containerOne {
         position: relative;
@@ -270,7 +273,7 @@ h1 {
     &:hover .taskDetails-onhover {
         position: absolute;
         display: flex;
-        flex-wrap: wrap;
+        // flex-wrap: wrap;
         width: 100%;
         height: 100%;
         top: 0;
