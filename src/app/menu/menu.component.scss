@@ -473,12 +473,13 @@ label {
     display: flex;
     flex-direction: column;
     width: 35px;
+    height: 80%;
     cursor: pointer;
 }
 
 label span {
-    background: #fff;
-    border-radius: 3px;
+    background: var(--primary-dark);
+    border-radius: 2px;
     height: 3.5px;
     margin: 3.5px 0;
     transition: 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
@@ -513,5 +514,5 @@ input[type="checkbox"]:checked ~ span:nth-of-type(2) {
 input[type="checkbox"]:checked ~ span:nth-of-type(3) {
     transform-origin: bottom;
     width: 50%;
-    transform: translate(15px, -5px) rotatez(45deg);
+    transform: translate(15px, -2px) rotatez(45deg);
 }
