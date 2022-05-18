@@ -2,9 +2,19 @@
   *ngIf="!taskservice.taskPopupOpen && (router.url === '/' || router.url.includes('home') || router.url.includes('board') || router.url.includes('backlog') || router.url.includes('imprint'))">
 </app-menu>
 
-<div class="main"
+<div 
+  class="main"
   [class.bottomImage]="router.url.includes('home') || router.url.includes('board') || router.url.includes('backlog') ">
+  
   <router-outlet></router-outlet>
+  
+  <!-- <a 
+    *ngIf="router.url === '/signup'|| router.url === '/login'"  
+    routerLink="/imprint"
+    class="imprint">
+    Imprint & Data Protection
+  </a> -->
+
 </div>
 
 <app-new-task *ngIf="taskservice.taskPopupOpen" class="asOverlay"></app-new-task>
