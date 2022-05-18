@@ -1,5 +1,13 @@
 <div class="wrapper">
-    <div class="sectionLeft">
+    <div class="sectionLeft" >
+
+        <!-- // Plus Button Mobile -->
+        <div *ngIf="!hideMobileMenu && !hamburgerMenuOpen"
+            (click)="newTaskPopUp()" class="plus-wrapper mobile">
+            <span class="plus"></span>
+            ADD TASK
+        </div>
+
         <!-- User Image -->
         <div class="user" *ngIf="hideMobileMenu">
             <img (mouseenter)="openSettings = true" (click)="toggleUserSubMenu()" src="assets/img/user.svg"
@@ -34,7 +42,6 @@
         <a *ngIf="hideMobileMenu" routerLink="/board" routerLinkActive="concave-btn">
             BOARDS
         </a>
-
     </div>
 
     <div class="sectionRight">
@@ -57,8 +64,8 @@
 
 
         <!-- INPUTFIELD NEW BOARD  -->
-        <div (click)="expandInputfield = true" [class.concave]="expandInputfield" *ngIf="router.url.includes('board') && !hamburgerMenuOpen"
-            class="newBoard">
+        <div (click)="expandInputfield = true" [class.concave]="expandInputfield"
+            *ngIf="router.url.includes('board') && !hamburgerMenuOpen" class="newBoard">
             <form>
                 <input [(ngModel)]="newBoardTitle" name="newBoardTitle" placeholder="+ NEW BOARD"
                     [class.expandAnimation]="expandInputfield" (blur)="expandInputfield=false" type="search"
@@ -78,19 +85,19 @@
             </div>
         </div>
 
-        <!-- // Plus Button -->
-        <div *ngIf="(router.url.includes('backlog') || router.url.includes('board')) && hideMobileMenu && !hamburgerMenuOpen"
+        <!-- // Plus Button Desktop -->
+        <div *ngIf="(router.url.includes('backlog') || router.url.includes('board')) && hideMobileMenu"
             (click)="newTaskPopUp()" class="plus-wrapper">
             <span class="plus"></span>
         </div>
 
-        <div *ngIf="!hideMobileMenu"  [class.isActive]="hamburgerMenuOpen"  class="hamburgerMenu">
-            <label for="check" >
-                <input type="checkbox" id="check" (click)="toggleHamburgerMenu()"/> 
+        <div *ngIf="!hideMobileMenu" [class.isActive]="hamburgerMenuOpen" class="hamburgerMenu">
+            <label for="check">
+                <input type="checkbox" id="check" (click)="toggleHamburgerMenu()" />
                 <span></span>
                 <span></span>
                 <span></span>
-              </label>
+            </label>
         </div>
 
     </div>
@@ -100,8 +107,9 @@
 <!-- ************** MOBILE VERSION *****************-->
 
 
-<div class="wrapperMobile" *ngIf="!hideMobileMenu" [class.expand]="hamburgerMenuOpen" >
-    <a routerLink="/home" (click)="hamburgerMenuOpen = false" routerLinkActive="concave-btn" [routerLinkActiveOptions]="{ exact: true }">
+<div class="wrapperMobile" *ngIf="!hideMobileMenu" [class.expand]="hamburgerMenuOpen">
+    <a routerLink="/home" (click)="hamburgerMenuOpen = false" routerLinkActive="concave-btn"
+        [routerLinkActiveOptions]="{ exact: true }">
         DASHBOARD </a>
     <a routerLink="/backlog" (click)="hamburgerMenuOpen = false" routerLinkActive="concave-btn">
         BACKLOG</a>
