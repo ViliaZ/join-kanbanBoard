@@ -3,7 +3,8 @@ import { Injectable, Injector } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { getAuth, onAuthStateChanged, deleteUser, signInAnonymously, UserInfo, UserProfile, Auth, UserCredential } from "firebase/auth";
+import { getAuth, onAuthStateChanged, deleteUser, signInAnonymously, UserInfo, UserProfile, Auth, UserCredential, browserLocalPersistence, setPersistence, EmailAuthCredential } from "firebase/auth";
+import { BehaviorSubject, first, firstValueFrom, Observable } from 'rxjs';
 import { User } from 'src/models/user';
 import { DatabaseService } from './database.service';
 
@@ -13,7 +14,7 @@ import { DatabaseService } from './database.service';
 
 export class AuthServiceService {
 
-  
+  public loginAlert: boolean = false;
   static injector: Injector; // access AuthService in Model Class (e.g. Task) --> access this property
 
   // create a reference to the current user, so that I can access his data easily again
@@ -21,10 +22,10 @@ export class AuthServiceService {
   user$!: User;             // is given as User object after login
   currentUser: any = {};    // is the firebase format user given at monitorAuthState() with login
   auth: any = getAuth();    // Initialize Firebase Authentication and get a reference to the service
-  
+
   // not activly in use yet, holds all OTHER users connected to this board / coUsers array is used in newTask component for-loop for template driven form
-  coUsers: any = []; 
-  
+  coUsers: any = [];
+
   // For dummyData:
   today: Date = new Date();
   futureDate: any = (date: Date, daysToCount: number) => {
@@ -32,6 +33,8 @@ export class AuthServiceService {
     const tomorrow = new Date(today.setDate(today.getDate() + daysToCount))
     return tomorrow
   }
+
+  public userUid$: BehaviorSubject<any> = new BehaviorSubject('initial');
 
   constructor(
     private router: Router,
@@ -42,32 +45,40 @@ export class AuthServiceService {
   }
 
 
-  async monitorAuthState(): Promise<void> {  
+  async monitorAuthState(): Promise<void> {
     await this.fireAuth.onAuthStateChanged((user) => {
       if (user) {
+        this.userUid$.next(user.uid);
         this.currentUser = user;  // create a reference to the current user, so that I can access his data easily again
+        console.log('User is changed state', this.currentUser);
         if (user.isAnonymous) {
           console.log('user.isAnonymous (Guest):', this.currentUser);
         }
       }
-      else {  // if no user returns NULL
-        // alert('no user found. Return to login')
-        console.log('TestAccount Logged In', user);
+      else {
+        console.log('user is null')
+        this.loginAlert = true;
       }
     })
   }
 
+
   async createNewUser(email: string, password: string, name: string): Promise<void> {
-    await this.fireAuth.createUserWithEmailAndPassword(email, password)
-      .then(async (userCredential: any) => {  // usercredential.user contains userInfo
-        this.saveUserInDatabase(userCredential.user, name);
-        await this.createDummyData();
-        this.router.navigate([''])  // automatically logged in
+    setPersistence(this.auth, browserLocalPersistence)
+      .then(() => {
+        this.fireAuth.createUserWithEmailAndPassword(email, password)
+          .then(async (userCredential: any) => {
+            // this.currentUser = userCredential.user;
+            this.saveUserInDB(userCredential.user, name);
+            await this.createDummyData();
+            this.router.navigate([''])  // automatically logged in
+            console.log("nach signin, this.currentUser is:", this.currentUser);
+          })
       })
   }
 
   /* Creating new User Instance of User with user data from sign in with username/password */
-  saveUserInDatabase(user: any, name: string): void {
+  saveUserInDB(user: any, name: string): void {
     let userData = {
       uid: user.uid,  // set the same ID in Database as fireAuth already given this user in fireAuth setup
       email: user.email,
@@ -83,15 +94,15 @@ export class AuthServiceService {
   };
 
 
-  
-  async login(email: string, password: string): Promise<void> {  
+
+  async login(email: string, password: string): Promise<void> {
     await this.fireAuth.signInWithEmailAndPassword(email, password)
       .then((userCredential) => {  // get User object: userCredential.user
         console.log('userCredential', userCredential);
         console.log('this.user after login', this.user$);
 
         // this.user$ = new User(userCredential);
-        this.router.navigate(['']); 
+        this.router.navigate(['']);
       })
       .catch((error) => {
         console.log('Login(): User data incorrrect, Please try again', error);
@@ -101,8 +112,11 @@ export class AuthServiceService {
   async loginAsGuest(): Promise<void> {
     await signInAnonymously(this.auth)  // function provided by firestore
       .then(async (userCredential) => {
-        await this.saveGuestToDatabase(userCredential.user);
-        await this.createDummyData();
+        const doc = await this.userExistsInFirebase(userCredential.user.uid);
+        if(!doc){
+          await this.saveGuestToDatabase(userCredential.user);
+          await this.createDummyData();
+        }
         this.router.navigate([''])
       })
       .catch((error) => {
@@ -138,6 +152,20 @@ export class AuthServiceService {
         console.log('Error deleting guest:', error);
       });
   }
+
+  userExistsInFirebase(uid: string) {
+    return firstValueFrom(this.firestore.collection('users').doc(uid).valueChanges())
+ }
+
+  // checkIfUserAlreadyExists(){
+  //   this.fireAuth.fetchSignInMethodsForEmail(email)
+  //   .then(function(signInMethods) {
+  //     if (signInMethods.length > 0) {
+      
+  //     }
+  //   })
+  // }
+
 
 
   // TODO - the function is set up to avoid error in forgot-pw component

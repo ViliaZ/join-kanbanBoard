@@ -23,10 +23,16 @@ export class DatabaseService {
   public toDoBoardExists: boolean = false;  // ToDo Board as static (undeletable) Board for EVERY User
   public guestIsInitialized: boolean = false;  // if true, guest - dummydata donot need to be created again
 
+  public userUid: string = '';
 
   constructor(
     private firestore: AngularFirestore,
     private authService: AuthServiceService) {
+    this.authService.userUid$.subscribe((result: any) => {
+      this.userUid = result;
+      this.getBoardAndTaskData();
+      console.log(result);
+    })
   }
 
 
@@ -36,32 +42,35 @@ export class DatabaseService {
     sortTasksBy: string = 'dueTo',
     sortTasksOrder: any = 'asc') {
 
-    console.log('currentUser exists', this.authService.currentUser.uid);
+    console.log('DB VOR Datenabruf, currentUser is:', this.userUid);
 
-    this.firestore
-      .collection('boards', ref => ref
-        .where('creator', '==', this.authService.currentUser.uid) // show only boards from current user
-        .orderBy(sortBoardsBy, sortBoardOrder))   // default sort: via timestamp
-      .valueChanges({ idField: 'customIdName' })
-      .pipe(switchMap((result: any) => {  
-        console.log(result);
-                // result = boards
-        this.boards = result as Board[];          // Read More: Type Assertion https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions
-        return this.firestore
-          .collection('tasks', ref => ref
-            .where('creator', '==', this.authService.currentUser.uid) // load only tasks from current user
-            .orderBy(sortTasksBy, sortTasksOrder))                    // default sort via timestamp
-          .valueChanges({ idField: 'customIdName' })
-      }))
-      .subscribe(async (result) => {               // result = tasks[]
-        // console.log(this.boards);
+    if (this.userUid !== 'initial') {
+      console.log('DB IM Datenabruf, currentUser is:', this.userUid);
 
-        this.emptyAllArrays();
-        result.forEach((task) => this.allTasks.push(new Task(task).toJson()))  // must be called after all Arrays are empty
-        await this.setStaticBoards();
-        this.handleTasks(result);
-      });
+      this.firestore
+        .collection('boards', ref => ref
+          .where('creator', '==', this.userUid) // show only boards from current user
+          .orderBy(sortBoardsBy, sortBoardOrder))   // default sort: via timestamp
+        .valueChanges({ idField: 'customIdName' })
+        .pipe(switchMap((result: any) => {
+          // console.log(result);
+          // result = boards
+          this.boards = result as Board[];          // Read More: Type Assertion https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions
+          return this.firestore
+            .collection('tasks', ref => ref
+              .where('creator', '==', this.userUid) // load only tasks from current user
+              .orderBy(sortTasksBy, sortTasksOrder))                    // default sort via timestamp
+            .valueChanges({ idField: 'customIdName' })
+        }))
+        .subscribe(async (result) => {               // result = tasks[]
+          // console.log(this.boards);
 
+          this.emptyAllArrays();
+          result.forEach((task) => this.allTasks.push(new Task(task).toJson()))  // must be called after all Arrays are empty
+          await this.setStaticBoards();
+          this.handleTasks(result);
+        });
+    }
   }
 
   // create initial ToDo Board
@@ -75,7 +84,7 @@ export class DatabaseService {
 
   // Handle every task:
   handleTasks(tasks: any) {
-    console.log(this.boards);  // error
+    // console.log(this.boards);  // error
 
     for (let i = 0; i < tasks.length; i++) {   // async await  doesnt work on forEach --> use standard for-loop
       tasks[i].dueTo = tasks[i].dueTo.toDate();
