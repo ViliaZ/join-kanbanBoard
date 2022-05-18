@@ -19,11 +19,19 @@
                 <div class="date">{{ task.dueTo | date: 'mediumDate'}}</div>
             </div>
 
-            <div class="buttons">
+            <div class="buttons" *ngIf="!isMobile700; else mobileButtons">
                 <button (click)="moveToBoardToDo(task.customIdName)">To Board</button>
                 <button (click)="deleteTask(task.customIdName)">Delete</button>
                 <button (click)="editTask(task)">Edit</button>
             </div>
+
+            <ng-template #mobileButtons>
+                <div class="buttons mobile">
+                    <button (click)="moveToBoardToDo(task.customIdName)"><img src="assets/img/toBoard.png" alt=""></button>
+                    <button (click)="deleteTask(task.customIdName)"><img src="assets/img/delete.png"></button>
+                    <button (click)="editTask(task)"><img src="assets/img/edit.png" alt=""></button>
+                </div>
+            </ng-template>
 
         </div>
 

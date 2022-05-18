@@ -2,6 +2,10 @@ import { Component, OnInit, OnChanges } from '@angular/core';
 import { DatabaseService } from 'src/services/database.service';
 import { EventemitterService } from 'src/services/eventemitter.service';
 import { TasksService } from 'src/services/tasks.service';
+import {
+  BreakpointObserver,
+  BreakpointState
+} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-backlog',
@@ -14,17 +18,32 @@ export class BacklogComponent implements OnInit {
   public searchInput: string = '';  // search input in menu component 
   public activeSearch: CallableFunction = () => {return (this.searchInput.length > 0) }
   public orderBacklogtasks: string = 'desc';  // is toggled via menu component / eventemitter 
+  public isMobile700: boolean = false;
 
   constructor(
     public db: DatabaseService, 
     public taskservice: TasksService,
-    private eventEmitterService: EventemitterService) {
+    private eventEmitterService: EventemitterService, 
+    public breakpointObserver: BreakpointObserver) {
   }
 
   ngOnInit(): void {
+    this.startBreakpointObserver();
     this.db.getBoardAndTaskData();   
     this.listenToEventEmitterSorting();
     this.listenToEventEmitterSearching();
+  }
+
+  startBreakpointObserver() {    // https://www.digitalocean.com/community/tutorials/angular-breakpoints-angular-cdk
+    this.breakpointObserver
+      .observe(['(max-width: 700px)'])
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.isMobile700 = true;
+        } else {
+          this.isMobile700 = false;
+        }
+      });
   }
 
   listenToEventEmitterSorting(){  
