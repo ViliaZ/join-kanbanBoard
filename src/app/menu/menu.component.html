@@ -30,16 +30,25 @@
             </div>
         </div>
 
-        <a *ngIf="hideMobileMenu" routerLink="/home" routerLinkActive="concave-btn"
+        <a 
+            *ngIf="hideMobileMenu" 
+            routerLink="/home" 
+            routerLinkActive="concave-btn"
             [routerLinkActiveOptions]="{ exact: true }">
             DASHBOARD
         </a>
 
-        <a *ngIf="hideMobileMenu" routerLink="/backlog" routerLinkActive="concave-btn">
+        <a 
+            *ngIf="hideMobileMenu" 
+            routerLink="/backlog" 
+            routerLinkActive="concave-btn">
             BACKLOG
         </a>
 
-        <a *ngIf="hideMobileMenu" routerLink="/board" routerLinkActive="concave-btn">
+        <a 
+            *ngIf="hideMobileMenu" 
+            routerLink="/board" 
+            routerLinkActive="concave-btn">
             BOARDS
         </a>
     </div>
@@ -61,14 +70,12 @@
             </div>
         </div>
 
-
-
         <!-- INPUTFIELD NEW BOARD  -->
         <div (click)="expandInputfield = true" [class.concave]="expandInputfield"
             *ngIf="router.url.includes('board') && !hamburgerMenuOpen" class="newBoard">
             <form>
                 <input [(ngModel)]="newBoardTitle" name="newBoardTitle" placeholder="+ NEW BOARD"
-                    [class.expandAnimation]="expandInputfield" (blur)="expandInputfield=false" type="search"
+                    [class.expandAnimation]="expandInputfield" (blur)="expandInputfield = false" type="search"
                     minlength="2">
                 <button type="submit" [class.expandAnimation]="expandInputfield"
                     (click)="handleNewBoardAdding(); stopPropagation($event)">
@@ -93,7 +100,7 @@
 
         <div *ngIf="!hideMobileMenu" [class.isActive]="hamburgerMenuOpen" class="hamburgerMenu">
             <label for="check">
-                <input type="checkbox" id="check" (click)="toggleHamburgerMenu()" />
+                <input type="checkbox" id="check" [checked]="hamburgerMenuOpen" (click)="toggleHamburgerMenu()" />
                 <span></span>
                 <span></span>
                 <span></span>
@@ -108,20 +115,34 @@
 
 
 <div class="wrapperMobile" *ngIf="!hideMobileMenu" [class.expand]="hamburgerMenuOpen">
-    <a routerLink="/home" (click)="hamburgerMenuOpen = false" routerLinkActive="concave-btn"
+    <a 
+        routerLink="/home" 
+        (click)="hamburgerMenuOpen = false" 
+        routerLinkActive="concave-btn"
         [routerLinkActiveOptions]="{ exact: true }">
         DASHBOARD </a>
-    <a routerLink="/backlog" (click)="hamburgerMenuOpen = false" routerLinkActive="concave-btn">
+    <a 
+        routerLink="/backlog" 
+        (click)="hamburgerMenuOpen = false" 
+        routerLinkActive="concave-btn">
         BACKLOG</a>
-    <a routerLink="/board" (click)="hamburgerMenuOpen = false" routerLinkActive="concave-btn">
+    <a 
+        routerLink="/board" 
+        (click)="hamburgerMenuOpen = false" 
+        routerLinkActive="concave-btn">
         BOARDS</a>
-    <a routerLink="/imprint" (click)="hamburgerMenuOpen = false">
+    <a 
+        routerLink="/imprint" 
+        (click)="hamburgerMenuOpen = false">
         IMPRINT</a>
-    <a class="logout" (click)="authService.logout()">
+    <a 
+        class="logout" 
+        (click)="authService.logout()">
         <img src="/assets/img/logout.svg" alt="help">
         LOGOUT
     </a>
-    <a class="help">
+    <a 
+        class="help">
         <img src="/assets/img/info.svg" alt="help">
         HELP
     </a>

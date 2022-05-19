@@ -62,6 +62,8 @@ export class MenuComponent implements OnInit {
 
   toggleHamburgerMenu() {
     this.hamburgerMenuOpen = !this.hamburgerMenuOpen;
+    // checkboxElement.nativeElement.
+    // uncheck the toggle 
   }
 
   getCurrentRoute() {

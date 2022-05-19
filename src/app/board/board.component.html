@@ -9,7 +9,8 @@
                 [disabled]="!board.editable"
                 value={{board.name}} 
                 (keyup.enter)="saveBoardTitle(boardTitle.value, board.customIdName, i)"
-                (click)="stopPropagation($event)">
+                (click)="stopPropagation($event)"
+                (blur)="board.editable ? setFocusToTitle(i) : boardTitle.blur">
                 <!-- <app-tooltip #ttTodoTitle  [text]="'No edits. ToDo board is fixed.'"></app-tooltip> -->
             <img    
                 *ngIf="board.editable"     
