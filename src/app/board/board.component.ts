@@ -43,11 +43,10 @@ export class BoardComponent implements OnInit {
     public taskservice: TasksService,
     private authService: AuthServiceService,
     private eventEmitterService: EventemitterService) {
-
   }
 
   ngOnInit(): void {
-    this.db.getBoardAndTaskData();
+    // this.db.getBoardAndTaskData();
     this.listenToEventEmitter();
   }
 
