@@ -53,7 +53,7 @@ export class DatabaseService {
           .orderBy(sortBoardsBy, sortBoardOrder))   // default sort: via timestamp
         .valueChanges({ idField: 'customIdName' })
         .pipe(switchMap((result: any) => {
-          // console.log(result);
+          console.log('received Boards',result);
           // result = boards
           this.boards = result as Board[];          // Read More: Type Assertion https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions
           return this.firestore
@@ -64,23 +64,25 @@ export class DatabaseService {
         }))
         .subscribe(async (result) => {               // result = tasks[]
           // console.log(this.boards);
+          console.log('received Tasks',result);
 
           this.emptyAllArrays();
+          console.log('this.boards after empty all',this.boards);
           result.forEach((task) => this.allTasks.push(new Task(task).toJson()))  // must be called after all Arrays are empty
-          await this.setStaticBoards();
+          // await this.setStaticBoards();
           this.handleTasks(result);
         });
     }
   }
 
   // create initial ToDo Board
-  async setStaticBoards() { // if no ToDo Board exists yet, create it (ToDo is a static board)
-    this.toDoBoardExists = this.boards.some((i: any) => i.name === 'ToDo');  // some() returns boolean
-    if (!this.toDoBoardExists) {
-      let newToDoBoard = Board.getEmptyBoard('ToDo', this.authService.currentUser.uid) // call a static function inside board.ts
-      await this.addDocToCollection('boards', newToDoBoard)
-    }
-  }
+  // async setStaticBoards() { // if no ToDo Board exists yet, create it (ToDo is a static board)
+  //   this.toDoBoardExists = this.boards.some((i: any) => i.name === 'ToDo');  // some() returns boolean
+  //   if (!this.toDoBoardExists) {
+  //     let newToDoBoard = Board.getEmptyBoard('ToDo', this.authService.currentUser.uid) // call a static function inside board.ts
+  //     await this.addDocToCollection('boards', newToDoBoard)
+  //   }
+  // }
 
   // Handle every task:
   handleTasks(tasks: any) {

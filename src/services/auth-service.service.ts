@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { getAuth, onAuthStateChanged, deleteUser, signInAnonymously, UserInfo, UserProfile, Auth, UserCredential, browserLocalPersistence, setPersistence, EmailAuthCredential } from "firebase/auth";
 import { BehaviorSubject, first, firstValueFrom, Observable } from 'rxjs';
 import { User } from 'src/models/user';
+import { Board } from 'src/models/board';
 import { DatabaseService } from './database.service';
 
 @Injectable({
@@ -21,7 +22,7 @@ export class AuthServiceService {
   private userRef!: AngularFirestoreDocument<any>; // will be initialized with change to LoginState
   public user$!: User;             // is given as User object after login
   public currentUser: any = {};    // is the firebase format user given at monitorAuthState() with login
-  public userUid$: BehaviorSubject<any> = new BehaviorSubject('initial');
+  public userUid$: BehaviorSubject<string> = new BehaviorSubject('initial');
 
   // not activly in use yet, holds all OTHER users connected to this board / coUsers array is used in newTask component for-loop for template driven form
   public coUsers: any = [];
@@ -51,10 +52,12 @@ export class AuthServiceService {
         this.currentUser = user;  // create a reference to the current user, so that I can access his data easily again
         console.log('User is changed state', this.currentUser);
         if (user.isAnonymous) {
-          console.log('user.isAnonymous (Guest):', this.currentUser)}
+          console.log('user.isAnonymous (Guest):', this.currentUser)
+        }
       } else {
         console.log('user is null')
-        this.loginAlert = true; }
+        this.loginAlert = true;
+      }
     })
   }
 
@@ -68,7 +71,8 @@ export class AuthServiceService {
             this.saveNewUserInDB(userCredential.user, name);
             await this.createDummyData();
             this.router.navigate([''])  // automatically logged in
-            console.log("nach signin, this.currentUser is:", this.currentUser); })
+            console.log("nach signin, this.currentUser is:", this.currentUser);
+          })
       })
   }
 
@@ -94,10 +98,12 @@ export class AuthServiceService {
       .then((userCredential) => {  // get User object: userCredential.user
         console.log('userCredential', userCredential);
         // this.user$ = new User(userCredential);
-        this.router.navigate(['']); })
+        this.router.navigate(['']);
+      })
       .catch((error) => {
         alert('Login Data not correct. Please try again.');
-        console.log('Login(): User data incorrrect, Please try again', error);});
+        console.log('Login(): User data incorrrect, Please try again', error);
+      });
   }
 
   async loginAsGuest(): Promise<void> {
@@ -106,17 +112,22 @@ export class AuthServiceService {
         const existingUserUid = await this.userExistsInFirebase(userCredential.user.uid);
         if (!existingUserUid) {
           await this.saveGuestToDB(userCredential.user);
-          await this.createDummyData(); }
-        this.router.navigate(['']) })
+          await this.createDummyData();
+          await this.createStaticToDoBoard();
+        }
+        this.router.navigate([''])
+      })
       .catch((error) => {
-        alert('An error occured, please try again'); });
+        alert('An error occured, please try again');
+      });
   }
 
   async saveGuestToDB(user: any) {
     let userData = {
       uid: user.uid,  // set the same ID in Database as fireAuth already given this user in fireAuth setup
       isAnonymous: user.isAnonymous,
-      displayName: 'Guest' }
+      displayName: 'Guest'
+    }
     this.user$ = new User(userData); // KEEP it!  for later use in app (we  need a version without toJson() there!)
     let newGuest = new User(userData).toJson();  // save as Json Format to database
     this.userRef = this.firestore.doc(`users/${user.uid}`)// create a reference to the current user, so that I can access his data easily again
@@ -132,12 +143,14 @@ export class AuthServiceService {
     await this.auth.currentUser.delete();
     await this.auth.deleteUser(this.currentUser.uid)
       .then(() => {
-        console.log('Successfully deleted guest'); })
+        console.log('Successfully deleted guest');
+      })
       .catch((error: any) => {
-        console.log('Error deleting guest:', error); });
+        console.log('Error deleting guest:', error);
+      });
   }
 
- async userExistsInFirebase(uid: string): Promise<any>{
+  async userExistsInFirebase(uid: string): Promise<any> {
     return await firstValueFrom(this.firestore.collection('users').doc(uid).valueChanges())
   }
 
@@ -148,11 +161,20 @@ export class AuthServiceService {
 
   /******* DUMMY DATE FOR GUEST USERS ***************/
 
+ 
+  async createStaticToDoBoard() {  // create initial ToDo Board --> always static for every user, cannot be deleted
+    let currentUserUid = await firstValueFrom(this.userUid$);
+      let newToDoBoard = Board.getEmptyBoard('ToDo', currentUserUid); // call a static function inside board.ts
+      console.log('newBoard',newToDoBoard);
+      this.firestore.collection('boards').add(newToDoBoard)
+    }
+  
   async createDummyData(): Promise<void> {
     let dummyData$ = this.httpClient.get('assets/json/guestData.JSON');
     dummyData$.subscribe(async (jsonData: any) => {
       await this.setDummyBoards(jsonData.dummyBoards);
-      await this.setDummyTasks(jsonData.dummyTasks); })
+      await this.setDummyTasks(jsonData.dummyTasks);
+    })
     this.userRef.set({ dummyDataCreated: true }, { merge: true }) // consider deleting this, if not needed
   }
 
@@ -160,7 +182,8 @@ export class AuthServiceService {
     for (let i = 0; i < dummmyBoards.length; i++) {  // modify static data with dynamic userdata
       dummmyBoards[i].createdAt = this.today;
       dummmyBoards[i].creator = this.currentUser.uid;
-      await this.firestore.collection('boards').add(dummmyBoards[i]); }
+      await this.firestore.collection('boards').add(dummmyBoards[i]);
+    }
   }
 
   async setDummyTasks(dummmyTasks: any) {
@@ -170,5 +193,7 @@ export class AuthServiceService {
       dummmyTasks[i].createdAt = this.today;
       dummmyTasks[i].dueTo = this.futureDate(this.today, daysFromNow);
       daysFromNow++
-      await this.firestore.collection('tasks').add(dummmyTasks[i]); }}
+      await this.firestore.collection('tasks').add(dummmyTasks[i]);
+    }
+  }
 }
