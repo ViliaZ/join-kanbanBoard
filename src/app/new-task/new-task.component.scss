@@ -346,7 +346,10 @@ button {
     align-items: center;
     gap: 1em;
     font-style: italic;
-    flex-wrap: wrap;
+
+    @media only screen and (max-width: 1000px) {
+        flex-wrap: wrap;
+        }
 }
 
 .containerLeft {
@@ -399,7 +402,7 @@ svg {
     }
 
     button:disabled {
-        background-color: var(--bg);
+        background-color: rgba(220, 219, 219, 0.43);
         color: var(--accent1);
         border: 1px solid currentColor;
 

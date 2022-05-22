@@ -1,9 +1,11 @@
+<!-- <div class="headColumn" matTooltip="Info about the action"
+[matTooltipPosition]="'above'"> -->
+
 <div class="body-board">
        <!-- COLUMN  -->
     <div *ngFor="let board of db.boards; index as i" class="board">
        <!-- COLUMN HEAD -->
-        <div class="headColumn" matTooltip="Info about the action"
-        [matTooltipPosition]="'above'">
+        <div class="headColumn">
             <input 
                 #boardTitle 
                 [disabled]="!board.editable"
@@ -52,7 +54,7 @@
                             <div class="title">New Task</div>
                             <div class="urgency"></div>
                         </div>
-                        <div class="user">+</div>
+                        <div class="plusContainer">+</div>
                     </div>
                 </div>
             </div>

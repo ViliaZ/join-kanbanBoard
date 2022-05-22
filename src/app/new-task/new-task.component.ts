@@ -14,7 +14,7 @@ import {
 import {
   TasksService
 } from 'src/services/tasks.service';
-import { Form, FormControl } from '@angular/forms';
+import { Form, FormControl, NgForm } from '@angular/forms';
 import { AuthServiceService } from 'src/services/auth-service.service';
 import { Task } from 'src/models/task';
 
@@ -29,6 +29,7 @@ export class NewTaskComponent implements OnInit {
   @Input() newTask: boolean | undefined;
   @ViewChild('catSelect') categorySelector: any;
   @ViewChild('newTodo') newTodo: any;
+  @ViewChild('myform') myform: NgForm | undefined;
 
   public closePopup: boolean = false;
   public customCategory: any = '';
@@ -112,23 +113,23 @@ export class NewTaskComponent implements OnInit {
 
   // handle Submit of form
   async onSubmit() {
-    alert('save ausgeführt')
     let task = new Task(this.formData).toJson();
     if (!this.taskservice.editMode) {
       console.log('saved dieser Task', task);
       this.db.addDocToCollection('tasks', task);
-    } else {      
+    } else {
       this.udpateEditedTask(task);
     }
-    this.resetForm();
+    this.resetForm()
   }
 
   // reset after save/cancel
   resetForm() {
+    this.myform?.form.markAsUntouched();
     let emptyTemplateTask = Task.getTaskTemplate(); // calling a static function inside of Task Model
     this.formData = emptyTemplateTask;
     this.taskservice.taskPopupOpen = false;
-    this.setUrgencyButtonColor('normal');
+    this.setUrgencyButtonColor('medium');
   }
 
   udpateEditedTask(taskAsJson: any) {
@@ -157,7 +158,7 @@ export class NewTaskComponent implements OnInit {
   }
 
   markChecked(indexUnchecked: number, todo: string) {
-    this.formData.checkedTodos.push(todo); 
-    this.formData.uncheckedTodos.splice(indexUnchecked,1)
+    this.formData.checkedTodos.push(todo);
+    this.formData.uncheckedTodos.splice(indexUnchecked, 1)
   }
 }

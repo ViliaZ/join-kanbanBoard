@@ -3,7 +3,7 @@
 <h3 *ngIf="taskservice.editMode" class="headline">
   Edit Task</h3>
 
-<form (ngSubmit)="onSubmit()" #form="ngForm">
+<form (ngSubmit)="onSubmit()" #myform="ngForm">
   <div class="title concave posRel">
     <input #title="ngModel" required placeholder="Title*" [(ngModel)]="formData.title" name="title">
     <app-validator [text]="'Title is required.'" *ngIf="title.errors?.['required'] && title.touched">
@@ -96,7 +96,7 @@
       </app-validator>
       <div>
 
-        <button (click)="handleCustomCategory('save', $event, form)"
+        <button (click)="handleCustomCategory('save', $event, myform)"
           [disabled]="!inputCat.value || inputCat.errors?.['minlength']" class="default-btn">
           Save
         </button>
@@ -176,7 +176,7 @@
         <span>Clear</span>
       </button>
 
-      <button type="submit" [disabled]="!form.valid" class="button default-btn btn-save">
+      <button type="submit" [disabled]="!myform.valid" class="button default-btn btn-save">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300"
           zoomAndPan="magnify" viewBox="0 0 224.87999 225" height="300" preserveAspectRatio="xMidYMid meet"
           version="1.0">
