@@ -50,9 +50,7 @@ h1 {
     @media only screen and (max-width: 1000px) {
         width: 100%;
         gap: unset;
-
     }
-
 
     .containerOne {
         position: relative;
@@ -67,14 +65,12 @@ h1 {
             font-size: var(--font-small);
             font-weight: var(--font-light);
         }
-
-
     }
 
     // contains cards
     .containerTwo {
         display: flex;
-        flex-direction: column; 
+        flex-direction: column;
         height: fit-content;
         margin-top: 32px;
         gap: 1em;
@@ -88,7 +84,7 @@ h1 {
     }
 }
 
-.rowsBottom{
+.rowsBottom {
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -166,7 +162,7 @@ h1 {
     @media only screen and (max-width: 400px) {
         height: 84px;
     }
-    
+
     span {
         font-size: 32px;
 
@@ -185,7 +181,8 @@ h1 {
     height: 100%;
 
     @media only screen and (max-width: 400px) {
-        width: 66px;    }
+        width: 66px;
+    }
 
     &:after {
         content: "";
@@ -227,7 +224,6 @@ h1 {
     @media only screen and (max-width: 400px) {
         height: 84px;
         padding: 8px 4px;
-
     }
 
     .row {
@@ -284,7 +280,6 @@ h1 {
     height: 96px;
     width: 100%;
     background-color: var(--bg-light);
-
 
     @media only screen and (max-width: 400px) {
         height: 84px;
@@ -394,6 +389,11 @@ h1 {
         margin-bottom: 80px;
     }
 
+    @media only screen and (max-width: 400px) {
+        min-width: unset;
+        box-shadow: unset!important;
+        border-radius: unset!important;
+    }
 }
 
 app-new-task {
@@ -407,6 +407,8 @@ app-new-task {
 
     @media only screen and (max-width: 800px) {
         margin: unset;
-
+    }
+    @media only screen and (max-width: 400px) {
+        padding: 14px 8px;
     }
 }

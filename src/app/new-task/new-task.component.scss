@@ -10,6 +10,10 @@
     margin-top: 12px;
     padding: 32px 54px;
     border-color: #d2ddef !important;
+
+    @media only screen and (max-width: 400px) {
+        min-width: unset;
+        }
 }
 
 .headline {

@@ -6,8 +6,6 @@
   color: var(--primary-dark);
 }
 
-
-
 :root {
   // --bg: linear-gradient(
   //   356deg,
@@ -18,9 +16,9 @@
   --bg-light: linear-gradient(45deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
   --gradientColors: linear-gradient(
     73deg,
-    #F5EC07 10%,
+    #f5ec07 10%,
     rgba(226, 167, 85, 1) 48%,
-    #F55672 100%,
+    #f55672 100%,
     rgba(99, 227, 209, 1) 100%,
     rgba(233, 62, 199, 1) 100%
   );
@@ -29,9 +27,9 @@
   --primary-dark: rgba(28, 16, 48, 0.694);
   --secondary: #27344b;
   --accent1: #e902b3;
-  --urgency-low: #f37fd7;  
-  --urgency-normal:  #f34ccc;  
-  --urgency-urgent:  #e902b3;  
+  --urgency-low: #f37fd7;
+  --urgency-normal: #f34ccc;
+  --urgency-urgent: #e902b3;
 
   --hover: rgba(140, 120, 173, 0.956);
   --font-bold: 400;
@@ -44,15 +42,14 @@
   --maxwidth: 1280px;
   --maxwidthMenu: 1460px;
 
-
   // FLuid Type
   --font-size-sm: clamp(0.8rem, 0.17vw + 0.76rem, 0.89rem);
---font-size-base: clamp(1rem, 0.34vw + 0.91rem, 1.19rem);
---font-size-md: clamp(1.25rem, 0.61vw + 1.1rem, 1.58rem);
---font-size-lg: clamp(1.56rem, 1vw + 1.31rem, 2.11rem);
---font-size-xl: clamp(1.95rem, 1.56vw + 1.56rem, 2.81rem);
---font-size-xxl: clamp(2.44rem, 2.38vw + 1.85rem, 3.75rem);
---font-size-xxxl: clamp(3.05rem, 3.54vw + 2.17rem, 5rem);
+  --font-size-base: clamp(1rem, 0.34vw + 0.91rem, 1.19rem);
+  --font-size-md: clamp(1.25rem, 0.61vw + 1.1rem, 1.58rem);
+  --font-size-lg: clamp(1.56rem, 1vw + 1.31rem, 2.11rem);
+  --font-size-xl: clamp(1.95rem, 1.56vw + 1.56rem, 2.81rem);
+  --font-size-xxl: clamp(2.44rem, 2.38vw + 1.85rem, 3.75rem);
+  --font-size-xxxl: clamp(3.05rem, 3.54vw + 2.17rem, 5rem);
 }
 
 .default-btn {
@@ -82,10 +79,10 @@
   box-shadow: inset 4px 3px 4px #dedfe4, inset -2px -4px 4px #f4f7ff;
 }
 
-.concave-dark{
-  background: #5B3380;
-border-radius: 15%;
-box-shadow: inset 6.91px 6.91px 28px #5B3380, inset -6.91px -6.91px 28px #5B3380;
+.concave-dark {
+  background: #5b3380;
+  border-radius: 15%;
+  box-shadow: inset 6.91px 6.91px 28px #5b3380, inset -6.91px -6.91px 28px #5b3380;
 }
 
 h1,
@@ -99,15 +96,15 @@ h1 {
 }
 
 h3 {
-  font-size: calc(1.25em + 0.08vw)!important;
+  font-size: calc(1.25em + 0.08vw) !important;
   font-weight: 600;
-  color:rgba(140, 120, 173, 0.956)
+  color: rgba(140, 120, 173, 0.956);
 }
 
 html,
 body {
   height: 100%;
-  font-size: var(--font-normal);  // min 16px max 22px
+  font-size: var(--font-normal); // min 16px max 22px
 }
 body {
   margin: 0;
@@ -119,7 +116,7 @@ body {
   font-size: var(--font-normal) !important;
 }
 
-.posRel{
+.posRel {
   position: relative;
 }
 
@@ -187,10 +184,10 @@ mat-option {
 .mat-form-field-appearance-fill .mat-form-field-flex {
   display: flex;
   align-items: center;
-  padding: 0!important;
+  padding: 0 !important;
 }
 
-.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button{
+.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
   border: unset;
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
@@ -199,24 +196,24 @@ mat-option {
   border-top: grey 0.04em solid;
   border-right: grey 0.04em solid;
   border-bottom: grey 0.04em solid;
-  height: 42px!important;
+  height: 42px !important;
 }
 
 .mat-form-field-infix {
-  padding: 0 0!important;
+  padding: 0 0 !important;
 }
 
-.mat-form-field-appearance-fill .mat-form-field-flex{
+.mat-form-field-appearance-fill .mat-form-field-flex {
   display: flex;
   align-items: flex-end;
 }
 
-.mat-form-field-wrapper{
-  padding-bottom: 0px!important;
+.mat-form-field-wrapper {
+  padding-bottom: 0px !important;
 }
 
-.mat-form-field-underline{
-  width: 0%!important;
+.mat-form-field-underline {
+  width: 0% !important;
 }
 
 mat-button-toggle:hover {
