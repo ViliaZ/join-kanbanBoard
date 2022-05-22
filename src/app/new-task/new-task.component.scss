@@ -38,7 +38,12 @@ form {
     height: fit-content;
     gap: 18px;
     border-radius: 12px;
+
+    @media only screen and (max-width: 1000px) {
+        min-width: unset;
+        }
 }
+
 ::placeholder {
     color: rgba(128, 128, 128, 0.581);
     font-size: 14px !important;
