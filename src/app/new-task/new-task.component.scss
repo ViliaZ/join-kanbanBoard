@@ -298,6 +298,7 @@ button {
             flex: 1;
             padding-left: 8px;
         }
+
         button {
             height: 100%;
             width: 76px;
@@ -333,6 +334,7 @@ button {
     align-items: center;
     gap: 1em;
     font-style: italic;
+    flex-wrap: wrap;
 }
 
 .containerLeft {

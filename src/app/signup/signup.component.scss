@@ -31,13 +31,12 @@ h2 {
     overflow: hidden;
     box-shadow: #1a116063 0px 40px 90px -20px, #1a11605c 0px 30px 40px -30px;
 
-
     @media only screen and (max-width: 900px){
         width: 80vw;
     }
 
     @media only screen and (max-width: 550px){
-        width: 100vw;
+        width: 100%;
         max-height: unset;
         border-radius: unset;
     }
@@ -103,6 +102,12 @@ h2 {
     -webkit-backdrop-filter: blur(4px);
     border-radius: 34px;
     z-index: 10;
+
+    @media only screen and (max-width: 550px){
+padding:0.3em;
+margin: unset;
+border-radius: unset;
+    }
 }
 
 //contains all input elements

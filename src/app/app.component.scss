@@ -66,7 +66,8 @@
   position: absolute;
   display: flex;
   background-color: white;
-  width: 55%;
+  width: 100%;
+  min-width: 400px;
   max-width: 600px;
   height: -moz-fit-content;
   height: fit-content;
@@ -78,6 +79,10 @@
   flex-direction: column;
   justify-content: center;
   overflow: auto;
+
+  @media only screen and (max-width: 650px) {
+min-width: 350px;
+    }
 }
 
 .blurOverlay {
