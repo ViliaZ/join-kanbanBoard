@@ -202,6 +202,8 @@ button {
         font-size: 12px;
     }
 
+
+    // Checkbox active and disabled
     input[type="checkbox"] {
         padding: 0px 0px;
         height: 12px !important;
@@ -209,6 +211,7 @@ button {
         min-height: 12px;
         min-width: 12px;
         margin-right: 0.4rem;
+      border: solid  black 0.1em;
         border-radius: 12%;
         -webkit-appearance: none;
         -moz-appearance: none;
@@ -216,8 +219,13 @@ button {
         appearance: none;
 
         &:disabled {
-            background-color: rgba(128, 128, 128, 0.181);
+            background-color: rgba(141, 139, 139, 0.119);
         }
+
+        &:checked{
+            background-color: rgba(35, 14, 28, 0.654);
+        }
+
     }
 }
 
