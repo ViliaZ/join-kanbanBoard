@@ -100,7 +100,6 @@ h1 {
         align-items: center;
         margin-bottom: 44px;
     }
-    
 }
 
 .card {
@@ -120,12 +119,20 @@ h1 {
     justify-content: center;
     width: 320px;
     gap: 1em;
+
+    @media only screen and (max-width: 350px) {
+        width: 100%;
+    }
 }
 
 .urgentTasks {
     height: 96px;
     flex: 1;
     background-color: var(--bg-light);
+
+    @media only screen and (max-width: 400px) {
+        height: 84px;
+    }
 }
 
 .text {
@@ -138,6 +145,10 @@ h1 {
     & div {
         font-weight: var(--font-bold);
         font-size: 32px;
+
+        @media only screen and (max-width: 400px) {
+            font-size: 22px;
+        }
     }
 }
 
@@ -152,8 +163,16 @@ h1 {
     border-radius: 12px;
     background-color: var(--bg-light);
 
+    @media only screen and (max-width: 400px) {
+        height: 84px;
+    }
+    
     span {
         font-size: 32px;
+
+        @media only screen and (max-width: 400px) {
+            font-size: 22px;
+        }
     }
 }
 
@@ -164,6 +183,9 @@ h1 {
     align-items: center;
     width: 86px;
     height: 100%;
+
+    @media only screen and (max-width: 400px) {
+        width: 66px;    }
 
     &:after {
         content: "";
@@ -201,6 +223,12 @@ h1 {
     gap: 8px;
     padding: 12px 22px;
     background-color: var(--bg-light);
+
+    @media only screen and (max-width: 400px) {
+        height: 84px;
+        padding: 8px 4px;
+
+    }
 
     .row {
         display: flex;
@@ -256,6 +284,11 @@ h1 {
     height: 96px;
     width: 100%;
     background-color: var(--bg-light);
+
+
+    @media only screen and (max-width: 400px) {
+        height: 84px;
+    }
 
     .info {
         flex: 1;
