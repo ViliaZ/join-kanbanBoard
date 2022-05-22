@@ -70,6 +70,7 @@ export class AuthServiceService {
             // this.currentUser = userCredential.user;
             this.saveNewUserInDB(userCredential.user, name);
             await this.createDummyData();
+            await this.createStaticToDoBoard();
             this.router.navigate([''])  // automatically logged in
             console.log("nach signin, this.currentUser is:", this.currentUser);
           })
