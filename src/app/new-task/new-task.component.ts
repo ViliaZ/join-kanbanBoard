@@ -17,6 +17,7 @@ import {
 import { Form, FormControl, NgForm } from '@angular/forms';
 import { AuthServiceService } from 'src/services/auth-service.service';
 import { Task } from 'src/models/task';
+import { AlertService } from 'src/services/alert.service';
 
 
 @Component({
@@ -59,7 +60,8 @@ export class NewTaskComponent implements OnInit {
     public db: DatabaseService,
     public taskservice: TasksService,
     public router: Router,
-    public authService: AuthServiceService) {
+    public authService: AuthServiceService, 
+    public alertService: AlertService) {
   }
 
   ngOnInit(): void {
@@ -115,12 +117,12 @@ export class NewTaskComponent implements OnInit {
   async onSubmit() {
     let task = new Task(this.formData).toJson();
     if (!this.taskservice.editMode) {
-      console.log('saved dieser Task', task);
       this.db.addDocToCollection('tasks', task);
     } else {
       this.udpateEditedTask(task);
     }
-    this.resetForm()
+    this.resetForm(); 
+    this.alertService.setAlert('confirmAddTask');
   }
 
   // reset after save/cancel
@@ -130,6 +132,7 @@ export class NewTaskComponent implements OnInit {
     this.formData = emptyTemplateTask;
     this.taskservice.taskPopupOpen = false;
     this.setUrgencyButtonColor('medium');
+
   }
 
   udpateEditedTask(taskAsJson: any) {

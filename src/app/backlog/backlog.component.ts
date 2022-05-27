@@ -6,6 +6,7 @@ import {
   BreakpointObserver,
   BreakpointState
 } from '@angular/cdk/layout';
+import { AlertService } from 'src/services/alert.service';
 
 @Component({
   selector: 'app-backlog',
@@ -24,7 +25,8 @@ export class BacklogComponent implements OnInit {
     public db: DatabaseService, 
     public taskservice: TasksService,
     private eventEmitterService: EventemitterService, 
-    public breakpointObserver: BreakpointObserver) {
+    public breakpointObserver: BreakpointObserver, 
+    public alertService: AlertService) {
   }
 
   ngOnInit(): void {

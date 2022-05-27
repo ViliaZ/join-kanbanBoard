@@ -80,23 +80,23 @@
 <!-- ALERTS  -->
 <div class="alertContainer">
 
-        <div *ngIf="alertStatusON && alerts.duplicateAlert.flag" class="alertbox">
+        <div *ngIf="alertService.alertStatusON && alertService.alerts.duplicateAlert" class="alertbox">
             <img src="assets/img/alertDelete.svg" alt="alert">
             Invalid choice: Title can`t be empty or already existing.
         </div>        
         
-        <div *ngIf="alertStatusON && alerts.backlogAlert.flag" class="alertbox">
+        <div *ngIf="alertService.alertStatusON && alertService.alerts.backlogAlert" class="alertbox">
             <img src="assets/img/alertDelete.svg" alt="alert">
             Backlog Tasks are already sorted to "Backlog" Section. Please choose another title.
         </div>
 
-        <div *ngIf="alertStatusON && alerts.editsProhibited.flag" class="alertbox">
+        <div *ngIf="alertService.alertStatusON && alertService.alerts.editsProhibited" class="alertbox">
             <img src="assets/img/alertDelete.svg" alt="alert">
             'ToDo' is a fixed board. Edits not permitted. 
         </div>        
 
 
-        <div *ngIf="alertStatusON && alerts.confirmDeletion.flag" class="alertDelete">
+        <div *ngIf="alertService.alertStatusON && alertService.alerts.confirmDeletion" class="alertDelete">
             <img src="assets/img/alertDelete.svg" alt="alert">
             Please confirm deletion. This will include all board tasks.
             <button (click)="confirmDelete()" id="btn-confirm">Confirm</button>

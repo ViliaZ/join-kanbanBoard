@@ -421,34 +421,55 @@ input[type="search"]:focus {
             }
         }
     }
+    
+    div{
+        display: flex;
+    }
 
-    button[type="submit"] {
+    .btn-newBoard{
         text-indent: -999px;
         overflow: hidden;
-        width: 0px;
         padding: 0;
         margin: 0;
         border: unset;
         background-color: transparent;
-        filter: opacity(0);
         background-image: url("../../assets/img/add.svg");
         background-size: 40%;
         background-repeat: no-repeat;
         background-position: center;
         cursor: pointer;
-        opacity: 0.4;
+        width: 40px;
+        height: 40px;
+    }
+
+    button[type="button"] {
+        // text-indent: -999px;
+        // overflow: hidden;
+        // width: 0px;
+        // padding: 0;
+        // margin: 0;
+        // border: unset;
+        // background-color: transparent;
+        // filter: opacity(0);
+        // background-image: url("../../assets/img/add.svg");
+        // background-size: 40%;
+        // background-repeat: no-repeat;
+        // background-position: center;
+        // cursor: pointer;
+        // opacity: 0.4;
 
         &.makeVisible {
             width: 40px;
+            height: 40px;
             filter: opacity(1);
         }
     }
 
-    button[type="submit"]:hover {
+    button[type="button"]:hover {
         opacity: 1;
     }
 
-    button[type="submit"]:focus,
+    button[type="button"]:focus,
     input[type="search"]:focus {
         outline: none;
 

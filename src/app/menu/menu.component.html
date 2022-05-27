@@ -75,8 +75,9 @@
             [class.concave]="inputfieldExpanded"
             *ngIf="router.url.includes('board') && !hamburgerMenuOpen" 
             class="newBoard">
-            <form (click)="expandInputfield($event)">
-                <input                  
+            <div (click)="expandInputfield()">
+                <input 
+                    #newBoardInput                 
                     [(ngModel)]="newBoardTitle" 
                     name="newBoardTitle" 
                     placeholder="+ NEW BOARD"
@@ -85,11 +86,12 @@
                     type="search"
                     minlength="2">
                 <button 
-                    type="submit" 
-                    [class.makeVisible]="inputfieldExpanded"
-                    (click)="$event.stopPropagation(); handleNewBoardAdding($event)">
+                    *ngIf="newBoardInput.value !== ''"
+                    class="btn-newBoard"
+                    (click)="handleNewBoardAdding($event)">
                 </button>
-            </form>
+            </div>
+           
         </div>
 
         <!-- Help Link -->
@@ -119,7 +121,7 @@
     </div>
 </div>
 
-
+   <!-- [class.makeVisible]="inputfieldExpanded" -->
 <!-- ************** MOBILE VERSION *****************-->
 
 

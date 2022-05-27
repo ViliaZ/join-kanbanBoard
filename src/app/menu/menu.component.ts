@@ -55,15 +55,12 @@ export class MenuComponent implements OnInit {
       });
   }
 
-
   ngOnDestroy() {
     this.event$.unsubscribe();
   }
 
   toggleHamburgerMenu() {
     this.hamburgerMenuOpen = !this.hamburgerMenuOpen;
-    // checkboxElement.nativeElement.
-    // uncheck the toggle 
   }
 
   getCurrentRoute() {
@@ -76,8 +73,7 @@ export class MenuComponent implements OnInit {
         });
   }
 
-  expandInputfield(event: Event){
-    console.log('expand Input');
+  expandInputfield(){
     this.inputfieldExpanded = true;
   }
 
@@ -85,16 +81,8 @@ export class MenuComponent implements OnInit {
     this.searchInput = '';
   }
 
-  stopPropagation(event: Event) {
-    console.log(event);
-    event.stopImmediatePropagation();
-    return false
-  }
-
-
   handleNewBoardAdding(event: Event) {
-    console.log(event);
-    alert('handleNewBoardAdding')
+    event.stopPropagation();
     this.eventEmitterService.onNewBoardAdding(this.newBoardTitle);
     this.newBoardTitle = '';
     this.inputfieldExpanded = false;
