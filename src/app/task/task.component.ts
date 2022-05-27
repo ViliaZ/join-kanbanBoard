@@ -1,5 +1,6 @@
 import { BaseOverlayDispatcher } from '@angular/cdk/overlay/dispatchers/base-overlay-dispatcher';
 import { Component, Input, OnInit } from '@angular/core';
+import { AlertService } from 'src/services/alert.service';
 import { DatabaseService } from 'src/services/database.service';
 import { TasksService } from 'src/services/tasks.service';
 import { LoginPageComponent } from '../login-page/login-page.component';
@@ -16,7 +17,8 @@ export class TaskComponent implements OnInit {
 
   constructor(
     private db: DatabaseService, 
-    public tasksservice: TasksService) {
+    public tasksservice: TasksService,
+    private alertService: AlertService) {
   }
 
   ngOnInit(): void {
@@ -34,12 +36,11 @@ export class TaskComponent implements OnInit {
 
   deleteTask(task: any, event: Event) {
     event.stopImmediatePropagation(); // prevent opening details view (card expansion)
-    this.db.deleteDoc('tasks', task.customIdName)
+    this.db.deleteDoc('tasks', task.customIdName);
+    this.alertService.setAlert("confirmDeleteTask");
   }
 
   editTask(task: any, event: Event) {
-    console.log('task selected', task);
-
     event.stopImmediatePropagation();
     this.tasksservice.currentTask = task;
     this.tasksservice.taskPopupOpen = true;

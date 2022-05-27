@@ -1,0 +1,74 @@
+//********** ALERTS **************
+:host{
+    position: absolute;
+    left: 50%;
+    bottom: 5vh;
+    transform: translate(-50%);
+    z-index: 2;
+}
+
+.alertbox {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: white;
+    width: max-content;
+    border-radius: 12px;
+    padding: 16px;
+    transition: 250ms all ease-in-out;
+
+
+    img {
+        height: 24px;
+        margin-right: 10px;
+    }
+}
+
+.alertDelete {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: white;
+    width: max-content;
+    border-radius: 12px;
+    padding: 0px 0px 0px 16px;
+    transition: 250ms all ease-in-out;
+
+    button {
+        border: unset;
+        background-color: white;
+        font-weight: var(--font-xbold);
+        padding: 16px 10px;
+        height: 100%;
+        cursor: pointer;
+    }
+
+    #btn-confirm {
+        margin-left: 24px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;   
+        &:hover {
+            color: var(--accent1);
+        }
+    }
+
+
+    #btn-cancel {
+        border-bottom-left-radius: 0px;
+        border-top-left-radius: 0px;
+        border-bottom-right-radius: 8px;
+        border-top-right-radius: 8px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;    
+        background-color:  var(--accent1);
+        color:  var(--primary-light);
+
+        &:hover {
+            color:  var(--bg);
+        }
+    }
+
+    img {
+        height: 24px;
+        margin-right: 10px;
+    }
+}

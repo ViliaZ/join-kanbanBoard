@@ -1,1 +1,47 @@
-<p>{{ text }}</p>
+<!-- ALERTS  -->
+<div class="alertContainer">
+
+    <div *ngIf="alertService.alertStatusON && alertService.alerts.confirmAddTask" class="alertbox">
+        <img src="assets/img/alertDelete.svg">
+        Task successfully created.
+    </div>
+
+    <div *ngIf="alertService.alertStatusON && alertService.alerts.confirmEditTask" class="alertbox">
+        <img src="assets/img/alertDelete.svg">
+        Task successfully edited.
+    </div>
+
+    <div *ngIf="alertService.alertStatusON && alertService.alerts.confirmMoveToToDo" class="alertbox">
+        <img src="assets/img/alertDelete.svg">
+        Task moved to board "ToDo".
+    </div>
+
+    <div *ngIf="alertService.alertStatusON && alertService.alerts.confirmDeleteTask" class="alertbox">
+        <img src="assets/img/alertDelete.svg">
+        Task deleted.
+    </div>
+
+    <div *ngIf="alertService.alertStatusON && alertService.alerts.duplicateAlert" class="alertbox">
+        <img src="assets/img/alertDelete.svg">
+        Invalid choice: Title can`t be empty or already existing.
+    </div>
+
+    <div *ngIf="alertService.alertStatusON && alertService.alerts.backlogAlert" class="alertbox">
+        <img src="assets/img/alertDelete.svg">
+        Backlog Tasks are already sorted to "Backlog" Section. Please choose another title.
+    </div>
+
+    <div *ngIf="alertService.alertStatusON && alertService.alerts.editsProhibited" class="alertbox">
+        <img src="assets/img/alertDelete.svg">
+        'ToDo' is a fixed board. Edits not permitted.
+    </div>
+
+
+    <div *ngIf="alertService.alertStatusON && alertService.alerts.confirmDeleteBoard" class="alertDelete">
+        <img src="assets/img/alertDelete.svg">
+        Please confirm deletion. This will include all board tasks.
+        <button (click)="confirmDelete()" id="btn-confirm">Confirm</button>
+        <button (click)="cancelDelete()" id="btn-cancel">Cancel</button>
+    </div>
+
+</div>

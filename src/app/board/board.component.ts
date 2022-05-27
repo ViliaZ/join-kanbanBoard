@@ -140,24 +140,10 @@ export class BoardComponent implements OnInit {
       this.alertService.setAlert('editsProhibited');
       return
     }
-    this.alertService.setAlert('confirmDeletion');
+    this.alertService.setAlert('confirmDeleteBoard');
     this.currentBoard = this.db.boards[i];
   }
 
-  // eventHandler: delete CONFIRMED --> close alert
-  confirmDelete(): any {
-    this.currentBoard.tasks.forEach((task: any) => { // first: delete all tasks on board
-      this.db.deleteDoc('tasks', task.customIdName)
-    });
-    this.db.deleteDoc('boards', this.currentBoard.customIdName);
-    this.alertService.setAlert('confirmDeletion', 'close'); // reset alert
-  }
-
-  cancelDelete() {
-    this.alertService.setAlert('confirmDeletion', 'close'); // reset alert
-
-    // this.alertService.alerts.confirmDeletion = false;
-  }
 
   // Click on existing Task to edit
   editTask(task: any) {

@@ -80,6 +80,7 @@ export class BacklogComponent implements OnInit {
 
   moveToBoardToDo(idInFirestore: string) {
     this.db.updateDoc('tasks', idInFirestore, { board: 'ToDo' });
+    this.alertService.setAlert("confirmMoveToToDo");
   }
 
   editTask(task: any) {
@@ -87,10 +88,13 @@ export class BacklogComponent implements OnInit {
     this.taskservice.currentTask = task as Task;
     this.taskservice.taskPopupOpen = true;
     this.taskservice.editMode = true;
+    this.alertService.setAlert("confirmEditTask");
   }
 
   deleteTask(idInFirestore: string) {
     this.db.deleteDoc('tasks', idInFirestore);
+    this.alertService.setAlert("confirmDeleteTask");
+
   }
 
   toggleBacklogSorting() {  // default is desc

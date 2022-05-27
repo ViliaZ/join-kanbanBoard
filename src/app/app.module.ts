@@ -30,7 +30,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthServiceService } from 'src/services/auth-service.service';
 import { DateValueAccessorModule } from 'angular-date-value-accessor';
 import { ValidatorComponent } from './validator/validator.component';
-import { TooltipComponent } from './tooltip/tooltip.component';
 import { EventemitterService } from 'src/services/eventemitter.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -53,7 +52,6 @@ import { AlertComponent } from './alert/alert.component';
     LogoutSuccessComponent,
     ForgotPwComponent,
     ValidatorComponent,
-    TooltipComponent,
     AlertComponent,
   ],
   imports: [

@@ -1,56 +1,30 @@
-
-
-
 <div class="body-board">
 
-       <!-- COLUMN  -->
+    <!-- COLUMN  -->
     <div *ngFor="let board of db.boards; index as i" class="board">
-   
-       <!-- COLUMN HEAD -->
+
+        <!-- COLUMN HEAD -->
         <div class="headColumn" [matTooltip]="board.name == 'ToDo' ? 'ToDo is a fixed board title. No Edits.' : ''"
-        [matTooltipPosition]="'above'">        
-            <input 
-                #boardTitle 
-                [disabled]="!board.editable"
-                value={{board.name}} 
+            [matTooltipPosition]="'above'">
+            <input #boardTitle [disabled]="!board.editable" value={{board.name}}
                 (keyup.enter)="saveBoardTitle(boardTitle.value, board.customIdName, i)"
                 (blur)="board.editable ? setFocusToTitle(i) : boardTitle.blur">
-        
 
-                <!-- <app-tooltip #ttTodoTitle  [text]="'No edits. ToDo board is fixed.'"></app-tooltip> -->
-            <img    
-                *ngIf="board.editable"     
-                (click)="saveBoardTitle(boardTitle.value, board.customIdName, i)"
-                [class.disabledIcon]="board.name =='ToDo'" 
-                class="iconEdit"
-                src="assets/img/save.png"
-                [matTooltip]="board.name !== 'ToDo' ? 'Save title' : ''"
-                [matTooltipPosition]="'above'" >
-            <img 
-                *ngIf="!board.editable" 
-                [class.disabledIcon]="board.name =='ToDo'" 
-                (click)="enterEditMode(i)" 
-                src="assets/img/edit.png"
-                class="iconEdit"
-                [matTooltip]="board.name !== 'ToDo' ? 'Edit title' : ''"
-                [matTooltipPosition]="'above'" >
-            <img 
-                *ngIf="!board.editable" 
-                [class.disabledIcon]="board.name =='ToDo'" 
-                (click)="deleteBoard(i)"
-                src="assets/img/delete.png" 
-                class="iconEdit"
-                [matTooltip]="board.name !== 'ToDo' ? 'Delete board' : ''"
+
+            <img *ngIf="board.editable" (click)="saveBoardTitle(boardTitle.value, board.customIdName, i)"
+                [class.disabledIcon]="board.name =='ToDo'" class="iconEdit" src="assets/img/save.png"
+                [matTooltip]="board.name !== 'ToDo' ? 'Save title' : ''" [matTooltipPosition]="'above'">
+            <img *ngIf="!board.editable" [class.disabledIcon]="board.name =='ToDo'" (click)="enterEditMode(i)"
+                src="assets/img/edit.png" class="iconEdit" [matTooltip]="board.name !== 'ToDo' ? 'Edit title' : ''"
+                [matTooltipPosition]="'above'">
+            <img *ngIf="!board.editable" [class.disabledIcon]="board.name =='ToDo'" (click)="deleteBoard(i)"
+                src="assets/img/delete.png" class="iconEdit" [matTooltip]="board.name !== 'ToDo' ? 'Delete board' : ''"
                 [matTooltipPosition]="'above'">
         </div>
-    
+
 
         <!-- COLUMN BODY WITH TICKETS -->
-        <div 
-            class="wrapperTickets" 
-            id={{board.name}}
-            (drop)="drop($event, board.name)"
-            (dragover)="allowDrop($event)">
+        <div class="wrapperTickets" id={{board.name}} (drop)="drop($event, board.name)" (dragover)="allowDrop($event)">
 
             <!-- SINGLE TICKET (dynamic) Note: customIdName is set from DB Firestore at subscribe -->
             <app-task *ngFor="let task of board.tasks; index as i" id={{task.customIdName}} [task]="task"
@@ -58,10 +32,7 @@
             </app-task>
 
             <!-- EMPTY TASK plaecholder (static) -->
-            <div 
-                class="ticketWrapPlaceholder" 
-                (click)="openTaskPopUp()"
-                [matTooltip]="'Create New Task'"
+            <div class="ticketWrapPlaceholder" (click)="openTaskPopUp()" [matTooltip]="'Create New Task'"
                 [matTooltipPosition]="'above'">
                 <div class="singleTicket plaecholderTicket">
                     <div class="rowTwo">
@@ -77,32 +48,5 @@
     </div>
 </div>
 
-<!-- ALERTS  -->
-<div class="alertContainer">
 
-        <div *ngIf="alertService.alertStatusON && alertService.alerts.duplicateAlert" class="alertbox">
-            <img src="assets/img/alertDelete.svg" alt="alert">
-            Invalid choice: Title can`t be empty or already existing.
-        </div>        
-        
-        <div *ngIf="alertService.alertStatusON && alertService.alerts.backlogAlert" class="alertbox">
-            <img src="assets/img/alertDelete.svg" alt="alert">
-            Backlog Tasks are already sorted to "Backlog" Section. Please choose another title.
-        </div>
-
-        <div *ngIf="alertService.alertStatusON && alertService.alerts.editsProhibited" class="alertbox">
-            <img src="assets/img/alertDelete.svg" alt="alert">
-            'ToDo' is a fixed board. Edits not permitted. 
-        </div>        
-
-
-        <div *ngIf="alertService.alertStatusON && alertService.alerts.confirmDeletion" class="alertDelete">
-            <img src="assets/img/alertDelete.svg" alt="alert">
-            Please confirm deletion. This will include all board tasks.
-            <button (click)="confirmDelete()" id="btn-confirm">Confirm</button>
-            <button (click)="cancelDelete()" id="btn-cancel" >Cancel</button>
-        </div>
-
-</div>
-
-
+<app-alert [currentBoard]="currentBoard"></app-alert>

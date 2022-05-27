@@ -118,11 +118,12 @@ export class NewTaskComponent implements OnInit {
     let task = new Task(this.formData).toJson();
     if (!this.taskservice.editMode) {
       this.db.addDocToCollection('tasks', task);
+      this.alertService.setAlert('confirmAddTask');
     } else {
       this.udpateEditedTask(task);
+      this.alertService.setAlert('confirmEditTask');
     }
     this.resetForm(); 
-    this.alertService.setAlert('confirmAddTask');
   }
 
   // reset after save/cancel
