@@ -90,15 +90,9 @@ export class BoardComponent implements OnInit {
     this.db.boards[i].editable = false;
   }
 
-  stopPropagation(event: Event) {
-    console.log('stoppropagation', event);
-  }
 
   async saveBoardTitle(inputData: any, boardIDinFirestore: any, i: number) {
-    console.log('allAlerts', this.alerts);
-
     if (inputData.length === 0) { // handle empty input  
-      console.log('null', inputData.length);
       this.setAlert(this.alerts.duplicateAlert);
       this.setFocusToTitle(i);
       return
@@ -113,7 +107,6 @@ export class BoardComponent implements OnInit {
       return
     }
     else if (await this.checkDuplicates(inputData) == true) { // handle duplicates found
-      console.log('duplicates found in save');
       this.setAlert(this.alerts.duplicateAlert);
       this.setFocusToTitle(i);
       return

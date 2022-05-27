@@ -96,11 +96,11 @@
       </app-validator>
       <div>
 
-        <button (click)="handleCustomCategory('save', $event, myform)"
+        <button #saveButton (click)="handleCustomCategory('save', $event, myform)"
           [disabled]="!inputCat.value || inputCat.errors?.['minlength']" class="default-btn">
           Save
         </button>
-        <button (click)="handleCustomCategory('close')" class="default-btn">
+        <button (click)="handleCustomCategory('close')" class="default-btn" [class.secondary]="!saveButton.disabled">
           Cancel
         </button>
       </div>

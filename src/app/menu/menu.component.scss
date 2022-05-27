@@ -376,7 +376,7 @@ input[type="search"]:focus {
     }
 }
 
-// ****** INPUT FIELD BOARD *******
+// ****** INPUT FIELD NEW BOARD *******
 .newBoard {
     display: flex;
     flex-direction: column;
@@ -394,9 +394,10 @@ input[type="search"]:focus {
     }
 
     input[type="search"] {
-        width: 100%;
+        width: 95%;
         border: none;
         background: transparent;
+        background-color: unset;
         margin: 0;
         font-size: 14px;
         text-align: right;
@@ -433,11 +434,11 @@ input[type="search"]:focus {
         background-image: url("../../assets/img/add.svg");
         background-size: 40%;
         background-repeat: no-repeat;
-        background-position: left;
+        background-position: center;
         cursor: pointer;
         opacity: 0.4;
 
-        &.expandAnimation {
+        &.makeVisible {
             width: 40px;
             filter: opacity(1);
         }

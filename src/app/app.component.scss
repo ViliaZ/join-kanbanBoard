@@ -20,7 +20,7 @@
   flex: 1;
   padding-top: 12vh;
   width: 100%;
-  overflow: auto;
+  overflow: hidden;
 
   @media only screen and (max-width: 800px) {
     padding-top: 8vh;

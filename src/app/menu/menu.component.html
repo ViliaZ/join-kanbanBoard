@@ -3,7 +3,7 @@
 
         <!-- // Plus Button Mobile -->
         <div *ngIf="!hideMobileMenu && !hamburgerMenuOpen"
-            (click)="newTaskPopUp()" class="plus-wrapper mobile">
+            (click)="openNewTaskPopUp()" class="plus-wrapper mobile">
             <span class="plus"></span>
             ADD TASK
         </div>
@@ -57,7 +57,7 @@
 
         <!-- SEARCH AND FILTETR FOR BACKLOG  -->
         <div *ngIf="!db.backlogEmpty() && router.url.includes('backlog') && !hamburgerMenuOpen" class="backlogSettings">
-            <div class="sortBy">
+            <div class="sortBy" [matTooltip]="'Reverse sorting order (by creation time)'" [matTooltipPosition]="'below'">
                 <img (click)="handleBacklogSorting()" src="assets/img/sort.png" alt="sort icon">
             </div>
 
@@ -71,15 +71,23 @@
         </div>
 
         <!-- INPUTFIELD NEW BOARD  -->
-        <div (click)="expandInputfield = true" [class.concave]="expandInputfield"
-            *ngIf="router.url.includes('board') && !hamburgerMenuOpen" class="newBoard">
-            <form>
-                <input [(ngModel)]="newBoardTitle" name="newBoardTitle" placeholder="+ NEW BOARD"
-                    [class.expandAnimation]="expandInputfield" (blur)="expandInputfield = false" type="search"
+        <div    
+            [class.concave]="inputfieldExpanded"
+            *ngIf="router.url.includes('board') && !hamburgerMenuOpen" 
+            class="newBoard">
+            <form (click)="expandInputfield($event)">
+                <input                  
+                    [(ngModel)]="newBoardTitle" 
+                    name="newBoardTitle" 
+                    placeholder="+ NEW BOARD"
+                    [class.expandAnimation]="inputfieldExpanded" 
+                    (blur)="inputfieldExpanded = false" 
+                    type="search"
                     minlength="2">
-                <button type="submit" [class.expandAnimation]="expandInputfield"
-                    (click)="handleNewBoardAdding(); stopPropagation($event)">
-                    Add
+                <button 
+                    type="submit" 
+                    [class.makeVisible]="inputfieldExpanded"
+                    (click)="$event.stopPropagation(); handleNewBoardAdding($event)">
                 </button>
             </form>
         </div>
@@ -94,7 +102,8 @@
 
         <!-- // Plus Button Desktop -->
         <div *ngIf="(router.url.includes('backlog') || router.url.includes('board')) && hideMobileMenu"
-            (click)="newTaskPopUp()" class="plus-wrapper">
+            (click)="openNewTaskPopUp()" class="plus-wrapper" 
+            [matTooltip]="'Add New Task'" [matTooltipPosition]="'below'">
             <span class="plus"></span>
         </div>
 

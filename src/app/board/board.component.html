@@ -1,38 +1,49 @@
-<!-- <div class="headColumn" matTooltip="Info about the action"
-[matTooltipPosition]="'above'"> -->
+
+
 
 <div class="body-board">
+
        <!-- COLUMN  -->
     <div *ngFor="let board of db.boards; index as i" class="board">
+   
        <!-- COLUMN HEAD -->
-        <div class="headColumn">
+        <div class="headColumn" [matTooltip]="board.name == 'ToDo' ? 'ToDo is a fixed board title. No Edits.' : ''"
+        [matTooltipPosition]="'above'">        
             <input 
                 #boardTitle 
                 [disabled]="!board.editable"
                 value={{board.name}} 
                 (keyup.enter)="saveBoardTitle(boardTitle.value, board.customIdName, i)"
-                (click)="stopPropagation($event)"
                 (blur)="board.editable ? setFocusToTitle(i) : boardTitle.blur">
+        
+
                 <!-- <app-tooltip #ttTodoTitle  [text]="'No edits. ToDo board is fixed.'"></app-tooltip> -->
             <img    
                 *ngIf="board.editable"     
                 (click)="saveBoardTitle(boardTitle.value, board.customIdName, i)"
                 [class.disabledIcon]="board.name =='ToDo'" 
                 class="iconEdit"
-                src="assets/img/save.png" >
+                src="assets/img/save.png"
+                [matTooltip]="board.name !== 'ToDo' ? 'Save title' : ''"
+                [matTooltipPosition]="'above'" >
             <img 
                 *ngIf="!board.editable" 
                 [class.disabledIcon]="board.name =='ToDo'" 
                 (click)="enterEditMode(i)" 
                 src="assets/img/edit.png"
-                class="iconEdit">
+                class="iconEdit"
+                [matTooltip]="board.name !== 'ToDo' ? 'Edit title' : ''"
+                [matTooltipPosition]="'above'" >
             <img 
                 *ngIf="!board.editable" 
                 [class.disabledIcon]="board.name =='ToDo'" 
                 (click)="deleteBoard(i)"
                 src="assets/img/delete.png" 
-                class="iconEdit">
+                class="iconEdit"
+                [matTooltip]="board.name !== 'ToDo' ? 'Delete board' : ''"
+                [matTooltipPosition]="'above'">
         </div>
+    
 
         <!-- COLUMN BODY WITH TICKETS -->
         <div 
@@ -47,7 +58,11 @@
             </app-task>
 
             <!-- EMPTY TASK plaecholder (static) -->
-            <div class="ticketWrapPlaceholder" (click)="openTaskPopUp()">
+            <div 
+                class="ticketWrapPlaceholder" 
+                (click)="openTaskPopUp()"
+                [matTooltip]="'Create New Task'"
+                [matTooltipPosition]="'above'">
                 <div class="singleTicket plaecholderTicket">
                     <div class="rowTwo">
                         <div>

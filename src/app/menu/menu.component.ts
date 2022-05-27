@@ -19,7 +19,7 @@ import {
 export class MenuComponent implements OnInit {
 
   public currentDate: Date = new Date();
-  public expandInputfield: boolean = false;
+  public inputfieldExpanded: boolean = false;
   public newBoardTitle: string = '';
   public activeNavItem: string = 'home';
   public openSettings: boolean = false;
@@ -76,6 +76,11 @@ export class MenuComponent implements OnInit {
         });
   }
 
+  expandInputfield(event: Event){
+    console.log('expand Input');
+    this.inputfieldExpanded = true;
+  }
+
   resetInputfield() {
     this.searchInput = '';
   }
@@ -83,11 +88,16 @@ export class MenuComponent implements OnInit {
   stopPropagation(event: Event) {
     console.log(event);
     event.stopImmediatePropagation();
+    return false
   }
 
-  handleNewBoardAdding() {
+
+  handleNewBoardAdding(event: Event) {
+    console.log(event);
+    alert('handleNewBoardAdding')
     this.eventEmitterService.onNewBoardAdding(this.newBoardTitle);
     this.newBoardTitle = '';
+    this.inputfieldExpanded = false;
   }
 
   handleBacklogSorting() {
@@ -114,7 +124,7 @@ export class MenuComponent implements OnInit {
     this.openSettings = !this.openSettings;
   }
 
-  newTaskPopUp() {
+  openNewTaskPopUp() {
     this.taskservice.taskPopupOpen = true;
   }
 

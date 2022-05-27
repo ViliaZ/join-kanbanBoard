@@ -24,7 +24,7 @@
             </div>
 
             <!-- // new card -->
-            <div class="allTasks convex">
+            <div class="allTasks convex" [matTooltip]="'Total Number of Tasks'" [matTooltipPosition]="'above'">
                 <span>{{ db.allTasks.length }}</span>
                 <div>Tasks</div>
             </div>
@@ -65,17 +65,17 @@
             <div class="cardRow">
                 <div class="card statistic convex">
                     <div class="row">
-                        <div class="row-label">
+                        <div class="row-label"  [matTooltip]="db.backlogtasks.length + ' ' + 'task(s) in Backlog'" [matTooltipPosition]="'right'" >
                             <div>In Backlog</div>
                             <div class="concave-small">{{ db.backlogtasks.length }}</div>
                         </div>
-                        <div class="fullwidth concave-small">
+                        <div class="fullwidth concave-small" >
                             <div class="bar" [ngStyle]="{'width': width.backlogTasks}">
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="row-label">
+                        <div class="row-label" [matTooltip]="db.allTasks.length + ' ' + 'task(s) on Boards'" [matTooltipPosition]="'right'" >
                             <div>In Progress</div>
                             <div class="concave-small">{{ db.allTasks.length - db.backlogtasks.length}}</div>
                         </div>

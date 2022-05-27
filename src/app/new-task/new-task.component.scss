@@ -13,7 +13,7 @@
 
     @media only screen and (max-width: 400px) {
         min-width: unset;
-        }
+    }
 }
 
 .headline {
@@ -45,7 +45,7 @@ form {
 
     @media only screen and (max-width: 1000px) {
         min-width: unset;
-        }
+    }
 }
 
 ::placeholder {
@@ -202,7 +202,6 @@ button {
         font-size: 12px;
     }
 
-
     // Checkbox active and disabled
     input[type="checkbox"] {
         padding: 0px 0px;
@@ -211,7 +210,7 @@ button {
         min-height: 12px;
         min-width: 12px;
         margin-right: 0.4rem;
-      border: solid  black 0.1em;
+        border: solid black 0.1em;
         border-radius: 12%;
         -webkit-appearance: none;
         -moz-appearance: none;
@@ -222,10 +221,9 @@ button {
             background-color: rgba(141, 139, 139, 0.119);
         }
 
-        &:checked{
+        &:checked {
             background-color: rgba(35, 14, 28, 0.654);
         }
-
     }
 }
 
@@ -253,6 +251,7 @@ button {
         border: none;
         background-color: var(--bg);
         box-shadow: rgb(117 117 117 / 2%) 0px 1px 3px 0px, rgb(101 110 118 / 15%) 0px 0px 0px 1px;
+        cursor: pointer;
     }
 
     img {
@@ -320,6 +319,7 @@ button {
             color: var(--primary-light);
             border: unset;
             background-color: var(--accent1);
+            cursor: pointer;
 
             &:disabled {
                 background-color: var(--bg-light);
@@ -335,6 +335,13 @@ button {
         button:last-child {
             border-top-right-radius: 6px;
             border-bottom-right-radius: 6px;
+
+            // when cancel button becomes less prominent
+            &.secondary {
+                background-color: var(--bg-light) !important;
+                border-color: var(--accent1) !important;
+                color: var(--accent1);
+            }
         }
     }
 }
@@ -349,7 +356,7 @@ button {
 
     @media only screen and (max-width: 1000px) {
         flex-wrap: wrap;
-        }
+    }
 }
 
 .containerLeft {
@@ -369,6 +376,7 @@ button {
     box-shadow: none;
     text-decoration: underline;
     font-style: italic;
+    cursor: pointer;
 }
 
 svg {
@@ -390,6 +398,7 @@ svg {
         width: 124px;
         height: 36px;
         background-color: var(--accent1);
+        cursor: pointer;
 
         svg {
             stroke: var(--primary-light);
@@ -417,6 +426,7 @@ svg {
 
     .btn-cancel {
         background-color: unset !important;
+        cursor: pointer;
 
         span {
             color: var(--primary-dark) !important;
