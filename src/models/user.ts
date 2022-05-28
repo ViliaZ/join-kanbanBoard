@@ -6,7 +6,7 @@ export class User {
     public emailVerified?: boolean;
     public isAnonymous: boolean;
     public dummyDataCreated?: boolean;
-    public customCategories?: any;  // user can create custom categories for their tasks
+    public customCategories?: string[];  // user can create custom categories for their tasks
     public lastlogin?: any; 
 
     constructor(obj?: any) {
@@ -16,7 +16,7 @@ export class User {
         this.photoURL = obj.photoURL ? obj.photoURL : '';
         this.emailVerified = obj.emailVerified ? obj.emailVerified : false;
         this.isAnonymous = obj.isAnonymous ? obj.isAnonymous : true;
-        this.customCategories = obj.customCategories ? obj.customCategories : [];
+        this.customCategories = obj.customCategories ? obj.customCategories : ['Design', 'Marketing', 'Finance', 'Admin', 'Other'];
         this.lastlogin = obj.lastlogin ? obj.lastlogin : new Date();
         this.dummyDataCreated = obj.dummyDataCreated ? obj.dummyDataCreated : false;
         }

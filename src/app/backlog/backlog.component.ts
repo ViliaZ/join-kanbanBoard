@@ -99,10 +99,14 @@ export class BacklogComponent implements OnInit {
 
   toggleBacklogSorting() {  // default is desc
     if (this.orderBacklogtasks == 'desc'){     
+      console.log('sort!');
+      
       this.orderBacklogtasks = 'asc';
       this.db.getBoardAndTaskData('createdAt', 'asc', 'dueTo', 'asc')  //Arguments: boardSorting + Order; TaskSorting + Order
     }
     else {
+      console.log('sort2');
+
       this.orderBacklogtasks = 'desc';
       this.db.getBoardAndTaskData('createdAt', 'asc', 'dueTo', 'desc')  //Arguments: boardSorting + Order; TaskSorting + Order
     }

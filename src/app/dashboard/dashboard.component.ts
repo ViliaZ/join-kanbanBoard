@@ -32,6 +32,7 @@ export class DashboardComponent implements OnInit {
     this.getStatistics();
   }
   
+
   getStatistics() {
     console.log('alltasks',this.db.allTasks);
     if (this.db.allTasks.length > 0) {

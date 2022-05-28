@@ -18,6 +18,8 @@ import { Form, FormControl, NgForm } from '@angular/forms';
 import { AuthServiceService } from 'src/services/auth-service.service';
 import { Task } from 'src/models/task';
 import { AlertService } from 'src/services/alert.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { firstValueFrom } from 'rxjs';
 
 
 @Component({
@@ -55,23 +57,36 @@ export class NewTaskComponent implements OnInit {
     uncheckedTodos: [],
     checkedTodos: []
   }
+  userUid!: string;
 
   constructor(
     public db: DatabaseService,
     public taskservice: TasksService,
     public router: Router,
-    public authService: AuthServiceService, 
-    public alertService: AlertService) {
+    public authService: AuthServiceService,
+    public alertService: AlertService,
+    private firestore: AngularFirestore) {
   }
 
   ngOnInit(): void {
     if (this.taskservice.editMode) {// EDITMODE only: set current values in all inputfields
-      let taskClicked = new Task(this.taskservice.currentTask).getEditmodeTask();
-      this.formData = taskClicked;
-      console.log('this is currenttask', new Date(this.taskservice.currentTask.dueTo));
-      console.log(this.formData);
+      this.setDefaultData();
     }
     this.setUrgencyDefault();
+    this.getCurrentUserUid();
+  }
+
+
+  async getCurrentUserUid() {
+    this.userUid = await firstValueFrom(this.authService.userUid$);
+    // only in editmode
+  }
+
+  setDefaultData() {
+    let taskClicked = new Task(this.taskservice.currentTask).getEditmodeTask();
+    this.formData = taskClicked;
+    console.log('this is currenttask', new Date(this.taskservice.currentTask.dueTo));
+    console.log(this.formData);
   }
 
   // Urgency is set per default not via ngModel (only after editing)
@@ -92,7 +107,7 @@ export class NewTaskComponent implements OnInit {
   }
 
   // if user choose to set up a custom category
-  handleCustomCategory(action: string, event?: any, form?: any) {
+  async handleCustomCategory(action: string, event?: any, form?: any) {
     if (action == 'checkIfCustomRequest') {
       this.checkIfCustomCatRequested(event);
     }
@@ -101,12 +116,24 @@ export class NewTaskComponent implements OnInit {
       this.openCategoryPopUp = false;
     }
     if (action == 'save') {
-      this.db.categories.push(this.customCategory);
+      await this.addCategoryInCatArrayFirestore();
       this.formData.category = this.customCategory;
       this.openCategoryPopUp = false;
     }
   }
-  // checks onchanges() for inputfield category
+
+  async addCategoryInCatArrayFirestore() {
+    await this.getCurrentUserUid();
+    this.firestore.collection('users').doc(this.userUid)
+      .get()
+      .subscribe(async (userDoc: any) => {
+        let catArray = userDoc.data().customCategories;  // get current Categories array
+        catArray.push(this.customCategory);  // update it with new cat
+        await this.firestore.collection('users').doc(this.userUid).update({ customCategories: catArray });
+      })
+  }
+
+  // check via onchanges() if user wants to add a custom category
   checkIfCustomCatRequested(event: any) {
     if (event.target.value == 'Custom Category' && !this.openCategoryPopUp) {
       this.openCategoryPopUp = true;
@@ -123,7 +150,7 @@ export class NewTaskComponent implements OnInit {
       this.udpateEditedTask(task);
       this.alertService.setAlert('confirmEditTask');
     }
-    this.resetForm(); 
+    this.resetForm();
   }
 
   // reset after save/cancel

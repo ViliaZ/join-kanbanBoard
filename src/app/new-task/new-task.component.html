@@ -83,7 +83,7 @@
       [(ngModel)]="formData.category" name="category">
       <option disabled value="">Choose a category*</option>
       <option value="Custom Category">Add Category</option>
-      <option *ngFor="let category of db.categories" value={{category}}>{{ category }}</option>
+      <option *ngFor="let category of db.userCategories$ | async" value={{category}}>{{ category }}</option> 
     </select>
 
     <div *ngIf="openCategoryPopUp" class="categoryPopUp posRel">
@@ -95,7 +95,7 @@
       <div>
 
         <button #saveButton (click)="handleCustomCategory('save', $event, myform)"
-          [disabled]="!inputCat.value || inputCat.errors?.['minlength']" class="default-btn">
+          [disabled]="!inputCat.value || inputCat.errors?.['minlength']" class="default-btn">
           Save
         </button>
         <button (click)="handleCustomCategory('close')" class="default-btn" [class.secondary]="!saveButton.disabled">

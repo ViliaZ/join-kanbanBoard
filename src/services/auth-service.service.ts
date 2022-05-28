@@ -20,7 +20,7 @@ export class AuthServiceService {
 
   // create a reference to the current user, so that I can access his data easily again
   private userRef!: AngularFirestoreDocument<any>; // will be initialized with change to LoginState
-  public user$!: User;             // is given as User object after login
+  public user!: User;             // is given as User object after login
   public currentUser: any = {};    // is the firebase format user given at monitorAuthState() with login
   public userUid$: BehaviorSubject<string> = new BehaviorSubject('initial');
 
@@ -87,7 +87,7 @@ export class AuthServiceService {
       emailVerified: user.emailVerified,
       isAnonymous: user.isAnonymous,
     }
-    this.user$ = new User(userData);  // assign it for later use in App
+    this.user = new User(userData);  // assign it for later use in App
     let newSignUpUser = new User(userData).toJson();      // save to database in json-format:
     this.userRef = this.firestore.doc(`users/${user.uid}`)  // create a reference to the current user, so that I can access his data easily again
     this.userRef.set(newSignUpUser, { merge: true });   // If Doc does not exist, create new one. If it exists, then merge it
@@ -98,7 +98,7 @@ export class AuthServiceService {
     await this.fireAuth.signInWithEmailAndPassword(email, password)
       .then((userCredential) => {  // get User object: userCredential.user
         console.log('userCredential', userCredential);
-        // this.user$ = new User(userCredential);
+        // this.user = new User(userCredential);
         this.router.navigate(['']);
       })
       .catch((error) => {
@@ -129,7 +129,7 @@ export class AuthServiceService {
       isAnonymous: user.isAnonymous,
       displayName: 'Guest'
     }
-    this.user$ = new User(userData); // KEEP it!  for later use in app (we  need a version without toJson() there!)
+    this.user = new User(userData); // KEEP it!  for later use in app (we  need a version without toJson() there!)
     let newGuest = new User(userData).toJson();  // save as Json Format to database
     this.userRef = this.firestore.doc(`users/${user.uid}`)// create a reference to the current user, so that I can access his data easily again
     this.userRef.set(newGuest, { merge: true }); // If Doc does not exist, create new one. If it exists, then merge it

@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { AuthServiceService } from './auth-service.service';
 import { Board } from 'src/models/board';
 import { Task } from 'src/models/task';
+import { arrayUnion } from '@angular/fire/firestore';
+
 
 
 @Injectable({
@@ -12,7 +14,7 @@ import { Task } from 'src/models/task';
 
 export class DatabaseService {
 
-  public categories: string[] = ['Design', 'Marketing', 'Finance', 'Admin', 'Other']
+  // public categories: string[] = ['Design', 'Marketing', 'Finance', 'Admin', 'Other']
   public boards: any = []; // contains boards and tickets for each board as array
   public backlogtasks: any = [];
   public urgentTasks: any = [];
@@ -22,8 +24,9 @@ export class DatabaseService {
   public backlogEmpty = () => this.backlogtasks.length == 0;
   public toDoBoardExists: boolean = false;  // ToDo Board as static (undeletable) Board for EVERY User
   public guestIsInitialized: boolean = false;  // if true, guest - dummydata donot need to be created again
-
   public userUid: string = '';
+  public userCategories$: BehaviorSubject<any> = new BehaviorSubject(['Design', 'Marketing', 'Finance', 'Admin', 'Other']);
+
 
   constructor(
     private firestore: AngularFirestore,
@@ -31,10 +34,18 @@ export class DatabaseService {
     this.authService.userUid$.subscribe((result: any) => {
       this.userUid = result;
       this.getBoardAndTaskData();
-      console.log(result);
+      this.getUserCategories();
     })
   }
 
+  async getUserCategories() {
+    this.firestore.collection('users').doc(this.userUid)
+      .valueChanges()
+      .subscribe((result: any) => {
+        console.log(result);
+        this.userCategories$.next(result?.customCategories);
+      }
+      )}
 
   async getBoardAndTaskData( // all parameters are defined by me
     sortBoardsBy: string = 'createdAt',
@@ -42,19 +53,13 @@ export class DatabaseService {
     sortTasksBy: string = 'dueTo',
     sortTasksOrder: any = 'asc') {
 
-    console.log('DB VOR Datenabruf, currentUser is:', this.userUid);
-
     if (this.userUid !== 'initial') {
-      console.log('DB IM Datenabruf, currentUser is:', this.userUid);
-
       this.firestore
         .collection('boards', ref => ref
           .where('creator', '==', this.userUid) // show only boards from current user
           .orderBy(sortBoardsBy, sortBoardOrder))   // default sort: via timestamp
         .valueChanges({ idField: 'customIdName' })
         .pipe(switchMap((result: any) => {
-          console.log('received Boards',result);
-          // result = boards
           this.boards = result as Board[];          // Read More: Type Assertion https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions
           return this.firestore
             .collection('tasks', ref => ref
@@ -63,32 +68,15 @@ export class DatabaseService {
             .valueChanges({ idField: 'customIdName' })
         }))
         .subscribe(async (result) => {               // result = tasks[]
-          // console.log(this.boards);
-          console.log('received Tasks',result);
-
           this.emptyAllArrays();
-          console.log('this.boards after empty all',this.boards);
           result.forEach((task) => this.allTasks.push(new Task(task).toJson()))  // must be called after all Arrays are empty
-          // await this.setStaticBoards();
           this.handleTasks(result);
         });
     }
   }
 
-  // create initial ToDo Board
-  // async setStaticBoards() { // if no ToDo Board exists yet, create it (ToDo is a static board)
-  //   this.toDoBoardExists = this.boards.some((i: any) => i.name === 'ToDo');  // some() returns boolean
-  //   if (!this.toDoBoardExists) {
-  //     let newToDoBoard = Board.getEmptyBoard('ToDo', this.authService.currentUser.uid) // call a static function inside board.ts
-  //     await this.addDocToCollection('boards', newToDoBoard)
-  //   }
-  // }
-
-  // Handle every task:
   handleTasks(tasks: any) {
-    // console.log(this.boards);  // error
-
-    for (let i = 0; i < tasks.length; i++) {   // async await  doesnt work on forEach --> use standard for-loop
+        for(let i = 0; i<tasks.length; i++) {   // async await  doesnt work on forEach --> use standard for-loop
       tasks[i].dueTo = tasks[i].dueTo.toDate();
       this.sortTasksToBoards(tasks[i]);
     }
