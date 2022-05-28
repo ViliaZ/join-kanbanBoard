@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, OnChanges, OnInit } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { AuthServiceService } from 'src/services/auth-service.service';
 import { DatabaseService } from 'src/services/database.service';
@@ -13,7 +13,7 @@ import { DatabaseService } from 'src/services/database.service';
 export class DashboardComponent implements OnInit {
 
   currentDate: any = new Date().getTime();
-  public width: any = {  // width of bar diagrams
+  public percentage: any = {  // width of bar diagrams
     allTasks: '0%',
     toDoTasks: '0%',
     backlogTasks: '0%'
@@ -21,38 +21,38 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     public db: DatabaseService,
-    public authService: AuthServiceService) { }
-
-  ngOnInit(): void {    
-    this.init();
+    public authService: AuthServiceService) {
   }
 
-  async init(){
-      await this.db.getBoardAndTaskData();
-    this.getStatistics();
+  async ngOnInit() {
+    await this.db.getBoardAndTaskData();
+    this.calcStatistics();
   }
-  
 
-  getStatistics() {
-    console.log('alltasks',this.db.allTasks);
+   calcStatistics() {
+    this.getPercentAllTasks()
+    this.getPercentToDoTasks();
+    this.getPercentBacklogTasks();
+    console.log(this.db.allTasks);
+  }
+
+  getPercentAllTasks() {
     if (this.db.allTasks.length > 0) {
-      this.width.allTasks = '100%';
-      this.getWidthToDoTasks();
-      this.getWidthBacklogTasks();
+      this.percentage.allTasks = '100%';
     }
   }
 
-  getWidthToDoTasks() {
+  getPercentToDoTasks() {
     if (this.db.todoTasks.length > 0) {
       let percentToDo = this.db.todoTasks.length * 100 / this.db.allTasks.length;
-      this.width.toDoTasks = percentToDo + '%';
+      this.percentage.toDoTasks = percentToDo + '%';
     }
   }
 
-  getWidthBacklogTasks() {
-    if (this.db.backlogtasks.length > 0) {
-      let percentBacklog = this.db.backlogtasks.length * 100 / this.db.allTasks.length;
-      this.width.backlogTasks = percentBacklog + '%';
+  getPercentBacklogTasks() {
+    if (this.db.backlogtasks?.length > 0) {
+      let percentBacklog = this.db.backlogtasks?.length * 100 / this.db.allTasks.length;
+      this.percentage.backlogTasks = percentBacklog + '%';
     }
   }
 

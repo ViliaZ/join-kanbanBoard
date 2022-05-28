@@ -11,15 +11,15 @@ import { Task } from 'src/models/task';
 
 export class DatabaseService {
 
-  public boards: any = []; // contains boards and tickets for each board as array
+  public boards: any = [];                                      // contains boards and tickets for each board as array
   public backlogtasks: any = [];
   public urgentTasks: any = [];
   public todoTasks: Task[] = [];
   public allTasks: any = [];
-  public nextDueDateTasks: any = [];  // can also be multiple tasks with same due Date
+  public nextDueDateTasks: any = [];                            // can also be multiple tasks with same due Date
   public backlogEmpty = () => this.backlogtasks.length == 0;
-  public toDoBoardExists: boolean = false;  // ToDo Board as static (undeletable) Board for EVERY User
-  public guestIsInitialized: boolean = false;  // if true, guest - dummydata donot need to be created again
+  public toDoBoardExists: boolean = false;                      // ToDo Board as static (undeletable) Board for EVERY User
+  public guestIsInitialized: boolean = false;                   // if true, guest - dummydata donot need to be created again
   public userUid: string = '';
   public userCategories$: BehaviorSubject<any> = new BehaviorSubject(['Design', 'Marketing', 'Finance', 'Admin', 'Other']);
 
@@ -34,42 +34,41 @@ export class DatabaseService {
     })
   }
 
-  async getUserCategories() {
-    this.firestore.collection('users').doc(this.userUid)
-      .valueChanges()
-      .subscribe((result: any) => {
-        console.log(result);
-        this.userCategories$.next(result?.customCategories);
-      }
-      )}
-
-  async getBoardAndTaskData( // all parameters are defined by me
+  async getBoardAndTaskData(
     sortBoardsBy: string = 'createdAt',
     sortBoardOrder: any = 'asc',
     sortTasksBy: string = 'dueTo',
-    sortTasksOrder: any = 'asc') {
+    sortTasksOrder: any = 'asc'): Promise<any>{
 
-    if (this.userUid !== 'initial') {
-      this.firestore
+    if (this.userUid !== 'noUser') {
+      return this.firestore
         .collection('boards', ref => ref
-          .where('creator', '==', this.userUid) // show only boards from current user
-          .orderBy(sortBoardsBy, sortBoardOrder))   // default sort: via timestamp
+          .where('creator', '==', this.userUid)       // show only boards from current user
+          .orderBy(sortBoardsBy, sortBoardOrder))     // default sort: via timestamp
         .valueChanges({ idField: 'customIdName' })
         .pipe(switchMap((result: any) => {
-          this.boards = result as Board[];          // Read More: Type Assertion https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions
+          this.boards = result as Board[];            // Read More: Type Assertion https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions
           return this.firestore
             .collection('tasks', ref => ref
-              .where('creator', '==', this.userUid) // load only tasks from current user
-              .orderBy(sortTasksBy, sortTasksOrder))                    // default sort via timestamp
+              .where('creator', '==', this.userUid)   // load only tasks from current user
+              .orderBy(sortTasksBy, sortTasksOrder))  // default sort via timestamp
             .valueChanges({ idField: 'customIdName' })
         }))
-        .subscribe(async (result) => {               // result = tasks[]
+        .subscribe(async (result) => {                // result = tasks[]
           this.emptyAllArrays();
           result.forEach((task) => this.allTasks.push(new Task(task).toJson()))  // must be called after all Arrays are empty
           this.handleTasks(result);
         });
     }
   }
+
+  async getUserCategories() {  // =  categories for tasks
+    this.firestore.collection('users').doc(this.userUid)
+      .valueChanges()
+      .subscribe((result: any) => {
+        this.userCategories$.next(result?.customCategories);
+      }
+      )}
 
   handleTasks(tasks: any) {
         for(let i = 0; i<tasks.length; i++) {   // async await  doesnt work on forEach --> use standard for-loop

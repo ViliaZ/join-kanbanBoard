@@ -67,20 +67,20 @@
                     <div class="row">
                         <div class="row-label"  [matTooltip]="db.backlogtasks.length + ' ' + 'task(s) in Backlog'" [matTooltipPosition]="'right'" >
                             <div>In Backlog</div>
-                            <div class="concave-small">{{ db.backlogtasks.length }}</div>
+                            <div class="concave-small">{{ db.backlogtasks?.length }}</div>
                         </div>
                         <div class="fullwidth concave-small" >
-                            <div class="bar" [ngStyle]="{'width': width.backlogTasks}">
+                            <div class="bar" [ngStyle]="{'width': percentage.backlogTasks}">
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="row-label" [matTooltip]="db.allTasks.length + ' ' + 'task(s) on Boards'" [matTooltipPosition]="'right'" >
+                        <div class="row-label" [matTooltip]="db.allTasks?.length + ' ' + 'task(s) on Boards'" [matTooltipPosition]="'right'" >
                             <div>In Progress</div>
-                            <div class="concave-small">{{ db.allTasks.length - db.backlogtasks.length}}</div>
+                            <div class="concave-small">{{ db.allTasks?.length - db.backlogtasks?.length}}</div>
                         </div>
                         <div class="fullwidth concave-small">
-                            <div class="bar" [ngStyle]="{'width': width.allTasks}">
+                            <div class="bar" [ngStyle]="{'width': percentage.allTasks}">
                             </div>
                         </div>
                     </div>

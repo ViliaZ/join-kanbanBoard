@@ -15,17 +15,15 @@ import { DatabaseService } from './database.service';
 
 export class AuthServiceService {
 
-  private auth: any = getAuth();    // Initialize Firebase Authentication and get a reference to the service
-  static injector: Injector; // access AuthService in Model Class (e.g. Task) --> access this property
+  private auth: any = getAuth();                      // Initialize Firebase Authentication and get a reference to the service
+  static injector: Injector;                          // access AuthService in Model Class (e.g. Task) --> access this property
+  private userRef!: AngularFirestoreDocument<any>;    // will be initialized with change to LoginState
+  public user!: User;                                 // is given as User object after login
+  public currentUser: any = {};                       // is the firebase format user given at monitorAuthState() with login
+  public userUid$: BehaviorSubject<string> = new BehaviorSubject('noUser');
 
-  // create a reference to the current user, so that I can access his data easily again
-  private userRef!: AngularFirestoreDocument<any>; // will be initialized with change to LoginState
-  public user!: User;             // is given as User object after login
-  public currentUser: any = {};    // is the firebase format user given at monitorAuthState() with login
-  public userUid$: BehaviorSubject<string> = new BehaviorSubject('initial');
-
-  // not activly in use yet, holds all OTHER users connected to this board / coUsers array is used in newTask component for-loop for template driven form
-  public coUsers: any = [];
+  // not activly in use yet
+  public coUsers: any = [];                           //holds all OTHER users connected to this board / coUsers array is used in newTask component for-loop for template driven form
   public loginAlert: boolean = false;
 
   // For dummyData:
@@ -44,7 +42,6 @@ export class AuthServiceService {
     this.monitorAuthState();
   }
 
-
   async monitorAuthState(): Promise<void> {
     await this.fireAuth.onAuthStateChanged((user) => {
       if (user) {
@@ -61,44 +58,37 @@ export class AuthServiceService {
     })
   }
 
-
   async createNewUser(email: string, password: string, name: string): Promise<void> {
     setPersistence(this.auth, browserLocalPersistence)
       .then(() => {
         this.fireAuth.createUserWithEmailAndPassword(email, password)
           .then(async (userCredential: any) => {
-            // this.currentUser = userCredential.user;
             this.saveNewUserInDB(userCredential.user, name);
             await this.createDummyData();
             await this.createStaticToDoBoard();
             this.router.navigate([''])  // automatically logged in
-            console.log("nach signin, this.currentUser is:", this.currentUser);
           })
       })
   }
-
-  /* Creating new User Instance of User with user data from sign in with username/password */
-  saveNewUserInDB(user: any, name: string): void {
+  
+  saveNewUserInDB(user: any, name: string): void {          // Creating new User Instance of User with user data from sign in with username/password */
     let userData = {
-      uid: user.uid,  // set the same ID in Database as fireAuth already given this user in fireAuth setup
+      uid: user.uid,                                        // set the same ID in Database as fireAuth already given this user in fireAuth setup
       email: user.email,
-      displayName: name,  // got it from Inputfield on signUp
+      displayName: name,                                    // get it from Inputfield on signUp
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
       isAnonymous: user.isAnonymous,
     }
-    this.user = new User(userData);  // assign it for later use in App
-    let newSignUpUser = new User(userData).toJson();      // save to database in json-format:
+    this.user = new User(userData);                         // assign it for later use in App
+    let newSignUpUser = new User(userData).toJson();        // save to database in json-format:
     this.userRef = this.firestore.doc(`users/${user.uid}`)  // create a reference to the current user, so that I can access his data easily again
-    this.userRef.set(newSignUpUser, { merge: true });   // If Doc does not exist, create new one. If it exists, then merge it
+    this.userRef.set(newSignUpUser, { merge: true });       // If Doc does not exist, create new one. If it exists, then merge it
   };
-
 
   async login(email: string, password: string): Promise<void> {
     await this.fireAuth.signInWithEmailAndPassword(email, password)
       .then((userCredential) => {  // get User object: userCredential.user
-        console.log('userCredential', userCredential);
-        // this.user = new User(userCredential);
         this.router.navigate(['']);
       })
       .catch((error) => {
@@ -108,7 +98,7 @@ export class AuthServiceService {
   }
 
   async loginAsGuest(): Promise<void> {
-    await signInAnonymously(this.auth)  // function provided by firestore
+    await signInAnonymously(this.auth)  
       .then(async (userCredential) => {
         const existingUserUid = await this.userExistsInFirebase(userCredential.user.uid);
         if (!existingUserUid) {
@@ -125,14 +115,14 @@ export class AuthServiceService {
 
   async saveGuestToDB(user: any) {
     let userData = {
-      uid: user.uid,  // set the same ID in Database as fireAuth already given this user in fireAuth setup
+      uid: user.uid,                                        // set the same ID in Database as fireAuth already given this user in fireAuth setup
       isAnonymous: user.isAnonymous,
       displayName: 'Guest'
     }
-    this.user = new User(userData); // KEEP it!  for later use in app (we  need a version without toJson() there!)
-    let newGuest = new User(userData).toJson();  // save as Json Format to database
-    this.userRef = this.firestore.doc(`users/${user.uid}`)// create a reference to the current user, so that I can access his data easily again
-    this.userRef.set(newGuest, { merge: true }); // If Doc does not exist, create new one. If it exists, then merge it
+    this.user = new User(userData);                         // KEEP it!  for later use in app (we  need a version without toJson() there!)
+    let newGuest = new User(userData).toJson();             // save as Json Format to database
+    this.userRef = this.firestore.doc(`users/${user.uid}`)  // create a reference to the current user, so that I can access his data easily again
+    this.userRef.set(newGuest, { merge: true });            // If Doc does not exist, create new one. If it exists, then merge it
   }
 
   async logout(): Promise<void> {
@@ -155,15 +145,14 @@ export class AuthServiceService {
     return await firstValueFrom(this.firestore.collection('users').doc(uid).valueChanges())
   }
 
-
   // TODO - the function is set up to avoid error in forgot-pw component
   ForgotPassword(passwordResetEmailvalue: any) { }
 
 
-  /******* DUMMY DATE FOR GUEST USERS ***************/
 
- 
-  async createStaticToDoBoard() {  // create initial ToDo Board --> always static for every user, cannot be deleted
+  
+  /******* DUMMY DATE FOR GUEST USERS ***************/
+  async createStaticToDoBoard() {                                     // create initial ToDo Board --> always static for every user, cannot be deleted
     let currentUserUid = await firstValueFrom(this.userUid$);
       let newToDoBoard = Board.getEmptyBoard('ToDo', currentUserUid); // call a static function inside board.ts
       console.log('newBoard',newToDoBoard);
@@ -176,11 +165,11 @@ export class AuthServiceService {
       await this.setDummyBoards(jsonData.dummyBoards);
       await this.setDummyTasks(jsonData.dummyTasks);
     })
-    this.userRef.set({ dummyDataCreated: true }, { merge: true }) // consider deleting this, if not needed
+    this.userRef.set({ dummyDataCreated: true }, { merge: true })     // consider deleting this, if not needed
   }
 
   async setDummyBoards(dummmyBoards: any): Promise<void> {
-    for (let i = 0; i < dummmyBoards.length; i++) {  // modify static data with dynamic userdata
+    for (let i = 0; i < dummmyBoards.length; i++) {                   // modify static data with dynamic userdata
       dummmyBoards[i].createdAt = this.today;
       dummmyBoards[i].creator = this.currentUser.uid;
       await this.firestore.collection('boards').add(dummmyBoards[i]);
@@ -189,7 +178,7 @@ export class AuthServiceService {
 
   async setDummyTasks(dummmyTasks: any) {
     let daysFromNow = 1;
-    for (let i = 0; i < dummmyTasks.length; i++) { // modify static data with dynamic userdata
+    for (let i = 0; i < dummmyTasks.length; i++) {                      // modify static data with dynamic userdata
       dummmyTasks[i].creator = this.currentUser.uid;
       dummmyTasks[i].createdAt = this.today;
       dummmyTasks[i].dueTo = this.futureDate(this.today, daysFromNow);
