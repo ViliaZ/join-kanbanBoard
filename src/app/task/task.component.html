@@ -52,13 +52,17 @@
                 >
         </div>
 
-        <div class="thirdRow">
-            <div class="progress">
+        <div class="thirdRow" >
+            <div class="progress" *ngIf="task.checkedTodos.length > 0 || task.uncheckedTodos.length > 0; else emptyChecklist">
                 <div class="barWrapper concave">
                     <div class="progressBar" [ngStyle]="{'width': task.percentCheckedTodos+'%'}"></div>
-                </div>
+                </div>                
                 <div class="todos"> {{ task.checkedTodos.length }} / {{ task.allTodos }} done</div>
             </div>
+
+            <ng-template #emptyChecklist>
+                <div>No Checklist items</div>
+            </ng-template>
         </div>
 
     </div>

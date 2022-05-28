@@ -4,9 +4,6 @@ import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { AuthServiceService } from './auth-service.service';
 import { Board } from 'src/models/board';
 import { Task } from 'src/models/task';
-import { arrayUnion } from '@angular/fire/firestore';
-
-
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +11,6 @@ import { arrayUnion } from '@angular/fire/firestore';
 
 export class DatabaseService {
 
-  // public categories: string[] = ['Design', 'Marketing', 'Finance', 'Admin', 'Other']
   public boards: any = []; // contains boards and tickets for each board as array
   public backlogtasks: any = [];
   public urgentTasks: any = [];
