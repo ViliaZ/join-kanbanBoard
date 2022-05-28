@@ -135,14 +135,15 @@ export class BoardComponent implements OnInit {
 
   // EventHandler: delete Board REQUEST--> opens Confirmation Alert
   deleteBoard(i: number) {
-    if (this.db.boards[i].name == 'ToDo') {
-      console.log('is Todo Board - no delete', this.db.boards[i]);
+    this.currentBoard = this.db.boards[i];
+    if (this.currentBoard.name == 'ToDo') {
       this.alertService.setAlert('editsProhibited');
       return
-    }
-    this.alertService.setAlert('confirmDeleteBoard');
-    this.currentBoard = this.db.boards[i];
+    } else {
+      this.alertService.indexOfBoardToDelete = i;
+      this.alertService.setAlert('confirmDeleteBoard');
   }
+}
 
 
   // Click on existing Task to edit

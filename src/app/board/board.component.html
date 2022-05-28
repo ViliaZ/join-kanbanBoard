@@ -6,6 +6,7 @@
         <!-- COLUMN HEAD -->
         <div class="headColumn" [matTooltip]="board.name == 'ToDo' ? 'ToDo is a fixed board title. No Edits.' : ''"
             [matTooltipPosition]="'above'">
+            
             <input #boardTitle [disabled]="!board.editable" value={{board.name}}
                 (keyup.enter)="saveBoardTitle(boardTitle.value, board.customIdName, i)"
                 (blur)="board.editable ? setFocusToTitle(i) : boardTitle.blur">
@@ -14,9 +15,11 @@
             <img *ngIf="board.editable" (click)="saveBoardTitle(boardTitle.value, board.customIdName, i)"
                 [class.disabledIcon]="board.name =='ToDo'" class="iconEdit" src="assets/img/save.png"
                 [matTooltip]="board.name !== 'ToDo' ? 'Save title' : ''" [matTooltipPosition]="'above'">
+           
             <img *ngIf="!board.editable" [class.disabledIcon]="board.name =='ToDo'" (click)="enterEditMode(i)"
                 src="assets/img/edit.png" class="iconEdit" [matTooltip]="board.name !== 'ToDo' ? 'Edit title' : ''"
                 [matTooltipPosition]="'above'">
+            
             <img *ngIf="!board.editable" [class.disabledIcon]="board.name =='ToDo'" (click)="deleteBoard(i)"
                 src="assets/img/delete.png" class="iconEdit" [matTooltip]="board.name !== 'ToDo' ? 'Delete board' : ''"
                 [matTooltipPosition]="'above'">

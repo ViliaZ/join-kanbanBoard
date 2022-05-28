@@ -19,19 +19,12 @@ export class AlertComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // eventHandler: delete CONFIRMED --> close alert
-  confirmDelete(): any {
-    this.currentBoard.tasks.forEach((task: any) => { // first: delete all tasks on board
-      this.db.deleteDoc('tasks', task.customIdName)
-    });
-    this.db.deleteDoc('boards', this.currentBoard.customIdName);
-    this.alertService.setAlert('confirmDeletion', 'close'); // reset alert
+  onConfirmDeleteBoard(): any { 
+    this.alertService.confirmDeleteBoard();   
   }
 
-  cancelDelete() {
-    this.alertService.setAlert('confirmDeletion', 'close'); // reset alert
-
-    // this.alertService.alerts.confirmDeletion = false;
+  onCancelDeleteBoard() {
+    this.alertService.cancelDeleteBoard();
   }
 
 }
