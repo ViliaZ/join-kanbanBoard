@@ -33,7 +33,7 @@ export class MenuComponent implements OnInit {
     public authService: AuthServiceService,
     public router: Router,
     private eventEmitterService: EventemitterService,
-    private taskservice: TasksService,
+    public taskservice: TasksService,
     public db: DatabaseService,
     public breakpointObserver: BreakpointObserver) {
     this.getCurrentRoute();
@@ -114,6 +114,13 @@ export class MenuComponent implements OnInit {
 
   openNewTaskPopUp() {
     this.taskservice.taskPopupOpen = true;
+  }
+
+  toggleHelpSection(){
+    this.taskservice.openHelp == false ? this.taskservice.openHelp = true : this.taskservice.openHelp = false;   
+    setTimeout(() => {
+      this.hamburgerMenuOpen = false;
+    }, 500);
   }
 
 }

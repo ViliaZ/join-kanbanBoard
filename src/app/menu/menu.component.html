@@ -2,7 +2,7 @@
     <div class="sectionLeft" >
 
         <!-- // Plus Button Mobile -->
-        <div *ngIf="!hideMobileMenu && !hamburgerMenuOpen"
+        <div *ngIf="!hideMobileMenu && !hamburgerMenuOpen && !router.url.includes('home')"
             (click)="openNewTaskPopUp()" class="plus-wrapper mobile">
             <span class="plus"></span>
             ADD TASK
@@ -96,7 +96,7 @@
 
         <!-- Help Link -->
         <div>
-            <div href="" class="info" *ngIf="router.url.includes('home') && hideMobileMenu">
+            <div (click)="toggleHelpSection()" class="info" *ngIf="router.url.includes('home') && hideMobileMenu">
                 <span>Help</span>
                 <img src="/assets/img/info.svg" alt="help">
             </div>
@@ -152,9 +152,10 @@
         <img src="/assets/img/logout.svg" alt="help">
         LOGOUT
     </a>
-    <a 
-        class="help">
+    <a
+        class="help"
+        (click)="toggleHelpSection()">
         <img src="/assets/img/info.svg" alt="help">
         HELP
-    </a>
+</a>
 </div>

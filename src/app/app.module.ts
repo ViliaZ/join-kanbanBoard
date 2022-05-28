@@ -34,6 +34,7 @@ import { EventemitterService } from 'src/services/eventemitter.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LayoutModule } from '@angular/cdk/layout';
 import { AlertComponent } from './alert/alert.component';
+import { HelpComponent } from './help/help.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { AlertComponent } from './alert/alert.component';
     ForgotPwComponent,
     ValidatorComponent,
     AlertComponent,
+    HelpComponent,
   ],
   imports: [
     BrowserModule,
