@@ -16,7 +16,6 @@ export class AlertService {
     "confirmAddTask": false,
     "confirmDeleteTask": false,
     "confirmMoveToToDo": false,
-
   }
 
   constructor() { }
@@ -30,7 +29,7 @@ export class AlertService {
     setTimeout(() => {  // reset
       this.alerts[alertName] = false;
       this.alertStatusON = false
-    }, 3800);  // to close popup
+    }, 4000);  // to close popup
   }
 
 }

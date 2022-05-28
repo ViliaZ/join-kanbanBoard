@@ -2,11 +2,32 @@
     <div class="sectionLeft" >
 
         <!-- // Plus Button Mobile -->
-        <div *ngIf="!hideMobileMenu && !hamburgerMenuOpen && !router.url.includes('home')"
+        <div *ngIf="!mobile500 && !hideMobileMenu && !hamburgerMenuOpen && !router.url.includes('home')"
             (click)="openNewTaskPopUp()" class="plus-wrapper mobile">
             <span class="plus"></span>
             ADD TASK
         </div>
+
+             <!-- MOBILE INPUTFIELD NEW BOARD  -->
+             <div    
+             *ngIf="mobile500 && router.url.includes('board') && !hamburgerMenuOpen" 
+             class="newBoard"
+             [class.concave]="mobile500">
+             <div>
+                 <input 
+                     #newBoardInput                 
+                     [(ngModel)]="newBoardTitle" 
+                     name="newBoardTitle" 
+                     placeholder="NEW BOARD"
+                     type="search"
+                     minlength="2">
+                 <button 
+                     *ngIf="newBoardInput.value !== ''"
+                     class="btn-newBoard"
+                     (click)="handleNewBoardAdding($event)">
+                 </button>
+             </div>
+         </div>
 
         <!-- User Image -->
         <div class="user" *ngIf="hideMobileMenu">
@@ -64,7 +85,7 @@
             <div class="container concave">
                 <form (ngSubmit)="handleBacklogFiltering()">
                     <input [(ngModel)]="searchInput" (ngModelChange)="handleBacklogFiltering()" name="searchInput"
-                        type="search" placeholder="SEARCH BACKLOG ...">
+                        type="search" placeholder="FIND TASK ...">
                     <button type="submit">Search</button>
                 </form>
             </div>
@@ -73,7 +94,7 @@
         <!-- INPUTFIELD NEW BOARD  -->
         <div    
             [class.concave]="inputfieldExpanded"
-            *ngIf="router.url.includes('board') && !hamburgerMenuOpen" 
+            *ngIf="!mobile500 && router.url.includes('board') && !hamburgerMenuOpen" 
             class="newBoard">
             <div (click)="expandInputfield()">
                 <input 
@@ -91,7 +112,6 @@
                     (click)="handleNewBoardAdding($event)">
                 </button>
             </div>
-           
         </div>
 
         <!-- Help Link -->
@@ -126,6 +146,12 @@
 
 
 <div class="wrapperMobile" *ngIf="!hideMobileMenu" [class.expand]="hamburgerMenuOpen">
+          <!-- // Plus Button Mobile -->
+          <div *ngIf="hamburgerMenuOpen"
+          (click)="openNewTaskPopUp(); hamburgerMenuOpen = false" class="plus-wrapper mobile">
+          <span class="plus mobile500"></span>
+          ADD TASK
+      </div>
     <a 
         routerLink="/home" 
         (click)="hamburgerMenuOpen = false" 

@@ -28,6 +28,7 @@ export class MenuComponent implements OnInit {
   private event$: any;  // events of routing
   public hideMobileMenu: boolean = true;
   public hamburgerMenuOpen: boolean = false;
+  public mobile500: boolean = false;
 
   constructor(
     public authService: AuthServiceService,
@@ -45,11 +46,16 @@ export class MenuComponent implements OnInit {
 
   startBreakpointObserver() {    // https://www.digitalocean.com/community/tutorials/angular-breakpoints-angular-cdk
     this.breakpointObserver
-      .observe(['(min-width: 800px)'])
-      .subscribe((state: BreakpointState) => {
-        if (state.matches) {
+      .observe(['(max-width: 500px)','(min-width: 800px)'])
+      .subscribe((state:any) => {
+        if (state.breakpoints['(max-width: 500px)']){
+          this.mobile500 = true;          
+        }
+        if (state.breakpoints['(min-width: 800px)']){
           this.hideMobileMenu = true;
-        } else {
+          this.mobile500 = false;   
+        }
+         else {
           this.hideMobileMenu = false;
         }
       });

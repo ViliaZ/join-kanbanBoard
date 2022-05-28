@@ -2,44 +2,44 @@
 <div class="alertContainer">
 
     <div *ngIf="alertService.alertStatusON && alertService.alerts.confirmAddTask" class="alertbox">
-        <img src="assets/img/alertDelete.svg">
-        Task successfully created.
+        <img src="assets/img/thumbsUp.png">
+        <p>Task successfully created.</p>
     </div>
 
     <div *ngIf="alertService.alertStatusON && alertService.alerts.confirmEditTask" class="alertbox">
-        <img src="assets/img/alertDelete.svg">
-        Task successfully edited.
+        <img src="assets/img/thumbsUp.png">
+        <p>Task successfully edited.</p>
     </div>
 
     <div *ngIf="alertService.alertStatusON && alertService.alerts.confirmMoveToToDo" class="alertbox">
-        <img src="assets/img/alertDelete.svg">
-        Task moved to board "ToDo".
+        <img src="assets/img/thumbsUp.png">
+        <p>Task moved to board "ToDo".</p>
     </div>
 
     <div *ngIf="alertService.alertStatusON && alertService.alerts.confirmDeleteTask" class="alertbox">
-        <img src="assets/img/alertDelete.svg">
-        Task deleted.
+        <img src="assets/img/thumbsUp.png">
+        <p>Task deleted.</p>
     </div>
 
     <div *ngIf="alertService.alertStatusON && alertService.alerts.duplicateAlert" class="alertbox">
-        <img src="assets/img/alertDelete.svg">
-        Invalid choice: Title can`t be empty or already existing.
+        <img src="assets/img/infoIcon.svg">
+        <p>Invalid choice: Title can`t be empty or already existing.</p>
     </div>
 
     <div *ngIf="alertService.alertStatusON && alertService.alerts.backlogAlert" class="alertbox">
-        <img src="assets/img/alertDelete.svg">
-        Backlog Tasks are already sorted to "Backlog" Section. Please choose another title.
+        <img src="assets/img/infoIcon.svg">
+        <p>Backlog Tasks are already sorted to "Backlog" Section. Please choose another title.</p>
     </div>
 
     <div *ngIf="alertService.alertStatusON && alertService.alerts.editsProhibited" class="alertbox">
-        <img src="assets/img/alertDelete.svg">
-        'ToDo' is a fixed board. Edits not permitted.
+        <img src="assets/img/infoIcon.svg">
+        <p>'ToDo' is a fixed board. Edits not permitted.</p>
     </div>
 
 
     <div *ngIf="alertService.alertStatusON && alertService.alerts.confirmDeleteBoard" class="alertDelete">
         <img src="assets/img/alertDelete.svg">
-        Please confirm deletion. This will include all board tasks.
+        <p>Please confirm deletion. This will include all board tasks.</p>
         <button (click)="confirmDelete()" id="btn-confirm">Confirm</button>
         <button (click)="cancelDelete()" id="btn-cancel">Cancel</button>
     </div>
