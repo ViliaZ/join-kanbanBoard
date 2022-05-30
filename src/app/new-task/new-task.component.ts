@@ -142,7 +142,7 @@ export class NewTaskComponent implements OnInit {
 
   // handle Submit of form
   async onSubmit() {
-    console.log(this.formData);
+    console.log('onsubmit',this.formData);
     
     let task = new Task(this.formData).toJson();
     if (!this.taskservice.editMode) {
@@ -176,6 +176,12 @@ export class NewTaskComponent implements OnInit {
     this.taskservice.currentTask = {};
     this.taskservice.editMode = false;
   }
+
+  clearForm(){
+    this.taskservice.currentTask = {};
+    this.resetForm();   
+  }
+
 
   handleTodo(action: string) {
     if (action == 'save') {

@@ -354,6 +354,11 @@ button {
     gap: 1em;
     font-style: italic;
 
+    img{
+        width: 14px;
+        filter: invert(13%) sepia(95%) saturate(6340%) hue-rotate(307deg) brightness(100%) contrast(102%);
+    }
+
     @media only screen and (max-width: 1000px) {
         flex-wrap: wrap;
     }
