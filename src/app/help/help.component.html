@@ -29,5 +29,5 @@
         <p>Enjoy!</p>
 </div>
 
-    <button class="" (click)="tasksservice.openHelp=false">Close</button>
 </div>
+<button  *ngIf="tasksservice.openHelp == true" (click)="tasksservice.openHelp=false">Close</button>

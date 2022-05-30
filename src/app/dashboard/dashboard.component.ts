@@ -27,6 +27,9 @@ export class DashboardComponent implements OnInit {
   async ngOnInit() {
     await this.db.getBoardAndTaskData();
     this.calcStatistics();
+    // setTimeout(() => {
+    //   this.calcStatistics();
+    // }, 2000);
   }
 
    calcStatistics() {
