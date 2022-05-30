@@ -42,7 +42,7 @@
 
       <!-- render checked items (EDITMODE only)-->
       <div *ngFor="let todo of formData.checkedTodos; index as i" class="row">
-        <input *ngIf="taskservice.editMode" checked type="checkbox" id={{todo}} name={{todo}}>
+        <input *ngIf="taskservice.editMode" checked (click)="markUnchecked(i, todo)" type="checkbox" id={{todo}} name={{todo}}>
         <label for={{todo}}>{{todo}}</label>
       </div>
 

@@ -142,6 +142,8 @@ export class NewTaskComponent implements OnInit {
 
   // handle Submit of form
   async onSubmit() {
+    console.log(this.formData);
+    
     let task = new Task(this.formData).toJson();
     if (!this.taskservice.editMode) {
       this.db.addDocToCollection('tasks', task);
@@ -192,4 +194,10 @@ export class NewTaskComponent implements OnInit {
     this.formData.checkedTodos.push(todo);
     this.formData.uncheckedTodos.splice(indexUnchecked, 1)
   }
+
+  markUnchecked(indexChecked: number, todo: string) {
+    this.formData.uncheckedTodos.push(todo);
+    this.formData.checkedTodos.splice(indexChecked, 1)
+  }
+
 }

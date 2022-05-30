@@ -2,24 +2,27 @@
   *ngIf="!taskservice.taskPopupOpen && (router.url === '/' || router.url.includes('home') || router.url.includes('board') || router.url.includes('backlog') || router.url.includes('imprint'))">
 </app-menu>
 
-<div 
-  class="main"
-  [class.bottomImage]="router.url.includes('home') || router.url.includes('board') || router.url.includes('backlog') ">
-  
+<div class="main" [class.bottomImage]="router.url.includes('home') || router.url.includes('board') || router.url.includes('backlog') ">
   <router-outlet></router-outlet>
-  
+</div>
+
+<app-alert></app-alert>
+<app-help></app-help>
+
+<app-new-task *ngIf="taskservice.taskPopupOpen" class="asOverlay"></app-new-task>
+
+<!-- Fullwidth Blur Overlay when Task Popup is open -->
+<div *ngIf="this.taskservice.taskPopupOpen" class="blurOverlay"></div>
+
+
+
+
+
+
+
   <!-- <a 
     *ngIf="router.url === '/signup'|| router.url === '/login'"  
     routerLink="/imprint"
     class="imprint">
     Imprint & Data Protection
   </a> -->
-
-</div>
-
-<app-new-task *ngIf="taskservice.taskPopupOpen" class="asOverlay"></app-new-task>
-
-<!-- <img class="bottomImage" src="/assets/img/335.png" alt=""> -->
-<div *ngIf="this.taskservice.taskPopupOpen" class="blurOverlay"></div>
-<app-alert></app-alert>
-<app-help></app-help>
