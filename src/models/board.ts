@@ -10,12 +10,17 @@ export class Board {
     public creator = this.service.currentUser.uid // UID from user
     public editable!: boolean;
     public tasks!: [];
+    static yesterday: any = () => {    // static because it is used in static getEmptyBoard()
+        const today: Date = new Date();
+        const yesterDay = new Date(today.setDate(today.getDate() - 1))
+        return yesterDay
+    }
 
 
     // obj will be formData Object
     constructor(obj?: any) {
         this.name = obj ? obj.name : '';
-        this.createdAt = obj ? obj.createdAt  : new Date();
+        this.createdAt = obj ? obj.createdAt : new Date();
         this.creator = this.service.currentUser.uid;
         this.editable = obj ? obj.editable : false
         this.tasks = obj ? obj.tasks : [];
@@ -31,13 +36,24 @@ export class Board {
         }
     }
 
-    static getEmptyBoard(boardName: string, creatorUiD: string){
-        return {
-            name: boardName,
-            createdAt: new Date().getTime(),
-            creator: creatorUiD,
-            editable: false,
-            tasks: []
+    static getEmptyBoard(boardName: string, creatorUiD: string) {
+        if (boardName === 'ToDo') {
+            return {
+                name: boardName,
+                createdAt: this.yesterday(),
+                creator: creatorUiD,
+                editable: false,
+                tasks: []
+            }
+        }
+        else {
+            return {
+                name: boardName,
+                createdAt: new Date().getTime(),
+                creator: creatorUiD,
+                editable: false,
+                tasks: []
+            }
         }
     }
 }

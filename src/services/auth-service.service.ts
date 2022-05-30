@@ -64,8 +64,8 @@ export class AuthServiceService {
         this.fireAuth.createUserWithEmailAndPassword(email, password)
           .then(async (userCredential: any) => {
             this.saveNewUserInDB(userCredential.user, name);
-            await this.createDummyData();
             await this.createStaticToDoBoard();
+            await this.createDummyData();
             this.router.navigate([''])  // automatically logged in
           })
       })
@@ -103,8 +103,8 @@ export class AuthServiceService {
         const existingUserUid = await this.userExistsInFirebase(userCredential.user.uid);
         if (!existingUserUid) {
           await this.saveGuestToDB(userCredential.user);
-          await this.createDummyData();
           await this.createStaticToDoBoard();
+          await this.createDummyData();
         }
         this.router.navigate([''])
       })
@@ -155,7 +155,6 @@ export class AuthServiceService {
   async createStaticToDoBoard() {                                     // create initial ToDo Board --> always static for every user, cannot be deleted
     let currentUserUid = await firstValueFrom(this.userUid$);
       let newToDoBoard = Board.getEmptyBoard('ToDo', currentUserUid); // call a static function inside board.ts
-      console.log('newBoard',newToDoBoard);
       this.firestore.collection('boards').add(newToDoBoard)
     }
   

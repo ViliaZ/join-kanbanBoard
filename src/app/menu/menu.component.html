@@ -19,6 +19,7 @@
                      [(ngModel)]="newBoardTitle" 
                      name="newBoardTitle" 
                      placeholder="NEW BOARD"
+                     (keyup.enter)="handleNewBoardAdding($event)"
                      type="search"
                      minlength="2">
                  <button 

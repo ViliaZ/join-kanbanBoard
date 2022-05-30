@@ -124,7 +124,6 @@ export class DatabaseService {
         this.boards[i].tasks.push(task);
       }
     }
-    // console.log(this.boards);  // ERROR!! Duplicate boards
   }
 
   // Goal: pinned Task on Top of Board, then all other tasks sorted by createdAt
