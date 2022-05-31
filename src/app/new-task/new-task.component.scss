@@ -346,18 +346,13 @@ button {
     }
 }
 
-// MAIN SAVE BUTTON
+//  BUTTONS
 .addTask {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 1em;
     font-style: italic;
-
-    img{
-        width: 14px;
-        filter: invert(13%) sepia(95%) saturate(6340%) hue-rotate(307deg) brightness(100%) contrast(102%);
-    }
 
     @media only screen and (max-width: 1000px) {
         flex-wrap: wrap;
@@ -384,14 +379,15 @@ button {
     cursor: pointer;
 }
 
-svg {
-    fill: currentColor;
-}
 
 // two main buttons
 .buttons {
     display: flex;
     gap: 12px;
+
+    img{
+        width: 14px;
+    }
 
     .button {
         display: flex;
@@ -404,10 +400,6 @@ svg {
         height: 36px;
         background-color: var(--accent1);
         cursor: pointer;
-
-        svg {
-            stroke: var(--primary-light);
-        }
 
         span {
             font-weight: 500;
@@ -424,9 +416,11 @@ svg {
         span {
             color: var(--accent1);
         }
+    }
 
-        svg {
-            stroke: var(--accent1);
+    .btn-save{
+        img{
+            filter: invert(13%) sepia(95%) saturate(6340%) hue-rotate(307deg) brightness(100%) contrast(102%);
         }
     }
 
@@ -453,10 +447,5 @@ svg {
             width: 12px;
             height: 12px;
         }
-    }
-
-    svg {
-        width: 12px;
-        height: 12px;
     }
 }

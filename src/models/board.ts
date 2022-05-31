@@ -37,10 +37,10 @@ export class Board {
     }
 
     static getEmptyBoard(boardName: string, creatorUiD: string) {
-        if (boardName === 'ToDo') {
+        if (boardName === 'ToDo') { // Todo must be displayed on first position on "Boards"
             return {
                 name: boardName,
-                createdAt: this.yesterday(),
+                createdAt: this.yesterday(), // Boards are sorted by createdAt --> Todo must be earliest Date, other dummy boards are later
                 creator: creatorUiD,
                 editable: false,
                 tasks: []
@@ -49,7 +49,7 @@ export class Board {
         else {
             return {
                 name: boardName,
-                createdAt: new Date().getTime(),
+                createdAt: new Date().getTime(),  // Today is the default Date
                 creator: creatorUiD,
                 editable: false,
                 tasks: []

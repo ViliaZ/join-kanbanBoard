@@ -6,6 +6,7 @@ import { EventemitterService } from 'src/services/eventemitter.service';
 import { TasksService } from 'src/services/tasks.service';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { AlertService } from 'src/services/alert.service';
+import { Task } from 'src/models/task';
 
 @Component({
   selector: 'app-board',
@@ -81,7 +82,6 @@ export class BoardComponent implements OnInit {
     this.db.boards[i].editable = false;
   }
 
-
   async saveBoardTitle(inputData: any, boardIDinFirestore: any, i: number) {
     if (inputData.length === 0) { // handle empty input  
       this.alertService.setAlert('duplicateAlert');
@@ -145,7 +145,6 @@ export class BoardComponent implements OnInit {
   }
 }
 
-
   // Click on existing Task to edit
   editTask(task: any) {
     this.taskservice.currentTask = task;
@@ -159,9 +158,12 @@ export class BoardComponent implements OnInit {
     this.taskservice.detailsRequested = false;
   }
 
-  // Trigger: Plus-Button or Click on a existing Task for Editing
-  openTaskPopUp() {
+  // Trigger: Click on Placeholder Task --> open empty Task BUT prefill it with current BoardName 
+  openTaskPopUp(currentBoardName: string) {
     this.taskservice.taskPopupOpen = true;
+    this.taskservice.editMode = true;
+    this.taskservice.currentTask = new Task();
+    this.taskservice.currentTask.board = currentBoardName;
   }
 
   //++++++++  DRAG AND DROP ******

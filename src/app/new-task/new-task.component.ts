@@ -76,10 +76,8 @@ export class NewTaskComponent implements OnInit {
     this.getCurrentUserUid();
   }
 
-
   async getCurrentUserUid() {
     this.userUid = await firstValueFrom(this.authService.userUid$);
-    // only in editmode
   }
 
   setDefaultData() {
@@ -162,7 +160,6 @@ export class NewTaskComponent implements OnInit {
     this.formData = emptyTemplateTask;
     this.taskservice.taskPopupOpen = false;
     this.setUrgencyButtonColor('medium');
-
   }
 
   udpateEditedTask(taskAsJson: any) {
@@ -181,7 +178,6 @@ export class NewTaskComponent implements OnInit {
     this.taskservice.currentTask = {};
     this.resetForm();   
   }
-
 
   handleTodo(action: string) {
     if (action == 'save') {
