@@ -84,11 +84,9 @@ export class BacklogComponent implements OnInit {
   }
 
   editTask(task: any) {
-    console.log('this task is edited', task);
     this.taskservice.currentTask = task as Task;
     this.taskservice.taskPopupOpen = true;
     this.taskservice.editMode = true;
-    this.alertService.setAlert("confirmEditTask");
   }
 
   deleteTask(idInFirestore: string) {
