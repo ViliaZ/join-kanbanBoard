@@ -1,7 +1,10 @@
 <h3 *ngIf="!taskservice.editMode && (router.url.includes('backlog') || router.url.includes('board'))" class="headline">
-  Add New Task</h3>
+  Add New Task
+</h3>
+
 <h3 *ngIf="taskservice.editMode" class="headline">
-  Edit Task</h3>
+  Edit Task
+</h3>
 
 <form (ngSubmit)="onSubmit()" #myform="ngForm">
   <div class="title concave posRel">

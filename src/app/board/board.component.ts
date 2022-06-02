@@ -56,7 +56,6 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  // newBoardName is received via Eventemitterservice from Menu component
   // userinput string from inputfield for adding a new board
   async addNewBoard(newBoardName: string) {
     let duplicate = await this.checkDuplicates(newBoardName);
@@ -79,7 +78,7 @@ export class BoardComponent implements OnInit {
     this.setFocusToTitle(i);
   }
 
-  // Board Title Edit exit
+  // disable Inputfield Board Title 
   exitEditMode(i: number) {
     this.db.boards[i].editable = false;
   }

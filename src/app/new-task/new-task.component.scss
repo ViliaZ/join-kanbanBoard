@@ -379,13 +379,12 @@ button {
     cursor: pointer;
 }
 
-
 // two main buttons
 .buttons {
     display: flex;
     gap: 12px;
 
-    img{
+    img {
         width: 14px;
     }
 
@@ -418,8 +417,12 @@ button {
         }
     }
 
-    .btn-save{
-        img{
+    .btn-save {
+        img {
+            filter: invert(100%);
+        }
+
+        &:disabled img {
             filter: invert(13%) sepia(95%) saturate(6340%) hue-rotate(307deg) brightness(100%) contrast(102%);
         }
     }
@@ -443,7 +446,7 @@ button {
         border: none;
         cursor: pointer;
 
-        img{
+        img {
             width: 12px;
             height: 12px;
         }

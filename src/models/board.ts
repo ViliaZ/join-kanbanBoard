@@ -31,7 +31,7 @@ export class Board {
     }
 
     static getEmptyBoard(boardName: string, creatorUiD: string) {
-        if (boardName === 'ToDo') { // Todo must be displayed on first position on "Boards"
+        if (boardName == 'ToDo') { // Todo must be displayed on first position on "Boards"
             return {
                 name: boardName,
                 createdAt: new Date(0), // Boards are sorted by createdAt --> Todo new Date(0) becomes 1.1.1970
@@ -43,7 +43,7 @@ export class Board {
         else {
             return {
                 name: boardName,
-                createdAt: new Date().getTime(),  // Today is the default Date
+                createdAt: new Date(),  // Today is the default Date
                 creator: creatorUiD,
                 editable: false,
                 tasks: []

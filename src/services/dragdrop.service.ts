@@ -14,15 +14,12 @@ export class DragdropService {
   }
 
   drag(ev: any) {
-    console.log(ev.target.id);
     ev.dataTransfer.setData("text", ev.target.id);
     // ev.target.id containes the HTML id="" of the div - the id of each task div is set to be the customID in Firestore for the element
   }
 
   drop(ev: any, targetboard: string) {
     ev.preventDefault();
-    console.log(targetboard);
-
     let dataID = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(dataID));
     // "data" returns the HTML Id of the dragged element - this id is set to be the customID in Firestore for the element
