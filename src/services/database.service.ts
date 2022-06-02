@@ -54,7 +54,7 @@ export class DatabaseService {
               .orderBy(sortTasksBy, sortTasksOrder))  // default sort via timestamp
             .valueChanges({ idField: 'customIdName' })
         }))
-        .subscribe(async (result) => {                // result = tasks[]
+        .subscribe(async (result) => {                // result = tasks[]          
           this.emptyAllArrays();
           result.forEach((task) => this.allTasks.push(new Task(task).toJson()))  // must be called after all Arrays are empty
           this.handleTasks(result);

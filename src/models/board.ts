@@ -10,12 +10,6 @@ export class Board {
     public creator = this.service.currentUser.uid // UID from user
     public editable!: boolean;
     public tasks!: [];
-    static yesterday: any = () => {    // static because it is used in static getEmptyBoard()
-        const today: Date = new Date();
-        const yesterDay = new Date(today.setDate(today.getDate() - 1))
-        return yesterDay
-    }
-
 
     // obj will be formData Object
     constructor(obj?: any) {
@@ -40,7 +34,7 @@ export class Board {
         if (boardName === 'ToDo') { // Todo must be displayed on first position on "Boards"
             return {
                 name: boardName,
-                createdAt: this.yesterday(), // Boards are sorted by createdAt --> Todo must be earliest Date, other dummy boards are later
+                createdAt: new Date(0), // Boards are sorted by createdAt --> Todo new Date(0) becomes 1.1.1970
                 creator: creatorUiD,
                 editable: false,
                 tasks: []
