@@ -35,8 +35,8 @@
             </app-task>
 
             <!-- EMPTY TASK plaecholder (static) -->
-            <div class="ticketWrapPlaceholder" (click)="openTaskPopUp(board.name)" [matTooltip]="'Create New Task'"
-                [matTooltipPosition]="'above'">
+            <div draggable="false" class="ticketWrapPlaceholder" (click)="openTaskPopUp(board.name)" [matTooltip]="'Create New Task'"
+                [matTooltipPosition]="'below'">
                 <div class="singleTicket plaecholderTicket">
                     <div class="rowTwo">
                         <div>
