@@ -76,7 +76,6 @@
     </div>
 
     <div class="sectionRight">
-
         <!-- SEARCH AND FILTETR FOR BACKLOG  -->
         <div *ngIf="!db.backlogEmpty() && router.url.includes('backlog') && !hamburgerMenuOpen" class="backlogSettings">
             <div class="sortBy" [matTooltip]="'Reverse sorting order (by creation time)'" [matTooltipPosition]="'below'">
@@ -97,7 +96,7 @@
             [class.concave]="inputfieldExpanded"
             *ngIf="!mobile500 && router.url.includes('board') && !hamburgerMenuOpen" 
             class="newBoard">
-            <div (click)="expandInputfield()">
+            <div (click)="expandInputfield()" [matTooltip]="'Add new Board'">
                 <input 
                     #newBoardInput                 
                     [(ngModel)]="newBoardTitle" 
