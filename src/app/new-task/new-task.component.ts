@@ -83,8 +83,7 @@ export class NewTaskComponent implements OnInit {
   setDefaultData() {
     let taskClicked = new Task(this.taskservice.currentTask).getEditmodeTask();
     this.formData = taskClicked;
-    console.log('this is currenttask', new Date(this.taskservice.currentTask.dueTo));
-    console.log(this.formData);
+    console.log('this is taskClicked', taskClicked);
   }
 
   // Urgency is set per default not via ngModel (only after editing)

@@ -15,10 +15,14 @@
     background: var(--bg);
     z-index: 100;
 
-    @media only screen and (max-width: 800px) {
+    @media only screen and (max-width: 800px) and (orientation: portrait){
         height: 132px; 
         padding: 20px;
     }
+
+    @media (orientation: landscape) {
+        height: 90px;
+     }
 }
 
 .wrapperMobile {
@@ -36,6 +40,12 @@
     transition: all 150ms ease-in-out;
     opacity: 0;
     z-index: 2;
+    overflow: auto;
+
+    @media (orientation: landscape) {
+        justify-content: flex-start;
+        padding-top: 114px;
+     }
 
     &.expand {
         height: 100vh;

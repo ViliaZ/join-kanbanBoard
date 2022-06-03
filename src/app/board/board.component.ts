@@ -159,12 +159,8 @@ export class BoardComponent implements OnInit {
     this.taskservice.detailsRequested = false;
   }
 
-  // Trigger: Click on Placeholder Task --> open empty Task BUT prefill it with current BoardName 
-  openTaskPopUp(currentBoardName: string) {
+  openTaskPopUp(currentBoardName: string) {  // not implemented yet to prefill with currentBoardname
     this.taskservice.taskPopupOpen = true;
-    this.taskservice.editMode = true;
-    this.taskservice.currentTask = new Task();
-    this.taskservice.currentTask.board = currentBoardName;
   }
 
   //++++++++  DRAG AND DROP ******

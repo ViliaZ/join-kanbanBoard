@@ -8,10 +8,10 @@ import { Subject } from 'rxjs';
 export class TasksService {
 
   public detailsRequested: boolean = false;
-  public taskPopupOpen = false; 
+  public taskPopupOpen = false;
   public currentTask!: any;
   public editMode: boolean = false;  // turns true if a task is edited
-  public openHelp: boolean = false;   
+  public openHelp: boolean = false;
 
   constructor() { }
 

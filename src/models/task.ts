@@ -82,7 +82,7 @@ export class Task {
 
     /**
      * Empty new Task as Template for New Task component
-     * Static Methodcan call be called without instanciating a new Task() --> Task.getTaskTemplate()
+     * Static Method can call be called without instanciating a new Task() --> Task.getTaskTemplate()
      * @returns new Task() as Json
      */
     static getTaskTemplate() { 
