@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
 
    calcStatistics() {
     this.getPercentAllTasks()
-    this.getPercentToDoTasks();
+    this.getPercentInProgressTasks();
     this.getPercentBacklogTasks();
     console.log(this.db.allTasks);
   }
@@ -45,12 +45,17 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  getPercentToDoTasks() {
-    if (this.db.todoTasks.length > 0) {
-      let percentToDo = this.db.todoTasks.length * 100 / this.db.allTasks.length;
-      this.percentage.toDoTasks = percentToDo + '%';
-    }
+  getPercentInProgressTasks() {
+    let inProgressTasksAmount= (this.db.allTasks.length - this.db.backlogtasks?.length);
+
+    
+      let percentInProgress = inProgressTasksAmount * 100 / this.db.allTasks.length;
+      this.percentage.toDoTasks = percentInProgress + '%';  // variable  umbenennen in inprogress in db (ist nicht mehr Todo)
+    console.log(this.db.allTasks.length,inProgressTasksAmount,percentInProgress);
+    
+    
   }
+
 
   getPercentBacklogTasks() {
     if (this.db.backlogtasks?.length > 0) {
