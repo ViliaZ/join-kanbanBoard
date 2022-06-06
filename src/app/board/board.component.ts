@@ -68,7 +68,7 @@ export class BoardComponent implements OnInit {
     }
   }
 
-trackBy(index: any) {
+  trackByIndex(index: any) {
   return index;
 }
 

@@ -1,6 +1,6 @@
 <div class="body-backlog">
 
-    <div *ngFor="let task of db.backlogtasks; index as i" [class.hide]="activeSearch() && !isFilteredTask(task)"
+    <div *ngFor="let task of db.backlogtasks; index as i; trackBy:trackByIndex" [class.hide]="activeSearch() && !isFilteredTask(task)"
         class="wrapper">
 
         <div class="taskContainer">

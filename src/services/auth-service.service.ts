@@ -43,19 +43,24 @@ export class AuthServiceService {
   }
 
   async monitorAuthState(): Promise<void> {
-    await this.fireAuth.onAuthStateChanged((user) => {
+    await this.fireAuth.onAuthStateChanged(async (user) => {
       if (user) {
         this.userUid$.next(user.uid);
         this.currentUser = user;  // create a reference to the current user, so that I can access his data easily again
+        // this.currentUser = await this.getCurrentUser(user);
         console.log('User is changed state', this.currentUser);
         if (user.isAnonymous) {
-          console.log('user.isAnonymous (Guest):', this.currentUser)
+          console.log('user.isAnonymous:', this.currentUser.displayName)
         }
       } else {
         console.log('user is null')
         this.loginAlert = true;
       }
     })
+  }
+
+  async getCurrentUser(user: any): Promise<any> {
+    return await firstValueFrom(this.firestore.collection('users').doc(user.uid).valueChanges());
   }
 
   async createNewUser(email: string, password: string, name: string): Promise<void> {
@@ -70,7 +75,7 @@ export class AuthServiceService {
           })
       })
   }
-  
+
   saveNewUserInDB(user: any, name: string): void {          // Creating new User Instance of User with user data from sign in with username/password */
     let userData = {
       uid: user.uid,                                        // set the same ID in Database as fireAuth already given this user in fireAuth setup
@@ -98,7 +103,7 @@ export class AuthServiceService {
   }
 
   async loginAsGuest(): Promise<void> {
-    await signInAnonymously(this.auth)  
+    await signInAnonymously(this.auth)
       .then(async (userCredential) => {
         const existingUserUid = await this.userExistsInFirebase(userCredential.user.uid);
         if (!existingUserUid) {
@@ -149,15 +154,13 @@ export class AuthServiceService {
   ForgotPassword(passwordResetEmailvalue: any) { }
 
 
-
-  
   /******* DUMMY DATE FOR GUEST USERS ***************/
   async createStaticToDoBoard() {                                     // create initial ToDo Board --> always static for every user, cannot be deleted
     let currentUserUid = await firstValueFrom(this.userUid$);
-      let newToDoBoard = Board.getEmptyBoard('ToDo', currentUserUid); // call a static function inside board.ts
-      this.firestore.collection('boards').add(newToDoBoard)
-    }
-  
+    let newToDoBoard = Board.getEmptyBoard('ToDo', currentUserUid); // call a static function inside board.ts
+    this.firestore.collection('boards').add(newToDoBoard)
+  }
+
   async createDummyData(): Promise<void> {
     let dummyData$ = this.httpClient.get('assets/json/guestData.JSON');
     dummyData$.subscribe(async (jsonData: any) => {

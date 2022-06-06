@@ -1,7 +1,7 @@
 <div class="body-board">
 
     <!-- COLUMN  -->
-    <div *ngFor="let board of db.boards; index as i;  trackBy:trackBy;" class="board">
+    <div *ngFor="let board of db.boards; index as i;  trackBy:trackByIndex;" class="board">
 
         <!-- COLUMN HEAD -->
         <div class="headColumn" [matTooltip]="board.name == 'ToDo' ? 'ToDo is a fixed board title. No Edits.' : ''"
@@ -28,7 +28,7 @@
         <div class="wrapperTickets" id={{board.name}} (drop)="drop($event, board.name)" (dragover)="allowDrop($event)">
 
             <!-- SINGLE TICKET (dynamic) Note: customIdName is set from DB Firestore at subscribe -->
-            <app-task *ngFor="let task of board.tasks; index as i" id={{task.customIdName}} [task]="task"
+            <app-task *ngFor="let task of board.tasks; index as i; trackBy:trackByIndex;" id={{task.customIdName}} [task]="task"
                 draggable="true" (dragstart)="drag($event)">
             </app-task>
 

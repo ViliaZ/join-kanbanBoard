@@ -70,6 +70,10 @@ export class BacklogComponent implements OnInit {
     // }
   }
 
+trackByIndex(index: any) {
+  return index;
+}
+
   // bound in template - gives back boolean for every rendered task
   isFilteredTask(task: any): any {
     console.log('BACKLOG: evaluateSearchRequest');
