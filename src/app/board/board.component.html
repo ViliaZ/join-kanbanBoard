@@ -1,7 +1,7 @@
 <div class="body-board">
 
     <!-- COLUMN  -->
-    <div *ngFor="let board of db.boards; index as i" class="board">
+    <div *ngFor="let board of db.boards; index as i;  trackBy:trackBy;" class="board">
 
         <!-- COLUMN HEAD -->
         <div class="headColumn" [matTooltip]="board.name == 'ToDo' ? 'ToDo is a fixed board title. No Edits.' : ''"
@@ -10,7 +10,6 @@
             <input #boardTitle [disabled]="!board.editable" value={{board.name}}
                 (keyup.enter)="saveBoardTitle(boardTitle.value, board.customIdName, i)"
                 (blur)="board.editable ? setFocusToTitle(i) : boardTitle.blur">
-
 
             <img *ngIf="board.editable" (click)="saveBoardTitle(boardTitle.value, board.customIdName, i)"
                 [class.disabledIcon]="board.name =='ToDo'" class="iconEdit" src="assets/img/save.png"
@@ -24,7 +23,6 @@
                 src="assets/img/delete.png" class="iconEdit" [matTooltip]="board.name !== 'ToDo' ? 'Delete board' : ''"
                 [matTooltipPosition]="'above'">
         </div>
-
 
         <!-- COLUMN BODY WITH TICKETS -->
         <div class="wrapperTickets" id={{board.name}} (drop)="drop($event, board.name)" (dragover)="allowDrop($event)">
@@ -50,6 +48,5 @@
         </div>
     </div>
 </div>
-
 
 <app-alert [currentBoard]="currentBoard"></app-alert>

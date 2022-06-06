@@ -68,6 +68,10 @@ export class BoardComponent implements OnInit {
     }
   }
 
+trackBy(index: any) {
+  return index;
+}
+
   // Board Title Edit
   enterEditMode(i: number) {
     if (this.db.boards[i].name == 'ToDo') {
