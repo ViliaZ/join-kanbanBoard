@@ -9,6 +9,8 @@ import {
   BreakpointObserver,
   BreakpointState
 } from '@angular/cdk/layout';
+import { User } from 'src/models/user';
+
 
 @Component({
   selector: 'app-menu',
@@ -29,6 +31,7 @@ export class MenuComponent implements OnInit {
   public hideMobileMenu: boolean = true;
   public hamburgerMenuOpen: boolean = false;
   public mobile500: boolean = false;
+  public currUser!: User | undefined;
 
   constructor(
     public authService: AuthServiceService,
@@ -41,8 +44,14 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getCurrUser();
     this.startBreakpointObserver();
   }
+
+  getCurrUser() {
+    this.authService.user$.subscribe(user => {
+      this.currUser = user;
+    })}
 
   startBreakpointObserver() {    // https://www.digitalocean.com/community/tutorials/angular-breakpoints-angular-cdk
     this.breakpointObserver
