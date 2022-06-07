@@ -111,9 +111,9 @@
   <div class="user">
     <select [(ngModel)]="formData.responsibility" required name="responsibility">
       <option disabled>Select Responsibility*</option>
-      <option value={{authService.currentUser?.displayName}}>
-        {{authService.currentUser?.displayName}}</option>
-      <option *ngIf="authService.currentUser.displayName == null" value="Guest">User</option>
+      <option value={{currUser?.displayName}}>
+        {{ (currUser?.displayName| titlecase) || 'User'}}</option>
+      <!-- <option *ngIf="authService.currentUser.displayName !== null" value="Guest">User</option> -->
       <option *ngFor="let user of authService.coUsers; index as i">{{user.displayName}}</option>
     </select>
   </div>

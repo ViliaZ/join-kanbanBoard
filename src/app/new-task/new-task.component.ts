@@ -41,7 +41,8 @@ export class NewTaskComponent implements OnInit {
   public activeUrgency: string = '';
   public minDate: any = new Date; // minimum date for datepicker
   public newToDoItem: string = '';  // input field for adding todo Items
-
+  public currUser: any = undefined;
+  
   public formData: any = {
     title: '',
     description: '',
@@ -49,7 +50,7 @@ export class NewTaskComponent implements OnInit {
     urgency: 'medium',
     board: 'backlog',
     category: '',
-    responsibility: 'Guest',
+    responsibility: '',  // currently insert the currentUser via currUser.displayName
     isPinnedToBoard: false,
     createdAt: new Date(),
     customIdName: '',
@@ -58,6 +59,7 @@ export class NewTaskComponent implements OnInit {
     checkedTodos: []
   }
   userUid!: string;
+
 
   constructor(
     public db: DatabaseService,
@@ -74,6 +76,14 @@ export class NewTaskComponent implements OnInit {
     }
     this.setUrgencyDefault();
     this.getCurrentUserUid();
+    this.getCurrentUser();
+  }
+
+  getCurrentUser() {  
+    this.authService.user$.subscribe(user => {
+      this.currUser = user;
+      this.formData.responsibility = this.currUser.displayName;
+    })
   }
 
   async getCurrentUserUid() {
@@ -83,7 +93,6 @@ export class NewTaskComponent implements OnInit {
   setDefaultData() {
     let taskClicked = new Task(this.taskservice.currentTask).getEditmodeTask();
     this.formData = taskClicked;
-    console.log('this is taskClicked', taskClicked);
   }
 
   // Urgency is set per default not via ngModel (only after editing)
@@ -138,9 +147,7 @@ export class NewTaskComponent implements OnInit {
   }
 
   // handle Submit of form
-  async onSubmit() {
-    console.log('onsubmit',this.formData);
-    
+  async onSubmit() {   
     let task = new Task(this.formData).toJson();
     if (!this.taskservice.editMode) {
       this.db.addDocToCollection('tasks', task);

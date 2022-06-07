@@ -48,7 +48,7 @@ export class AuthServiceService {
       if (user) {
         this.userUid$.next(user.uid); // consider refactor, delete UserUid in favor of user$
         await this.updateUser$Data(user.uid); // when refreshig the page, dont loose access 
-        this.currentUser = user;  // create a reference to the current user, so that I can access his data easily again
+        this.currentUser = user;  // create a reference to the current user, so that I can access his data easily again      
       } else {
         this.loginAlert = true;
       }
@@ -64,8 +64,9 @@ export class AuthServiceService {
     return await firstValueFrom(this.firestore.collection('users').doc(user.uid).valueChanges());
   }
 
+
   async createNewUser(email: string, password: string, name: string): Promise<void> {
-    setPersistence(this.auth, browserLocalPersistence)
+    setPersistence(this.auth, browserLocalPersistence)  // read: https://jsmobiledev.com/article/firebase-auth-persistence/
       .then(() => {
         this.fireAuth.createUserWithEmailAndPassword(email, password)
           .then(async (userCredential: any) => {
@@ -87,6 +88,7 @@ export class AuthServiceService {
       isAnonymous: user.isAnonymous,
     }
     this.user = new User(userData);                         // assign it for later use in App
+    this.user$.next(userData); 
     let newSignUpUser = new User(userData).toJson();        // save to database in json-format:
     this.userRef = this.firestore.doc(`users/${user.uid}`)  // create a reference to the current user, so that I can access his data easily again
     this.userRef.set(newSignUpUser, { merge: true });       // If Doc does not exist, create new one. If it exists, then merge it
@@ -163,7 +165,7 @@ export class AuthServiceService {
   ForgotPassword(passwordResetEmailvalue: any) { }
 
 
-  /******* DUMMY DATE FOR GUEST USERS ***************/
+  /******* DUMMY DATA FOR ALL USERS ***************/
   async createStaticToDoBoard() {                                     // create initial ToDo Board --> always static for every user, cannot be deleted
     let currentUserUid = await firstValueFrom(this.userUid$);
     let newToDoBoard = Board.getEmptyBoard('ToDo', currentUserUid); // call a static function inside board.ts
