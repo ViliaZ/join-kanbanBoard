@@ -4,7 +4,6 @@ import { initializeApp } from 'firebase/app';
 import { AuthServiceService } from 'src/services/auth-service.service';
 import { DatabaseService } from 'src/services/database.service';
 
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -12,7 +11,8 @@ import { DatabaseService } from 'src/services/database.service';
 })
 export class DashboardComponent implements OnInit {
 
-  currentDate: any = new Date().getTime();
+  public currUser!: any;
+  public currentDate: any = new Date().getTime();
   public percentage: any = {  // width of bar diagrams
     allTasks: '0%',
     toDoTasks: '0%',
@@ -26,17 +26,21 @@ export class DashboardComponent implements OnInit {
 
   async ngOnInit() {
     await this.db.getBoardAndTaskData();
+    this.getCurrUser();
     this.calcStatistics();
-    setTimeout(() => {
-      this.calcStatistics();
-    }, 1500);
+    setTimeout(() => { this.calcStatistics() }, 1500);
+  }
+
+  getCurrUser(){
+    this.authService.user$.subscribe((result: any) => {
+      this.currUser = result;
+    });
   }
 
    calcStatistics() {
     this.getPercentAllTasks()
     this.getPercentInProgressTasks();
     this.getPercentBacklogTasks();
-    console.log(this.db.allTasks);
   }
 
   getPercentAllTasks() {
@@ -47,15 +51,9 @@ export class DashboardComponent implements OnInit {
 
   getPercentInProgressTasks() {
     let inProgressTasksAmount= (this.db.allTasks.length - this.db.backlogtasks?.length);
-
-    
       let percentInProgress = inProgressTasksAmount * 100 / this.db.allTasks.length;
-      this.percentage.toDoTasks = percentInProgress + '%';  // variable  umbenennen in inprogress in db (ist nicht mehr Todo)
-    console.log(this.db.allTasks.length,inProgressTasksAmount,percentInProgress);
-    
-    
+      this.percentage.toDoTasks = percentInProgress + '%';  // variable  umbenennen in inprogress in db (ist nicht mehr Todo)    
   }
-
 
   getPercentBacklogTasks() {
     if (this.db.backlogtasks?.length > 0) {

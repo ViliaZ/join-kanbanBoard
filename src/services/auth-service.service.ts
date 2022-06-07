@@ -19,6 +19,7 @@ export class AuthServiceService {
   static injector: Injector;                          // access AuthService in Model Class (e.g. Task) --> access this property
   private userRef!: AngularFirestoreDocument<any>;    // will be initialized with change to LoginState
   public user!: User;                                 // is given as User object after login
+  public user$: BehaviorSubject<any> = new BehaviorSubject(null);          // is given as BehaviorSubject after login
   public currentUser: any = {};                       // is the firebase format user given at monitorAuthState() with login
   public userUid$: BehaviorSubject<string> = new BehaviorSubject('noUser');
 
@@ -45,18 +46,18 @@ export class AuthServiceService {
   async monitorAuthState(): Promise<void> {
     await this.fireAuth.onAuthStateChanged(async (user) => {
       if (user) {
-        this.userUid$.next(user.uid);
+        this.userUid$.next(user.uid); // consider refactor, delete UserUid in favor of user$
+        await this.updateUser$Data(user.uid); // when refreshig the page, dont loose access 
         this.currentUser = user;  // create a reference to the current user, so that I can access his data easily again
-        // this.currentUser = await this.getCurrentUser(user);
-        console.log('User is changed state', this.currentUser);
-        if (user.isAnonymous) {
-          console.log('user.isAnonymous:', this.currentUser.displayName)
-        }
       } else {
-        console.log('user is null')
         this.loginAlert = true;
       }
     })
+  }
+
+  async updateUser$Data(userUid: string) {
+    let userDataInFirebase = await firstValueFrom(this.firestore.collection('users').doc(userUid).valueChanges())
+    this.user$.next(userDataInFirebase);  // with refreshing page, dont loose reference to userData
   }
 
   async getCurrentUser(user: any): Promise<any> {
@@ -105,8 +106,10 @@ export class AuthServiceService {
   async loginAsGuest(): Promise<void> {
     await signInAnonymously(this.auth)
       .then(async (userCredential) => {
-        const existingUserUid = await this.userExistsInFirebase(userCredential.user.uid);
-        if (!existingUserUid) {
+        const userAlreadyExists = await this.checkIfUserAlreadyExists(userCredential.user.uid);
+        if (userAlreadyExists) {
+          alert('User logged in before. Please try again');
+        } else {
           await this.saveGuestToDB(userCredential.user);
           await this.createStaticToDoBoard();
           await this.createDummyData();
@@ -119,12 +122,18 @@ export class AuthServiceService {
   }
 
   async saveGuestToDB(user: any) {
+    // data to save for new Guest
     let userData = {
       uid: user.uid,                                        // set the same ID in Database as fireAuth already given this user in fireAuth setup
       isAnonymous: user.isAnonymous,
       displayName: 'Guest'
     }
+
+    // consider refactor / deleting the value "this.user" bc. we have user$
     this.user = new User(userData);                         // KEEP it!  for later use in app (we  need a version without toJson() there!)
+    this.user$.next(userData);          
+    
+    // save new guest data in DB
     let newGuest = new User(userData).toJson();             // save as Json Format to database
     this.userRef = this.firestore.doc(`users/${user.uid}`)  // create a reference to the current user, so that I can access his data easily again
     this.userRef.set(newGuest, { merge: true });            // If Doc does not exist, create new one. If it exists, then merge it
@@ -146,7 +155,7 @@ export class AuthServiceService {
       });
   }
 
-  async userExistsInFirebase(uid: string): Promise<any> {
+  async checkIfUserAlreadyExists(uid: string): Promise<any> {
     return await firstValueFrom(this.firestore.collection('users').doc(uid).valueChanges())
   }
 
