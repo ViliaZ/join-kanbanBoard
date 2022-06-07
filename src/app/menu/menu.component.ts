@@ -32,6 +32,7 @@ export class MenuComponent implements OnInit {
   public hamburgerMenuOpen: boolean = false;
   public mobile500: boolean = false;
   public currUser!: User | undefined;
+  public usernameInitials: string = 'AB';
 
   constructor(
     public authService: AuthServiceService,
@@ -124,6 +125,7 @@ export class MenuComponent implements OnInit {
 
 
   toggleUserSubMenu() {
+    console.log('toggleUserSubMenu');
     this.openSettings = !this.openSettings;
   }
 

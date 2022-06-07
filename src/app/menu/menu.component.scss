@@ -15,14 +15,14 @@
     background: var(--bg);
     z-index: 100;
 
-    @media only screen and (max-width: 800px) and (orientation: portrait){
-        height: 132px; 
+    @media only screen and (max-width: 800px) and (orientation: portrait) {
+        height: 132px;
         padding: 20px;
     }
 
     @media (orientation: landscape) {
         height: 90px;
-     }
+    }
 }
 
 .wrapperMobile {
@@ -45,7 +45,7 @@
     @media (orientation: landscape) {
         justify-content: flex-start;
         padding-top: 114px;
-     }
+    }
 
     &.expand {
         height: 100vh;
@@ -117,13 +117,29 @@ a {
         z-index: 0;
         transition: all 200ms ease-in-out;
     }
-
-    img {
-        width: 32px;
-        height: 32px;
-        z-index: 1;
-    }
 }
+
+// .userImg {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     width: 32px;
+//     height: 32px;
+//     z-index: 1;
+//     border-radius: 100%;
+//     background-color: #f5ec07;
+
+//     .userInitials {
+//         font-size: 18px;
+//         font-weight: bolder;
+//     }
+
+//     // if guestuser
+//     img {
+//         width: 100%;
+//         height: 100%;
+//     }
+// }
 
 .sectionLeft {
     display: flex;
@@ -131,8 +147,8 @@ a {
     gap: 1em;
 
     @media only screen and (max-width: 500px) {
-       flex-direction: column;
-       align-items: flex-start;
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .settingsContainer {
@@ -234,13 +250,12 @@ a {
         padding: 4px 0px;
         padding-right: 16px;
         width: fit-content;
-    white-space: nowrap;
+        white-space: nowrap;
 
-    span{
-        padding-left: 48px;
-        padding-right: 8px;
-    }
-
+        span {
+            padding-left: 48px;
+            padding-right: 8px;
+        }
     }
 
     .plus {
@@ -330,8 +345,7 @@ input[type="search"] {
 
     @media only screen and (max-width: 350px) {
         max-width: 100px;
-     }
-
+    }
 }
 
 input[type="search"]::placeholder {
@@ -434,7 +448,7 @@ input[type="search"]:focus {
             height: 40px;
             padding: 4px 4px;
             text-align: center;
-         }
+        }
 
         &.expandAnimation {
             width: 100%;
@@ -446,12 +460,12 @@ input[type="search"]:focus {
             }
         }
     }
-    
-    div{
+
+    div {
         display: flex;
     }
 
-    .btn-newBoard{
+    .btn-newBoard {
         text-indent: -999px;
         overflow: hidden;
         padding: 0;
@@ -471,7 +485,7 @@ input[type="search"]:focus {
             height: 24px;
             align-self: center;
             background-size: 50%;
-         }
+        }
     }
 
     button[type="button"] {

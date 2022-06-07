@@ -35,6 +35,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { LayoutModule } from '@angular/cdk/layout';
 import { AlertComponent } from './alert/alert.component';
 import { HelpComponent } from './help/help.component';
+import { UserAvatarComponent } from './user-avatar/user-avatar.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { HelpComponent } from './help/help.component';
     ValidatorComponent,
     AlertComponent,
     HelpComponent,
+    UserAvatarComponent,
   ],
   imports: [
     BrowserModule,

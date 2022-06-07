@@ -1,0 +1,13 @@
+<div class="userImg">
+    <img 
+        *ngIf="this.authService.currentUser.isAnonymous == true; else userAvatar"
+        src="assets/img/user.svg"
+        alt="logout">
+
+    <ng-template #userAvatar>
+        <div>
+            <span class="userInitials">{{ usernameFirstLetter | uppercase }}</span>
+        </div> 
+    </ng-template>
+</div>
+

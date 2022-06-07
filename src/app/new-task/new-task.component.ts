@@ -82,7 +82,7 @@ export class NewTaskComponent implements OnInit {
   getCurrentUser() {  
     this.authService.user$.subscribe(user => {
       this.currUser = user;
-      this.formData.responsibility = this.currUser.displayName;
+      this.formData.responsibility = this.currUser?.displayName;
     })
   }
 

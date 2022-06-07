@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <div class="sectionLeft" >
+    <div class="sectionLeft">
 
         <!-- // Plus Button Mobile -->
         <div *ngIf="!mobile500 && !hideMobileMenu && !hamburgerMenuOpen && !router.url.includes('home')"
@@ -8,32 +8,25 @@
             ADD TASK
         </div>
 
-             <!-- MOBILE INPUTFIELD NEW BOARD  -->
-             <div    
-             *ngIf="mobile500 && router.url.includes('board') && !hamburgerMenuOpen" 
-             class="newBoard"
-             [class.concave]="mobile500">
-             <div>
-                 <input 
-                     #newBoardInput                 
-                     [(ngModel)]="newBoardTitle" 
-                     name="newBoardTitle" 
-                     placeholder="NEW BOARD"
-                     (keyup.enter)="handleNewBoardAdding($event)"
-                     type="search"
-                     minlength="2">
-                 <button 
-                     *ngIf="newBoardInput.value !== ''"
-                     class="btn-newBoard"
-                     (click)="handleNewBoardAdding($event)">
-                 </button>
-             </div>
-         </div>
+        <!-- MOBILE INPUTFIELD NEW BOARD  -->
+        <div *ngIf="mobile500 && router.url.includes('board') && !hamburgerMenuOpen" class="newBoard"
+            [class.concave]="mobile500">
+            <div>
+                <input #newBoardInput [(ngModel)]="newBoardTitle" name="newBoardTitle" placeholder="NEW BOARD"
+                    (keyup.enter)="handleNewBoardAdding($event)" type="search" minlength="2">
+                <button *ngIf="newBoardInput.value !== ''" class="btn-newBoard" (click)="handleNewBoardAdding($event)">
+                </button>
+            </div>
+        </div>
 
         <!-- User Image -->
         <div class="user" *ngIf="hideMobileMenu">
-            <img (mouseenter)="openSettings = true" (click)="toggleUserSubMenu()" src="assets/img/user.svg"
-                alt="logout">
+            
+            <app-user-avatar
+              (mouseenter)="openSettings = true" 
+              (click)="toggleUserSubMenu()">
+            </app-user-avatar>
+
 
             <div *ngIf="openSettings" class="settingsContainer" (mouseenter)="openSettings = true"
                 (mouseleave)="openSettings = false">
@@ -52,25 +45,16 @@
             </div>
         </div>
 
-        <a 
-            *ngIf="hideMobileMenu" 
-            routerLink="/home" 
-            routerLinkActive="concave-btn"
+        <a *ngIf="hideMobileMenu" routerLink="/home" routerLinkActive="concave-btn"
             [routerLinkActiveOptions]="{ exact: true }">
             DASHBOARD
         </a>
 
-        <a 
-            *ngIf="hideMobileMenu" 
-            routerLink="/backlog" 
-            routerLinkActive="concave-btn">
+        <a *ngIf="hideMobileMenu" routerLink="/backlog" routerLinkActive="concave-btn">
             BACKLOG
         </a>
 
-        <a 
-            *ngIf="hideMobileMenu" 
-            routerLink="/board" 
-            routerLinkActive="concave-btn">
+        <a *ngIf="hideMobileMenu" routerLink="/board" routerLinkActive="concave-btn">
             BOARDS
         </a>
     </div>
@@ -78,7 +62,8 @@
     <div class="sectionRight">
         <!-- SEARCH AND FILTETR FOR BACKLOG  -->
         <div *ngIf="!db.backlogEmpty() && router.url.includes('backlog') && !hamburgerMenuOpen" class="backlogSettings">
-            <div class="sortBy" [matTooltip]="'Reverse sorting order (by creation time)'" [matTooltipPosition]="'below'">
+            <div class="sortBy" [matTooltip]="'Reverse sorting order (by creation time)'"
+                [matTooltipPosition]="'below'">
                 <img (click)="handleBacklogSorting()" src="assets/img/sort.png" alt="sort icon">
             </div>
 
@@ -92,24 +77,13 @@
         </div>
 
         <!-- INPUTFIELD NEW BOARD  -->
-        <div    
-            [class.concave]="inputfieldExpanded"
-            *ngIf="!mobile500 && router.url.includes('board') && !hamburgerMenuOpen" 
-            class="newBoard">
+        <div [class.concave]="inputfieldExpanded"
+            *ngIf="!mobile500 && router.url.includes('board') && !hamburgerMenuOpen" class="newBoard">
             <div (click)="expandInputfield()" [matTooltip]="'Add new Board'">
-                <input 
-                    #newBoardInput                 
-                    [(ngModel)]="newBoardTitle" 
-                    name="newBoardTitle" 
-                    placeholder="+ NEW BOARD"
-                    [class.expandAnimation]="inputfieldExpanded" 
-                    (blur)="inputfieldExpanded = false" 
-                    type="search"
+                <input #newBoardInput [(ngModel)]="newBoardTitle" name="newBoardTitle" placeholder="+ NEW BOARD"
+                    [class.expandAnimation]="inputfieldExpanded" (blur)="inputfieldExpanded = false" type="search"
                     minlength="2">
-                <button 
-                    *ngIf="newBoardInput.value !== ''"
-                    class="btn-newBoard"
-                    (click)="handleNewBoardAdding($event)">
+                <button *ngIf="newBoardInput.value !== ''" class="btn-newBoard" (click)="handleNewBoardAdding($event)">
                 </button>
             </div>
         </div>
@@ -124,8 +98,8 @@
 
         <!-- // Plus Button Desktop -->
         <div *ngIf="(router.url.includes('backlog') || router.url.includes('board')) && hideMobileMenu"
-            (click)="openNewTaskPopUp()" class="plus-wrapper" 
-            [matTooltip]="'Add New Task'" [matTooltipPosition]="'below'">
+            (click)="openNewTaskPopUp()" class="plus-wrapper" [matTooltip]="'Add New Task'"
+            [matTooltipPosition]="'below'">
             <span class="plus"></span>
         </div>
 
@@ -141,47 +115,31 @@
     </div>
 </div>
 
-   <!-- [class.makeVisible]="inputfieldExpanded" -->
+<!-- [class.makeVisible]="inputfieldExpanded" -->
 <!-- ************** MOBILE VERSION *****************-->
 
 
 <div class="wrapperMobile" *ngIf="!hideMobileMenu" [class.expand]="hamburgerMenuOpen">
-          <!-- // Plus Button Mobile -->
-          <div *ngIf="hamburgerMenuOpen"
-          (click)="openNewTaskPopUp(); hamburgerMenuOpen = false" class="plus-wrapper mobile">
-          <span class="plus mobile500"></span>
-          ADD TASK
-      </div>
-    <a 
-        routerLink="/home" 
-        (click)="hamburgerMenuOpen = false" 
-        routerLinkActive="concave-btn"
+    <!-- // Plus Button Mobile -->
+    <div *ngIf="hamburgerMenuOpen" (click)="openNewTaskPopUp(); hamburgerMenuOpen = false" class="plus-wrapper mobile">
+        <span class="plus mobile500"></span>
+        ADD TASK
+    </div>
+    <a routerLink="/home" (click)="hamburgerMenuOpen = false" routerLinkActive="concave-btn"
         [routerLinkActiveOptions]="{ exact: true }">
         DASHBOARD </a>
-    <a 
-        routerLink="/backlog" 
-        (click)="hamburgerMenuOpen = false" 
-        routerLinkActive="concave-btn">
+    <a routerLink="/backlog" (click)="hamburgerMenuOpen = false" routerLinkActive="concave-btn">
         BACKLOG</a>
-    <a 
-        routerLink="/board" 
-        (click)="hamburgerMenuOpen = false" 
-        routerLinkActive="concave-btn">
+    <a routerLink="/board" (click)="hamburgerMenuOpen = false" routerLinkActive="concave-btn">
         BOARDS</a>
-    <a 
-        routerLink="/imprint" 
-        (click)="hamburgerMenuOpen = false">
+    <a routerLink="/imprint" (click)="hamburgerMenuOpen = false">
         IMPRINT</a>
-    <a 
-        class="logout" 
-        (click)="authService.logout()">
-        <img src="assets/img/logout.svg" >
+    <a class="logout" (click)="authService.logout()">
+        <img src="assets/img/logout.svg">
         LOGOUT
     </a>
-    <a
-        class="help"
-        (click)="toggleHelpSection()">
+    <a class="help" (click)="toggleHelpSection()">
         <img src="assets/img/info.svg">
         HELP
-</a>
+    </a>
 </div>
