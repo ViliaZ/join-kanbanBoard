@@ -6,14 +6,14 @@ import { DatabaseService } from './database.service';
 })
 export class AlertService {
 
-  alertStatusON: boolean = false; // toggles alerts open, for setTimeout() 
+  alertStatusON: boolean = true; // toggles alerts open, for setTimeout() 
   indexOfBoardToDelete!: number;
 
   alerts: any = {  
     "backlogAlert": false,  // 
     "editsProhibited": false, // no Edits on Todo board
     "duplicateAlert": false,
-    "confirmDeleteBoard": false,
+    "confirmDeleteBoard": true,
     "confirmEditTask": false,
     "confirmAddTask": false,
     "confirmDeleteTask": false,

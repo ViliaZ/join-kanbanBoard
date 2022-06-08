@@ -1,6 +1,8 @@
 //********** ALERTS **************
 :host{
     position: absolute;
+    width: fit-content;
+    max-width: 85vw;
     left: 50%;
     bottom: 5vh;
     transform: translate(-50%);
@@ -13,8 +15,7 @@
     align-items: center;
     justify-content: center;
     background-color: white;
-    width: fit-content;
-    height: 52px;
+    min-height: 52px;
     border-radius: 12px;
     padding: 4px 16px;
     transition: 250ms all ease-in-out;
@@ -41,12 +42,49 @@ p{
     align-items: center;
     justify-content: flex-start;
     background-color: white;
-    width: max-content;
     border-radius: 12px;
     padding: 0px 0px 0px 16px;
     transition: 250ms all ease-in-out;
 
+    @media only screen and (max-width: 550px) {
+        flex-direction: column;
+        justify-content: center;
+        padding: 12px 12px 12px 12px;
+
+        .buttons{
+            width: 100%;
+            margin-left: 0px!important;
+            margin-top: 6px;
+        }
+
+        button{
+            height: 22px!important;
+            margin: 0px;
+            padding: 8px 10px !important;
+        }
+
+        #btn-confirm{
+            border-bottom-left-radius: 8px;
+            border-top-left-radius: 8px;    
+        }
+
+        img{
+            margin-right: 0px!important;
+        }
+    }
+
+    .buttons{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+        margin-left: 24px;
+    }
+
     button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border: unset;
         background-color: white;
         font-weight: var(--font-xbold);
@@ -56,7 +94,6 @@ p{
     }
 
     #btn-confirm {
-        margin-left: 24px;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;   
         &:hover {
             color: var(--accent1);

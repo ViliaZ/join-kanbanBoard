@@ -40,8 +40,10 @@
     <div *ngIf="alertService.alertStatusON && alertService.alerts.confirmDeleteBoard" class="alertDelete">
         <img src="assets/img/alertDelete.svg">
         <p>Please confirm deletion. This will include all board tasks.</p>
-        <button (click)="onConfirmDeleteBoard()" id="btn-confirm">Confirm</button>
-        <button (click)="onCancelDeleteBoard()" id="btn-cancel">Cancel</button>
+        <div class="buttons">
+            <button (click)="onConfirmDeleteBoard()" id="btn-confirm">Confirm</button>
+            <button (click)="onCancelDeleteBoard()" id="btn-cancel">Cancel</button>
+        </div>
     </div>
 
 </div>
