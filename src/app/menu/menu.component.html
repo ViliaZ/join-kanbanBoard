@@ -13,7 +13,7 @@
             [class.concave]="mobile500">
             <div>
                 <input #newBoardInput [(ngModel)]="newBoardTitle" name="newBoardTitle" placeholder="ADD BOARD"
-                    (keyup.enter)="handleNewBoardAdding($event)" type="search" minlength="2">
+                (keyup.enter)="handleNewBoardAdding($event)" type="search" minlength="2">
                 <button *ngIf="newBoardInput.value !== ''" class="btn-newBoard" (click)="handleNewBoardAdding($event)">
                 </button>
             </div>
@@ -80,7 +80,7 @@
             <div (click)="expandInputfield()" [matTooltip]="'Add new Board'">
                 <input #newBoardInput [(ngModel)]="newBoardTitle" name="newBoardTitle" placeholder="+ ADD BOARD"
                     [class.expandAnimation]="inputfieldExpanded" (blur)="inputfieldExpanded = false" type="search"
-                    minlength="2" autocomplete="disabled">
+                    minlength="2" autocomplete="disabled" (keyup.enter)="handleNewBoardAdding($event)">
                 <button *ngIf="newBoardInput.value !== ''" class="btn-newBoard" (click)="handleNewBoardAdding($event)">
                 </button>
             </div>
