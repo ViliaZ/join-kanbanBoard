@@ -136,13 +136,8 @@ mat-option {
   }
 }
 
-// selector background
-.mat-form-field-appearance-fill .mat-form-field-flex {
-  // background-color: rgb(255, 255, 255);
-}
 
 .mat-form-field-infix {
-  // padding: 0 0 !important;
   border-top: 0 solid transparent !important;
 }
 
@@ -152,7 +147,6 @@ mat-option {
 }
 
 // urgency
-
 .mat-button-toggle {
   background-color: white;
 
@@ -166,20 +160,8 @@ mat-option {
   }
 }
 
-.not-empty-select.mat-selected {
-  color: green !important;
-}
-
-.not-empty-select.mat-selected {
-  color: rgb(0, 70, 128) !important;
-}
-
 .mat-calendar {
   background-color: var(--primary-dark) !important;
-}
-
-.mat-button-wrapper > * {
-  color: white !important;
 }
 
 .mat-select-panel .mat-optgroup-label,

@@ -12,7 +12,7 @@
         <div *ngIf="mobile500 && router.url.includes('board') && !hamburgerMenuOpen" class="newBoard"
             [class.concave]="mobile500">
             <div>
-                <input #newBoardInput [(ngModel)]="newBoardTitle" name="newBoardTitle" placeholder="NEW BOARD"
+                <input #newBoardInput [(ngModel)]="newBoardTitle" name="newBoardTitle" placeholder="ADD BOARD"
                     (keyup.enter)="handleNewBoardAdding($event)" type="search" minlength="2">
                 <button *ngIf="newBoardInput.value !== ''" class="btn-newBoard" (click)="handleNewBoardAdding($event)">
                 </button>
@@ -21,10 +21,8 @@
 
         <!-- User Image -->
         <div class="user" *ngIf="hideMobileMenu">
-            
-            <app-user-avatar
-              (mouseenter)="openSettings = true" 
-              (click)="toggleUserSubMenu()">
+
+            <app-user-avatar (mouseenter)="openSettings = true" (click)="toggleUserSubMenu()">
             </app-user-avatar>
 
 
@@ -80,9 +78,9 @@
         <div [class.concave]="inputfieldExpanded"
             *ngIf="!mobile500 && router.url.includes('board') && !hamburgerMenuOpen" class="newBoard">
             <div (click)="expandInputfield()" [matTooltip]="'Add new Board'">
-                <input #newBoardInput [(ngModel)]="newBoardTitle" name="newBoardTitle" placeholder="+ NEW BOARD"
+                <input #newBoardInput [(ngModel)]="newBoardTitle" name="newBoardTitle" placeholder="+ ADD BOARD"
                     [class.expandAnimation]="inputfieldExpanded" (blur)="inputfieldExpanded = false" type="search"
-                    minlength="2">
+                    minlength="2" autocomplete="disabled">
                 <button *ngIf="newBoardInput.value !== ''" class="btn-newBoard" (click)="handleNewBoardAdding($event)">
                 </button>
             </div>
