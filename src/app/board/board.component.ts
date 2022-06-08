@@ -38,7 +38,7 @@ export class BoardComponent implements OnInit {
   editMode: boolean = false; // title edits
   newBoardTitle: any = ''; // from inputfield ngModel (to ADD a new Board)
   currentBoard: any = {}; // board to delete
-
+  public draggingInProgress: boolean = false;
   // Info: Tooltip possible Positions
   positionOptions: TooltipPosition[] = [
     'after',
@@ -197,18 +197,20 @@ export class BoardComponent implements OnInit {
   }
 
   drag(ev: any) {
+    console.log(ev);
     this.dragdropService.drag(ev);
-  }
+    if (this.draggingInProgress == false){
+    this.draggingInProgress = true;
+  } }
+  // else{this.draggingInProgress = false;}
 
   drop(ev: any, targetboard: string) {
-
-    if (!this.droppingIsAllowed(ev)) {
-      console.log('dropping is not allowed');
-      return;
-    } else {
-      console.log('dropping', ev);
+    if (this.droppingIsAllowed(ev) == true){
       this.dragdropService.drop(ev, targetboard);
     }
+    if (this.draggingInProgress == true){
+      this.draggingInProgress = false;
+    } 
   }
 
   droppingIsAllowed(ev: any) {
@@ -217,6 +219,8 @@ export class BoardComponent implements OnInit {
     } else {
       return true;
     }
-}    
+}   
+
+
 }
 

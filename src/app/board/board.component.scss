@@ -91,7 +91,7 @@
         justify-content: space-between;
         align-items: center;
         max-width: 100%;
-        padding: 8px 0px 18px 0px;
+        padding: 8px 0px 0px 0px;
         transition: all 300ms ease-in-out;
 
         input {
@@ -130,6 +130,7 @@
 .wrapperTickets {
     display: flex;
     flex-direction: column;
+    padding-top: 24px;
     width: 100%;
     height: 100%;
     gap: 24px;
@@ -195,6 +196,17 @@
     font-size: 12px;
     padding: 4px;
 }
+
+//********** DRAG AREA HIGHLIGHTED TiCKET **************
+
+.dragAreaHighlighted{
+    background-color:rgba(255, 255, 255, 0.299);
+    width: 100%; 
+    height: 100%;
+    border-radius: 12px 12px 12px 12px;
+    box-shadow: rgb(0 0 0 / 4%) 1px 1px 6px;
+}
+
 
 //********** PLACEHOLDER TiCKET **************
 

@@ -28,12 +28,12 @@
         <div class="wrapperTickets" id={{board.name}} (drop)="drop($event, board.name)" (dragover)="allowDrop($event)">
 
             <!-- SINGLE TICKET (dynamic) Note: customIdName is set from DB Firestore at subscribe -->
-            <app-task *ngFor="let task of board.tasks; index as i; trackBy:trackByIndex;" id={{task.customIdName}} [task]="task"
+            <app-task *ngFor="let task of board.tasks; index as i;" id={{task.customIdName}} [task]="task"
                 draggable="true" (dragstart)="drag($event)" class="noDrop">
             </app-task>
 
             <!-- EMPTY TASK plaecholder (static) -->
-            <div class="ticketWrapPlaceholder noDrop" (click)="openTaskPopUp(board.name)" [matTooltip]="'Create New Task'"
+            <div *ngIf="!draggingInProgress" class="ticketWrapPlaceholder noDrop" (click)="openTaskPopUp(board.name)" [matTooltip]="'Create New Task'"
                 [matTooltipPosition]="'below'" >
                 <div class="singleTicket plaecholderTicket noDrop">
                     <div class="rowTwo noDrop">
@@ -45,6 +45,10 @@
                     </div>
                 </div>
             </div>
+
+            <!-- DRAG AREA -->
+            <div *ngIf="draggingInProgress" class="dragAreaHighlighted"></div>
+
         </div>
     </div>
 </div>
