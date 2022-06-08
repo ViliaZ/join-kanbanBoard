@@ -8,6 +8,11 @@
     margin: auto;
 }
 
+app-user-avatar {
+    width: 26px !important;
+    height: 26px !important;
+}
+
 .body-backlog {
     overflow: auto;
     margin-top: 3em;
@@ -126,7 +131,9 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        font-size: 16px;
+        text-align: center;
+        font-size: 14px;
+        margin-right: 0px !important;
     }
 
     .title {
@@ -146,27 +153,26 @@
     flex-direction: column;
     justify-content: space-between;
 
-   &.mobile{
+    &.mobile {
         position: absolute;
-        bottom: 12px; 
+        bottom: 12px;
         right: 12px;
         flex-direction: row;
         gap: 1.5em;
         height: 32px;
 
-        img{
+        img {
             width: 16px;
             height: 16px;
-            display: block;   
+            display: block;
             opacity: 0.5;
         }
-        
-        button{
+
+        button {
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 44px!important;
-
+            width: 44px !important;
         }
     }
 
@@ -187,19 +193,8 @@
 
 .user {
     @media only screen and (max-width: 700px) {
-       position: absolute;
-       bottom: 6px; 
-       left: 12px;
-    }
-
-    img {
-        border-radius: 8px;
-        width: 45px;
-        height: 45px;
-
-        @media only screen and (max-width: 700px) {
-            width: 32px;
-            height: 32px;
-         }
+        position: absolute;
+        bottom: 6px;
+        left: 12px;
     }
 }

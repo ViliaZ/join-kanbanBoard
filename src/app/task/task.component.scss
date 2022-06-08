@@ -85,13 +85,13 @@
     .urgent{
         background-color:rgba(233, 0, 183, 0.393);
     }
-
-    img {
-        width: 22px;
-        height: 22px;
-    }
 }
 
+app-user-avatar {
+    width: 22px!important;
+    height: 22px!important;
+    font-size: 0.8em!important;
+}
 
 
 // Progressbar
