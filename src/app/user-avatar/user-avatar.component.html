@@ -1,7 +1,7 @@
 <div class="userImg">
     <img 
         *ngIf="this.authService.currentUser.isAnonymous == true; else userAvatar"
-        src="assets/img/user.svg"
+        src="assets/img/user-guest.png"
         alt="logout">
 
     <ng-template #userAvatar>
