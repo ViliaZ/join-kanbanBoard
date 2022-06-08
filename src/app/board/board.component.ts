@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { Board } from 'src/models/board';
 import { AuthServiceService } from 'src/services/auth-service.service';
 import { DatabaseService } from 'src/services/database.service';
@@ -12,34 +22,41 @@ import { DragdropService } from 'src/services/dragdrop.service';
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss'
-  ]
+  styleUrls: ['./board.component.scss'],
 })
-
 export class BoardComponent implements OnInit {
+  @ViewChildren('boardTitle') boardTitles!: QueryList<any>;
 
-  @ViewChildren('boardTitle') boardTitles!: QueryList<any>
+  setFocusToTitle: CallableFunction = (currentTitle: number) => {
+    // focus current title
+    let allTitles = this.boardTitles.toArray(); // toArray() is specific method for Querylists (e.g. with Viewchildren)
+    setTimeout(() => {
+      allTitles[currentTitle].nativeElement.focus();
+    }, 200);
+  };
 
-  setFocusToTitle: CallableFunction = (currentTitle: number) => { // focus current title
-    let allTitles = this.boardTitles.toArray();  // toArray() is specific method for Querylists (e.g. with Viewchildren)
-    setTimeout(() => { allTitles[currentTitle].nativeElement.focus() }, 200)
-  }
-
-  editMode: boolean = false;  // title edits
-  newBoardTitle: any = '';  // from inputfield ngModel (to ADD a new Board)
+  editMode: boolean = false; // title edits
+  newBoardTitle: any = ''; // from inputfield ngModel (to ADD a new Board)
   currentBoard: any = {}; // board to delete
 
   // Info: Tooltip possible Positions
-  positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
+  positionOptions: TooltipPosition[] = [
+    'after',
+    'before',
+    'above',
+    'below',
+    'left',
+    'right',
+  ];
 
   constructor(
     public db: DatabaseService,
     public taskservice: TasksService,
     private authService: AuthServiceService,
-    private eventEmitterService: EventemitterService, 
-    public alertService: AlertService, 
-    public dragdropService: DragdropService) {
-  }
+    private eventEmitterService: EventemitterService,
+    public alertService: AlertService,
+    public dragdropService: DragdropService
+  ) {}
 
   ngOnInit(): void {
     // this.db.getBoardAndTaskData();
@@ -49,10 +66,12 @@ export class BoardComponent implements OnInit {
   // get updates if user filled inputfield for new board title (in menu comp) via EventemitterService
   listenToEventEmitter() {
     if (this.eventEmitterService.subscription == undefined) {
-      this.eventEmitterService.subscription = this.eventEmitterService.
-        callBoardEventHandler.subscribe((data: string) => {
-          this.addNewBoard(data);
-        });
+      this.eventEmitterService.subscription =
+        this.eventEmitterService.callBoardEventHandler.subscribe(
+          (data: string) => {
+            this.addNewBoard(data);
+          }
+        );
     }
   }
 
@@ -60,7 +79,10 @@ export class BoardComponent implements OnInit {
   async addNewBoard(newBoardName: string) {
     let duplicate = await this.checkDuplicates(newBoardName);
     if (newBoardName.length > 0 && !duplicate) {
-      let newBoard = Board.getEmptyBoard(newBoardName, this.authService.currentUser.uid);  // call a static function inside of model board
+      let newBoard = Board.getEmptyBoard(
+        newBoardName,
+        this.authService.currentUser.uid
+      ); // call a static function inside of model board
       this.db.addDocToCollection('boards', newBoard);
     } else {
       this.newBoardTitle = '';
@@ -69,43 +91,43 @@ export class BoardComponent implements OnInit {
   }
 
   trackByIndex(index: any) {
-  return index;
-}
+    return index;
+  }
 
   // Board Title Edit
   enterEditMode(i: number) {
     if (this.db.boards[i].name == 'ToDo') {
       this.alertService.setAlert('editsProhibited');
-      return
+      return;
     }
-    this.db.boards[i].editable = true;  // set LOCALLY in db.service (not in firestore) --> otherwise data would be newly rendered
+    this.db.boards[i].editable = true; // set LOCALLY in db.service (not in firestore) --> otherwise data would be newly rendered
     this.setFocusToTitle(i);
   }
 
-  // disable Inputfield Board Title 
+  // disable Inputfield Board Title
   exitEditMode(i: number) {
     this.db.boards[i].editable = false;
   }
 
   async saveBoardTitle(inputData: any, boardIDinFirestore: any, i: number) {
-    if (inputData.length === 0) { // handle empty input  
+    if (inputData.length === 0) {
+      // handle empty input
       this.alertService.setAlert('duplicateAlert');
       this.setFocusToTitle(i);
-      return
-    }
-    else if (inputData === 'backlog' || inputData === 'Backlog') {
+      return;
+    } else if (inputData === 'backlog' || inputData === 'Backlog') {
       this.alertService.setAlert('backlogAlert');
       this.setFocusToTitle(i);
-      return
-    }
-    else if (this.db.boards[i].name == inputData) {  // if no changes are made
-      this.db.boards[i].editable = false;  // only local change in db.service (no new render from db firestore)
-      return
-    }
-    else if (await this.checkDuplicates(inputData) == true) { // handle duplicates found
+      return;
+    } else if (this.db.boards[i].name == inputData) {
+      // if no changes are made
+      this.db.boards[i].editable = false; // only local change in db.service (no new render from db firestore)
+      return;
+    } else if ((await this.checkDuplicates(inputData)) == true) {
+      // handle duplicates found
       this.alertService.setAlert('duplicateAlert');
       this.setFocusToTitle(i);
-      return
+      return;
     }
     // handle success case --> no duplicates, no backlog, inputdata.length > 0
     else {
@@ -116,15 +138,16 @@ export class BoardComponent implements OnInit {
 
   // Check for Title DUPLICATES --> boolean
   async checkDuplicates(inputTitle: string) {
-    // this.alertService.alerts.duplicateAlert = false;    
-    let foundDouplicate = await this.db.boards.some((board: any) => board.name == inputTitle)
+    // this.alertService.alerts.duplicateAlert = false;
+    let foundDouplicate = await this.db.boards.some(
+      (board: any) => board.name == inputTitle
+    );
     if (foundDouplicate) {
-      console.log('duplicates found')
-      return true
-    }
-    else {
-      console.log('no duplicates found')
-      return false
+      console.log('duplicates found');
+      return true;
+    } else {
+      console.log('no duplicates found');
+      return false;
     }
   }
 
@@ -133,8 +156,8 @@ export class BoardComponent implements OnInit {
     let tasksOnBoard: [] = this.db.boards[i].tasks;
     if (tasksOnBoard.length > 0) {
       tasksOnBoard.map((task: any) => {
-        this.db.updateDoc('tasks', task.customIdName, { board: newBoardTitle })
-      })
+        this.db.updateDoc('tasks', task.customIdName, { board: newBoardTitle });
+      });
     }
   }
 
@@ -143,12 +166,12 @@ export class BoardComponent implements OnInit {
     this.currentBoard = this.db.boards[i];
     if (this.currentBoard.name == 'ToDo') {
       this.alertService.setAlert('editsProhibited');
-      return
+      return;
     } else {
       this.alertService.indexOfBoardToDelete = i;
       this.alertService.setAlert('confirmDeleteBoard');
+    }
   }
-}
 
   // Click on existing Task to edit
   editTask(task: any) {
@@ -163,7 +186,8 @@ export class BoardComponent implements OnInit {
     this.taskservice.detailsRequested = false;
   }
 
-  openTaskPopUp(currentBoardName: string) {  // not implemented yet to prefill with currentBoardname
+  openTaskPopUp(currentBoardName: string) {
+    // not implemented yet to prefill with currentBoardname
     this.taskservice.taskPopupOpen = true;
   }
 
@@ -177,6 +201,22 @@ export class BoardComponent implements OnInit {
   }
 
   drop(ev: any, targetboard: string) {
-    this.dragdropService.drop(ev, targetboard);
+
+    if (!this.droppingIsAllowed(ev)) {
+      console.log('dropping is not allowed');
+      return;
+    } else {
+      console.log('dropping', ev);
+      this.dragdropService.drop(ev, targetboard);
+    }
   }
+
+  droppingIsAllowed(ev: any) {
+    if(ev.target.classList.contains('noDrop')) {
+      return false;
+    } else {
+      return true;
+    }
+}    
 }
+

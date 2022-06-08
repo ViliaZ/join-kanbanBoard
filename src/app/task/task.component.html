@@ -1,20 +1,20 @@
 
-<div (click)="editTask(task, $event)" class="ticketWrap">
+<div (click)="editTask(task, $event)" class="ticketWrap noDrop">
 
-    <div class="singleTicket">
+    <div class="singleTicket noDrop">
 
-        <div class="first-row">
+        <div class="first-row noDrop">
             <div 
-                class="dueTo"
+                class="dueTo noDrop"
                 [matTooltip]="'Due Date'"
                 [matTooltipPosition]="'above'">
                 <!-- <img src="assets/img/bell.png" alt="due to"> -->
                 {{ task.dueTo | date: 'mediumDate' }}
             </div>
-            <div class="title">{{ task.title}}</div>
+            <div class="title noDrop">{{ task.title}}</div>
 
             <img 
-                class="icon-delete" 
+                class="icon-delete noDrop" 
                 src="assets/img/delete.png" 
                 (click)="deleteTask(task, $event)"
                 [matTooltip]="'Delete task'"
@@ -22,7 +22,7 @@
 
             <!-- PIN ICON -->
             <img 
-                class="icon-pin" 
+                class="icon-pin noDrop" 
                 src="assets/img/pin-filled.png" 
                 (click)="fixTaskToTop(task, $event)"
                 [class.pinRotation]="task.isPinnedToBoard"
@@ -32,34 +32,34 @@
 
             <img 
                 *ngIf="task.isPinnedToBoard" 
-                class="icon-pin-fixed" 
+                class="icon-pin-fixed noDrop" 
                 src="assets/img/pin-filled.png"
                 [class.pinRotation]="task.isPinnedToBoard"
                 [matTooltip]="'Remove fixation'"
                 [matTooltipPosition]="'above'">
         </div>
 
-        <div class="secondRow">
+        <div class="secondRow noDrop">
             <div 
-                class="urgency {{task.urgency}}"
+                class="urgency {{task.urgency}} noDrop"
                 [matTooltip]="'Urgency'"
                 [matTooltipPosition]="'right'">
                 {{ task.urgency }}
             </div>
-           <app-user-avatar></app-user-avatar>
+           <app-user-avatar class="noDrop"></app-user-avatar>
 
         </div>
 
-        <div class="thirdRow" >
-            <div class="progress" *ngIf="task.checkedTodos.length > 0 || task.uncheckedTodos.length > 0; else emptyChecklist">
-                <div class="barWrapper concave">
-                    <div class="progressBar" [ngStyle]="{'width': task.percentCheckedTodos+'%'}"></div>
+        <div class="thirdRow noDrop" >
+            <div class="progress noDrop" *ngIf="task.checkedTodos.length > 0 || task.uncheckedTodos.length > 0; else emptyChecklist">
+                <div class="barWrapper concave noDrop">
+                    <div class="progressBar noDrop" [ngStyle]="{'width': task.percentCheckedTodos+'%'}"></div>
                 </div>                
-                <div class="todos"> {{ task.checkedTodos.length }} / {{ task.allTodos }} done</div>
+                <div class="todos noDrop"> {{ task.checkedTodos.length }} / {{ task.allTodos }} done</div>
             </div>
 
             <ng-template #emptyChecklist>
-                <div>No Checklist items</div>
+                <div class="noDrop">No Checklist items</div>
             </ng-template>
         </div>
 
@@ -67,7 +67,7 @@
 
 
     <!-- category -->
-    <div class="category">
+    <div class="category noDrop">
         {{ task.category | titlecase }}
     </div>
 </div>

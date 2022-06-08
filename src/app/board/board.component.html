@@ -29,19 +29,19 @@
 
             <!-- SINGLE TICKET (dynamic) Note: customIdName is set from DB Firestore at subscribe -->
             <app-task *ngFor="let task of board.tasks; index as i; trackBy:trackByIndex;" id={{task.customIdName}} [task]="task"
-                draggable="true" (dragstart)="drag($event)">
+                draggable="true" (dragstart)="drag($event)" class="noDrop">
             </app-task>
 
             <!-- EMPTY TASK plaecholder (static) -->
-            <div class="ticketWrapPlaceholder" (click)="openTaskPopUp(board.name)" [matTooltip]="'Create New Task'"
-                [matTooltipPosition]="'below'">
-                <div class="singleTicket plaecholderTicket">
-                    <div class="rowTwo">
+            <div class="ticketWrapPlaceholder noDrop" (click)="openTaskPopUp(board.name)" [matTooltip]="'Create New Task'"
+                [matTooltipPosition]="'below'" >
+                <div class="singleTicket plaecholderTicket noDrop">
+                    <div class="rowTwo noDrop">
                         <div>
-                            <div class="title">New Task</div>
-                            <div class="urgency"></div>
+                            <div class="title noDrop">New Task</div>
+                            <div class="urgency noDrop"></div>
                         </div>
-                        <div class="plusContainer">+</div>
+                        <div class="plusContainer noDrop">+</div>
                     </div>
                 </div>
             </div>
