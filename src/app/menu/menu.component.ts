@@ -26,7 +26,6 @@ export class MenuComponent implements OnInit {
   public activeNavItem: string = 'home';
   public openSettings: boolean = false;
   public searchInput: string = '';  // search input for backlog in menu component 
-  // private currentRoute: string;
   private event$: any;  // events of routing
   public hideMobileMenu: boolean = true;
   public hamburgerMenuOpen: boolean = false;
@@ -134,7 +133,7 @@ export class MenuComponent implements OnInit {
   }
 
   toggleHelpSection(){
-    this.taskservice.openHelp == false ? this.taskservice.openHelp = true : this.taskservice.openHelp = false;   
+    this.taskservice.openHelp = !this.taskservice.openHelp;
     setTimeout(() => {
       this.hamburgerMenuOpen = false;
     }, 500);

@@ -28,7 +28,6 @@ export class BoardComponent implements OnInit {
   @ViewChildren('boardTitle') boardTitles!: QueryList<any>;
 
   setFocusToTitle: CallableFunction = (currentTitle: number) => {
-    // focus current title
     let allTitles = this.boardTitles.toArray(); // toArray() is specific method for Querylists (e.g. with Viewchildren)
     setTimeout(() => {
       allTitles[currentTitle].nativeElement.focus();
@@ -39,7 +38,6 @@ export class BoardComponent implements OnInit {
   newBoardTitle: any = ''; // from inputfield ngModel (to ADD a new Board)
   currentBoard: any = {}; // board to delete
   public draggingInProgress: boolean = false;
-  // Info: Tooltip possible Positions
   positionOptions: TooltipPosition[] = [
     'after',
     'before',
@@ -59,7 +57,6 @@ export class BoardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.db.getBoardAndTaskData();
     this.listenToEventEmitter();
   }
 
@@ -82,7 +79,7 @@ export class BoardComponent implements OnInit {
       let newBoard = Board.getEmptyBoard(
         newBoardName,
         this.authService.currentUser.uid
-      ); // call a static function inside of model board
+      ); 
       this.db.addDocToCollection('boards', newBoard);
     } else {
       this.newBoardTitle = '';
@@ -138,15 +135,12 @@ export class BoardComponent implements OnInit {
 
   // Check for Title DUPLICATES --> boolean
   async checkDuplicates(inputTitle: string) {
-    // this.alertService.alerts.duplicateAlert = false;
     let foundDouplicate = await this.db.boards.some(
       (board: any) => board.name == inputTitle
     );
     if (foundDouplicate) {
-      console.log('duplicates found');
       return true;
     } else {
-      console.log('no duplicates found');
       return false;
     }
   }
@@ -202,7 +196,7 @@ export class BoardComponent implements OnInit {
     if (this.draggingInProgress == false){
     this.draggingInProgress = true;
   } }
-  // else{this.draggingInProgress = false;}
+
 
   drop(ev: any, targetboard: string) {
     if (this.droppingIsAllowed(ev) == true){
