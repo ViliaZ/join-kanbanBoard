@@ -100,22 +100,6 @@
         "responsibility": "Guest"
       }, 
       {
-        "board": "ToDo",
-        "title": "Plan Team-Event",
-        "description": "Annual Meeting in September.",
-        "percentUncheckedTodos": 75,
-        "percentCheckedTodos": 25,
-        "uncheckedTodos": ["Find date", "Schedule Zoom-Call", "Transportation"],
-        "checkedTodos": ["Organize Location"],
-        "allTodos": "4",
-        "category": "Other",
-        "urgency": "low",
-        "dueTo": 0,
-        "createdAt": "",
-        "isPinnedToBoard": false,
-        "responsibility": "Guest"
-      }, 
-      {
         "board": "Await Feedback",
         "title": "Hire Software Developer",
         "description": "",
