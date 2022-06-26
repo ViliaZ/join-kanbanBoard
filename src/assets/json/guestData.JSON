@@ -116,9 +116,9 @@
         "responsibility": "Guest"
       },
       {
-        "board": "Short-term",
-        "title": "Bugfix: Mobile View",
-        "description": "Check media queries <1000px",
+        "board": "ToDo",
+        "title": "Integrate User Feedback",
+        "description": "Check bug reports and user feedback",
         "allTodos": "2",
         "percentUncheckedTodos": 50,
         "percentCheckedTodos": 50,

@@ -1,0 +1,31 @@
+:root {
+    --bg: linear-gradient(45deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
+    --bg-light: linear-gradient(45deg, hsla(240, 100%, 98%, 1) 0%, hsla(222, 41%, 92%, 1) 100%);
+    --gradientColors: linear-gradient(
+      73deg,
+      #f5ec07 10%,
+      rgba(226, 167, 85, 1) 48%,
+      #f55672 100%,
+      rgba(99, 227, 209, 1) 100%,
+      rgba(233, 62, 199, 1) 100%
+    );
+  
+    --primary-light: rgb(255, 255, 255);
+    --primary-dark: rgba(28, 16, 48, 0.694);
+    --secondary: #27344b;
+    --accent1: #e902b3;
+    --urgency-low: #f37fd7;
+    --urgency-normal: #f34ccc;
+    --urgency-urgent: #e902b3;
+  
+    --hover: rgba(140, 120, 173, 0.956);
+    --font-bold: 400;
+    --font-xbold: 600;
+    --font-light: 200;
+    --font-small: 12px;
+    --font-normal: clamp(0.95rem, 0.17vw + 0.76rem, 0.89rem);
+    --paddingPage: 120px;
+    --paddingPageTopBottom: 44px;
+    --maxwidth: 1280px;
+    --maxwidthMenu: 1460px;
+}
