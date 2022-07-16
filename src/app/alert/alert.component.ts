@@ -12,8 +12,7 @@ export class AlertComponent implements OnInit {
   @Input() currentBoard!: any;
 
   constructor( 
-    public alertService: AlertService,
-    private db: DatabaseService ) {
+    public alertService: AlertService) {
    }
 
   ngOnInit(): void {

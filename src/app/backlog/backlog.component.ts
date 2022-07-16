@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from 'src/services/database.service';
 import { EventemitterService } from 'src/services/eventemitter.service';
 import { TasksService } from 'src/services/tasks.service';
@@ -55,48 +55,44 @@ export class BacklogComponent implements OnInit {
   }
 
   listenToEventEmitterSearching() {
-    // search Input for find tasks in backlog
-    console.log('BACKLOG: listenToEventEmitterSearching');
-    // if (this.eventEmitterService.subscription == undefined) {
     this.eventEmitterService.subscription =
       this.eventEmitterService.callBacklogFilterEventHandler.subscribe(
         (data: string) => {
           this.searchInput = data;
         }
       );
-    // }
   }
 
   trackByIndex(index: any) {
     return index;
   }
 
-  // bound in template - gives back boolean for every rendered task
-  isFilteredTask(task: any): any {
+  // bound in template - returns boolean for every rendered task
+  isFilteredTask(task: any): Boolean {
     console.log('BACKLOG: evaluateSearchRequest');
     let taskToString = JSON.stringify(task).toLowerCase();
-    let searchItemFound = taskToString.includes(this.searchInput.toLowerCase());
-    return searchItemFound; // boolean
+    let searchItemIsFound = taskToString.includes(this.searchInput.toLowerCase());
+    return searchItemIsFound; 
   }
 
-  moveToBoardToDo(idInFirestore: string) {
+  moveToBoardToDo(idInFirestore: string): void {
     this.db.updateDoc('tasks', idInFirestore, { board: 'ToDo' });
     this.alertService.setAlert('confirmMoveToToDo');
   }
 
-  editTask(task: any) {
+  editTask(task: any): void {
     this.taskservice.currentTask = task as Task;
     this.taskservice.taskPopupOpen = true;
     this.taskservice.editMode = true;
   }
 
-  deleteTask(idInFirestore: string) {
+  deleteTask(idInFirestore: string): void {
     this.db.deleteDoc('tasks', idInFirestore);
     this.alertService.setAlert('confirmDeleteTask');
   }
 
-  toggleBacklogSorting() {
-    // default is desc
+  toggleBacklogSorting(): void {
+    // default: descending ('desc')
     if (this.orderBacklogtasks == 'desc') {
       this.orderBacklogtasks = 'asc';
       this.db.getBoardAndTaskData('createdAt', 'asc', 'dueTo', 'asc'); //Arguments: boardSorting + Order; TaskSorting + Order

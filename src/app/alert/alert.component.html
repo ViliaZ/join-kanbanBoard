@@ -1,6 +1,4 @@
-<!-- ALERTS  -->
 <div class="alertContainer">
-
     <div *ngIf="alertService.alertStatusON && alertService.alerts.confirmAddTask" class="alertbox">
         <img src="assets/img/thumbsUp.png">
         <p>Task successfully created.</p>
@@ -36,7 +34,6 @@
         <p>'ToDo' is a fixed board. Edits not permitted.</p>
     </div>
 
-
     <div *ngIf="alertService.alertStatusON && alertService.alerts.confirmDeleteBoard" class="alertDelete">
         <img src="assets/img/alertDelete.svg">
         <p>Please confirm deletion. This will include all board tasks.</p>
@@ -45,5 +42,4 @@
             <button (click)="onCancelDeleteBoard()" id="btn-cancel">Cancel</button>
         </div>
     </div>
-
 </div>

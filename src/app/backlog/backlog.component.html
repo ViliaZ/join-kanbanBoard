@@ -4,9 +4,7 @@
         class="wrapper">
 
         <div class="taskContainer">
-            <!-- <div class="user margin-right"> -->
                 <app-user-avatar></app-user-avatar>
-            <!-- </div> -->
 
             <div class="text margin-right">
                 <div class="title">{{ task.title | titlecase }}</div>
@@ -37,7 +35,6 @@
             {{ task.category | titlecase }}
         </div>
     </div>
-
 
     <div *ngIf="db.backlogEmpty()" class="emptyBacklog">
         <img *ngIf="db.backlogEmpty()" src="assets/img/notFound.svg" alt="emptyBacklog">
