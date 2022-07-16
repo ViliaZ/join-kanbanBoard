@@ -1,12 +1,7 @@
 import {
-  ChangeDetectionStrategy,
   Component,
-  ElementRef,
-  Input,
-  OnChanges,
   OnInit,
   QueryList,
-  ViewChild,
   ViewChildren,
 } from '@angular/core';
 import { Board } from 'src/models/board';
@@ -16,7 +11,6 @@ import { EventemitterService } from 'src/services/eventemitter.service';
 import { TasksService } from 'src/services/tasks.service';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { AlertService } from 'src/services/alert.service';
-import { Task } from 'src/models/task';
 import { DragdropService } from 'src/services/dragdrop.service';
 
 @Component({
@@ -214,7 +208,6 @@ export class BoardComponent implements OnInit {
       return true;
     }
 }   
-
 
 }
 

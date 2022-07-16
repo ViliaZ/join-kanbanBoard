@@ -1,33 +1,35 @@
-<div class="wrapper" [class.slide-in]="tasksservice.openHelp == true">
-    
+<div class="wrapper" [class.slide-in]="!!tasksservice.openHelp">
+
     <div class="textcontainer">
-    
+
         <h2>HOW TO USE JOIN</h2>
-    
-        <p>JOIN is based on the kanban system, which is frequently used in professional settings, eg to organize software
+
+        <p>JOIN is based on the kanban system, which is frequently used in professional settings, eg to organize
+            software
             development in a team.
-    
-            To get started, create your own boards and tasks or use the data provided. Note, that "ToDo"-board is fixed and cannot be edited or deleted.
+
+            To get started, create your own boards and tasks or use the data provided. Note, that "ToDo"-board is fixed
+            and cannot be edited or deleted.
         </p>
         <h3> Quick Start:</h3>
         <p> <span>1</span>Create a new Task.
             Use the form on your Dashboard or the colored Plus-button in the top menu of each site.
             Fill out all required fields.</p>
-    
-    
-        <p><span>2</span>Choose a board, where you would like to save your task. Otherwise, tasks are saved to backlog per default.</p>
-    
-    
+        <p><span>2</span>Choose a board, where you would like to save your task. Otherwise, tasks are saved to backlog
+            per default.</p>
+
         <p><span>3</span>The backlog stores all your tasks that are ot in progress yet.
             You can filter (search) or sort the backlog tasks by clicking on the sort icon.</p>
         <p><span>4</span>Start working on your task by moving it from backlog to "ToDo" board.
         </p>
-        <p><span>5</span>Use drag and drop to move your task between boards. Hover over a task to see edit option and delete option.
-            You can edit a task by clicking on it. Tasks can also be pinned to the top of a board (see Pin icon on hover).
+        <p><span>5</span>Use drag and drop to move your task between boards. Hover over a task to see edit option and
+            delete option.
+            You can edit a task by clicking on it. Tasks can also be pinned to the top of a board (see Pin icon on
+            hover).
         </p>
         <p> Create your own boards, delete or edit them to your requirements.</p>
         <p>Enjoy!</p>
-</div>
+    </div>
 
 </div>
-<button  *ngIf="tasksservice.openHelp == true" (click)="tasksservice.openHelp=false">Close</button>
+<button *ngIf="tasksservice.openHelp == true" (click)="tasksservice.openHelp=false">Close</button>

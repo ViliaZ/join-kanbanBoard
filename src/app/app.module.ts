@@ -25,7 +25,6 @@ import { LogoAnimationComponent } from './logo-animation/logo-animation.componen
 import { GradientAnimationComponent } from './gradient-animation/gradient-animation.component';
 import { SignupComponent } from './signup/signup.component';
 import { LogoutSuccessComponent } from './logout-success/logout-success.component';
-import { ForgotPwComponent } from './forgot-pw/forgot-pw.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthServiceService } from 'src/services/auth-service.service';
 import { DateValueAccessorModule } from 'angular-date-value-accessor';
@@ -52,7 +51,6 @@ import { UserAvatarComponent } from './user-avatar/user-avatar.component';
     GradientAnimationComponent,
     SignupComponent,
     LogoutSuccessComponent,
-    ForgotPwComponent,
     ValidatorComponent,
     AlertComponent,
     HelpComponent,
@@ -80,11 +78,9 @@ import { UserAvatarComponent } from './user-avatar/user-avatar.component';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-
-
     // 3 Steps for giving access to AuthService in Model Class (e.g. Task) - as workaround for Constructor DI of AuthService
     // AuthServiceService:: add injector property
-    // in Model (e.g. Task.ts): acceass AuthService via property (no DI in constructro needded)
+    // in Model (e.g. Task.ts): acceass AuthService via property (no DI in constructor needded)
     // in app.module: Add the following: 
   constructor(private injector: Injector) {
     AuthServiceService.injector = injector;

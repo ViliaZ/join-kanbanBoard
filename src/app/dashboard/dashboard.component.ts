@@ -1,6 +1,4 @@
-import { HttpClient } from '@angular/common/http';
-import { AfterContentInit, AfterViewInit, Component, OnChanges, OnInit } from '@angular/core';
-import { initializeApp } from 'firebase/app';
+import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from 'src/services/auth-service.service';
 import { DatabaseService } from 'src/services/database.service';
 
