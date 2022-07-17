@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AlertService } from 'src/services/alert.service';
-import { DatabaseService } from 'src/services/database.service';
 
 @Component({
   selector: 'app-alert',
@@ -18,11 +17,11 @@ export class AlertComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onConfirmDeleteBoard(): any { 
+  onConfirmDeleteBoard(): void { 
     this.alertService.confirmDeleteBoard();   
   }
 
-  onCancelDeleteBoard() {
+  onCancelDeleteBoard(): void {
     this.alertService.cancelDeleteBoard();
   }
 
