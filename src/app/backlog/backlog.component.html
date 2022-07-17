@@ -1,46 +1,46 @@
-<div class="body-backlog">
+<div *ngFor="let task of db.backlogtasks; index as i; trackBy:trackByIndex"
+    [class.hide]="activeSearch() && !isFilteredTask(task)" class="wrapper">
 
-    <div *ngFor="let task of db.backlogtasks; index as i; trackBy:trackByIndex" [class.hide]="activeSearch() && !isFilteredTask(task)"
-        class="wrapper">
+    <div class="taskContainer">
+        <app-user-avatar></app-user-avatar>
 
-        <div class="taskContainer">
-                <app-user-avatar></app-user-avatar>
-
-            <div class="text margin-right">
-                <div class="title">{{ task.title | titlecase }}</div>
-                <div class="description">{{ task.description | titlecase}}</div>
-            </div>
-
-            <div class="information margin-right">
-                <div class="urgency {{task.urgency}}" [matTooltip]="'Urgency'" [matTooltipPosition]="'right'">{{ task.urgency }}</div>
-                <div class="date" [matTooltip]="'Due Date'" [matTooltipPosition]="'right'">{{ task.dueTo | date: 'mediumDate'}}</div>
-            </div>
-
-            <div class="buttons" *ngIf="!isMobile700; else mobileButtons">
-                <button (click)="moveToBoardToDo(task.customIdName)" [matTooltip]="'Move Task to ToDo-Board'" [matTooltipPosition]="'right'">To Board</button>
-                <button (click)="deleteTask(task.customIdName)" [matTooltip]="'Delete Task'" [matTooltipPosition]="'right'">Delete</button>
-                <button (click)="editTask(task)" [matTooltip]="'Edit Task'" [matTooltipPosition]="'right'">Edit</button>
-            </div>
-
-            <ng-template #mobileButtons>
-                <div class="buttons mobile">
-                    <button (click)="moveToBoardToDo(task.customIdName)"><img src="assets/img/toBoard.png" alt=""></button>
-                    <button (click)="deleteTask(task.customIdName)"><img src="assets/img/delete.png"></button>
-                    <button (click)="editTask(task)"><img src="assets/img/edit.png" alt=""></button>
-                </div>
-            </ng-template>
+        <div class="text margin-right">
+            <div class="title">{{ task.title | titlecase }}</div>
+            <div class="description">{{ task.description | titlecase}}</div>
         </div>
 
-        <div class="category">
-            {{ task.category | titlecase }}
+        <div class="information margin-right">
+            <div class="urgency {{task.urgency}}" [matTooltip]="'Urgency'" [matTooltipPosition]="'right'">{{
+                task.urgency }}</div>
+            <div class="date" [matTooltip]="'Due Date'" [matTooltipPosition]="'right'">{{ task.dueTo | date:
+                'mediumDate'}}</div>
         </div>
+
+        <div class="buttons" *ngIf="!isMobile700; else mobileButtons">
+            <button (click)="moveToBoardToDo(task.customIdName)" [matTooltip]="'Move Task to ToDo-Board'"
+                [matTooltipPosition]="'right'">To Board</button>
+            <button (click)="deleteTask(task.customIdName)" [matTooltip]="'Delete Task'"
+                [matTooltipPosition]="'right'">Delete</button>
+            <button (click)="editTask(task)" [matTooltip]="'Edit Task'" [matTooltipPosition]="'right'">Edit</button>
+        </div>
+
+        <ng-template #mobileButtons>
+            <div class="buttons mobile">
+                <button (click)="moveToBoardToDo(task.customIdName)"><img src="assets/img/toBoard.png" alt=""></button>
+                <button (click)="deleteTask(task.customIdName)"><img src="assets/img/delete.png"></button>
+                <button (click)="editTask(task)"><img src="assets/img/edit.png" alt=""></button>
+            </div>
+        </ng-template>
     </div>
 
-    <div *ngIf="db.backlogEmpty()" class="emptyBacklog">
-        <img *ngIf="db.backlogEmpty()" src="assets/img/notFound.svg" alt="emptyBacklog">
-        <h3> No Tasks in the Backlog.</h3>
+    <div class="category">
+        {{ task.category | titlecase }}
     </div>
-
-    <app-alert></app-alert>
-
 </div>
+
+<div *ngIf="db.backlogEmpty()" class="emptyBacklog">
+    <img *ngIf="db.backlogEmpty()" src="assets/img/notFound.svg" alt="emptyBacklog">
+    <h3> No Tasks in the Backlog.</h3>
+</div>
+
+<app-alert></app-alert>

@@ -4,6 +4,7 @@ import { EventemitterService } from 'src/services/eventemitter.service';
 import { TasksService } from 'src/services/tasks.service';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { AlertService } from 'src/services/alert.service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-backlog',
@@ -36,17 +37,12 @@ export class BacklogComponent implements OnInit {
     this.breakpointObserver
       .observe(['(max-width: 700px)'])
       .subscribe((state: BreakpointState) => {
-        if (state.matches) {
-          this.isMobile700 = true;
-        } else {
-          this.isMobile700 = false;
-        }
+       state.matches ? this.isMobile700 = true : this.isMobile700 = false;
       });
   }
 
   listenToEventEmitterSorting() {
-    console.log('BACKLOG: listenToEventEmitterSorting');
-    if (this.eventEmitterService.subscription == undefined) {
+    if (!this.eventEmitterService.subscription) { // if undefined
       this.eventEmitterService.subscription =
         this.eventEmitterService.callBacklogSortEventHandler.subscribe(() => {
           this.toggleBacklogSorting(); // is called, if sorting in menu comp is requested
@@ -57,19 +53,10 @@ export class BacklogComponent implements OnInit {
   listenToEventEmitterSearching() {
     this.eventEmitterService.subscription =
       this.eventEmitterService.callBacklogFilterEventHandler.subscribe(
-        (data: string) => {
-          this.searchInput = data;
-        }
-      );
+        (data: string) => {this.searchInput = data;});
   }
 
-  trackByIndex(index: any) {
-    return index;
-  }
-
-  // bound in template - returns boolean for every rendered task
   isFilteredTask(task: any): Boolean {
-    console.log('BACKLOG: evaluateSearchRequest');
     let taskToString = JSON.stringify(task).toLowerCase();
     let searchItemIsFound = taskToString.includes(this.searchInput.toLowerCase());
     return searchItemIsFound; 
@@ -100,5 +87,9 @@ export class BacklogComponent implements OnInit {
       this.orderBacklogtasks = 'desc';
       this.db.getBoardAndTaskData('createdAt', 'asc', 'dueTo', 'desc'); //Arguments: boardSorting + Order; TaskSorting + Order
     }
+  }
+
+  trackByIndex(index: any) {
+    return index;
   }
 }
