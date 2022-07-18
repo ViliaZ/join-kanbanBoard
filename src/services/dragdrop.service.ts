@@ -8,7 +8,6 @@ export class DragdropService {
 
   constructor(private db: DatabaseService) { }
 
-  //++++++++  DRAG AND DROP ******
   allowDrop(ev: any) {
     ev.preventDefault();
   }

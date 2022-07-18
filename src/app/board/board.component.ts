@@ -36,11 +36,11 @@ export class BoardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.listenToEventEmitter();
+    this.listenToNewBoardEvent();
   }
 
   // get updates if user filled inputfield for new board title (in menu comp) via EventemitterService
-  listenToEventEmitter(): void {
+  listenToNewBoardEvent(): void {
     if (this.eventEmitterService.subscription == undefined) {
       this.eventEmitterService.subscription =
         this.eventEmitterService.callBoardEventHandler.subscribe(

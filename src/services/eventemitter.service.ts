@@ -9,9 +9,9 @@ export class EventemitterService {
   // use of communication between 2 compartments
   // more: https://www.c-sharpcorner.com/article/simple-way-to-execute-a-function-in-a-component-from-another-component/
 
-  callBoardEventHandler = new EventEmitter();    // will be used to emitt the event 
-  callBacklogFilterEventHandler = new EventEmitter();    // will be used to emitt the event 
-  callBacklogSortEventHandler = new EventEmitter();    // will be used to emitt the event 
+  callBoardEventHandler = new EventEmitter();    
+  callBacklogFilterEventHandler = new EventEmitter();   
+  callBacklogSortEventHandler = new EventEmitter();   
   subscription: Subscription | undefined;    // will be used later in event subscription
     
   constructor() { }    
@@ -25,7 +25,7 @@ export class EventemitterService {
   } 
 
   onBacklogFiltering(searchedWord: String) {  // trigger used to force state change to subscribe to
-    console.log('Filtering im service, searchedWord', searchedWord);
+    console.log('Filtering active for Word:', searchedWord);
     this.callBacklogFilterEventHandler.emit(searchedWord);   
   } 
 
